@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+
+<title th:replace="~{/include/include_title.html::title}"></title>
+
+<link rel="stylesheet" th:href="@{/css/common.css}">
+<link rel="stylesheet" th:href="@{/css/franchisee/member/franchisee_modify_form.css}">
+
+<script type="text/javascript" th:src="@{/js/franchisee/member/franchisee_member.js}"></script>
+
+</head>
+<body>
+	
+	<header th:replace="~{/franchisee/include/franchisee_include.html::franchisee_header}"></header>
+
+
+	
+	<nav th:replace="~{/franchisee/include/franchisee_include.html::franchisee_nav}">
+	</nav>
+	
+	<section>
+	
+		<div id="section_wrap">
+			
+			<div class="pos_section_info_wrap">
+
+				<div class="word">
+					franchisee_modify_form
+				</div>
+				
+				<div class="franchisee_modify_form">
+	
+					<form 	th:action="@{/franchisee/member/franchiseeModifyConfirm}" 
+							name="franchisee_modify_form"
+							method="post">
+							
+						<input type="hidden" name="fcm_no" th:value="${session.loginedFranchiseeMemberDto.fcm_no}">
+						
+						<input type="text" name="fcm_id" th:value="${session.loginedFranchiseeMemberDto.fcm_id}" readonly disabled >
+						<br>
+						<input type="text" value="******" readonly disabled >
+						<br>
+						<input type="text" name="fcm_name" th:value="${session.loginedFranchiseeMemberDto.fcm_name}" placeholder="INPUT FRANCHISEE NAME">
+						<br>
+						<input type="text" name="fcm_phone" th:value="${session.loginedFranchiseeMemberDto.fcm_phone}" placeholder="INPUT FRANCHISEE PHONE">
+						<br>
+						<input type="text" name="fcm_mail" th:value="${session.loginedFranchiseeMemberDto.fcm_mail}" placeholder="INPUT FRANCHISEE MAIL">
+						<br>
+						
+						<input class="modify_form_btn" type="button" value="modify account" onclick="franchiseeModifyForm()">
+						<input class="modify_form_btn" type="reset" value="reset">
+					
+					</form>
+				
+				</div>
+							
+			</div>
+		
+		
+			<div class="pos_section_detail_view_wrap">
+
+			</div>
+			
+		</div>
+	
+	</section>
+	
+	
+	
+	
+	
+	<footer th:replace="~{/franchisee/include/franchisee_include.html::franchisee_footer}"></footer>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<html xmlns:th="http://www.thymeleaf.org">
+	
+	<header th:fragment="admin_header">
+	</header>
+	
+
+	<nav th:fragment="admin_nav">
+	
+		<div id="nav_wrap" th:if="${session.loginedAdminMemberDto == null}" >
+			<a th:href="@{/admin/home}">Admin Home</a>
+			<a th:href="@{/admin/member/adminMemberAccountForm}">Create Admin Account Form</a>
+			<a th:href="@{/admin/member/adminLoginForm}">Admin Login Form</a>
+		</div>
+		
+		<div id="nav_wrap" th:unless="${session.loginedAdminMemberDto == null}" >
+			<a th:href="@{/admin/home}">Admin Home</a>
+			<a th:href="@{/admin/member/adminMemberModifyForm}">Admin Modify Form</a>
+			<a href="#none" th:onclick="adminLogoutConfirm()">Admin Logout</a>
+		</div> 
+		
+	</nav>
+	
+	
+	<footer th:fragment="admin_footer">
+		<p>© 2024 hell demon blade.</p>
+	</footer>
+
+</html>

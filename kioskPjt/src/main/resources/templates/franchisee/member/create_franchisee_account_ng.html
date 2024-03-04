@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+
+<title th:replace="~{/include/include_title.html::title}"></title>
+
+<script type="text/javascript" th:src="@{/js/franchisee/member/franchisee_member.js}"></script>
+
+</head>
+<body>
+
+	<header th:replace="~{/franchisee/include/franchisee_include.html::franchisee_header}"></header>
+
+
+	<nav th:replace="~{/franchisee/include/franchisee_include.html::franchisee_nav}">
+	</nav>
+	
+	<section>
+	
+		<div id="section_wrap">
+
+			<div class="pos_section_info_wrap">
+				<div class="word">
+					create_franchisee_account_fail	
+				</div>
+				
+				<div class="others">
+					<a th:href="@{/franchisee/member/createFranchiseeAccountForm}">Create Franchisee Account Form</a>
+				</div>
+				
+			</div>
+			
+			<div class="pos_section_detail_view_wrap">
+
+			</div>
+		
+		</div>
+	
+	</section>
+	
+	
+	<footer th:replace="~{/franchisee/include/franchisee_include.html::franchisee_footer}"></footer>
+	
+</body>
+</html>

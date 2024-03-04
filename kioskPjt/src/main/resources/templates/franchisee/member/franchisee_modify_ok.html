@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+
+<title th:replace="~{/include/include_title.html::title}"></title>
+
+<link rel="stylesheet" th:href="@{/css/common.css}">
+<link rel="stylesheet" th:href="@{/css/franchisee/member/franchisee_modify_result.css}">
+
+<script type="text/javascript" th:src="@{/js/franchisee/member/franchisee_member.js}"></script>
+
+</head>
+<body>
+
+	<header th:replace="~{/franchisee/include/franchisee_include.html::franchisee_header}"></header>
+
+	
+	<nav th:replace="~{/franchisee/include/franchisee_include.html::franchisee_nav}">
+	</nav>
+	
+	
+	<section>
+
+		<div id="section_wrap">
+			
+			<div th:replace="~{/franchisee/include/franchisee_include.html::franchisee_side_menu_div}">
+			</div>
+			
+			<div class="pos_section_info_wrap">
+				<div class="word">
+					franchisee_modify_success
+				</div>
+				
+				<div class="others">
+					<a th:href="@{/franchisee/home}">Franchisee Home</a>
+				</div>
+				
+			</div>
+			
+			<div class="pos_section_detail_view_wrap">
+
+			</div>
+		
+		</div>
+	
+	</section>
+	
+	
+	<footer th:replace="~{/franchisee/include/franchisee_include.html::franchisee_footer}"></footer>
+	
+</body>
+</html>

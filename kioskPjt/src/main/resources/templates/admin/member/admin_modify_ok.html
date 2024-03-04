@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+
+<title th:replace="~{include/include_title.html::title}"></title>
+
+<script type="text/javascript" th:src="@{/js/admin/member/admin_member.js}"></script>
+
+</head>
+<body>
+
+	<header th:replace="~{admin/include/admin_include.html::admin_header}">
+	</header>
+
+
+	<nav th:replace="~{admin/include/admin_include.html::admin_nav}">
+	</nav>
+	
+	
+	<section>
+	
+		<div class="section_wrap">
+		
+			<div class="word">
+				admin_modify_ok
+			</div>
+			
+			<div class="others">
+				<a th:href="@{/admin/home}">Admin Home</a>
+			</div>
+			
+		</div>
+		
+	</section>
+		
+	
+	<footer th:replace="~{admin/include/admin_include.html::admin_footer}">
+	</footer>
+
+</body>
+</html>

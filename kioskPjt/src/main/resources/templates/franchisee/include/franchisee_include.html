@@ -1,0 +1,29 @@
+<html xmlns:th="http://www.thymeleaf.org">
+	
+	<header th:fragment="franchisee_header">
+	</header>
+	
+
+	<nav th:fragment="franchisee_nav">
+	
+		<div id="nav_wrap" th:if="${session.loginedFranchiseeMemberDto ==null}" >
+			<a th:href="@{/franchisee/home}">Franchisee Home</a>
+			<a th:href="@{/franchisee/member/createFranchiseeAccountForm}">Create Franchisee Account Form</a>
+			<a th:href="@{/franchisee/member/franchiseeLoginForm}">Franchisee Login Form</a>
+		</div>
+		
+		<div id="nav_wrap" th:unless="${session.loginedFranchiseeMemberDto ==null}" >
+			<a th:href="@{/franchisee/home}">Franchisee Home</a>
+			<a href="#none" >Franchisee Customer View</a>
+			<a th:href="@{/franchisee/member/franchiseeModifyForm}">Franchisee Modify Form</a>
+			<a href="#none" th:onclick="franchiseeLogoutConfirm()">Franchisee Logout</a>
+		</div>
+		
+	</nav>
+	
+	
+	<footer th:fragment="franchisee_footer">
+		<p>© 2024 hell demon blade.</p>
+	</footer>
+
+</html>

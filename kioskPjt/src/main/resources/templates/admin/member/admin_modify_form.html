@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+
+<title th:replace="~{include/include_title.html::title}"></title>
+
+<script type="text/javascript" th:src="@{/js/admin/member/admin_member.js}"></script>
+
+</head>
+<body>
+
+	<header th:replace="~{admin/include/admin_include.html::admin_header}">
+	</header>
+
+
+	<nav th:replace="~{admin/include/admin_include.html::admin_nav}">
+	</nav>
+	
+	
+	<section>
+	
+		<div class="section_wrap">
+		
+			<div class="word">
+				admin_modify_form
+			</div>
+				
+			<div class="modify_form">
+			
+				<form 	th:action="@{/admin/member/adminModifyConfirm}" 
+						name="admin_modify_form"
+						method="post">
+					<input type="hidden" name="am_no" th:value="${session.loginedAdminMemberDto.am_no}">
+					
+					<input type="text" name="am_id" th:value="${session.loginedAdminMemberDto.am_id}" readonly disabled>
+					<br>
+					<input type="password" value="******" readonly disabled>
+					<br>
+					<input type="text" name="am_name" th:value="${session.loginedAdminMemberDto.am_name}" placeholder="INPUT ADMIN NAME">
+					<br>
+					<input type="text" name="am_phone" th:value="${session.loginedAdminMemberDto.am_phone}" placeholder="INPUT ADMIN PHONE">
+					<br>
+					<input type="text" name="am_mail" th:value="${session.loginedAdminMemberDto.am_mail}" placeholder="INPUT ADMIN MAIL">
+					<br>
+					
+					<input class="modify_form_btn" type="button" value="modify account" onclick="AdminModifyForm()">
+					<input class="modify_form_btn" type="reset" value="reset">
+				
+				</form>
+			
+			</div>
+
+		</div>
+		
+	
+	</section>
+		
+	
+	<footer th:replace="~{admin/include/admin_include.html::admin_footer}">
+	</footer>
+
+</body>
+</html>

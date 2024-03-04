@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.office.kiosk.admin.member.IAdminMemberDao">
+
+	<select id="isMember" 
+			parameterType="String" 
+			resultType="Boolean">
+	
+		SELECT 
+			COUNT(*) 
+		FROM 
+			TBL_ADMIN_MEMBER 
+		WHERE 
+			AM_ID = #{am_id} 
+	
+	</select>
+	
+	<insert id="insertAdmin" 
+			parameterType="com.office.kiosk.admin.member.AdminMemberDto">
+	
+		INSERT INTO 
+			TBL_ADMIN_MEMBER(
+				AM_ID, 
+				AM_PW, 
+				AM_NAME,
+				AM_PHONE, 
+				AM_MAIL, 
+				AM_REG_DATE, 
+				AM_MOD_DATE) 
+		VALUES(	#{am_id}, 
+				#{am_pw}, 
+				#{am_name}, 
+				#{am_phone}, 
+				#{am_mail}, 
+				NOW(), NOW())
+	
+	</insert>
+	
+	<select id="selectAdminForLogin" 
+			parameterType="com.office.kiosk.admin.member.AdminMemberDto" 
+			resultType="com.office.kiosk.admin.member.AdminMemberDto">
+	
+		SELECT 
+			*
+		FROM 
+			TBL_ADMIN_MEMBER 
+		WHERE 
+			AM_ID = #{am_id} 
+	
+	</select>
+	
+	<update id="updateAdminForModify" 
+			parameterType="com.office.kiosk.admin.member.AdminMemberDto">
+	
+		UPDATE 
+			TBL_ADMIN_MEMBER
+		SET 
+			AM_NAME = #{am_name}, 
+			AM_PHONE = #{am_phone}, 
+			AM_MAIL = #{am_mail}, 
+			AM_MOD_DATE = now()
+		WHERE
+			AM_NO = #{am_no} 
+	
+	</update>
+	
+	<select id="selectLastesAdminInfo" 
+			parameterType="int" 
+			resultType="com.office.kiosk.admin.member.AdminMemberDto">
+	
+		SELECT 
+			*
+		FROM 
+			TBL_ADMIN_MEMBER 
+		WHERE 
+			AM_NO = #{am_no} 
+	
+	</select>
+	
+
+</mapper>
