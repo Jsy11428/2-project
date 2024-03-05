@@ -10,33 +10,43 @@
 </head>
 <body>
 
-	<header th:replace="~{admin/include/admin_include.html::admin_header}">
-	</header>
-
-
-	<nav th:replace="~{admin/include/admin_include.html::admin_nav}">
-	</nav>
+	<div id="admin_wrap">
+	
+		<header th:replace="~{admin/include/admin_include.html::admin_header}">
+		</header>
 	
 	
-	<section>
-	
-		<div class="section_wrap">
+		<nav th:replace="~{admin/include/admin_include.html::admin_nav}">
+		</nav>
 		
-			<div class="word">
-				admin_login_ng
+		
+		<section>
+		
+			<div class="section_wrap">
+				
+				<div th:replace="~{admin/include/admin_include.html::admin_section_side_menu}"></div>
+				
+				<div class="admin_section_view_wrap">
+	
+					<div class="word">
+						admin_login_ng
+					</div>
+					
+					<div class="others">
+						<a th:href="@{/admin/member/adminLoginForm}">Admin Login Form</a>
+					</div>
+				
+				</div>
+				
 			</div>
 			
-			<div class="others">
-				<a th:href="@{/admin/member/adminLoginForm}">Admin Login Form</a>
-			</div>
+		</section>
 			
-		</div>
 		
-	</section>
-		
+		<footer th:replace="~{admin/include/admin_include.html::admin_footer}">
+		</footer>
 	
-	<footer th:replace="~{admin/include/admin_include.html::admin_footer}">
-	</footer>
+	</div>
 
 </body>
 </html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+
+<title th:replace="~{include/include_title.html::title}"></title>
+
+<script type="text/javascript" th:src="@{/js/admin/member/admin_member.js}"></script>
+
+</head>
+<body>
+
+	<div id="admin_wrap">
+
+		<header th:replace="~{admin/include/admin_include.html::admin_header}">
+		</header>
+	
+	
+		<nav th:replace="~{admin/include/admin_include.html::admin_nav}">
+		</nav>
+		
+		
+		<section>
+		
+			<div class="section_wrap">
+			
+				<div th:replace="~{admin/include/admin_include.html::admin_section_side_menu}"></div>
+			
+				<div class="admin_section_view_wrap">
+				
+					<div class="word">
+						franchisee list
+					</div>
+						
+					<div class="franchisee_list">
+					
+		  				<table>
+							<tr>
+								<td>가맹점주 no</td>
+								<td>가맹점주 id</td>
+								<td>가맹점주 이름</td>
+								<td>가맹점주 연락처</td>
+								<td>가맹점주 메일</td>
+								<td>승인</td>
+								<td>가맹점주 등록일</td>
+								<td>가맹점주 수정일</td>
+							</tr>
+							<tr th:each="f : ${franchiseeMemberDtos}">
+								<td th:text="${f.fcm_no}"></td>
+								<td th:text="${f.fcm_id}"></td>
+								<td th:text="${f.fcm_name}"></td>
+								<td th:text="${f.fcm_phone}"></td>
+								<td th:text="${f.fcm_mail}"></td>
+								<td th:if="${f.fcm_approval} == 0">
+									<button th:No="${f.fcm_no}" type="button" th:onclick="franchiseeApproveBtn(this.getAttribute('No'))" th:text="승인"></button> 
+								</td>
+								<td th:unless="${f.fcm_approval} == 0" th:text="승인완료"></td>
+								<td th:text="${f.fcm_reg_date}"></td>
+								<td th:text="${f.fcm_mod_date}"></td>
+							</tr>
+						</table> 
+						
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		
+		</section>
+			
+		
+		<footer th:replace="~{admin/include/admin_include.html::admin_footer}">
+		</footer>
+		
+	</div>
+
+</body>
+</html>

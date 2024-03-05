@@ -5,23 +5,57 @@
 
 <title th:replace="~{include/include_title.html::title}"></title>
 
+<link rel="stylesheet" th:href="@{/css/admin/common.css}">
+<link rel="stylesheet" th:href="@{/css/admin/admin_include.css}">
+<link rel="stylesheet" th:href="@{/css/admin/admin_home.css}">
+
 <script type="text/javascript" th:src="@{/js/admin/member/admin_member.js}"></script>
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script>
+
+	$('#section_wrap .section_side_menu ul>li').mouseenter(function(){
+		$('#section_wrap .section_side_menu ul>li>ul').css('display', 'block')
+	})
+	$('#section_wrap .section_side_menu ul>li').mouseleave(function(){
+		$('#section_wrap .section_side_menu ul>li>ul').css('display', 'none')
+	})
+
+</script>
 
 </head>
 <body>
 
-	<header th:replace="~{admin/include/admin_include.html::admin_header}">
-	</header>
+	<div id="admin_wrap">
 
-
-	<nav th:replace="~{admin/include/admin_include.html::admin_nav}">
-	</nav>
-	
-	this is admin home
+		<header th:replace="~{admin/include/admin_include.html::admin_header}">
+		</header>
 	
 	
-	<footer th:replace="~{admin/include/admin_include.html::admin_footer}">
-	</footer>
+		<nav th:replace="~{admin/include/admin_include.html::admin_nav}">
+		</nav>
+		
+		<section>
+			<div id="section_wrap">
+				
+				<div th:replace="~{admin/include/admin_include.html::admin_section_side_menu}"></div>
+				
+				<div class="admin_section_view_wrap">
+	
+					<div class="word">
+						this is admin home
+					</div>
+				
+				</div>
+	
+			</div>
+		</section>
+		
+		
+		<footer th:replace="~{admin/include/admin_include.html::admin_footer}">
+		</footer>
+	
+	</div>
 
 </body>
 </html>

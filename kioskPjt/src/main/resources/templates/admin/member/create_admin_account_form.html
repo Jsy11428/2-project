@@ -10,56 +10,65 @@
 </head>
 <body>
 
-	<header th:replace="~{admin/include/admin_include.html::admin_header}">
-	</header>
+	<div id="admin_wrap">
 
-
-	<nav th:replace="~{admin/include/admin_include.html::admin_nav}">
-	</nav>
+		<header th:replace="~{admin/include/admin_include.html::admin_header}">
+		</header>
 	
 	
-	<section>
-	
-		<div class="section_wrap">
+		<nav th:replace="~{admin/include/admin_include.html::admin_nav}">
+		</nav>
 		
-			<div class="word">
-				create_admin_account_form
-			</div>
+		
+		<section>
+		
+			<div id="section_wrap">
 				
-			<div class="create_form">
-			
-				<form 	th:action="@{/admin/member/createadminAccountConfirm}" 
-						name="create_admin_account_form"
-						method="post">
-					
-					<input type="text" name="am_id" placeholder="INPUT ADMIN ID">
-					<br>
-					<input type="password" name="am_pw" placeholder="INPUT ADMIN PW">
-					<br>
-					<input type="password" name="am_pw_again" placeholder="INPUT AGAIN PW">
-					<br>
-					<input type="text" name="am_name" placeholder="INPUT ADMIN NAME">
-					<br>
-					<input type="text" name="am_phone" placeholder="INPUT ADMIN PHONE">
-					<br>
-					<input type="text" name="am_mail" placeholder="INPUT ADMIN MAIL">
-					<br>
-					
-					<input class="create_form_btn" type="button" value="create account" onclick="createAdminAccountForm()">
-					<input class="create_form_btn" type="reset" value="reset">
+				<div th:replace="~{admin/include/admin_include.html::admin_section_side_menu}"></div>
 				
-				</form>
-			
+				<div class="admin_section_view">
+				
+					<div class="word">
+						create_admin_account_form
+					</div>
+						
+					<div class="create_form">
+					
+						<form 	th:action="@{/admin/member/createadminAccountConfirm}" 
+								name="create_admin_account_form"
+								method="post">
+							
+							<input type="text" name="am_id" placeholder="INPUT ADMIN ID">
+							<br>
+							<input type="password" name="am_pw" placeholder="INPUT ADMIN PW">
+							<br>
+							<input type="password" name="am_pw_again" placeholder="INPUT AGAIN PW">
+							<br>
+							<input type="text" name="am_name" placeholder="INPUT ADMIN NAME">
+							<br>
+							<input type="text" name="am_phone" placeholder="INPUT ADMIN PHONE">
+							<br>
+							<input type="text" name="am_mail" placeholder="INPUT ADMIN MAIL">
+							<br>
+							
+							<input class="create_form_btn" type="button" value="create account" onclick="createAdminAccountForm()">
+							<input class="create_form_btn" type="reset" value="reset">
+						
+						</form>
+					
+					</div>
+					
+				</div>
+	
 			</div>
-
-		</div>
+			
+		</section>
+			
 		
-	
-	</section>
+		<footer th:replace="~{admin/include/admin_include.html::admin_footer}">
+		</footer>
 		
-	
-	<footer th:replace="~{admin/include/admin_include.html::admin_footer}">
-	</footer>
+	</div>
 
 </body>
 </html>

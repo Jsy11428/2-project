@@ -1,6 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	
 	<header th:fragment="admin_header">
+		<div id="header_wrap"></div>
 	</header>
 	
 
@@ -21,8 +22,45 @@
 	</nav>
 	
 	
+	<div class="section_side_menu" th:fragment="admin_section_side_menu">
+		
+		<ul>
+			<li>member management
+				<ul>
+					<li>
+						<a th:href="@{/admin/member/adminList}">admin List</a>
+						<br>
+						<a th:href="@{/admin/member/franchiseeList}">Franchisee List</a>
+						<br>
+						<a th:href="@{/admin/member/storeList}">Store List</a>
+					</li>
+				</ul>		
+			</li>
+			<li>menu
+				<ul>
+					<li>
+						<a th:href="@{/admin/menu/menuList}">menu List</a>
+						<br>
+						<a th:href="@{/admin/menu/addMenu}">add menu</a>
+					</li>
+				</ul>
+			</li>
+			<li>sales
+				<ul>
+					<li>
+						<a th:href="@{/admin/sales/menuList}">sales List</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+		
+	</div>
+	
+	
 	<footer th:fragment="admin_footer">
-		<p>© 2024 hell demon blade.</p>
+		<div id="footer_wrap">
+			<p>© 2024 hell demon blade.</p>
+		</div>
 	</footer>
 
 </html>

@@ -20,21 +20,45 @@
 	<insert id="insertAdmin" 
 			parameterType="com.office.kiosk.admin.member.AdminMemberDto">
 	
-		INSERT INTO 
-			TBL_ADMIN_MEMBER(
-				AM_ID, 
-				AM_PW, 
-				AM_NAME,
-				AM_PHONE, 
-				AM_MAIL, 
-				AM_REG_DATE, 
-				AM_MOD_DATE) 
-		VALUES(	#{am_id}, 
-				#{am_pw}, 
-				#{am_name}, 
-				#{am_phone}, 
-				#{am_mail}, 
-				NOW(), NOW())
+		<choose>
+			<when test="am_id == 'super admin'">
+				INSERT INTO 
+					TBL_ADMIN_MEMBER(
+						AM_ID, 
+						AM_PW, 
+						AM_NAME,
+						AM_PHONE, 
+						AM_MAIL, 
+						AM_APPROVAL, 
+						AM_REG_DATE, 
+						AM_MOD_DATE) 
+				VALUES(	#{am_id}, 
+						#{am_pw}, 
+						#{am_name}, 
+						#{am_phone}, 
+						#{am_mail}, 
+						1, NOW(), NOW())
+			</when>
+			<otherwise>
+				INSERT INTO 
+					TBL_ADMIN_MEMBER(
+						AM_ID, 
+						AM_PW, 
+						AM_NAME,
+						AM_PHONE, 
+						AM_MAIL, 
+						AM_REG_DATE, 
+						AM_MOD_DATE) 
+				VALUES(	#{am_id}, 
+						#{am_pw}, 
+						#{am_name}, 
+						#{am_phone}, 
+						#{am_mail}, 
+						NOW(), NOW())
+			</otherwise>
+		</choose>
+		
+
 	
 	</insert>
 	
@@ -48,6 +72,8 @@
 			TBL_ADMIN_MEMBER 
 		WHERE 
 			AM_ID = #{am_id} 
+		AND 
+			AM_APPROVAL = 1 
 	
 	</select>
 	
@@ -79,5 +105,65 @@
 	
 	</select>
 	
+	<select id="selectAllFranchiseeInfo"
+			resultType="com.office.kiosk.franchisee.member.FranchiseeMemberDto" >
+	
+		SELECT 
+			* 
+		FROM 
+			TBL_FC_MEMBER 
+	
+	</select>
+	
+	<update id="updateFranchiseeApproval" 
+			parameterType="int" >
+			
+		UPDATE 
+			TBL_FC_MEMBER 
+		SET 
+			FCM_APPROVAL = 1
+		WHERE 
+			FCM_NO = #{fcm_no}
+	
+	</update>
+	
+	<select id="selectAllAdminInfo"
+			resultType="com.office.kiosk.admin.member.AdminMemberDto" >
+	
+		SELECT 
+			* 
+		FROM 
+			TBL_ADMIN_MEMBER 
+		WHERE 
+			AM_ID != 'super admin' 	
+		
+	
+	</select>
+	
+	<update id="updateAdminApproval" 
+			parameterType="int" >
+			
+		UPDATE 
+			TBL_ADMIN_MEMBER 
+		SET 
+			AM_APPROVAL = 1
+		WHERE 
+			AM_NO = #{am_no}
+	
+	</update>
+	
+	<select id="selectAllFranchiseeStoreInfo"
+			resultType="com.office.kiosk.franchisee.FranchiseeStoreDto">
+	
+		SELECT 
+			* 
+		FROM 
+			TBL_FC_STORE FCS 
+		JOIN 
+			TBL_FC_MEMBER FCM 
+		ON 
+			FCS.FCM_ID = FCM.FCM_ID 
+	
+	</select>
 
 </mapper>

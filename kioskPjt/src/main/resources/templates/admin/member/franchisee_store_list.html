@@ -29,17 +29,41 @@
 				<div class="admin_section_view_wrap">
 				
 					<div class="word">
-						admin_modify_ok
+						franchisee store list
+					</div>
+						
+					<div class="franchisee_store_list">
+					
+		  				<table>
+							<tr>
+								<td>가맹점 no</td>
+								<td>가맹점 위치</td>
+								<td>가맹점 연락처</td>
+								<td>가맹점주 이름</td>
+								<td>가맹점주 id</td>
+								<td>가맹점주 연락처</td>
+								<td>가맹점 등록일</td>
+								<td>가맹점 수정일</td>
+							</tr>
+							<tr th:each="f : ${franchiseeSotreDtos}">
+								<td th:text="${f.fcs_no}"></td>
+								<td th:text="${f.fcs_location}"></td>
+								<td th:text="${f.fcs_phone}"></td>
+								<td th:text="${f.fcm_name}"></td>
+								<td th:text="${f.fcm_id}"></td>
+								<td th:text="${f.fcm_phone}"></td>
+								<td th:text="${f.fcs_reg_date}"></td>
+								<td th:text="${f.fcs_mod_date}"></td>
+							</tr>
+						</table> 
+						
 					</div>
 					
-					<div class="others">
-						<a th:href="@{/admin/home}">Admin Home</a>
-					</div>
-				
 				</div>
 				
 			</div>
 			
+		
 		</section>
 			
 		

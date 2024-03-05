@@ -26,12 +26,15 @@ public class FranchiseeMemberDetailService implements UserDetailsService {
 		FranchiseeMemberDto selectedFranchiseeMemberDto =
 				iFranchiseeMemberDao.selectFranchiseeForLogin(franchiseeMemberDto);
 		
-		return User.builder()
+		return User
+				.builder()
 				.username(selectedFranchiseeMemberDto.getFcm_id())
 				.password(selectedFranchiseeMemberDto.getFcm_pw())
 				.roles("FRANCHISEE")
 				.build();
 		
 	}
+	
+
 	
 }
