@@ -10,6 +10,7 @@
 <link rel="stylesheet" th:href="@{/css/admin/common.css}">
 <link rel="stylesheet" th:href="@{/css/admin/admin_include.css}">
 <link rel="stylesheet" th:href="@{/css/admin/admin_home.css}">
+<link rel="stylesheet" th:href="@{/css/admin/member/create_admin_account_form.css}">
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
@@ -34,7 +35,7 @@
 				
 				<div th:replace="~{admin/include/admin_include.html::admin_section_side_menu}"></div>
 				
-				<div class="admin_section_view">
+				<div class="admin_section_view_wrap">
 				
 					<div class="word">
 						create_admin_account_form
@@ -59,8 +60,8 @@
 							<input type="text" name="am_mail" placeholder="INPUT ADMIN MAIL">
 							<br>
 							
-							<input class="create_form_btn" type="button" value="create account" onclick="createAdminAccountForm()">
-							<input class="create_form_btn" type="reset" value="reset">
+							<input type="button" value="create account" onclick="createAdminAccountForm()">
+							<input type="reset" value="reset">
 						
 						</form>
 					

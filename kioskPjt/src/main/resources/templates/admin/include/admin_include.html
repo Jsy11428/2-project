@@ -8,15 +8,15 @@
 	<nav th:fragment="admin_nav">
 	
 		<div id="nav_wrap" th:if="${session.loginedAdminMemberDto == null}" >
-			<a th:href="@{/admin/home}">Admin Home</a>
-			<a th:href="@{/admin/member/adminMemberAccountForm}">Create Admin Account Form</a>
-			<a th:href="@{/admin/member/adminLoginForm}">Admin Login Form</a>
+			<a th:href="@{/admin/member/adminLoginForm}">로그인</a>
+			<a th:href="@{/admin/member/adminMemberAccountForm}">회원가입</a>
+			<a th:href="@{/admin/home}">홈</a>
 		</div>
 		
 		<div id="nav_wrap" th:unless="${session.loginedAdminMemberDto == null}" >
-			<a th:href="@{/admin/home}">Admin Home</a>
-			<a th:href="@{/admin/member/adminMemberModifyForm}">Admin Modify Form</a>
-			<a href="#none" th:onclick="adminLogoutConfirm()">Admin Logout</a>
+			<a href="#none" th:onclick="adminLogoutConfirm()">로그아웃</a>
+			<a th:href="@{/admin/member/adminMemberModifyForm}">정보수정</a>
+			<a th:href="@{/admin/home}">홈</a>
 		</div> 
 		
 	</nav>
@@ -25,18 +25,18 @@
 	<div class="section_side_menu" th:fragment="admin_section_side_menu">
 		
 		<ul>
-			<li>member management
+			<li>가맹점 관리
 				<ul>
 					<li>
-						<a th:href="@{/admin/member/adminList}">admin List</a>
+						<a th:href="@{/admin/member/adminList}">관리자 목록</a>
 						<br>
-						<a th:href="@{/admin/member/franchiseeList}">Franchisee List</a>
+						<a th:href="@{/admin/member/franchiseeList}">가맹회원 목록</a>
 						<br>
-						<a th:href="@{/admin/member/storeList}">Store List</a>
+						<a th:href="@{/admin/member/storeList}">가맹점 목록</a>
 					</li>
 				</ul>		
 			</li>
-			<li>menu
+			<li>메뉴 관리
 				<ul>
 					<li>
 						<a th:href="@{/admin/menu/menuList}">menu List</a>
@@ -45,7 +45,7 @@
 					</li>
 				</ul>
 			</li>
-			<li>sales
+			<li>매출 관리
 				<ul>
 					<li>
 						<a th:href="@{/admin/sales/menuList}">sales List</a>

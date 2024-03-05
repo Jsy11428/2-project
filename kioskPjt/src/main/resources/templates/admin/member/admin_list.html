@@ -10,6 +10,7 @@
 <link rel="stylesheet" th:href="@{/css/admin/common.css}">
 <link rel="stylesheet" th:href="@{/css/admin/admin_include.css}">
 <link rel="stylesheet" th:href="@{/css/admin/admin_home.css}">
+<link rel="stylesheet" th:href="@{/css/admin/member/admin_list.css}">
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
@@ -37,21 +38,21 @@
 				<div class="admin_section_view_wrap">
 			
 					<div class="word">
-						admin list
+						관리자 목록
 					</div>
 						
 					<div class="admin_list">
 					
 		  				<table>
 							<tr>
-								<td>admin no</td>
-								<td>admin id</td>
-								<td>admin 이름</td>
-								<td>admin 연락처</td>
-								<td>admin 메일</td>
+								<td>NO</td>
+								<td>ID</td>
+								<td>이름</td>
+								<td>연락처</td>
+								<td>메일</td>
 								<td>승인</td>
-								<td>admin 등록일</td>
-								<td>admin 수정일</td>
+								<td>등록일</td>
+								<td>수정일</td>
 							</tr>
 							<tr th:each="a : ${adminMemberDtos}">
 								<td th:text="${a.am_no}"></td>
