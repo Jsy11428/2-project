@@ -20,8 +20,7 @@
 
 <select id="isMenuCategory" parameterType="String" resultType="boolean">
 
-	SELECT * 
-	FROM TBL_FC_MENU_CATEGORY;
+	SELECT COUNT(*) FROM TBL_FC_MENU_CATEGORY WHERE FCMC_NAME = #{FCMC_NAME}
 
 </select>
 
