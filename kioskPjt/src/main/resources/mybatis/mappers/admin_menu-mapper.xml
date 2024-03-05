@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.office.kiosk.admin.menu.IAdminMenuDao">
+
+
+<select id="selectAllCategory" resultType="com.office.kiosk.franchisee.menu.FranchiseeMenuCategoryDto">
+
+	SELECT * 
+	FROM TBL_FC_MENU_CATEGORY;
+
+</select>
+
+<insert id="insertMenuCategory" parameterType="com.office.kiosk.franchisee.menu.FranchiseeMenuCategoryDto">
+
+	INSERT INTO TBL_FC_MENU_CATEGORY(FCMC_NAME, FCMC_REG_DATE, FCMC_MOD_DATE) 
+	VALUES(#{fcmc_name}, NOW(), NOW());
+
+</insert>
+
+<select id="isMenuCategory" parameterType="String" resultType="boolean">
+
+	SELECT * 
+	FROM TBL_FC_MENU_CATEGORY;
+
+</select>
+
+
+</mapper>
