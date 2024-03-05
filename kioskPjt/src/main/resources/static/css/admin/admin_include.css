@@ -18,7 +18,7 @@
 }
 
 #section_wrap .section_side_menu ul>li>ul {
-    display: block;    
+    display: none;    
 }
 
 #footer_wrap {
