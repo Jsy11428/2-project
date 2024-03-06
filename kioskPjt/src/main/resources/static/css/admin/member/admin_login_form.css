@@ -1,0 +1,16 @@
+#section_wrap .admin_section_view_wrap .login_form {
+    margin-top: 50px;
+	margin-bottom: 30px;
+	text-align: center;
+}
+
+#section_wrap .admin_section_view_wrap .login_form input {
+    width: 300px;
+	padding: 5px;
+	margin: 3px;
+}
+
+#section_wrap .admin_section_view_wrap .login_form input[type='button'],
+#section_wrap .admin_section_view_wrap .login_form input[type='reset'] {
+    width: 140px;
+}
