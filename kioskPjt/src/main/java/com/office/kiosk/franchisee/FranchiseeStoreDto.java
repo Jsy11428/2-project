@@ -6,6 +6,7 @@ import lombok.Data;
 public class FranchiseeStoreDto {
 
 	private int fcs_no;
+	private String fcs_name;
 	private String fcs_location;
 	private String fcs_phone;
 	private String fcs_reg_date;

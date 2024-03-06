@@ -3,6 +3,7 @@
 }
 
 #section_wrap .admin_section_view_wrap .franchisee_store_list table {
+	width: 960px;
 	margin: 0 10px;
 	border-collapse: collapse;
 	margin: 0 auto;
