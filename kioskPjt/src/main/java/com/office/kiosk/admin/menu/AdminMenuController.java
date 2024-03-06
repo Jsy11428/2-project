@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.office.kiosk.admin.menu.util.UploadFileService;
-import com.office.kiosk.franchisee.menu.FranchiseeMenuCategoryDto;
-import com.office.kiosk.franchisee.menu.FranchiseeMenuDto;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -33,12 +30,10 @@ public class AdminMenuController {
 	// 메뉴 등록 화면 페이지네이션
 	
 	@GetMapping("/createMenuForm")
-	public String createMenuForm(Model model, AdminMenuCategoryDto adminMenuCategoryDto) {
+	public String createMenuForm() {
 		log.info("createMenuForm()");
 		
 		String nextPage = "/admin/menu/create_menu_account_form";
-		
-		model.addAttribute("adminMenuCategoryDto", adminMenuCategoryDto);
 		
 		return nextPage;
 		
@@ -94,7 +89,7 @@ public class AdminMenuController {
 	public String createMenuCategoryAccountConfirm(Model model, AdminMenuCategoryDto adminMenuCategoryDto) {
 		log.info("createMenuCategoryAccountConfirm");
 		
-		String nextPage = "/admin/menu/create_menu_account_ok";
+		String nextPage = "redirect:/admin/menu/createMenuForm";
 		
 		int result = -1;
 		
