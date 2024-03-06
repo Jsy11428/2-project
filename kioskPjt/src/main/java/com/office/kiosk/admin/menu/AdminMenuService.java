@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.office.kiosk.franchisee.menu.FranchiseeMenuCategoryDto;
+import com.office.kiosk.franchisee.menu.FranchiseeMenuDto;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -31,7 +32,7 @@ public class AdminMenuService {
 	
 	@Autowired
 	IAdminMenuDao iAdminMenuDao;
-
+	
 	public Map<String, Object> getCategory() {
 		log.info("getCategory");
 		
@@ -80,9 +81,44 @@ public class AdminMenuService {
 			return ADMIN_MENU_CATEGORY_ALREADT_EXIST;
 		}
 		
-		
-		
 	}
+	
+	public int createMenuAccountConfirm(FranchiseeMenuDto franchiseeMenuDto) {
+		log.info("createMenuAccountConfirm()");
+		
+		boolean isMenu = iAdminMenuDao.isMenu(franchiseeMenuDto.getFc_menu_name());
+		
+		if (!isMenu) {
+			
+			int result = iAdminMenuDao.insertMenu(franchiseeMenuDto);		
+			
+			switch (result) {
+			case  ADMIN_MENU_DATABASE_TROUBLE:
+				log.info("MENU DATABASE COMMUNICATION TROUBLE");
+				
+				break;
+				
+			case  ADMIN_MENU_INSERT_FAIL:
+				log.info("INSERT MENU FAIL");
+				
+				break;
+				
+			case  ADMIN_MENU_INSERT_SUCCESS:
+				log.info("INSERT MENU SUCCESS");
+				
+				break;
+				
+			}
+			
+			return result;
+			
+			
+		} else {
+			
+			return ADMIN_MENU_ALREADT_EXIST;
+		}
+	}
+
 
 
 	

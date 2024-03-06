@@ -24,5 +24,18 @@
 
 </select>
 
+<insert id="insertMenu" parameterType="com.office.kiosk.franchisee.menu.FranchiseeMenuDto"> 
+
+	INSERT INT TBL_FC_MENU(FC_MENU_NAME, FCMC_NO, FC_MENU_TEXT, FC_MENU_PRICE, FC_MENU_IMG_NAME, FC_MENU_QUANTITY, FC_MENU_REG_DATE, FC_MENU_MOD_DATE) 
+	
+	VALUES (#{FC_MENU_NAME}, #{FCMC_NO}, NOW(), NOW()); 
+
+</insert>
+
+<select id="isMenu" parameterType="String" resultType="boolean"> 
+
+	SELECT COUNT(*) FROM TBL_FC_MENU WHERE FC_MENU_NAME = #{FC_MENU_NAME}; 
+
+</select>
 
 </mapper>
