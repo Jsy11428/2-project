@@ -75,8 +75,12 @@ public class AdminMemberService {
 		AdminMemberDto selectedAdminMemberDtoById = 
 				iAdminMemberDao.selectAdminForLogin(adminMemberDto);
 		
-		if (passwordEncoder.matches(adminMemberDto.getAm_pw(), selectedAdminMemberDtoById.getAm_pw())) {
-			return selectedAdminMemberDtoById;
+		if (selectedAdminMemberDtoById != null) {
+			if (passwordEncoder.matches(adminMemberDto.getAm_pw(), selectedAdminMemberDtoById.getAm_pw())) {
+				return selectedAdminMemberDtoById;
+			} else {
+				return null;
+			}
 		} else {
 			return null;
 		}

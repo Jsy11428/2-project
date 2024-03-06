@@ -1,0 +1,16 @@
+#section_wrap .admin_section_view_wrap .admin_sales_list {
+	width: 100%;
+}
+
+#section_wrap .admin_section_view_wrap .admin_sales_list table {
+	margin: 0 10px;
+	border-collapse: collapse;
+	margin: 0 auto;
+}
+
+#section_wrap .admin_section_view_wrap .admin_sales_list table tr td {
+	border: 1px solid #000;
+	text-align: center;
+	font-size: .9em;
+	padding: 5px;
+}
