@@ -131,6 +131,7 @@ function ajax_getCategorie_menu() {
             for (let i = 0; i < cateDtos.length; i++) {
                 // 카테고리 버튼 추가
                 $('.menu_category_change_wrap').append('<a href="#" value="' + cateDtos[i].fcmc_no + '">' + cateDtos[i].fcmc_name + '</a>');
+            
             }
         },
         error: function(data) {
