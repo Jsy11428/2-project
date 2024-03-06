@@ -1,0 +1,91 @@
+#section_wrap input[type="button"] {
+    cursor: pointer;
+}
+#section_wrap div.admin_section_view_wrap {
+    width: 800px;
+    margin:0 auto;
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* create_menu_category_form CSS */
+#section_wrap div.admin_section_view_wrap div.create_menu_category_form {
+    margin:20px 0 ;
+}
+#section_wrap div.admin_section_view_wrap div.create_menu_category_form h3 {
+    margin:10px 0;
+    font-size: 1.0em;
+}
+#section_wrap div.admin_section_view_wrap div.create_menu_category_form input[type="text"] {
+    width: 250px;
+    height: 30px;
+    border-radius: 7px;
+    box-sizing: border-box;
+    vertical-align: top;
+    border: 1px solid #c8c8c8;
+}
+#section_wrap div.admin_section_view_wrap div.create_menu_category_form input[type="button"] {
+    width: 60px;
+    height: 30px;
+    border-radius: 7px;
+    box-sizing: border-box;
+    vertical-align: top;
+    border: 1px solid #c8c8c8;
+}
+/* create_menu_category_form CSS END*/
+
+/* create_menu_form CSS */
+#section_wrap div.admin_section_view_wrap div.create_menu_form {
+    margin-top: 30px;
+}
+#section_wrap div.admin_section_view_wrap div.create_menu_form h3 {
+    margin-top: 20px;
+    font-size: 1.0em;
+}
+#section_wrap div.admin_section_view_wrap div.create_menu_form table {
+    margin:10px auto;
+}
+#section_wrap div.admin_section_view_wrap div.create_menu_form table tr td {
+    text-align: left;
+    padding: 5px;
+}
+#section_wrap div.admin_section_view_wrap div.create_menu_form table tr td:nth-child(even) {
+    text-align: right;
+}
+#section_wrap div.admin_section_view_wrap div.create_menu_form table tr td span {
+    color: #555;
+    font-weight: 600;
+}
+#section_wrap div.admin_section_view_wrap div.create_menu_form table tr:last-child td {
+    text-align: center;
+    padding: 10px;
+}
+#section_wrap div.admin_section_view_wrap div.create_menu_form table tr:last-child td input {
+    width: 100px;
+    height: 30px;
+    border-radius: 7px;
+    border: 1px solid #aaa;
+}
+#section_wrap div.admin_section_view_wrap div.create_menu_form table tr td select[name="cate_name"]{
+    width: 200px;
+    padding: 2px;
+    border-radius: 7px;
+    border: 1px solid #c8c8c8;
+}
+#section_wrap div.admin_section_view_wrap div.create_menu_form table tr td input.basic_txt_input{
+    width: 200px;
+    box-sizing: border-box;
+    padding: 2px;
+    border-radius: 7px;
+    border: 1px solid #c8c8c8;
+}
+#section_wrap div.admin_section_view_wrap div.create_menu_form table tr td textarea.long_txt_input{
+    width: 200px;
+    height: 300px;
+    overflow-y: scroll;
+    box-sizing: border-box;
+    border-radius: 7px;
+    border: 1px solid #c8c8c8;
+    resize: none;
+}
+/* create_menu_form CSS END */

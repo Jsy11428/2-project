@@ -26,12 +26,12 @@ public class AdminMenuController {
 	// 메뉴 등록 화면 페이지네이션
 	
 	@GetMapping("/createMenuForm")
-	public String createMenuForm(Model model, FranchiseeMenuCategoryDto franchiseeMenuCategoryDto) {
+	public String createMenuForm(Model model, AdminMenuCategoryDto adminMenuCategoryDto) {
 		log.info("createMenuForm()");
 		
 		String nextPage = "/admin/menu/create_menu_account_form";
 		
-		model.addAttribute("franchiseeMenuCategoryDto", franchiseeMenuCategoryDto);
+		model.addAttribute("adminMenuCategoryDto", adminMenuCategoryDto);
 		
 		return nextPage;
 		
@@ -53,14 +53,14 @@ public class AdminMenuController {
 	// 메뉴 카테고리 등록 확인 컨펌(넥스트페이지 안넘어가게 바뀌어야함)
 	
 	@PostMapping("/createMenuCategoryAccountConfirm")
-	public String createMenuCategoryAccountConfirm(Model model, FranchiseeMenuCategoryDto franchiseeMenuCategoryDto) {
+	public String createMenuCategoryAccountConfirm(Model model, AdminMenuCategoryDto adminMenuCategoryDto) {
 		log.info("createMenuCategoryAccountConfirm");
 		
 		String nextPage = "/admin/menu/create_menu_account_ok";
 		
 		int result = -1;
 		
-		result = adminMenuService.createMenuCategoryAccountConfirm(franchiseeMenuCategoryDto);
+		result = adminMenuService.createMenuCategoryAccountConfirm(adminMenuCategoryDto);
 		
 		if (result <= 0) {
 			nextPage = "/admin/menu/create_menu_account_ng";

@@ -10,12 +10,12 @@ import com.office.kiosk.franchisee.menu.FranchiseeMenuDto;
 @Mapper
 public interface IAdminMenuDao {
 
-	public List<FranchiseeMenuCategoryDto> selectAllCategory();
+	public List<AdminMenuCategoryDto> selectAllCategory();
 
-	public int insertMenuCategory(FranchiseeMenuCategoryDto franchiseeMenuCategoryDto);
+	public int insertMenuCategory(AdminMenuCategoryDto adminMenuCategoryDto);
 
 	public boolean isMenuCategory(String fcmc_name);
 	
-	public List<FranchiseeMenuDto> selectAllMenus();
+	public List<AdminMenuDto> selectAllMenus();
 	
 }
