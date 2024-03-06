@@ -11,4 +11,6 @@ public interface IAdminSalesDao {
 
 	public List<FranchiseeSalesDto> selectAllSalesInfo();
 
+	public List<FranchiseeSalesDto> selectAllSalesInfoForAjax();
+
 }

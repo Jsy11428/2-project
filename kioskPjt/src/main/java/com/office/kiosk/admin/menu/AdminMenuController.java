@@ -30,18 +30,23 @@ public class AdminMenuController {
 	@Autowired
 	UploadFileService uploadFileService;
 	
+	// 메뉴 등록 화면 페이지네이션
+	
 	@GetMapping("/createMenuForm")
-	public String createMenuForm(Model model, FranchiseeMenuCategoryDto franchiseeMenuCategoryDto) {
+	public String createMenuForm(Model model, AdminMenuCategoryDto adminMenuCategoryDto) {
 		log.info("createMenuForm()");
 		
 		String nextPage = "/admin/menu/create_menu_account_form";
 		
-		model.addAttribute("franchiseeMenuCategoryDto", franchiseeMenuCategoryDto);
+		model.addAttribute("adminMenuCategoryDto", adminMenuCategoryDto);
 		
 		return nextPage;
 		
 	}
 	
+
+	// 메뉴 등록 화면 기존 카테고리들 select창에 불러오기 메서드
+
 	@PostMapping("/createMenuAccountConfirm")
 	public String createMenuAccountConfirm(AdminMenuDto adminMenuDto,
 			@RequestParam("file") MultipartFile file) {
@@ -70,6 +75,7 @@ public class AdminMenuController {
 	}
 	
 	// /admin/menu/getCategory
+
 	
 	@PostMapping("/getCategory")
 	@ResponseBody
@@ -82,16 +88,17 @@ public class AdminMenuController {
 		
 	}
 	
+	// 메뉴 카테고리 등록 확인 컨펌(넥스트페이지 안넘어가게 바뀌어야함)
 	
 	@PostMapping("/createMenuCategoryAccountConfirm")
-	public String createMenuCategoryAccountConfirm(Model model, FranchiseeMenuCategoryDto franchiseeMenuCategoryDto) {
+	public String createMenuCategoryAccountConfirm(Model model, AdminMenuCategoryDto adminMenuCategoryDto) {
 		log.info("createMenuCategoryAccountConfirm");
 		
 		String nextPage = "/admin/menu/create_menu_account_ok";
 		
 		int result = -1;
 		
-		result = adminMenuService.createMenuCategoryAccountConfirm(franchiseeMenuCategoryDto);
+		result = adminMenuService.createMenuCategoryAccountConfirm(adminMenuCategoryDto);
 		
 		if (result <= 0) {
 			nextPage = "/admin/menu/create_menu_account_ng";
@@ -101,6 +108,37 @@ public class AdminMenuController {
 		return nextPage;
 		
 	}
+	
+	// 메뉴리스트 화면 페이지네이션
+	
+	@GetMapping("/menuList")
+	public String menuList() {
+		log.info("menuList()");
+		
+		String nextPage = "/admin/menu/admin_menu_list";
+		
+		return nextPage;
+		
+	}
+	
+	
+	
+	
+	// 메뉴리스트 화면 기존 메뉴 리스트 불러오기 메서드
+	
+	@PostMapping("/getMenus")
+	@ResponseBody
+	public Object getMenus()  {
+		log.info("getMenus()");
+		
+		Map<String, Object> menuDtos = adminMenuService.getMenus();
+				
+		return menuDtos;
+		
+	}
+	
+	
+	
 	
 	
 }
