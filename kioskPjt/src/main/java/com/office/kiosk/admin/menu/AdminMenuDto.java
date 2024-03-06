@@ -14,5 +14,8 @@ public class AdminMenuDto {
 	private int fc_menu_quantity;
 	private String fc_menu_reg_date;
 	private String fc_menu_mod_date;
+
 	
 }
+
+

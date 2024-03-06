@@ -43,25 +43,29 @@ public class AdminMenuController {
 	}
 	
 	@PostMapping("/createMenuAccountConfirm")
-	public String createMenuAccountConfirm(@ModelAttribute FranchiseeMenuDto franchiseeMenuDto, 
-            @RequestParam("fc_menu_img_name") MultipartFile file) {
+	public String createMenuAccountConfirm(AdminMenuDto adminMenuDto,
+			@RequestParam("file") MultipartFile file) {
 		log.info("createMenuAccountConfirm()");
 		
 		String nextPage = "/admin/menu/create_menu_account_ok";
 		
+		log.info(file);
+		
+		
 		String saveFileName = uploadFileService.upload(file);
-		
+			
 		if(saveFileName != null) {
-			franchiseeMenuDto.setFc_menu_img_name(saveFileName);
-			int result = adminMenuService.createMenuAccountConfirm(franchiseeMenuDto);
-			
-			if(result <=0)
-				nextPage = "/admin/menu/create_menu_account_ng";
-			
-		} else {
-			nextPage = "/admin/menu/create_menu_account_ng";
-		}
+			adminMenuDto.setFc_menu_img_name(saveFileName); 
 		
+		int result =
+		adminMenuService.createMenuAccountConfirm(adminMenuDto);
+		 
+		if(result <= 0) nextPage = "/admin/menu/create_menu_account_ng";
+		 
+		} else { nextPage = "/admin/menu/create_menu_account_ng"; 
+		 
+		}
+		 
 		return nextPage;
 	}
 	

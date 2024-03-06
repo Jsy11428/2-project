@@ -21,7 +21,7 @@ function ajax_getCategorie_menu() {
 
          let cateDtos = data.categoryDtos;
          for (let i = 0; i < cateDtos.length; i++) {
-            $('select[name="cate_name"]').append('<option value="' + cateDtos[i].fcmc_no + '">' + cateDtos[i].fcmc_name + '</option>');
+            $('select[name="fcmc_no"]').append('<option value="' + cateDtos[i].fcmc_no + '">' + cateDtos[i].fcmc_name + '</option>');
          }
       },
 

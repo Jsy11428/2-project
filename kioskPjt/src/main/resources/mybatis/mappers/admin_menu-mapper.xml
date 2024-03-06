@@ -24,17 +24,18 @@
 
 </select>
 
-<insert id="insertMenu" parameterType="com.office.kiosk.franchisee.menu.FranchiseeMenuDto"> 
+<insert id="insertMenu" parameterType="com.office.kiosk.admin.menu.AdminMenuDto"> 
 
-	INSERT INT TBL_FC_MENU(FC_MENU_NAME, FCMC_NO, FC_MENU_TEXT, FC_MENU_PRICE, FC_MENU_IMG_NAME, FC_MENU_QUANTITY, FC_MENU_REG_DATE, FC_MENU_MOD_DATE) 
+	INSERT INTO TBL_FC_MENU(FC_MENU_NAME, FCMC_NO, FC_MENU_TEXT, FC_MENU_PRICE, FC_MENU_IMG_NAME, FC_MENU_QUANTITY, FC_MENU_REG_DATE, FC_MENU_MOD_DATE) 
 	
-	VALUES (#{FC_MENU_NAME}, #{FCMC_NO}, NOW(), NOW()); 
+	VALUES (#{fc_menu_name}, #{fcmc_no}, #{fc_menu_text}, #{fc_menu_price}, #{fc_menu_img_name}, #{fc_menu_quantity}, NOW(), NOW());
+	
 
 </insert>
 
 <select id="isMenu" parameterType="String" resultType="boolean"> 
 
-	SELECT COUNT(*) FROM TBL_FC_MENU WHERE FC_MENU_NAME = #{FC_MENU_NAME}; 
+	SELECT COUNT(*) FROM TBL_FC_MENU WHERE FC_MENU_NAME = #{fc_menu_name};
 
 </select>
 

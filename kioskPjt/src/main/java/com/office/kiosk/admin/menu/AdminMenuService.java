@@ -74,8 +74,7 @@ public class AdminMenuService {
 			}
 			
 			return result;
-			
-			
+				
 		} else {
 			
 			return ADMIN_MENU_CATEGORY_ALREADT_EXIST;
@@ -83,18 +82,18 @@ public class AdminMenuService {
 		
 	}
 	
-	public int createMenuAccountConfirm(FranchiseeMenuDto franchiseeMenuDto) {
+	public int createMenuAccountConfirm(AdminMenuDto adminMenuDto) {
 		log.info("createMenuAccountConfirm()");
 		
-		boolean isMenu = iAdminMenuDao.isMenu(franchiseeMenuDto.getFc_menu_name());
+		boolean isMenu = iAdminMenuDao.isMenu(adminMenuDto.getFc_menu_name());
 		
 		if (!isMenu) {
 			
-			int result = iAdminMenuDao.insertMenu(franchiseeMenuDto);		
+			int result = iAdminMenuDao.insertMenu(adminMenuDto);		
 			
 			switch (result) {
 			case  ADMIN_MENU_DATABASE_TROUBLE:
-				log.info("MENU DATABASE COMMUNICATION TROUBLE");
+				log.info("DATABASE COMMUNICATION TROUBLE");
 				
 				break;
 				
@@ -108,18 +107,14 @@ public class AdminMenuService {
 				
 				break;
 				
-			}
+			}	
 			
 			return result;
 			
-			
 		} else {
-			
 			return ADMIN_MENU_ALREADT_EXIST;
 		}
+		
 	}
-
-
-
 	
 }

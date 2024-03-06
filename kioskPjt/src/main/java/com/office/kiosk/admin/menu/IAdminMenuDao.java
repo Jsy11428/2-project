@@ -16,8 +16,7 @@ public interface IAdminMenuDao {
 
 	public boolean isMenuCategory(String fcmc_name);
 	
-	public int insertMenu(FranchiseeMenuDto franchiseeMenuDto);
+	public int insertMenu(AdminMenuDto adminMenuDto);
 	
 	public boolean isMenu(String fc_menu_name);
 }
-
