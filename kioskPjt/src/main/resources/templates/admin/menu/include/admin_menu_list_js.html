@@ -1,0 +1,212 @@
+<!-- 
+<script th:fragment="js" type="text/javascript">
+
+ $(document).ready(function() {
+
+    ajax_getCategorie_menu();
+    ajax_get_all_menus();
+
+});
+
+
+function ajax_getCategorie_menu() {					// 모든 카테고리 가져오기
+	console.log('ajax_getCategorie_menu()');
+	
+	$.ajax({
+		url: '/admin/menu/getCategory',
+		method: 'post',
+		// data: JSON.stringify(msgDto),
+		contentType: 'application/json; charset=utf-8',
+		dataType: 'json',
+		success: function(data) {
+			console.log('ajax success!!');
+
+			let cateDtos = data.categoryDtos;
+			for (let i = 0; i < cateDtos.length; i++) {
+				$('div.menu_category_change_wrap').append('<a href="#none" value="' + cateDtos[i].fcmc_no + '">' + cateDtos[i].fcmc_name + '</a>');
+			}
+		},
+
+		error: function(data) {
+			console.log('ajax error!!');
+
+		}
+	});
+
+}
+
+
+
+function ajax_get_all_menus() {						// 모든 메뉴 가져오기
+	console.log('ajax_get_all_menus()');
+	
+	$.ajax({
+		url: '/admin/menu/getMenus',
+		method: 'post',
+		// data: JSON.stringify(msgDto),
+		contentType: 'application/json; charset=utf-8',
+		dataType: 'json',
+		success: function(data) {
+			console.log('ajax success!!');
+			
+			let appendTag = '';
+			let menusDtos = data.menusDtos;
+			let index = 0; // 아이템의 인덱스를 기억하기 위한 변수
+
+			while (index < menusDtos.length) {
+			    appendTag += '<tr>'; // 새로운 행을 시작합니다.
+
+			    // 각 행에 최대 4개의 셀을 추가합니다.
+			    for (let j = 0; j < 4; j++) {
+			        if (index < menusDtos.length) {
+			            appendTag += '<td>';
+			            appendTag += '<div class="menu_item_wrap">';
+			            appendTag += '<ul>';
+			            appendTag += '<li class="fc_menu_img_name">';
+			            appendTag += '<img src="';
+			            appendTag += menusDtos[index].fc_menu_img_name;
+			            appendTag += '">'
+			            appendTag += '</li>';
+			            appendTag += '<li class="fc_menu_name">';
+			            appendTag += menusDtos[index].fc_menu_name;
+			            appendTag += '</li>';
+			            appendTag += '</ul>';
+			            appendTag += '</div>';
+			            appendTag += '</td>';
+			            index++; // 아이템 인덱스를 증가시킵니다.
+			        } else {
+			            appendTag += '<td></td>'; // 남은 셀을 빈 셀로 채웁니다.
+			        }
+			    }
+
+			    appendTag += '</tr>'; // 행을 마감합니다.
+			}
+
+			$('table[id="admin_menu_list"]').append(appendTag);
+			
+		},
+
+		error: function(data) {
+			console.log('ajax error!!');
+
+		}
+	});
+
+} 
+
+
+
+
+
+</script>
+ -->
+
+
+<script th:fragment="js" type="text/javascript">
+
+
+
+$(document).ready(function() {
+    // 페이지가 로드되면 카테고리와 메뉴들을 가져오는 함수 호출
+    ajax_getCategorie_menu();
+    ajax_get_all_menus();
+
+    // 카테고리 버튼을 클릭하면 해당 카테고리의 메뉴를 출력하는 함수 호출
+    $(document).on('click', '.menu_category_change_wrap a', function(e) {
+        e.preventDefault(); // 기본 이벤트 방지
+        let categoryId = $(this).attr('value'); // 클릭된 카테고리의 아이디 가져오기
+        ajax_get_menus_by_category(categoryId); // 해당 카테고리의 메뉴 출력 함수 호출
+    });
+});
+
+// 모든 카테고리 가져오기
+function ajax_getCategorie_menu() {
+    $.ajax({
+        url: '/admin/menu/getCategory',
+        method: 'post',
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function(data) {
+            let cateDtos = data.categoryDtos;
+            for (let i = 0; i < cateDtos.length; i++) {
+                // 카테고리 버튼 추가
+                $('.menu_category_change_wrap').append('<a href="#" value="' + cateDtos[i].fcmc_no + '">' + cateDtos[i].fcmc_name + '</a>');
+            }
+        },
+        error: function(data) {
+            console.log('ajax error!!');
+        }
+    });
+}
+
+// 모든 메뉴 가져오기
+function ajax_get_all_menus() {
+    $.ajax({
+        url: '/admin/menu/getMenus',
+        method: 'post',
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function(data) {
+            // 메뉴 출력 함수 호출
+            renderMenus(data.menusDtos);
+        },
+        error: function(data) {
+            console.log('ajax error!!');
+        }
+    });
+}
+
+// 카테고리에 따른 메뉴 가져오기
+function ajax_get_menus_by_category(categoryId) {
+    $.ajax({
+        url: '/admin/menu/getMenusByCategory',
+        method: 'post',
+        data: JSON.stringify({ categoryId: categoryId }),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function(data) {
+            // 메뉴 출력 함수 호출
+            renderMenus(data.menusDtos);
+        },
+        error: function(data) {
+            console.log('ajax error!!');
+        }
+    });
+}
+
+// 메뉴 출력 함수
+function renderMenus(menusDtos) {
+    let appendTag = '';
+    let itemsPerRow = 4; // 한 행당 아이템 개수
+    for (let i = 0; i < menusDtos.length; i += itemsPerRow) {
+        appendTag += '<tr>'; // 새로운 행을 시작합니다.
+        // 한 행에 최대 itemsPerRow 개의 아이템을 추가합니다.
+        for (let j = 0; j < itemsPerRow; j++) {
+            let index = i + j; // 현재 아이템 인덱스
+            if (index < menusDtos.length) {
+                appendTag += '<td>';
+                appendTag += '<div class="menu_item_wrap">';
+                appendTag += '<ul>';
+                appendTag += '<li class="fc_menu_img_name">';
+                appendTag += '<img src="http://14.42.124.93:8091/kioskUploadImg/' + menusDtos[index].fc_menu_img_name + '">';
+                appendTag += '</li>';
+                appendTag += '<li class="fc_menu_name">';
+                appendTag += menusDtos[index].fc_menu_name;
+                appendTag += '</li>';
+                appendTag += '</ul>';
+                appendTag += '</div>';
+                appendTag += '</td>';
+            } else {
+                appendTag += '<td></td>'; // 남은 셀을 빈 셀로 채웁니다.
+            }
+        }
+        appendTag += '</tr>'; // 행을 마감합니다.
+    }
+    $('#admin_menu_list').html(appendTag);
+}
+
+
+
+
+
+</script>

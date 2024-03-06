@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.office.kiosk.franchisee.menu.FranchiseeMenuCategoryDto;
+import com.office.kiosk.franchisee.menu.FranchiseeMenuDto;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -31,13 +32,13 @@ public class AdminMenuService {
 	
 	@Autowired
 	IAdminMenuDao iAdminMenuDao;
-
+	
 	public Map<String, Object> getCategory() {
-		log.info("getCategory");
+		log.info("getCategory()");
 		
 		Map<String, Object> cateDtos = new HashMap<>();
 		
-		List<FranchiseeMenuCategoryDto> categoryDtos = (List<FranchiseeMenuCategoryDto>) iAdminMenuDao.selectAllCategory();
+		List<AdminMenuCategoryDto> categoryDtos = (List<AdminMenuCategoryDto>) iAdminMenuDao.selectAllCategory();
 		
 		cateDtos.put("categoryDtos", categoryDtos);
 		
@@ -45,14 +46,16 @@ public class AdminMenuService {
 	}
 
 
-	public int createMenuCategoryAccountConfirm(FranchiseeMenuCategoryDto franchiseeMenuCategoryDto) {
-		log.info("createMenuCategoryAccountConfirm");
+
+	public int createMenuCategoryAccountConfirm(AdminMenuCategoryDto adminMenuCategoryDto) {
+		log.info("createMenuCategoryAccountConfirm()");
+
 		
-		boolean isMenuCategory = iAdminMenuDao.isMenuCategory(franchiseeMenuCategoryDto.getFcmc_name());
+		boolean isMenuCategory = iAdminMenuDao.isMenuCategory(adminMenuCategoryDto.getFcmc_name());
 		
 		if (!isMenuCategory) {
 			
-			int result = iAdminMenuDao.insertMenuCategory(franchiseeMenuCategoryDto);		
+			int result = iAdminMenuDao.insertMenuCategory(adminMenuCategoryDto);		
 			
 			switch (result) {
 			case  ADMIN_MENU_CATEGORY_DATABASE_TROUBLE:
@@ -73,17 +76,60 @@ public class AdminMenuService {
 			}
 			
 			return result;
-			
-			
+				
 		} else {
 			
 			return ADMIN_MENU_CATEGORY_ALREADT_EXIST;
 		}
 		
+	}
+	
+	
+	public Map<String, Object> getMenus() {
+		log.info("getCategory()");
 		
+		Map<String, Object> menuDtos = new HashMap<>();
+		
+		List<AdminMenuDto> menusDtos = (List<AdminMenuDto>) iAdminMenuDao.selectAllMenus();
+		
+		menuDtos.put("menusDtos", menusDtos);
+		
+		return menuDtos;
+	}
+		
+	public int createMenuAccountConfirm(AdminMenuDto adminMenuDto) {
+		log.info("createMenuAccountConfirm()");
+		
+		boolean isMenu = iAdminMenuDao.isMenu(adminMenuDto.getFc_menu_name());
+		
+		if (!isMenu) {
+			
+			int result = iAdminMenuDao.insertMenu(adminMenuDto);		
+			
+			switch (result) {
+			case  ADMIN_MENU_DATABASE_TROUBLE:
+				log.info("DATABASE COMMUNICATION TROUBLE");
+				
+				break;
+				
+			case  ADMIN_MENU_INSERT_FAIL:
+				log.info("INSERT MENU FAIL");
+				
+				break;
+				
+			case  ADMIN_MENU_INSERT_SUCCESS:
+				log.info("INSERT MENU SUCCESS");
+				
+				break;
+				
+			}	
+			
+			return result;
+			
+		} else {
+			return ADMIN_MENU_ALREADT_EXIST;
+		}
 		
 	}
-
-
 	
 }
