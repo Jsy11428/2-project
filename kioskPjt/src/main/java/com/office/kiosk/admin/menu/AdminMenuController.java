@@ -23,6 +23,8 @@ public class AdminMenuController {
 	AdminMenuService adminMenuService;
 	
 	
+	// 메뉴 등록 화면 페이지네이션
+	
 	@GetMapping("/createMenuForm")
 	public String createMenuForm(Model model, FranchiseeMenuCategoryDto franchiseeMenuCategoryDto) {
 		log.info("createMenuForm()");
@@ -35,7 +37,7 @@ public class AdminMenuController {
 		
 	}
 	
-	// /admin/menu/getCategory
+	// 메뉴 등록 화면 기존 카테고리들 select창에 불러오기 메서드
 	
 	@PostMapping("/getCategory")
 	@ResponseBody
@@ -48,6 +50,7 @@ public class AdminMenuController {
 		
 	}
 	
+	// 메뉴 카테고리 등록 확인 컨펌(넥스트페이지 안넘어가게 바뀌어야함)
 	
 	@PostMapping("/createMenuCategoryAccountConfirm")
 	public String createMenuCategoryAccountConfirm(Model model, FranchiseeMenuCategoryDto franchiseeMenuCategoryDto) {
@@ -67,6 +70,37 @@ public class AdminMenuController {
 		return nextPage;
 		
 	}
+	
+	// 메뉴리스트 화면 페이지네이션
+	
+	@GetMapping("/menuList")
+	public String menuList() {
+		log.info("menuList()");
+		
+		String nextPage = "/admin/menu/admin_menu_list";
+		
+		return nextPage;
+		
+	}
+	
+	
+	
+	
+	// 메뉴리스트 화면 기존 메뉴 리스트 불러오기 메서드
+	
+	@PostMapping("/getMenus")
+	@ResponseBody
+	public Object getMenus()  {
+		log.info("getMenus()");
+		
+		Map<String, Object> menuDtos = adminMenuService.getMenus();
+				
+		return menuDtos;
+		
+	}
+	
+	
+	
 	
 	
 }

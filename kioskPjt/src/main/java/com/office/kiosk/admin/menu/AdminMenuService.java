@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.office.kiosk.franchisee.menu.FranchiseeMenuCategoryDto;
+import com.office.kiosk.franchisee.menu.FranchiseeMenuDto;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -33,7 +34,7 @@ public class AdminMenuService {
 	IAdminMenuDao iAdminMenuDao;
 
 	public Map<String, Object> getCategory() {
-		log.info("getCategory");
+		log.info("getCategory()");
 		
 		Map<String, Object> cateDtos = new HashMap<>();
 		
@@ -46,7 +47,7 @@ public class AdminMenuService {
 
 
 	public int createMenuCategoryAccountConfirm(FranchiseeMenuCategoryDto franchiseeMenuCategoryDto) {
-		log.info("createMenuCategoryAccountConfirm");
+		log.info("createMenuCategoryAccountConfirm()");
 		
 		boolean isMenuCategory = iAdminMenuDao.isMenuCategory(franchiseeMenuCategoryDto.getFcmc_name());
 		
@@ -80,9 +81,23 @@ public class AdminMenuService {
 			return ADMIN_MENU_CATEGORY_ALREADT_EXIST;
 		}
 		
-		
-		
 	}
+	
+	
+	public Map<String, Object> getMenus() {
+		log.info("getCategory()");
+		
+		Map<String, Object> menuDtos = new HashMap<>();
+		
+		List<FranchiseeMenuDto> menusDtos = (List<FranchiseeMenuDto>) iAdminMenuDao.selectAllMenus();
+		
+		menuDtos.put("menusDtos", menusDtos);
+		
+		return menuDtos;
+	}
+	
+	
+	
 
 
 	

@@ -24,5 +24,12 @@
 
 </select>
 
+<select id="selectAllMenus" resultType="com.office.kiosk.franchisee.menu.FranchiseeMenuDto">
+
+	SELECT * 
+	FROM TBL_FC_MENU;
+
+</select>
+
 
 </mapper>

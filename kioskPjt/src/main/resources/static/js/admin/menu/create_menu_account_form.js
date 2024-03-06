@@ -21,7 +21,7 @@
     console.log('createMenuAccountForm()');
     
     let form = document.create_menu_account_form;
-    let fm_fcmc_no = form.fcmc_no;
+ /*   let fm_fcmc_no = form.fcmc_no;
     
     
     let isChecked_fcmc_no = false;
@@ -39,7 +39,7 @@
         alert('대분류를 선택해주세요.');
         fm_fcmc_no[0].focus();
         return false;
-    }
+    }*/
     
     // 메뉴 이름 검증
     if (form.fc_menu_name.value === "") {

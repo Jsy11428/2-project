@@ -1,0 +1,66 @@
+
+<script th:fragment="js" type="text/javascript">
+
+$(document).ready(function() {
+
+    ajax_get_all_menus();
+
+});
+
+function ajax_get_all_menus() {
+	console.log('ajax_get_all_menus()');
+	
+	$.ajax({
+		url: '/admin/menu/getMenus',
+		method: 'post',
+		// data: JSON.stringify(msgDto),
+		contentType: 'application/json; charset=utf-8',
+		dataType: 'json',
+		success: function(data) {
+			console.log('ajax success!!');
+			
+			let appendTag = '';
+			let menusDtos = data.menusDtos;
+			let index = 0; // 아이템의 인덱스를 기억하기 위한 변수
+
+			while (index < menusDtos.length) {
+			    appendTag += '<tr>'; // 새로운 행을 시작합니다.
+
+			    // 각 행에 최대 4개의 셀을 추가합니다.
+			    for (let j = 0; j < 4; j++) {
+			        if (index < menusDtos.length) {
+			            appendTag += '<td>';
+			            appendTag += '<div class="menu_item_wrap">';
+			            appendTag += '<ul>';
+			            appendTag += '<li class="fc_menu_img_name">';
+			            appendTag += '<img src="';
+			            appendTag += menusDtos[index].fc_menu_img_name;
+			            appendTag += '">'
+			            appendTag += '</li>';
+			            appendTag += '<li class="fc_menu_name">';
+			            appendTag += menusDtos[index].fc_menu_name;
+			            appendTag += '</li>';
+			            appendTag += '</ul>';
+			            appendTag += '</div>';
+			            appendTag += '</td>';
+			            index++; // 아이템 인덱스를 증가시킵니다.
+			        } else {
+			            appendTag += '<td></td>'; // 남은 셀을 빈 셀로 채웁니다.
+			        }
+			    }
+
+			    appendTag += '</tr>'; // 행을 마감합니다.
+			}
+
+			$('table[id="admin_menu_list"]').append(appendTag);
+			
+		},
+
+		error: function(data) {
+			console.log('ajax error!!');
+
+		}
+	});
+
+}
+</script>

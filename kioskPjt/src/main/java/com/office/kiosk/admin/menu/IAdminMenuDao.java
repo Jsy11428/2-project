@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.office.kiosk.franchisee.menu.FranchiseeMenuCategoryDto;
+import com.office.kiosk.franchisee.menu.FranchiseeMenuDto;
 
 @Mapper
 public interface IAdminMenuDao {
@@ -14,5 +15,7 @@ public interface IAdminMenuDao {
 	public int insertMenuCategory(FranchiseeMenuCategoryDto franchiseeMenuCategoryDto);
 
 	public boolean isMenuCategory(String fcmc_name);
+	
+	public List<FranchiseeMenuDto> selectAllMenus();
 	
 }
