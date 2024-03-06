@@ -46,16 +46,18 @@
 		  				<table>
 							<tr>
 								<td>NO</td>
+								<td>지점명</td>
 								<td>주소</td>
 								<td>연락처</td>
 								<td>가맹회원 이름</td>
 								<td>가맹회원 ID</td>
-								<td>가맹점주 연락처</td>
+								<td>가맹회원 연락처</td>
 								<td>등록일</td>
 								<td>수정일</td>
 							</tr>
 							<tr th:each="f : ${franchiseeSotreDtos}">
 								<td th:text="${f.fcs_no}"></td>
+								<td th:text="${f.fcs_name}"></td>
 								<td th:text="${f.fcs_location}"></td>
 								<td th:text="${f.fcs_phone}"></td>
 								<td th:text="${f.fcm_name}"></td>

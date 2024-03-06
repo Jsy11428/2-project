@@ -162,7 +162,7 @@
 		JOIN 
 			TBL_FC_MEMBER FCM 
 		ON 
-			FCS.FCM_ID = FCM.FCM_ID 
+			FCS.FCM_NO = FCM.FCM_NO 
 	
 	</select>
 
