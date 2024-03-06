@@ -10,7 +10,7 @@
 <link rel="stylesheet" th:href="@{/css/admin/common.css}">
 <link rel="stylesheet" th:href="@{/css/admin/admin_include.css}">
 <link rel="stylesheet" th:href="@{/css/admin/admin_home.css}">
-<link rel="stylesheet" th:href="@{/css/admin/member/franchisee_store_list.css}">
+<link rel="stylesheet" th:href="@{/css/admin/member/admin_sales_list.css}">
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
@@ -34,47 +34,42 @@
 			<div id="section_wrap">
 			
 				<div th:replace="~{admin/include/admin_include.html::admin_section_side_menu}"></div>
-			
-				<div class="admin_section_view_wrap">
 				
+				<div class="admin_section_view_wrap">
+			
 					<div class="word">
-						가맹점 목록
+						매출 목록
 					</div>
 						
-					<div class="franchisee_store_list">
+					<div class="admin_sales_list">
 					
 		  				<table>
 							<tr>
 								<td>NO</td>
+								<td>ORDER NO</td>
 								<td>지점명</td>
-								<td>주소</td>
-								<td>연락처</td>
-								<td>가맹회원 이름</td>
-								<td>가맹회원 ID</td>
-								<td>가맹회원 연락처</td>
+								<td>금액</td>
+								<td>결제수단</td>
 								<td>등록일</td>
 								<td>수정일</td>
 							</tr>
-							<tr th:each="f : ${franchiseeSotreDtos}">
-								<td th:text="${f.fcs_no}"></td>
-								<td th:text="${f.fcs_name}"></td>
-								<td th:text="${f.fcs_location}"></td>
-								<td th:text="${f.fcs_phone}"></td>
-								<td th:text="${f.fcm_name}"></td>
-								<td th:text="${f.fcm_id}"></td>
-								<td th:text="${f.fcm_phone}"></td>
-								<td th:text="${f.fcs_reg_date}"></td>
-								<td th:text="${f.fcs_mod_date}"></td>
+							<tr th:each="fs_dto : ${franchiseeSalesDtos}">
+								<td th:text="${fs_dto.fcsa_no}"></td>
+								<td th:text="${fs_dto.fco_ori_no}"></td>
+								<td th:text="${fs_dto.fcs_name}"></td>
+								<td th:text="${fs_dto.fcsa_price}"></td>
+								<td th:text="${fs_dto.pm_type}"></td>
+								<td th:text="${fs_dto.fcsa_reg_date}"></td>
+								<td th:text="${fs_dto.fcsa_mod_date}"></td>
 							</tr>
 						</table> 
 						
 					</div>
-					
+				
 				</div>
 				
 			</div>
 			
-		
 		</section>
 			
 		

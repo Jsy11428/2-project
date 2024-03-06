@@ -1,5 +1,7 @@
 package com.office.kiosk.franchisee.menu;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data

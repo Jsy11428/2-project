@@ -16,6 +16,12 @@ public interface IAdminMenuDao {
 
 	public boolean isMenuCategory(String fcmc_name);
 	
+
 	public List<AdminMenuDto> selectAllMenus();
 	
+
+	public int insertMenu(AdminMenuDto adminMenuDto);
+	
+	public boolean isMenu(String fc_menu_name);
+
 }

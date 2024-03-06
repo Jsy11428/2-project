@@ -32,7 +32,7 @@ public class AdminMenuService {
 	
 	@Autowired
 	IAdminMenuDao iAdminMenuDao;
-
+	
 	public Map<String, Object> getCategory() {
 		log.info("getCategory()");
 		
@@ -46,8 +46,10 @@ public class AdminMenuService {
 	}
 
 
+
 	public int createMenuCategoryAccountConfirm(AdminMenuCategoryDto adminMenuCategoryDto) {
 		log.info("createMenuCategoryAccountConfirm()");
+
 		
 		boolean isMenuCategory = iAdminMenuDao.isMenuCategory(adminMenuCategoryDto.getFcmc_name());
 		
@@ -74,8 +76,7 @@ public class AdminMenuService {
 			}
 			
 			return result;
-			
-			
+				
 		} else {
 			
 			return ADMIN_MENU_CATEGORY_ALREADT_EXIST;
@@ -95,10 +96,40 @@ public class AdminMenuService {
 		
 		return menuDtos;
 	}
-	
-	
-	
-
-
+		
+	public int createMenuAccountConfirm(AdminMenuDto adminMenuDto) {
+		log.info("createMenuAccountConfirm()");
+		
+		boolean isMenu = iAdminMenuDao.isMenu(adminMenuDto.getFc_menu_name());
+		
+		if (!isMenu) {
+			
+			int result = iAdminMenuDao.insertMenu(adminMenuDto);		
+			
+			switch (result) {
+			case  ADMIN_MENU_DATABASE_TROUBLE:
+				log.info("DATABASE COMMUNICATION TROUBLE");
+				
+				break;
+				
+			case  ADMIN_MENU_INSERT_FAIL:
+				log.info("INSERT MENU FAIL");
+				
+				break;
+				
+			case  ADMIN_MENU_INSERT_SUCCESS:
+				log.info("INSERT MENU SUCCESS");
+				
+				break;
+				
+			}	
+			
+			return result;
+			
+		} else {
+			return ADMIN_MENU_ALREADT_EXIST;
+		}
+		
+	}
 	
 }

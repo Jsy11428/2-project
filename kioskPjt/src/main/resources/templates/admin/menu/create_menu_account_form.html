@@ -5,9 +5,13 @@
 
 <title th:replace="~{include/include_title.html::title}"></title>
 
+<<<<<<< HEAD
 <script type="text/javascript"
    th:src="@{/js/admin/member/admin_member.js}"></script>
 
+=======
+<script type="text/javascript" th:src="@{/js/admin/member/admin_member.js}"></script>
+>>>>>>> 6b5729418fad31567ae156035ba2cdd82a75d081
 
 <link rel="stylesheet" th:href="@{/css/admin/common.css}">
 <link rel="stylesheet" th:href="@{/css/admin/admin_include.css}">
@@ -55,13 +59,13 @@
 					
 						<h3>신규 메뉴 등록</h3>
 
-						<form th:action="@{/admin/menu/createMenuAccountConfirm}" name="create_menu_account_form" method="post">
+						<form th:action="@{/admin/menu/createMenuAccountConfirm}" name="create_menu_account_form" method="post" enctype="multipart/form-data">
 
 							<div class="input_create_menu_wrap">
 								<table>
 									<tr>
 										<td><span>카테고리 선택</span></td>
-										<td><select name="cate_name"></select></td>
+										<td><select name="fcmc_no"></select></td>
 									</tr>
 									<tr>
 										<td><span>메 뉴 명</span></td>
@@ -79,7 +83,7 @@
 									</tr>									
 									<tr>
 										<td><span>메뉴 이미지 첨부</span></td>
-										<td><input type="file" name="fc_menu_img_name"></td>
+										<td><input type="file" name="file"></td>
 									</tr>
 									<tr>
 										<td colspan="2">
@@ -102,6 +106,5 @@
 		</footer>
 
 	</div>
-
 </body>
 </html>
