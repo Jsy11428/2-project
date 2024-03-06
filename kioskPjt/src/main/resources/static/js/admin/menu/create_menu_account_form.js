@@ -28,9 +28,16 @@
         return false;
     }
     // 메뉴 이름 검증
-    else if (form.fc_menu_name.value === "") {
+    else if (form.fc_menu_name.value === "") {	
         alert('메뉴의 이름을 입력해주세요.');
         form.fc_menu_name.focus();
+        return false;
+    }
+    
+    // 메뉴 가격 검증
+    else if (form.fc_menu_price.value === "") {
+        alert('메뉴의 가격을 입력해주세요.');
+        form.fc_menu_price.focus();
         return false;
     }
     
@@ -42,20 +49,13 @@
 		
 	}
     
-    // 메뉴 가격 검증
-    else if (form.fc_menu_price.value === "") {
-        alert('메뉴의 가격을 입력해주세요.');
-        form.fc_menu_price.focus();
-        return false;
-    }
-    
     // 메뉴 이미지 검증
-	else if (form.fc_menu_img_name.value === "") {
+	else if (form.file.value === "") {
         alert('메뉴의 사진을 선택해주세요.');
-        form.fc_menu_img_name.focus();
+        form.file.focus();
         return false;
     } else {
-		console.log("dssdfdsf");
+		
     	form.submit();
 	}
      

@@ -44,8 +44,8 @@ public class AdminMenuService {
 		
 		return cateDtos;
 	}
-
-
+	
+	
 	public int createMenuCategoryAccountConfirm(FranchiseeMenuCategoryDto franchiseeMenuCategoryDto) {
 		log.info("createMenuCategoryAccountConfirm");
 		
