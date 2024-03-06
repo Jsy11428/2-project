@@ -27,6 +27,7 @@
         form.fcmc_no.focus();
 
     }
+    
     // 메뉴 이름 검증
     else if (form.fc_menu_name.value === "") {	
         alert('메뉴의 이름을 입력해주세요.');

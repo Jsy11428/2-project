@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import com.office.kiosk.admin.menu.util.UploadFileService;
 
 import lombok.extern.log4j.Log4j2;
@@ -47,7 +48,7 @@ public class AdminMenuController {
 			@RequestParam("file") MultipartFile file) {
 		log.info("createMenuAccountConfirm()");
 		
-		String nextPage = "/admin/menu/create_menu_account_ok";
+		String nextPage = "redirect:/admin/menu/menuList";
 		
 		log.info(file);
 		
