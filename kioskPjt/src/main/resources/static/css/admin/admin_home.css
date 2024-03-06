@@ -1,0 +1,17 @@
+#admin_wrap {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+#section_wrap {
+    width: 100%;
+    height: 770px;
+    background-color: #c8c8c8;
+    overflow: hidden;
+}
+
+#section_wrap .admin_section_view {
+    width: 800px;
+    height: 100%;
+    float: left;
+}

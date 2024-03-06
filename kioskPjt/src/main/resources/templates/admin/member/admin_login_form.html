@@ -7,51 +7,68 @@
 
 <script type="text/javascript" th:src="@{/js/admin/member/admin_member.js}"></script>
 
+<link rel="stylesheet" th:href="@{/css/admin/common.css}">
+<link rel="stylesheet" th:href="@{/css/admin/admin_include.css}">
+<link rel="stylesheet" th:href="@{/css/admin/admin_home.css}">
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+<script type="text/javascript" th:replace="~{admin/include/section_side_menu_js.html::jquery_js}"></script>
+
 </head>
 <body>
 
-	<header th:replace="~{admin/include/admin_include.html::admin_header}">
-	</header>
+	<div id="admin_wrap">
 
-
-	<nav th:replace="~{admin/include/admin_include.html::admin_nav}">
-	</nav>
+		<header th:replace="~{admin/include/admin_include.html::admin_header}">
+		</header>
 	
 	
-	<section>
-	
-		<div class="section_wrap">
+		<nav th:replace="~{admin/include/admin_include.html::admin_nav}">
+		</nav>
 		
-			<div class="word">
-				admin_login_form
-			</div>
+		
+		<section>
+		
+			<div id="section_wrap">
 				
-			<div class="login_form">
-			
-				<form 	th:action="@{/admin/member/adminLoginConfirm}" 
-						name="admin_login_form"
-						method="post">
-					
-					<input type="text" name="am_id" placeholder="INPUT ADMIN ID">
-					<br>
-					<input type="password" name="am_pw" placeholder="INPUT ADMIN PW">
-					<br>
-					
-					<input class="login_form_btn" type="button" value="login" onclick="AdminLoginForm()">
-					<input class="login_form_btn" type="reset" value="reset">
+				<div th:replace="~{admin/include/admin_include.html::admin_section_side_menu}"></div>
 				
-				</form>
+				<div class="admin_section_view_wrap">
 			
+					<div class="word">
+						admin_login_form
+					</div>
+						
+					<div class="login_form">
+					
+						<form 	th:action="@{/admin/member/adminLoginConfirm}" 
+								name="admin_login_form"
+								method="post">
+							
+							<input type="text" name="am_id" placeholder="INPUT ADMIN ID">
+							<br>
+							<input type="password" name="am_pw" placeholder="INPUT ADMIN PW">
+							<br>
+							
+							<input class="login_form_btn" type="button" value="login" onclick="AdminLoginForm()">
+							<input class="login_form_btn" type="reset" value="reset">
+						
+						</form>
+					
+					</div>
+				
+				</div>
+	
 			</div>
-
-		</div>
 		
-	
-	</section>
+		</section>
+			
 		
-	
-	<footer th:replace="~{admin/include/admin_include.html::admin_footer}">
-	</footer>
+		<footer th:replace="~{admin/include/admin_include.html::admin_footer}">
+		</footer>
+		
+	</div>
 
 </body>
 </html>

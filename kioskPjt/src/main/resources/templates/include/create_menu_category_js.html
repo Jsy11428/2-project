@@ -1,34 +1,35 @@
+
 <script th:fragment="js" type="text/javascript">
 
 $(document).ready(function() {
 
-    ajax_getKategorie_menu();
+    ajax_getCategorie_menu();
 
 });
 
 function ajax_getCategorie_menu() {
-	console.log('ajax_getCategorie_menu()');
+   console.log('ajax_getCategorie_menu()');
+   
+   $.ajax({
+      url: '/admin/menu/getCategory',
+      method: 'post',
+      // data: JSON.stringify(msgDto),
+      contentType: 'application/json; charset=utf-8',
+      dataType: 'json',
+      success: function(data) {
+         console.log('ajax success!!');
 
-	$.ajax({
-		url: '/categori/getMenu',
-		method: 'post',
-		// data: JSON.stringify(msgDto),
-		contentType: 'application/json; charset=utf-8',
-		dataType: 'json',
-		success: function(data) {
-			console.log('ajax success!!');
+         let cateDtos = data.categoryDtos;
+         for (let i = 0; i < cateDtos.length; i++) {
+            $('select[name="cate_name"]').append('<option value="' + cateDtos[i].fcmc_no + '">' + cateDtos[i].fcmc_name + '</option>');
+         }
+      },
 
-			let cateDtos = data.cateDtos;
-			for (let i = 0; i < cateDtos.length; i++) {
-				$('select[name="cate_name"]').append('<option value="' + cate_Dtos[i].fcmc_no + '">' + cate_Dtos[i].fcmc_name + '</option>');
-			}
-		},
+      error: function(data) {
+         console.log('ajax error!!');
 
-		error: function(data) {
-			console.log('ajax error!!');
-
-		}
-	});
+      }
+   });
 
 }
 </script>

@@ -12,7 +12,7 @@ public class FranchiseeMemberDto {
 	private String fcm_phone;
 	private String fcm_mail;
 	private int fcm_approval;
-	private String fcm_reg__date;
+	private String fcm_reg_date;
 	private String fcm_mod_date;
 
 }

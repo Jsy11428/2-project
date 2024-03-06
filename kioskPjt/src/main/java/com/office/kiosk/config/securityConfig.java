@@ -40,23 +40,10 @@ public class securityConfig {
 		.csrf((csrf) -> csrf.disable())
 				.authorizeHttpRequests((request) -> request
 						.requestMatchers("/franchisee/member/franchiseeModifyForm", 
-										"/franchisee/member/franchiseeModifyConfirm" 
-										).authenticated()
-//						.requestMatchers("/", 
-//										"/css/**", 
-//										"/js/**", 
-//										"/img/**", 
-//										"/franchisee",
-//										"/franchisee/",
-//										"/franchisee/home",
-//										"/franchisee/member/createFranchiseeAccountForm", 
-//										"/franchisee/member/createFranchiseeAccountConfirm", 
-//										"/franchisee/member/franchiseeLoginForm", 
-//										"/franchisee/member/franchiseeLoginSuccess", 
-//										"/franchisee/member/franchiseeLoginFail" 
-//										).permitAll());
+										"/franchisee/member/franchiseeModifyConfirm")
+							.authenticated()
 						.requestMatchers("/**")
-								.permitAll());
+							.permitAll());
 
 		http.formLogin(login -> login
 				.loginPage("/franchisee/member/franchiseeLoginForm")

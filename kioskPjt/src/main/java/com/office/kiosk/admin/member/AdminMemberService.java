@@ -1,9 +1,12 @@
 package com.office.kiosk.admin.member;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.office.kiosk.franchisee.FranchiseeStoreDto;
 import com.office.kiosk.franchisee.member.FranchiseeMemberDto;
 
 import lombok.extern.log4j.Log4j2;
@@ -19,6 +22,9 @@ public class AdminMemberService {
 	
 	@Autowired
 	IAdminMemberDao iAdminMemberDao;
+	
+	@Autowired
+	AdminMemberDao adminMemberDao;
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -91,5 +97,51 @@ public class AdminMemberService {
 		
 		return null;
 	}
+
+
+	public List<FranchiseeMemberDto> franchiseeList() {
+		log.info("franchiseeList()");
+		
+		List<FranchiseeMemberDto> franchiseeMemberDtos = iAdminMemberDao.selectAllFranchiseeInfo();
+		
+		return franchiseeMemberDtos;
+		
+//		return adminMemberDao.selectAllFranchiseeInfo();
+		
+	}
+
+
+	public void franchiseeApprove(int fcm_no) {
+		log.info("franchiseeList()");
+		
+		iAdminMemberDao.updateFranchiseeApproval(fcm_no);
+		
+	}
+
+
+	public List<AdminMemberDto> adminList() {
+		log.info("adminList()");
+		
+		List<AdminMemberDto> adminMemberDtos = iAdminMemberDao.selectAllAdminInfo();
+		
+		return adminMemberDtos;
+	}
+
+
+	public void adminApprove(int am_no) {
+		log.info("franchiseeList()");
+		
+		iAdminMemberDao.updateAdminApproval(am_no);
+		
+	}
+
+
+	public List<FranchiseeStoreDto> storeList() {
+		log.info("storeList()");
+		
+		return iAdminMemberDao.selectAllFranchiseeStoreInfo();
+	}
+
+
 
 }

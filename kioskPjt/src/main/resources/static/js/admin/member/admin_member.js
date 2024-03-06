@@ -96,3 +96,30 @@ function AdminModifyForm() {
 	}
 	
 }
+
+
+function franchiseeApproveBtn(fcm_no) {
+	console.log("franchiseeApproveBtn()");
+	
+	let result = confirm("승인하시겠습니까?");
+	
+	if (result) {
+		
+		location.href = "/admin/member/franchiseeApprove?fcm_no=" + fcm_no;
+		
+	}
+	
+}
+
+function adminApproveBtn(am_no) {
+	console.log("adminApproveBtn()");
+	
+	let result = confirm("승인하시겠습니까?");
+	
+	if (result) {
+		
+		location.href = "/admin/member/adminApprove?am_no=" + am_no;
+		
+	}
+	
+}

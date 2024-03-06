@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+
+<title th:replace="~{include/include_title.html::title}"></title>
+
+<script type="text/javascript" th:src="@{/js/admin/member/admin_member.js}"></script>
+
+<link rel="stylesheet" th:href="@{/css/admin/common.css}">
+<link rel="stylesheet" th:href="@{/css/admin/admin_include.css}">
+<link rel="stylesheet" th:href="@{/css/admin/admin_home.css}">
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+<script type="text/javascript" th:replace="~{admin/include/section_side_menu_js.html::jquery_js}"></script>
+
+</head>
+<body>
+
+	<div id="admin_wrap">
+
+		<header th:replace="~{admin/include/admin_include.html::admin_header}">
+		</header>
+	
+	
+		<nav th:replace="~{admin/include/admin_include.html::admin_nav}">
+		</nav>
+		
+		
+		<section>
+		
+			<div id="section_wrap">
+			
+				<div th:replace="~{admin/include/admin_include.html::admin_section_side_menu}"></div>
+			
+				<div class="admin_section_view_wrap">
+				
+					<div class="word">
+						franchisee store list
+					</div>
+						
+					<div class="franchisee_store_list">
+					
+		  				<table>
+							<tr>
+								<td>가맹점 no</td>
+								<td>가맹점 위치</td>
+								<td>가맹점 연락처</td>
+								<td>가맹점주 이름</td>
+								<td>가맹점주 id</td>
+								<td>가맹점주 연락처</td>
+								<td>가맹점 등록일</td>
+								<td>가맹점 수정일</td>
+							</tr>
+							<tr th:each="f : ${franchiseeSotreDtos}">
+								<td th:text="${f.fcs_no}"></td>
+								<td th:text="${f.fcs_location}"></td>
+								<td th:text="${f.fcs_phone}"></td>
+								<td th:text="${f.fcm_name}"></td>
+								<td th:text="${f.fcm_id}"></td>
+								<td th:text="${f.fcm_phone}"></td>
+								<td th:text="${f.fcs_reg_date}"></td>
+								<td th:text="${f.fcs_mod_date}"></td>
+							</tr>
+						</table> 
+						
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		
+		</section>
+			
+		
+		<footer th:replace="~{admin/include/admin_include.html::admin_footer}">
+		</footer>
+		
+	</div>
+
+</body>
+</html>

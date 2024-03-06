@@ -7,36 +7,52 @@
 
 <script type="text/javascript" th:src="@{/js/admin/member/admin_member.js}"></script>
 
+<link rel="stylesheet" th:href="@{/css/admin/common.css}">
+<link rel="stylesheet" th:href="@{/css/admin/admin_include.css}">
+<link rel="stylesheet" th:href="@{/css/admin/admin_home.css}">
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+<script type="text/javascript" th:replace="~{admin/include/section_side_menu_js.html::jquery_js}"></script>
+
 </head>
 <body>
 
-	<header th:replace="~{admin/include/admin_include.html::admin_header}">
-	</header>
+	<div id="admin_wrap">
 
-
-	<nav th:replace="~{admin/include/admin_include.html::admin_nav}">
-	</nav>
+		<header th:replace="~{admin/include/admin_include.html::admin_header}">
+		</header>
 	
 	
-	<section>
-	
-		<div class="section_wrap">
+		<nav th:replace="~{admin/include/admin_include.html::admin_nav}">
+		</nav>
 		
-			<div class="word">
-				create_admin_account_ng
+		
+		<section>
+		
+			<div id="section_wrap">
+				
+				<div th:replace="~{admin/include/admin_include.html::admin_section_side_menu}"></div>
+				
+				<div class="admin_section_view_wrap">
+					<div class="word">
+						create_admin_account_ng
+					</div>
+					
+					<div class="others">
+						<a th:href="@{/admin/member/adminMemberAccountForm}">Create Admin Account Form</a>
+					</div>
+				</div>
+				
 			</div>
 			
-			<div class="others">
-				<a th:href="@{/admin/member/adminMemberAccountForm}">Create Admin Account Form</a>
-			</div>
+		</section>
 			
-		</div>
 		
-	</section>
+		<footer th:replace="~{admin/include/admin_include.html::admin_footer}">
+		</footer>
 		
-	
-	<footer th:replace="~{admin/include/admin_include.html::admin_footer}">
-	</footer>
+	</div>
 
 </body>
 </html>

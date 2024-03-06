@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+
+</head>
+<body>
+
+
+	<nav
+		th:replace="~{/franchisee/include/franchisee_include.html::franchisee_nav}">
+	</nav>
+
+	<section>
+
+		<div id="section_wrap">
+			<div class="pos_section_side_menu_wrap">
+				<ul>
+					<li><a th:href="@{/franchisee/sales/getSalesInfo}">SALES</a></li>
+					<li><a th:href="@{/franchisee/menu/franchiseeMenuHome}">MENU</a></li>
+					<li><a th:href="@{/franchisee/order/getTableOrderList}">ORDER</a></li>
+					<li><a href="#none">MAGAGEMENT</a></li>
+				</ul>
+			</div>
+
+			<div class="pos_section_info_wrap">
+
+				<div id="word">메뉴 리스트</div>
+			 	
+
+			</div>
+
+			<div class="pos_section_detail_view_wrap"></div>
+			</div>
+
+	</section>
+
+	<footer
+		th:replace="~{/franchisee/include/franchisee_include.html::franchisee_footer}">
+
+	</footer>
+
+</body>
+</html>
