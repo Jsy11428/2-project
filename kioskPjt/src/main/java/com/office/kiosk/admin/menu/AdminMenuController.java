@@ -3,6 +3,7 @@ package com.office.kiosk.admin.menu;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,10 +27,7 @@ public class AdminMenuController {
 
 	@Autowired
 	AdminMenuService adminMenuService;
-	
-	@Autowired
-	UploadFileService uploadFileService;
-	
+		
 	// 메뉴 등록 화면 페이지네이션
 	
 	@GetMapping("/createMenuForm")
@@ -54,13 +52,13 @@ public class AdminMenuController {
 		
 		String nextPage = "/admin/menu/create_menu_account_ok";
 		
-		log.info(file);
+		log.info(file);		
 		
+		ResponseEntity<String> saveFileName = adminMenuService.uploadFile(file);
 		
-		String saveFileName = uploadFileService.upload(file);
 			
 		if(saveFileName != null) {
-			adminMenuDto.setFc_menu_img_name(saveFileName); 
+			adminMenuDto.setFc_menu_img_name(saveFileName.getBody()); 
 		
 		int result =
 		adminMenuService.createMenuAccountConfirm(adminMenuDto);
