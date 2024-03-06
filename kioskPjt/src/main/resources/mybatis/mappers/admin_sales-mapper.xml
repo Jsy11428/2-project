@@ -19,5 +19,25 @@
 			FCSA_NO DESC 
 	
 	</select>
+	
+	<select id="selectAllSalesInfoForAjax" 
+			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto" >
+	
+		SELECT 
+			* 
+		FROM 
+			TBL_FC_SALES FCSA 
+		JOIN 
+			TBL_FC_STORE FCS 
+		ON 
+			FCSA.FCS_NO = FCS.FCS_NO
+		JOIN 
+			TBL_FC_MEMBER FCM 
+		ON 
+			FCM.FCM_NO = FCS.FCM_NO 
+		ORDER BY 
+			FCSA_NO DESC 
+	
+	</select>
 
 </mapper>

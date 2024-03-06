@@ -1,0 +1,147 @@
+<script type="text/javascript" th:fragment="admin_sales_list_js">
+
+
+$(document).ready(function(){
+    console.log('DOCUMENT READY!!')
+
+    addSalesListTable()
+
+})
+
+function addSalesListTable() {
+    console.log('addSalesListTable()');
+
+    ajax_getAllSalesInfo()
+
+    initEvents()
+
+}
+
+
+function initEvents() {
+    console.log('initEvents()');
+
+    $(document).on('click', '#section_wrap .list_search input[value="search"]', function (e){
+        console.log('검색 버튼 클릭!');
+
+        let search_term = $('#section_wrap .list_search select[name="search_term"]').val();
+        let search_value = $('#section_wrap .list_search select[name="search_value"]').val();
+        let search_word = $('#section_wrap .list_search input[name="search_word"]').val();
+
+        if (search_word === '') {
+            alert('검색어를 입력해주세요.')
+
+            $('#section_wrap .list_search input[name="search_word"]').focus();
+        } else {
+
+            ajax_searchSalesList(search_term, search_value, search_word);
+        }
+
+    })
+
+}
+
+function removeSalesList() {
+    console('removeSalesList()');
+
+    $('#section_wrap table tbody tr').remove();
+}
+
+// ajax - 모든 매출 목록 불러오기 
+function ajax_getAllSalesInfo() {
+    console.log('ajax_getAllSalesInfo');
+
+    $.ajax({
+        url: '/admin/sales/getAllSalesInfo', 
+        method: 'post', 
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function(data) {
+            console.log('ajax success!!');
+
+            let salesDtos = data.franchiseeSalesDtos;
+            let appendTag = '';
+			
+            for (let i = 0; i < salesDtos.length; i++) {
+                
+                appendTag = '<tr>';
+                    
+                    appendTag += '<td>' + salesDtos[i].fcsa_no + '</td>';
+                    appendTag += '<td>' + salesDtos[i].fco_ori_no + '</td>';
+                    appendTag += '<td>' + salesDtos[i].fcs_name + '</td>';
+                    appendTag += '<td>' + salesDtos[i].fcm_name + '</td>';
+                    appendTag += '<td>' + salesDtos[i].fcsa_price + '</td>';
+                    appendTag += '<td>' + salesDtos[i].pm_type + '</td>';
+                    appendTag += '<td>' + salesDtos[i].fcsa_reg_date + '</td>';
+                    appendTag += '<td>' + salesDtos[i].fcsa_mod_date + '</td>';
+
+                appendTag += '</tr>';
+
+                $('#section_wrap table tbody').append(appendTag);
+
+            }
+
+        },
+        error: function(data) {
+            console.log('ajax error!!')
+
+        }
+
+    })
+
+}
+
+// ajax sales list 검색
+function ajax_searchSalesList(search_term, search_value, search_word) {
+    console.log('ajax_searchSalesList()')
+
+    let formData = new FormData();
+    formData.append('search_term', search_term);
+    formData.append('search_value', search_value);
+    formData.append('search_word', search_word);
+
+    $.ajax({
+        url: '/admin/sales/getSearchSales',
+        method: 'post', 
+        processData: false,
+        contentType: false,
+        data: formData,
+        success: function (data) {
+            console.log('ajax success!!');
+
+            removeSalesList();
+
+            let searchDtos = data.franchiseeSalesDtos;
+            let appendTag = '';
+			
+            for (let i = 0; i < searchDtos.length; i++) {
+                
+                appendTag = '<tr>';
+                    
+                    appendTag += '<td>' + searchDtos[i].fcsa_no + '</td>';
+                    appendTag += '<td>' + searchDtos[i].fco_ori_no + '</td>';
+                    appendTag += '<td>' + searchDtos[i].fcs_name + '</td>';
+                    appendTag += '<td>' + searchDtos[i].fcm_name + '</td>';
+                    appendTag += '<td>' + searchDtos[i].fcsa_price + '</td>';
+                    appendTag += '<td>' + searchDtos[i].pm_type + '</td>';
+                    appendTag += '<td>' + searchDtos[i].fcsa_reg_date + '</td>';
+                    appendTag += '<td>' + searchDtos[i].fcsa_mod_date + '</td>';
+
+                appendTag += '</tr>';
+
+                $('#section_wrap table tbody').append(appendTag);
+
+            }
+
+        },
+        error: function(data) {
+            console.log('ajax error!!')
+
+        }
+
+    })
+    
+
+}
+
+</script>
