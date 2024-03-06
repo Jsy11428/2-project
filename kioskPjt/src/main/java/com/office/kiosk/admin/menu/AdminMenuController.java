@@ -52,8 +52,7 @@ public class AdminMenuController {
 		
 		String nextPage = "/admin/menu/create_menu_account_ok";
 		
-		log.info(file);
-		
+		log.info(file);		
 		
 		ResponseEntity<String> saveFileName = adminMenuService.uploadFile(file);
 		
