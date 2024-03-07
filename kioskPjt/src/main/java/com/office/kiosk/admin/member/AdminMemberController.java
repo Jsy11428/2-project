@@ -1,6 +1,7 @@
 package com.office.kiosk.admin.member;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import com.office.kiosk.franchisee.member.FranchiseeMemberDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Log4j2
@@ -24,7 +26,7 @@ public class AdminMemberController {
 
 	@Autowired
 	AdminMemberService adminMemberService;
-	
+		
 	/*
 	 * 	admin 회원가입
 	 */
@@ -180,6 +182,28 @@ public class AdminMemberController {
 	/*
 	 *  admin list 불러오기
 	 */
+//	@GetMapping("/adminList")
+//	public String adminList(Model model, HttpSession session) {
+//		log.info("adminList()");
+//		
+//		String nextPage = "/admin/member/admin_list";
+//		
+//		AdminMemberDto loginedAdminMemberDto = 
+//				(AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
+//		
+//		if (loginedAdminMemberDto.getAm_id().equals("super admin")) {
+//			
+//			List<AdminMemberDto> adminMemberDtos = adminMemberService.adminList();
+//			
+//			model.addAttribute("adminMemberDtos", adminMemberDtos);
+//		} else {
+//			nextPage = "/admin/member/admin_list_fail";
+//			
+//		}
+//		
+//		return nextPage;
+//		
+//	}
 	@GetMapping("/adminList")
 	public String adminList(Model model, HttpSession session) {
 		log.info("adminList()");
@@ -189,19 +213,74 @@ public class AdminMemberController {
 		AdminMemberDto loginedAdminMemberDto = 
 				(AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
 		
-		if (loginedAdminMemberDto.getAm_id().equals("super admin")) {
+		if (!loginedAdminMemberDto.getAm_id().equals("super admin")) {
 			
-			List<AdminMemberDto> adminMemberDtos = adminMemberService.adminList();
-			
-			model.addAttribute("adminMemberDtos", adminMemberDtos);
-		} else {
 			nextPage = "/admin/member/admin_list_fail";
-			
-		}
+						
+		} 
 		
 		return nextPage;
 		
 	}
+	
+//	@GetMapping("/getAdminList")
+//	@ResponseBody
+//	public Object adminList( HttpSession session) {
+//		log.info("adminList()");
+//				
+//		AdminMemberDto loginedAdminMemberDto = 
+//				(AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
+//		
+//		if (loginedAdminMemberDto.getAm_id().equals("super admin")) {
+//			
+//			Map<String, Object> adminMemberDtos = adminMemberService.adminList();
+//			
+//			return adminMemberDtos;
+//		} else {
+//			
+//			return null;
+//			
+//		}
+//				
+//	}
+	@GetMapping("/getAdminList")
+	@ResponseBody
+	public Object adminList(@RequestParam(value = "page", required = false, defaultValue = "1") int page, HttpSession session) {
+		log.info("adminList()");
+		log.info("page: "+page);
+		
+		AdminMemberDto loginedAdminMemberDto = 
+				(AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
+		
+		if (loginedAdminMemberDto.getAm_id().equals("super admin")) {
+			
+			Map<String, Object> pagingAdminMemberDtos = adminMemberService.pagingAdminList(page);
+			
+			AdminMemberListPageDto adminMemberListPageDto = adminMemberService.getAllAdminListPageNum(page);
+			
+			pagingAdminMemberDtos.put("adminMemberListPageDto", adminMemberListPageDto);
+			
+			return pagingAdminMemberDtos;
+		} else {
+			
+			return null;
+			
+		}
+				
+	}
+	
+	/*
+	 * admin_list paging
+	 */
+//	@GetMapping("/adminList/paging")
+//	@ResponseBody
+//	public Object adminListPageing (@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+//		log.info("adminListPageing()");
+//				
+//		Map<String, Object> pagingAdminMemberDtos = adminMemberService.pagingAdminList(page);
+//				
+//		return pagingAdminMemberDtos;
+//	}
 	
 	/*
 	 * 	admin 승인하기
