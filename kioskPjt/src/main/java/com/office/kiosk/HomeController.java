@@ -29,15 +29,7 @@ public class HomeController {
 		
 	}
 	
-	@GetMapping({"/admin/home", "/admin/", "/admin"})
-	public String adminHome() {
-		log.info("adminHome()");
-	
-		String nextPage = "/admin/admin_home";
-		
-		return nextPage;
-		
-	}
+
 	
 	
 }

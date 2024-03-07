@@ -32,6 +32,12 @@
 
 </select>
 
+<select id="selectMenusByCategory" parameterType="String" resultType="com.office.kiosk.admin.menu.AdminMenuDto">
+    
+    SELECT * FROM TBL_FC_MENU WHERE FCMC_NO = #{FCMC_NO}
+
+</select>
+
 
 <insert id="insertMenu" parameterType="com.office.kiosk.admin.menu.AdminMenuDto"> 
 

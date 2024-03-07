@@ -24,4 +24,6 @@ public interface IAdminMenuDao {
 	
 	public boolean isMenu(String fc_menu_name);
 
+	public List<AdminMenuDto> selectMenusByCategory(String fcmc_no);
+
 }
