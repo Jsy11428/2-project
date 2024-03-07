@@ -1,6 +1,8 @@
 package com.office.kiosk.admin.member;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +21,9 @@ public class AdminMemberService {
 	final static public int ADMIN_DATABASE_TRUBLE			= -1;
 	final static public int ADMIN_INSERT_FAIL				= 0;
 	final static public int ADMIN_INSERT_SUCCESS			= 1;
+	
+	private int pageLimit = 5; // 한 페이지당 보여줄 admin정보 갯수
+	private int blockLimit = 3; // 하단에 보여줄 페이지 번호 갯수
 	
 	@Autowired
 	IAdminMemberDao iAdminMemberDao;
@@ -123,12 +128,24 @@ public class AdminMemberService {
 	}
 
 
-	public List<AdminMemberDto> adminList() {
+//	public List<AdminMemberDto> adminList() {
+//		log.info("adminList()");
+//		
+//		List<AdminMemberDto> adminMemberDtos = iAdminMemberDao.selectAllAdminInfo();
+//		
+//		return adminMemberDtos;
+//	}
+	
+	public Map<String, Object> adminList() {
 		log.info("adminList()");
+		
+		Map<String, Object> map = new HashMap<>();
 		
 		List<AdminMemberDto> adminMemberDtos = iAdminMemberDao.selectAllAdminInfo();
 		
-		return adminMemberDtos;
+		map.put("adminMemberDtos",adminMemberDtos);
+		
+		return map;
 	}
 
 
@@ -144,6 +161,71 @@ public class AdminMemberService {
 		log.info("storeList()");
 		
 		return iAdminMemberDao.selectAllFranchiseeStoreInfo();
+	}
+
+	
+	/*
+	 * admin list paging 처리
+	 */
+	public Map<String, Object> pagingAdminList(int page) {
+		log.info("pagingAdminList()");		
+		
+		
+		/*		 
+		 1페이지에 보여지는 리스트 갯수 5개
+		 1page => 0 (시작 인덱스)
+		 2page => 5 (시작 인덱스)
+		 3page => 10 (시작 인덱스)		 
+		 */
+		int pageingStart = (page - 1) * pageLimit;
+		
+		Map<String, Object> pagingList = new HashMap<>();
+		
+		Map<String, Integer> pagingParams = new HashMap<>();
+		pagingParams.put("start", pageingStart);
+		pagingParams.put("limit", pageLimit);		
+		
+		List<AdminMemberDto> adminMemberDtos = iAdminMemberDao.selectPagingList(pagingParams);
+		
+		log.info("adminMemberDtos>>>>>>>>>"+adminMemberDtos);
+		
+		pagingList.put("adminMemberDtos", adminMemberDtos);
+		
+		return pagingList;
+	}
+
+	/*
+	 * get all admin member list page number
+	 */
+	public AdminMemberListPageDto getAllAdminListPageNum(int page) {
+		log.info("getAllAdminListPageNum()");	
+		
+		//전체 admin 갯수 조회
+		int adminListCnt = iAdminMemberDao.selcetAllAdminListCnt();
+		
+		//전체 페이지 갯수 계산
+		int maxPage = (int) (Math.ceil((double) adminListCnt / pageLimit));
+		
+		//시작 페이지 값 계산 (페이지 번호를 3개씩 보여줄 경우 = (1,4,7,10,~~~~))
+		int startPage = (((int)(Math.ceil((double) page / blockLimit))) - 1 ) * blockLimit + 1;
+		
+		//마지막 페이지 값 계산 (페이지 번호를 3개씩 보여줄 경우 = (3,6,9,12,~~~~~))
+		int endPage = startPage + blockLimit - 1;
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		AdminMemberListPageDto adminMemberListPageDto = new AdminMemberListPageDto();
+		adminMemberListPageDto.setPage(page);
+		adminMemberListPageDto.setMaxPage(maxPage);
+		adminMemberListPageDto.setStartPage(startPage);
+		adminMemberListPageDto.setEndPage(endPage);
+		
+		log.info("page: "+page);
+		log.info("maxPage: "+maxPage);
+		log.info("startPage: "+startPage);
+		log.info("endPage: "+endPage);
+		
+		return adminMemberListPageDto;
 	}
 
 

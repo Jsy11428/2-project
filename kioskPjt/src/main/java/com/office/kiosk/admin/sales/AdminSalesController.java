@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +24,6 @@ public class AdminSalesController {
 
 	@Autowired
 	AdminSalesService adminSalesService;
-	
 //	/*
 //	 * 	sales list 불러오기
 //	 */
@@ -44,13 +42,13 @@ public class AdminSalesController {
 //	}
 	
 	/*
-	 * 	sales list 불러오기
+	 * 	전체 매출 리스트
 	 */
 	@GetMapping("/salesList")
-	public String salesList(Model model) {
+	public String salesList() {
 		log.info("salesList()");
 		
-		String nextPage = "/admin/sales/admin_sales_list2";
+		String nextPage = "/admin/sales/admin_sales_list";
 		
 		return nextPage;
 		
@@ -81,6 +79,90 @@ public class AdminSalesController {
 				adminSalesService.getSearchSales(searchSalesDto);
 		
 		log.info("resultMap----" + resultMap);
+		
+		return resultMap;
+	}
+	
+	
+	
+	/*
+	 * 	가맹점별 매출리스트 뷰
+	 */
+	@GetMapping("/storeSalesList")
+	public String storeSalesList() {
+		log.info("storeSalesList()");
+		
+		String nextPage = "/admin/sales/admin_store_sales_list";
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * 	전체 가맹점 매출 불러오기
+	 */
+	@PostMapping("/getStoreAllSalesInfo")
+	@ResponseBody
+	public Object getStoreAllSalesInfo() {
+		log.info("getStoreAllSalesInfo()");
+		
+		Map<String, Object> resultMap = 
+				adminSalesService.getStoreAllSalesInfo();
+		
+		return resultMap;
+	}
+	
+	/*
+	 * 	선택 날짜 매출 리스트 불러오기
+	 */
+	@PostMapping("/getSelectDateSalesInfo")
+	@ResponseBody
+	public Object getSelectDateSalesInfo(@RequestBody Map<String, String> currentDate) {
+		log.info("getSelectDateSalesInfo()");
+		
+		Map<String, Object> resultMap = 
+				adminSalesService.getSelectDateSalesInfo(currentDate);
+		
+		return resultMap;
+	}
+	
+	/*
+	 * 	가맹회원별 매출 리스트 뷰
+	 */
+	@GetMapping("/franchiseeSalesList")
+	public String franchiseeSalesList() {
+		log.info("franchiseeSalesList()");
+		
+		String nextPage = "/admin/sales/admin_franchisee_sales_list";
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * 	전체 회원별 매출 불러오기
+	 */
+	@PostMapping("/getFranchiseeAllSalesInfo")
+	@ResponseBody
+	public Object getFranchiseeAllSalesInfo() {
+		log.info("getFranchiseeAllSalesInfo()");
+		
+		Map<String, Object> resultMap = 
+				adminSalesService.getFranchiseeAllSalesInfo();
+		
+		return resultMap;
+	}
+	
+	/*
+	 * 	선택 날짜 매출 리스트 불러오기
+	 */
+	@PostMapping("/getSelectDateFranchiseeSalesInfo")
+	@ResponseBody
+	public Object getSelectDateFranchiseeSalesInfo(@RequestBody Map<String, String> currentDate) {
+		log.info("getSelectDateFranchiseeSalesInfo()");
+		
+		Map<String, Object> resultMap = 
+				adminSalesService.getSelectDateFranchiseeSalesInfo(currentDate);
 		
 		return resultMap;
 	}

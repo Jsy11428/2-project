@@ -1,19 +1,19 @@
-<script type="text/javascript" th:fragment="admin_sales_list_js">
+<script type="text/javascript" th:fragment="franchisee_store_list_js">
 
 
 $(document).ready(function(){
     console.log('DOCUMENT READY!!')
 
-    addSalesListTable()
+    addFranchiseeStoreListTable()
 
     initEvents()
 
 })
 
-function addSalesListTable() {
-    console.log('addSalesListTable()');
+function addFranchiseeStoreListTable() {
+    console.log('addFranchiseeStoreListTable()');
 
-    ajax_getAllSalesInfo()
+    ajax_getAllFranchiseeStoreInfo()
 
 }
 
@@ -21,59 +21,42 @@ function addSalesListTable() {
 function initEvents() {
     console.log('initEvents()');
 
-    $(document).on('click', '#section_wrap .list_search input[value="search"]', function (e){
-        console.log('검색 버튼 클릭!');
+}
 
-        let search_term = $('#section_wrap .list_search select[name="search_term"]').val();
-        let search_value = $('#section_wrap .list_search select[name="search_value"]').val();
-        let search_word = $('#section_wrap .list_search input[name="search_word"]').val();
+function removeFranchiseeStoreList() {
+    console.log('removeFranchiseeStoreList()');
 
-        if (search_word === '') {
-            alert('검색어를 입력해주세요.')
-
-            $('#section_wrap .list_search input[name="search_word"]').focus();
-        } else {
-
-            ajax_searchSalesList(search_term, search_value, search_word);
-        }
-
-    })
 
 }
 
-function removeSalesList() {
-    console.log('removeSalesList()');
-
-    $('#section_wrap .admin_section_view_wrap .admin_sales_list table tbody').empty();
-}
-
-// ajax - 모든 매출 목록 불러오기 
-function ajax_getAllSalesInfo() {
-    console.log('ajax_getAllSalesInfo');
+// ajax - 모든 가맹점 목록 불러오기 
+function ajax_getAllFranchiseeStoreInfo() {
+    console.log('ajax_getAllFranchiseeStoreInfo');
 
     $.ajax({
-        url: '/admin/sales/getAllSalesInfo', 
+        url: '/admin/member/getAllFranchiseeStoreInfo', 
         method: 'post', 
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function(data) {
             console.log('ajax success!!');
 
-            let salesDtos = data.franchiseeSalesDtos;
+            let storeDtos = data.franchiseeStoreDtos;
             let appendTag = '';
 			
-            for (let i = 0; i < salesDtos.length; i++) {
+            for (let i = 0; i < storeDtos.length; i++) {
                 
                 appendTag = '<tr>';
                     
-                    appendTag += '<td>' + salesDtos[i].fcsa_no + '</td>';
-                    appendTag += '<td>' + salesDtos[i].fco_ori_no + '</td>';
-                    appendTag += '<td>' + salesDtos[i].fcs_name + '</td>';
-                    appendTag += '<td>' + salesDtos[i].fcm_name + '</td>';
-                    appendTag += '<td>' + salesDtos[i].fcsa_price + '</td>';
-                    appendTag += '<td>' + salesDtos[i].pm_type + '</td>';
-                    appendTag += '<td>' + salesDtos[i].fcsa_reg_date + '</td>';
-                    appendTag += '<td>' + salesDtos[i].fcsa_mod_date + '</td>';
+                    appendTag += '<td>' + storeDtos[i].fcs_no + '</td>';
+                    appendTag += '<td>' + storeDtos[i].fcs_name + '</td>';
+                    appendTag += '<td>' + storeDtos[i].fcs_location + '</td>';
+                    appendTag += '<td>' + storeDtos[i].fcs_phone + '</td>';
+                    appendTag += '<td>' + storeDtos[i].fcm_name + '</td>';
+                    appendTag += '<td>' + storeDtos[i].fcm_id + '</td>';
+                    appendTag += '<td>' + storeDtos[i].fcm_phone + '</td>';
+                    appendTag += '<td>' + storeDtos[i].fcs_reg_date + '</td>';
+                    appendTag += '<td>' + storeDtos[i].fcs_mod_date + '</td>';
 
                 appendTag += '</tr>';
 
@@ -113,7 +96,7 @@ function ajax_searchSalesList(search_term, search_value, search_word) {
             console.log("searchDtos--", searchDtos);
             let appendTag = '';
             
-            removeSalesList();
+            removeFranchiseeStoreList();
 
             if (searchDtos.length !== 0) {
 

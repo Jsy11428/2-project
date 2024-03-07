@@ -6,6 +6,266 @@
 <title th:replace="~{/include/include_title.html::title}"></title>
 
 <script type="text/javascript" th:src="@{/js/admin/member/admin_member.js}"></script>
+<script type="text/javascript" th:replace="~{include/home_js.html::home_js}"></script>
+<style>
+        /* common.css */
+        * {
+            margin: 0; padding: 0; list-style: none;
+        }
+        a {
+            color: inherit; text-decoration: none;
+        }
+        #wrap {
+            max-width: 1000px;
+            min-width: 1000px;
+            margin: auto;
+        }
+        /* common.css END*/
+
+        /* header.css */        
+        #header_wrap {
+            width: 100%;
+            height: 60px;
+            background: no-repeat center center url("header_bg.jpg");
+            position: relative;
+            overflow: hidden;
+        }
+        #header_wrap div.home_btn {
+            background-color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 30px;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            text-align: center;
+        }
+        #header_wrap div.home_btn img {
+            width: 24px;
+            margin-top: 3px;
+        }
+        #header_wrap div.home_btn:hover {
+            cursor: pointer;
+        }
+        /* header.css END*/
+
+        /* nav.css */
+        #nav_wrap {
+            width: 100%;
+            height: 80px;
+            background-color: #ffe80a;
+            display: flex;
+            justify-content: center;
+        }
+        #nav_wrap div.nav_pre_btn {
+            height: 100%;
+            width: 20px;
+            cursor: pointer;
+        }
+        #nav_wrap div.nav_next_btn {
+            height: 100%;
+            width: 20px;
+            cursor: pointer;
+        }
+        #nav_wrap ul.nav_menu_wrap {
+            width: 960px;
+            overflow: hidden;
+            text-align: center;
+        }
+        #nav_wrap ul.nav_menu_wrap li{
+            height: 40px;
+            width: 240px;
+            float: left;
+            line-height: 40px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+        #nav_wrap ul.nav_menu_wrap li:hover {
+            color: #fff;
+            background-color: #251d0c;
+        }
+        /* nav.css END*/
+
+        /* section.css */
+        #section_wrap {
+            width: 100%;
+            height: 770px;
+        }
+        #section_wrap ul.section_menu_list {
+            display: flex;
+            flex-wrap: wrap;
+            width: 936px;
+            margin:0 auto;
+        }
+        #section_wrap ul.section_menu_list li {
+            width: 225px;
+            height: 240px;
+            margin-right: 12px;
+            text-align: center;
+            box-sizing: border-box;
+            padding: 10px;
+            cursor: pointer;
+        }
+        #section_wrap ul.section_menu_list li:hover {
+            background-color: rgba(0,0,0,0.1);
+        }
+        #section_wrap ul.section_menu_list li:nth-child(4n) {
+            margin-right: 0px;
+        }
+        #section_wrap ul.section_menu_list li img {
+            height: 180px;
+        }
+        #section_wrap ul.section_menu_list li p.item_name {
+            text-align: left;
+        }
+        #section_wrap ul.section_menu_list li p.item_price {
+            text-align: right;
+        }
+        #section_wrap div.section_bottom_btn_wrap{
+            height: 50px;
+            display: flex;
+            justify-content: space-around;
+        }
+        #section_wrap div.section_bottom_btn_wrap div.section_bottom_pre_btn {
+            height: 100%;
+            width: 50px;
+            cursor: pointer;
+        }
+        #section_wrap div.section_bottom_btn_wrap div.section_bottom_next_btn {
+            height: 100%;
+            width: 50px;
+            cursor: pointer;
+        }
+        #section_wrap div.section_bottom_btn_wrap img {
+            height: 40px;
+            margin-top: 5px;
+        }
+        /* section.css END*/
+
+        /* footer.css */
+        #footer_wrap {
+            width: 100%;
+            height: 120px;
+            background-color: #e8e8e8;
+            display: flex;
+        }
+        #footer_wrap div.cart_area_wrap {
+            background-color: #ddd;
+            width: 700px;
+            height: 100%;
+            display: flex;
+        }
+        #footer_wrap div.cart_area_wrap div.cart_area_left_btn {
+            width: 40px;
+            height: 100%;
+            text-align: right;
+            cursor: pointer;
+        }
+        #footer_wrap div.cart_area_wrap div.cart_area_left_btn img {
+            margin-top: 46px;
+        }
+        #footer_wrap div.cart_area_wrap div.cart_area_right_btn {
+            width: 40px;
+            height: 100%;
+            text-align: left;
+            cursor: pointer;
+        }
+        #footer_wrap div.cart_area_wrap div.cart_area_right_btn img {
+            margin-top: 46px;
+        }
+        #footer_wrap div.cart_area_wrap div.cart_area_item_wrap {
+            width: 620px;
+            height: 100%;
+        }
+        #footer_wrap div.cart_area_wrap div.cart_area_item_wrap ul.cart_area_items {
+            overflow: hidden;
+        }
+        #footer_wrap div.cart_area_wrap div.cart_area_item_wrap ul.cart_area_items li {
+            width: 100px;
+            height: 100px;
+            background-color: #fff;
+            margin: 10px;
+            float: left;
+            position: relative;
+        }
+        #footer_wrap div.cart_area_wrap div.cart_area_item_wrap ul.cart_area_items li img.cart_area_cancel_btn {
+            width: 20px;
+            position: absolute;
+            right: -5px;
+            top: -5px;
+            cursor: pointer;
+        }
+        #footer_wrap div.cart_area_wrap div.cart_area_item_wrap ul.cart_area_items li div.cart_item_select_wrap {
+            display: flex;
+            justify-content: space-around;
+        }
+        #footer_wrap div.cart_area_wrap div.cart_area_item_wrap ul.cart_area_items li div.cart_item_select_wrap img {
+            width: 20px;
+            cursor: pointer;
+        }
+        #footer_wrap div.cart_area_wrap div.cart_area_item_wrap ul.cart_area_items li div.cart_item_img {
+            width: 100%;
+            height: 70px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        #footer_wrap div.cart_area_wrap div.cart_area_item_wrap ul.cart_area_items li div.cart_item_img img {
+            width: 50px;
+        }
+        #footer_wrap div.price_area_wrap {
+            width: 300px;
+            height: 100%;
+            display: flex;
+        }
+        #footer_wrap div.price_area_wrap div.total_price_area {
+            width: 200px;
+            height: 100%;
+            background-color: #251d0c;
+        }
+        #footer_wrap div.price_area_wrap div.total_price_area div.total_price_text {
+            height: 80px;
+            text-align: right;
+            box-sizing: border-box;
+            padding: 20px 0;
+            padding-right: 10px;
+        }
+        #footer_wrap div.price_area_wrap div.total_price_area div.total_price_text p{
+            color: #fff;
+            font-weight: 100;
+            font-size: 0.9em;
+        }
+        #footer_wrap div.price_area_wrap div.total_price_area div.total_price_text h4{
+            color: #ffe80a;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+        #footer_wrap div.price_area_wrap div.total_price_area div.order_cancel_btn {
+            background-color: #000;
+            height: 40px;
+            color: #fff;
+            text-align: center;
+            line-height: 40px;
+            cursor: pointer;
+        }
+        #footer_wrap div.price_area_wrap div.payment_btn {
+            width: 100px;
+            height: 100%;
+            background-color: blue;
+            color: #fff;
+            text-align: center;
+            cursor: pointer;
+        }
+        #footer_wrap div.price_area_wrap div.payment_btn div.payment_btn_icon{
+            padding-top: 20px;
+        }
+        #footer_wrap div.price_area_wrap div.payment_btn div.payment_btn_text{
+            margin-top: 18px;
+        }
+        /* footer.css END*/
+      
+    </style>
+
+
 </head>
 <body>
 
@@ -13,6 +273,189 @@
 	
 	<a th:href="@{/franchisee/home}">프랜차이즈홈</a>
 	<a th:href="@{/admin/home}">어드민홈</a>
+	<div id="wrap">
+        <header>
+            <div id="header_wrap">
+                <div class="home_btn">
+                    <img src="home_icon.png" alt="home_icon">
+                </div>
+            </div>
+        </header>
+        <nav>
+            <div id="nav_wrap">
+                <div class="nav_pre_btn">
+                    <img src="nav_left_arrow.png" alt="left_arrow">
+                </div>
+                <ul class="nav_menu_wrap">
+                    <li>커피(COFFEE)</li>
+                    <li>음료(NON COFFEE)</li>
+                    <li>주스/에이드(JUICE/ADE)</li>
+                    <li>백스치노(PAIKS CCINO)</li>
+                    <li>스무디/쉐이크(BLENDED)</li>
+                    <li>차(TEA)</li>
+                    <li>블랙펄(PEARL)</li>
+                    <li>디저트(DESSERT)</li>
+                </ul>
+                <div class="nav_next_btn">
+                    <img src="nav_right_arrow.png" alt="right_arrow">
+                </div>
+            </div>
+        </nav>       
+        <section>
+            <div id="section_wrap">
+                <ul class="section_menu_list">
+                    <li>
+                        <img src="ice_ame.png" alt="ice_americano">
+                        <p class="item_name">아메리카노</p>
+                        <p class="item_price">2,000원</p>
+                    </li>
+                    <li>
+                        <img src="ice_ame.png" alt="ice_americano">
+                        <p class="item_name">아메리카노</p>
+                        <p class="item_price">2,000원</p>
+                    </li>
+                    <li>
+                        <img src="ice_ame.png" alt="ice_americano">
+                        <p class="item_name">아메리카노</p>
+                        <p class="item_price">2,000원</p>
+                    </li>
+                    <li>
+                        <img src="ice_ame.png" alt="ice_americano">
+                        <p class="item_name">아메리카노</p>
+                        <p class="item_price">2,000원</p>
+                    </li>
+                    <li>
+                        <img src="ice_ame.png" alt="ice_americano">
+                        <p class="item_name">아메리카노</p>
+                        <p class="item_price">2,000원</p>
+                    </li>
+                    <li>
+                        <img src="ice_ame.png" alt="ice_americano">
+                        <p class="item_name">아메리카노</p>
+                        <p class="item_price">2,000원</p>
+                    </li>
+                    <li>
+                        <img src="ice_ame.png" alt="ice_americano">
+                        <p class="item_name">아메리카노</p>
+                        <p class="item_price">2,000원</p>
+                    </li>
+                    <li>
+                        <img src="ice_ame.png" alt="ice_americano">
+                        <p class="item_name">아메리카노</p>
+                        <p class="item_price">2,000원</p>
+                    </li>
+                    <li>
+                        <img src="ice_ame.png" alt="ice_americano">
+                        <p class="item_name">아메리카노</p>
+                        <p class="item_price">2,000원</p>
+                    </li>
+                    <li>
+                        <img src="ice_ame.png" alt="ice_americano">
+                        <p class="item_name">아메리카노</p>
+                        <p class="item_price">2,000원</p>
+                    </li>
+                    <li>
+                        <img src="ice_ame.png" alt="ice_americano">
+                        <p class="item_name">아메리카노</p>
+                        <p class="item_price">2,000원</p>
+                    </li>
+                    <li>
+                        <img src="ice_ame.png" alt="ice_americano">
+                        <p class="item_name">아메리카노</p>
+                        <p class="item_price">2,000원</p>
+                    </li>                    
+                </ul>
+                <div class="section_bottom_btn_wrap">
+                    <div class="section_bottom_pre_btn">
+                        <img src="bottom_left_arrow.png" alt="left_arrow">
+                    </div>
+                    <div class="section_bottom_next_btn">
+                        <img src="bottom_right_arrow.png" alt="right_arrow">
+                    </div>
+                </div>
+            </div>
+        </section>    
+        <footer>
+            <div id="footer_wrap">
+                <div class="cart_area_wrap">
+                    <div class="cart_area_left_btn">
+                        <img src="cart_area_left_btn.png" alt="cart_area_left_btn">
+                    </div>
+                    <div class="cart_area_item_wrap">
+                        <ul class="cart_area_items">
+                            <li>
+                                <img class="cart_area_cancel_btn" src="cart_area_cancel_btn.png" alt="">
+                                <div class="cart_item_img">
+                                    <img src="ice_ame.png" alt="">
+                                </div>
+                                <div class="cart_item_select_wrap">
+                                    <div class="item_sub_btn">
+                                        <img src="cart_area_sub_btn.png" alt="">
+                                    </div>
+                                    <p class="item_cnt">1</p>
+                                    <div class="item_add_btn">
+                                        <img src="cart_area_add_btn.png" alt="">
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <img class="cart_area_cancel_btn" src="cart_area_cancel_btn.png" alt="">
+                                <div class="cart_item_img">
+                                    <img src="ice_ame.png" alt="">
+                                </div>
+                                <div class="cart_item_select_wrap">
+                                    <div class="item_sub_btn">
+                                        <img src="cart_area_sub_btn.png" alt="">
+                                    </div>
+                                    <p class="item_cnt">1</p>
+                                    <div class="item_add_btn">
+                                        <img src="cart_area_add_btn.png" alt="">
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <img class="cart_area_cancel_btn" src="cart_area_cancel_btn.png" alt="">
+                                <div class="cart_item_img">
+                                    <img src="ice_ame.png" alt="">
+                                </div>
+                                <div class="cart_item_select_wrap">
+                                    <div class="item_sub_btn">
+                                        <img src="cart_area_sub_btn.png" alt="">
+                                    </div>
+                                    <p class="item_cnt">1</p>
+                                    <div class="item_add_btn">
+                                        <img src="cart_area_add_btn.png" alt="">
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="cart_area_right_btn">
+                        <img src="cart_area_right_btn.png" alt="cart_area_right_btn">
+                    </div>
+                </div>
+                <div class="price_area_wrap">
+                    <div class="total_price_area">
+                        <div class="total_price_text">
+                            <p>총 결재 금액</p>
+                            <h4>10,000원</h4>
+                        </div>
+                        <div class="order_cancel_btn">
+                            전체취소
+                        </div>
+                    </div>
+                    <div class="payment_btn">
+                        <div class="payment_btn_icon">
+                            <img src="payment_icon.png" alt="payment_icon">
+                        </div>
+                        <div class="payment_btn_text">
+                            결제하기
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
 
 </body>
 </html>

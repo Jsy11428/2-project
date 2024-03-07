@@ -1,6 +1,7 @@
 package com.office.kiosk.admin.member;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -29,5 +30,10 @@ public interface IAdminMemberDao {
 	public void updateAdminApproval(int am_no);
 
 	public List<FranchiseeStoreDto> selectAllFranchiseeStoreInfo();
+
+	public List<AdminMemberDto> selectPagingList(Map<String, Integer> pagingParams);
+
+	public int selcetAllAdminListCnt();
+
 
 }

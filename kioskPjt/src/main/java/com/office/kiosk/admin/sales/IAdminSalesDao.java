@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.office.kiosk.franchisee.dto.SearchSalesDto;
 import com.office.kiosk.franchisee.sales.FranchiseeSalesDto;
 
 @Mapper
@@ -14,6 +13,19 @@ public interface IAdminSalesDao {
 
 	public List<FranchiseeSalesDto> selectAllSalesInfoForAjax();
 
+//	public List<FranchiseeSalesDto> selectSalesInfoByFcsName(SearchSalesDto searchSalesDto);
+//
+//	public List<FranchiseeSalesDto> selectSalesInfoByFcmName(SearchSalesDto searchSalesDto);
+//
+//	public List<FranchiseeSalesDto> selectSalesInfoByPmType(SearchSalesDto searchSalesDto);
+	
+	
+//	public List<FranchiseeSalesDto> selectSalesInfoByFcsName(String searchTerm, String searchWord);
+//
+//	public List<FranchiseeSalesDto> selectSalesInfoByFcmName(String searchTerm, String searchWord);
+//
+//	public List<FranchiseeSalesDto> selectSalesInfoByPmType(String searchTerm, String searchWord);
+	
 	public List<FranchiseeSalesDto> selectSalesInfoByFcsNameForOneDay(String searchWord);
 
 	public List<FranchiseeSalesDto> selectSalesInfoByFcsNameForOneWeek(String searchWord);
@@ -50,12 +62,13 @@ public interface IAdminSalesDao {
 
 	public List<FranchiseeSalesDto> selectSalesInfoByPmType(String searchWord);
 
-	
-	
-//	public List<FranchiseeSalesDto> selectSalesInfoByFcsName(SearchSalesDto searchSalesDto);
-//
-//	public List<FranchiseeSalesDto> selectSalesInfoByFcmName(SearchSalesDto searchSalesDto);
-//
-//	public List<FranchiseeSalesDto> selectSalesInfoByPmType(SearchSalesDto searchSalesDto);
+	public List<FranchiseeSalesDto> selectStoreTotalSales();
+
+	public List<FranchiseeSalesDto> selectDateTotalSales(String selectDate);
+
+	public List<FranchiseeSalesDto> selectFranchiseeTotalSales();
+
+	public List<FranchiseeSalesDto> selectDateFranchiseeTotalSales(String selectDate);
+
 
 }

@@ -25,45 +25,48 @@ public class AdminMenuController {
 
 	// 메뉴 등록 화면 페이지 이동(뷰 변경)
 
-	@GetMapping("/createMenuForm")
-	public String createMenuForm(Model model, AdminMenuCategoryDto adminMenuCategoryDto) {
-		log.info("createMenuForm()");
-
-		String nextPage = "/admin/menu/create_menu_account_form";
-
-		model.addAttribute("adminMenuCategoryDto", adminMenuCategoryDto);
-
-		return nextPage;
-
-	}
+	 @GetMapping("/createMenuForm")
+	   public String createMenuForm(Model model, AdminMenuCategoryDto adminMenuCategoryDto) {
+	      log.info("createMenuForm()");
+	      
+	      String nextPage = "/admin/menu/create_menu_account_form";
+	      
+	      model.addAttribute("adminMenuCategoryDto", adminMenuCategoryDto);
+	      
+	      return nextPage;
+	      
+	   }
+	 
+	  @PostMapping("/createMenuAccountConfirm")
+	   public String createMenuAccountConfirm(AdminMenuDto adminMenuDto,
+	         @RequestParam("file") MultipartFile file) {
+	      log.info("createMenuAccountConfirm()");
+	      
+	      String nextPage = "redirect:/admin/menu/menuList";
+	      
+	      log.info(file);      
+	      
+	      ResponseEntity<String> saveFileName = adminMenuService.uploadFile(file);
+	      
+	         
+	      if(saveFileName != null) {
+	         adminMenuDto.setFc_menu_img_name(saveFileName.getBody()); 
+	      
+	      int result =
+	      adminMenuService.createMenuAccountConfirm(adminMenuDto);
+	       
+	      if(result <= 0) nextPage = "/admin/menu/create_menu_account_ng";
+	       
+	      } else { nextPage = "/admin/menu/create_menu_account_ng"; 
+	      	
+	      }
+	       
+	      return nextPage;
+	   }
+   
 
 	// 메뉴 등록
 
-	@PostMapping("/createMenuAccountConfirm")
-	public String createMenuAccountConfirm(AdminMenuDto adminMenuDto, @RequestParam("file") MultipartFile file) {
-		log.info("createMenuAccountConfirm()");
-
-		String nextPage = "redirect:/admin/menu/menuList";
-
-		log.info(file);
-
-		ResponseEntity<String> saveFileName = adminMenuService.uploadFile(file);
-
-		if (saveFileName != null) {
-			adminMenuDto.setFc_menu_img_name(saveFileName.getBody());
-
-			int result = adminMenuService.createMenuAccountConfirm(adminMenuDto);
-
-			if (result <= 0)
-				nextPage = "/admin/menu/create_menu_account_ng";
-
-		} else {
-			nextPage = "/admin/menu/create_menu_account_ng";
-
-		}
-
-		return nextPage;
-	}
 
 	// 모든 카테고리 가져오기
 

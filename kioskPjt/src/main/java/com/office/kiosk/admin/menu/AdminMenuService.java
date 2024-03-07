@@ -96,6 +96,8 @@ public class AdminMenuService {
 	public Map<String, Object> getMenus() {
 		log.info("getCategory()");
 
+		log.info("getMenus()");
+		
 		Map<String, Object> menuDtos = new HashMap<>();
 
 		List<AdminMenuDto> menusDtos = (List<AdminMenuDto>) iAdminMenuDao.selectAllMenus();
@@ -151,6 +153,14 @@ public class AdminMenuService {
 		// RestTemplate 객체생성
 //		RestTemplate restTemplate = new RestTemplate();
 
+		
+		System.out.println("file: "+file);
+				
+		//RestTemplate
+		
+		//RestTemplate 객체생성
+		//RestTemplate restTemplate = new RestTemplate();
+		
 		// Request Header 설정
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.MULTIPART_FORM_DATA);

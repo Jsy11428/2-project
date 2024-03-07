@@ -1,0 +1,135 @@
+<script type="text/javascript" th:fragment="admin_list_js">
+
+
+$(document).ready(function(){
+    console.log('DOCUMENT READY!!')
+
+    addAdminListTable()
+
+})
+
+function addAdminListTable() {
+    console.log('addAdminListTable()');
+
+    ajax_getAllAdminInfo();
+
+}
+
+function removeAdminList() {
+    console.log('removeAdminList()');
+    $('#section_wrap table tbody tr').remove();
+}
+
+function removePageNo() {
+    console.log('removePageNo()');
+    $('#section_wrap div.page_no_wrap').empty();
+}
+
+// ajax - 모든 관리자 목록 불러오기 
+function ajax_getAllAdminInfo(pageNum = 1) {
+    console.log('ajax_getAllAdminInfo()');
+
+    $.ajax({
+        url: '/admin/member/getAdminList',
+        method: 'get', 
+        data: 'page='+pageNum,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function(data) {
+            console.log('ajax success!!');
+
+            let adminMemberDtos = data.adminMemberDtos;
+            let adminMemberListPageDto = data.adminMemberListPageDto;
+            let appendTag = '';
+            
+            removeAdminList();
+            removePageNo();
+            
+            for (let i = 0; i < adminMemberDtos.length; i++) {
+                
+                appendTag = '<tr>';
+                    
+                    appendTag += '<td>' + adminMemberDtos[i].am_no + '</td>';
+                    appendTag += '<td>' + adminMemberDtos[i].am_id + '</td>';
+                    appendTag += '<td>' + adminMemberDtos[i].am_name + '</td>';
+                    appendTag += '<td>' + adminMemberDtos[i].am_phone + '</td>';
+                    appendTag += '<td>' + adminMemberDtos[i].am_mail + '</td>';
+                    
+                    if(adminMemberDtos[i].am_approval === 0){
+                    	appendTag += '<td>';
+                    	appendTag += '<button type="button" onclick="adminApproveBtn('+adminMemberDtos[i].am_no+')" >승인</button>';
+                    	appendTag += '</td>';
+                    }else{                    	
+                    	appendTag += '<td>승인완료</td>'
+                    }
+                                        
+                    appendTag += '<td>' + adminMemberDtos[i].am_reg_date + '</td>';
+                    appendTag += '<td>' + adminMemberDtos[i].am_mod_date + '</td>';
+
+                appendTag += '</tr>';
+
+                $('#section_wrap table tbody').append(appendTag);
+
+            }
+          	
+            if(adminMemberListPageDto.page <= 1){
+            	$('#section_wrap div.page_no_wrap').append("<span>[이전]</span>");
+            }else{
+            	/* $('#section_wrap div.page_no_wrap').append("<a href='/admin/member/getAdminList?page="+adminMemberListPageDto.page - 1+"'>[이전]</a>"); */
+            	$('#section_wrap div.page_no_wrap').append(`<a href="#none" class="pre_page_btn" page_num='${(adminMemberListPageDto.page-1)}'>[이전]</a>`);
+            }
+                        
+            for(let i = adminMemberListPageDto.startPage; i <= adminMemberListPageDto.endPage; i++){
+            	let appendPageNum = '';
+            	appendPageNum += "<span class='page_num_wrap'>";
+            	if(i === adminMemberListPageDto.page){
+            		appendPageNum += i;
+            	}else{
+            		/* appendPageNum += "<a href='/admin/member/getAdminList?page="+i+"'>"+i+"</a>"; */
+            		appendPageNum += `<a href="#none" class="page_num_btn" page_num='${i}'>${i}</a>`;
+            	}
+            	appendPageNum += "</span>";
+            	$('#section_wrap div.page_no_wrap').append(appendPageNum);                  	
+            }
+            
+            if(adminMemberListPageDto.page >= adminMemberListPageDto.maxPage){
+            	$('#section_wrap div.page_no_wrap').append("<span>[다음]</span>");
+            }else{
+            	/* $('#section_wrap div.page_no_wrap').append("<a href='/admin/member/getAdminList?page="+(adminMemberListPageDto.page+1)+"'>[다음]</a>"); */
+            	$('#section_wrap div.page_no_wrap').append(`<a href="#none" class="next_page_btn" page_num='${(adminMemberListPageDto.page+1)}'>[다음]</a>`);
+            }
+            
+
+        },
+        error: function(data) {
+            console.log('ajax error!!');
+	
+        },
+        complete: function(){
+        	console.log('ajax complete!!');
+        	
+        	$('#section_wrap div.page_no_wrap .next_page_btn').click(function(){
+            	console.log('nextPageBtnClick()')
+            	
+            	ajax_getAllAdminInfo(this.getAttribute('page_num'));
+            });
+        	
+        	$('#section_wrap div.page_no_wrap .pre_page_btn').click(function(){
+            	console.log('prePageBtnClick()')
+            	
+            	ajax_getAllAdminInfo(this.getAttribute('page_num'));
+            });
+        	
+        	$('#section_wrap div.page_no_wrap .page_num_btn').click(function(){
+            	console.log('pageNumBtnClick()')
+            	
+            	ajax_getAllAdminInfo(this.getAttribute('page_num'));
+            });
+        	
+        }
+
+    });
+          
+}
+
+</script>

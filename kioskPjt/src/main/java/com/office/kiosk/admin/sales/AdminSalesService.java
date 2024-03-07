@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.office.kiosk.admin.member.IAdminMemberDao;
 import com.office.kiosk.franchisee.dto.SearchSalesDto;
 import com.office.kiosk.franchisee.sales.FranchiseeSalesDto;
 
@@ -19,6 +20,9 @@ public class AdminSalesService {
 	
 	@Autowired
 	IAdminSalesDao iAdminSalesDao;
+	
+	@Autowired
+	IAdminMemberDao iAdminMemberDao;
 
 	public List<FranchiseeSalesDto> salesList() {
 		log.info("salesList()");
@@ -53,7 +57,7 @@ public class AdminSalesService {
 		switch (searchValue) {
 		case "fcs_name":
 			
-//			searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcsName(searchSalesDto);
+//			searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcsName(searchTerm, searchWord);
 			
 			switch (searchTerm) {
 			case "1d":
@@ -98,7 +102,7 @@ public class AdminSalesService {
 			
 		case "fcm_name":
 			
-//			searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcmName(searchSalesDto);
+//			searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcmName(searchTerm, searchWord);
 			
 			switch (searchTerm) {
 			case "1d":
@@ -143,7 +147,7 @@ public class AdminSalesService {
 			
 		case "pm_type":
 			
-//			searchSalesDtos = iAdminSalesDao.selectSalesInfoByPmType(searchSalesDto);
+//			searchSalesDtos = iAdminSalesDao.selectSalesInfoByPmType(searchTerm, searchWord);
 			
 			switch (searchTerm) {
 			case "1d":
@@ -197,6 +201,76 @@ public class AdminSalesService {
 		
 		
 		map.put("searchSalesDtos", searchSalesDtos);
+		
+		return map;
+	}
+
+	public Map<String, Object> getStoreAllSalesInfo() {
+		log.info("getStoreAllSalesInfo()");
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		List<FranchiseeSalesDto> storeSalesDtos = 
+				iAdminSalesDao.selectStoreTotalSales();
+		
+		map.put("storeSalesDtos", storeSalesDtos);
+		
+		return map;
+	}
+
+	public Map<String, Object> getSelectDateSalesInfo(Map<String, String> currentDate) {
+		log.info("getSelectDateSalesInfo()");
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		String year = currentDate.get("year");
+        String month = currentDate.get("month");
+        String date = currentDate.get("date");
+
+        String selectDate = String.format("%04d-%02d-%02d",
+                Integer.parseInt(year),
+                Integer.parseInt(month),
+                Integer.parseInt(date));
+		
+		List<FranchiseeSalesDto> selectSalesDtos = 
+				iAdminSalesDao.selectDateTotalSales(selectDate);
+		
+		map.put("selectSalesDtos", selectSalesDtos);
+		
+		return map;
+	}
+
+	public Map<String, Object> getFranchiseeAllSalesInfo() {
+		log.info("getFranchiseeAllSalesInfo()");
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		List<FranchiseeSalesDto> franchiseeSalesDtos = 
+				iAdminSalesDao.selectFranchiseeTotalSales();
+		
+		map.put("franchiseeSalesDtos", franchiseeSalesDtos);
+		
+		return map;
+	}
+
+	public Map<String, Object> getSelectDateFranchiseeSalesInfo(Map<String, String> currentDate) {
+		log.info("getSelectDateSalesInfo()");
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		String year = currentDate.get("year");
+        String month = currentDate.get("month");
+        String date = currentDate.get("date");
+
+        String selectDate = String.format("%04d-%02d-%02d",
+                Integer.parseInt(year),
+                Integer.parseInt(month),
+                Integer.parseInt(date));
+		
+		List<FranchiseeSalesDto> selectFranchiseeSalesDtos = 
+				iAdminSalesDao.selectDateFranchiseeTotalSales(selectDate);
+		
+		map.put("selectFranchiseeSalesDtos", selectFranchiseeSalesDtos);
 		
 		return map;
 	}
