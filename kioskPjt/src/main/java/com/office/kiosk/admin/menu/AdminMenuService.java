@@ -97,7 +97,7 @@ public class AdminMenuService {
 	
 	
 	public Map<String, Object> getMenus() {
-		log.info("getCategory()");
+		log.info("getMenus()");
 		
 		Map<String, Object> menuDtos = new HashMap<>();
 		
@@ -152,7 +152,7 @@ public class AdminMenuService {
 		//RestTemplate
 		
 		//RestTemplate 객체생성
-//		RestTemplate restTemplate = new RestTemplate();
+		//RestTemplate restTemplate = new RestTemplate();
 		
 		// Request Header 설정
 		HttpHeaders headers = new HttpHeaders();

@@ -165,5 +165,26 @@
 			FCS.FCM_NO = FCM.FCM_NO 
 	
 	</select>
+	
+	<select id="selectPagingList" parameterType="java.util.Map" resultType="com.office.kiosk.admin.member.AdminMemberDto">
+		
+		SELECT 
+			* 
+		FROM 
+			TBL_ADMIN_MEMBER 
+		ORDER BY AM_NO ASC 
+		LIMIT 
+			#{start},#{limit}
+		
+	</select>
+	
+	<select id="selcetAllAdminListCnt" resultType="Integer">
+		
+		SELECT 
+			COUNT(AM_NO) 
+		FROM 
+			TBL_ADMIN_MEMBER
+		
+	</select>
 
 </mapper>

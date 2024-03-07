@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+<script type="text/javascript"
+	th:replace="~{/franchisee/order/include/franchisee_order_list_js.html::js}"></script>
+
+
+
+</head>
+<body>
+
+	<nav
+		th:replace="~{/franchisee/include/franchisee_include.html::franchisee_nav}">
+	</nav>
+
+	<section>
+
+		<div id="section_wrap">
+			
+
+			<div class="pos_section_info_wrap">
+
+				<div id="word">오더 리스트</div>
+							
+				<table id="franchisee_order_list">
+					  <thead>
+					    <tr>
+					      <th>주문 번호</th>
+					      <th>상품 번호</th>
+					      <th>포장</th>
+					      <th>메뉴번호</th>
+					      <th>주문 수량</th>
+					      <th>가게 번호</th>
+					      <th>주문일</th>
+					      <th>수정일</th>
+					    </tr>
+					  </thead>
+					  
+					  <tbody>
+					    
+					  </tbody>
+				  
+				</table>
+				
+			</div>
+
+			<div class="pos_section_detail_view_wrap"></div>
+		</div>
+
+	</section>
+
+	<footer
+		th:replace="~{/franchisee/include/franchisee_include.html::franchisee_footer}">
+
+	</footer>
+
+</body>
+</html>

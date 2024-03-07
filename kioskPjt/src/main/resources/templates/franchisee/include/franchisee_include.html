@@ -7,16 +7,16 @@
 	<nav th:fragment="franchisee_nav">
 	
 		<div id="nav_wrap" th:if="${session.loginedFranchiseeMemberDto ==null}" >
-			<a th:href="@{/franchisee/home}">Franchisee Home</a>
-			<a th:href="@{/franchisee/member/createFranchiseeAccountForm}">Create Franchisee Account Form</a>
-			<a th:href="@{/franchisee/member/franchiseeLoginForm}">Franchisee Login Form</a>
+			<a th:href="@{/franchisee/home}">홈</a>
+			<a th:href="@{/franchisee/member/createFranchiseeAccountForm}">회원가입</a>
+			<a th:href="@{/franchisee/member/franchiseeLoginForm}">로그인</a>
 		</div>
 		
 		<div id="nav_wrap" th:unless="${session.loginedFranchiseeMemberDto ==null}" >
-			<a th:href="@{/franchisee/home}">Franchisee Home</a>
-			<a href="#none" >Franchisee Customer View</a>
-			<a th:href="@{/franchisee/member/franchiseeModifyForm}">Franchisee Modify Form</a>
-			<a href="#none" th:onclick="franchiseeLogoutConfirm()">Franchisee Logout</a>
+			<a th:href="@{/franchisee/home}">홈</a>
+			<a href="#none" >고객 뷰</a>
+			<a th:href="@{/franchisee/member/franchiseeModifyForm}">정보수정</a>
+			<a href="#none" th:onclick="franchiseeLogoutConfirm()">로그아웃</a>
 		</div>
 		
 	</nav>

@@ -19,15 +19,16 @@ public class HomeController {
 		
 	}
 	
-	@GetMapping({"/franchisee/home","/franchisee", "/franchisee/"})
-	public String franchiseeHome() {
-		log.info("franchiseeHome()");
-	
-		String nextPage = "/franchisee/franchisee_home";
-		
-		return nextPage;
-		
-	}
+	/*
+	 * @GetMapping({"/franchisee/home","/franchisee", "/franchisee/"}) public String
+	 * franchiseeHome() { log.info("franchiseeHome()");
+	 * 
+	 * String nextPage = "/franchisee/franchisee_home";
+	 * 
+	 * return nextPage;
+	 * 
+	 * }
+	 */
 	
 	@GetMapping({"/admin/home", "/admin/", "/admin"})
 	public String adminHome() {
