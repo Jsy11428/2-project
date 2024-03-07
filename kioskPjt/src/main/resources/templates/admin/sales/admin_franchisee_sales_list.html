@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+
+<title th:replace="~{include/include_title.html::title}"></title>
+
+<script type="text/javascript" th:src="@{/js/admin/member/admin_member.js}"></script>
+
+<link rel="stylesheet" th:href="@{/css/admin/common.css}">
+<link rel="stylesheet" th:href="@{/css/admin/admin_include.css}">
+<link rel="stylesheet" th:href="@{/css/admin/admin_home.css}">
+<link rel="stylesheet" th:href="@{/css/admin/sales/admin_franchisee_sales_list.css}">
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+<script type="text/javascript" th:replace="~{admin/include/section_side_menu_js.html::jquery_js}"></script>
+<script type="text/javascript" th:replace="~{admin/include/admin_franchisee_sales_list_js.html::admin_franchisee_sales_list_js}"></script>
+
+</head>
+<body>
+
+	<div id="admin_wrap">
+
+		<header th:replace="~{admin/include/admin_include.html::admin_header}">
+		</header>
+	
+	
+		<nav th:replace="~{admin/include/admin_include.html::admin_nav}">
+		</nav>
+		
+		
+		<section>
+		
+			<div id="section_wrap">
+			
+				<div th:replace="~{admin/include/admin_include.html::admin_section_side_menu}"></div>
+				
+				<div class="admin_section_view_wrap">
+			
+					<div class="word">
+						가맹 회원 일 매출
+					</div>
+
+					<div class="select_wrap">
+			
+						<select name="p_year">
+							<option value="2022">2022</option>
+							<option value="2023">2023</option>
+							<option value="2024">2024</option>
+							<option value="2025">2025</option>
+							<option value="2026">2026</option>
+							<option value="2027">2027</option>
+							<option value="2028">2028</option>
+							<option value="2029">2029</option>
+							<option value="2030">2030</option>
+							<option value="2031">2031</option>
+						</select>
+						년 &nbsp;&nbsp;
+						<select name="p_month">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+						</select>
+						월 &nbsp;&nbsp;
+
+						<select name="p_date">
+
+						</select>
+						일 &nbsp;&nbsp;
+
+						<input type="button" name="p_today" value="오늘">
+						
+					</div>
+						
+					<div class="admin_franchisee_sales_list">
+					
+		  				<table>
+							<thead>
+								<tr>
+									<td>NO</td>
+									<td>회원 이름</td>
+									<td>현금매출</td>
+									<td>카드매출</td>
+									<td>총매출</td>
+								</tr>
+							</thead>
+							
+							<tbody>
+
+							</tbody>
+
+						</table> 
+						
+					</div>
+
+					<div class="list_search">
+
+						<input type="text" name="start_date" maxlength="10">
+						<input type="text" name="end_date" maxlength="10">
+
+					</div>
+
+				</div>
+				
+			</div>
+			
+		</section>
+			
+		
+		<footer th:replace="~{admin/include/admin_include.html::admin_footer}">
+		</footer>
+		
+	</div>
+
+</body>
+</html>

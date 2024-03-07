@@ -50,5 +50,8 @@ public class FranchiseeSalesDto {
 	private String fcm_reg_date;
 	private String fcm_mod_date;
 	
+	private int cash_total_price;
+	private int card_total_price;
+	
 }
 

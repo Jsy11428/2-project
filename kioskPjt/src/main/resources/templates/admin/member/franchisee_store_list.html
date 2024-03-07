@@ -15,6 +15,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
 <script type="text/javascript" th:replace="~{admin/include/section_side_menu_js.html::jquery_js}"></script>
+<script type="text/javascript" th:replace="~{admin/include/franchisee_store_list_js.html::franchisee_store_list_js}"></script>
 
 </head>
 <body>
@@ -66,8 +67,30 @@
 								<td th:text="${f.fcs_reg_date}"></td>
 								<td th:text="${f.fcs_mod_date}"></td>
 							</tr>
-						</table> 
-						
+						</table>
+
+						<!-- <table>
+
+							<thead>
+								<tr>
+									<td>NO</td>
+									<td>지점명</td>
+									<td>주소</td>
+									<td>연락처</td>
+									<td>가맹회원 이름</td>
+									<td>가맹회원 ID</td>
+									<td>가맹회원 연락처</td>
+									<td>등록일</td>
+									<td>수정일</td>
+								</tr>
+							</thead>
+
+							<tbody>
+								
+							</tbody>
+
+						</table>  -->
+
 					</div>
 					
 				</div>

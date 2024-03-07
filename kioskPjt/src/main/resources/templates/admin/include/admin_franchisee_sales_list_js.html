@@ -1,0 +1,313 @@
+<script type="text/javascript" th:fragment="admin_franchisee_sales_list_js">
+
+// ------------ 현재 ------------
+let current_year;			// 현재_년도
+let current_month;			// 현재_월
+let current_date;			// 현재_일
+
+//------------ 오늘 ------------
+let today = new Date();
+let today_year 	= today.getFullYear();		// 오늘_년도
+let today_month = today.getMonth() + 1;		// 오늘_월
+let today_date 	= today.getDate();			// 오늘_일
+
+$(document).ready(function(){
+    console.log('DOCUMENT READY!!')
+
+    // 현재 날짜 세팅
+    setCurrentDate(today_year, today_month, today_date);
+
+    // select p_date 이달 날짜 입력
+    setCurrentDateSelectOption();
+
+    // select_wrap 현재 일자 세팅
+    setCurrentYearAndMonthSelectUI();
+
+    setCurrentDateSearchInput();
+
+    // 가맹점별 일 매출 테이블 <tr> 추가
+    addFranchiseeSalesListTable();
+
+    // 이벤트 핸들러 초기화
+    initEvents();
+
+})
+
+function setCurrentDate(year, month, date) {
+	console.log('setCurrentDate()');
+
+	current_year 	= year;
+	current_month 	= month;
+	current_date 	= date;
+	
+}
+
+function setCurrentYearAndMonthSelectUI() {
+	console.log('setCurrentYearAndMonthSelectUI()');
+	
+	$('#section_wrap select[name="p_year"]').val(current_year).prop('selected', true);
+	$('#section_wrap select[name="p_month"]').val(current_month).prop('selected', true);
+	$('#section_wrap select[name="p_date"]').val(current_date).prop('selected', true);
+
+}
+
+function setCurrentDateSearchInput() {
+    console.log('setCurrentDateSearchInput()');
+
+    let date = new Date();
+    let year = date.getFullYear();
+    let preMonth = ('0' + (date.getMonth())).slice(-2);
+    let month = ('0' + (date.getMonth() + 1)).slice(-2);
+    let day = ('0' + date.getDate()).slice(-2);
+    let preMonthDateStr = `${year}-${preMonth}-${day}`;
+    let dateStr = `${year}-${month}-${day}`;
+
+    $('#section_wrap .list_search input[name="start_date"]').val(preMonthDateStr);
+    $('#section_wrap .list_search input[name="end_date"]').val(dateStr);
+
+}
+
+function setCurrentDateSelectOption() {
+    console.log('setCurrentDateSelectOption()');
+
+    // -----------------  현재 월 & 첫 날 -------------------
+    let thisDateStart			= new Date(current_year, current_month, 1);
+    let thisDateStart_year		= thisDateStart.getFullYear();			// 이번달_년
+    let thisDateStart_month		= thisDateStart.getMonth();				// 이번달_월
+    let thisDateStart_date		= thisDateStart.getDate();				// 이번달_일
+
+    // -----------------  현재 월 & 마지막 날 -----------------
+    let thisDateEnd				= new Date(current_year, current_month + 1, 0);
+    let thisDateEnd_year		= thisDateEnd.getFullYear();			// 이번달_년
+    let thisDateEnd_month		= thisDateEnd.getMonth();				// 이번달_월
+    let thisDateEnd_date		= thisDateEnd.getDate();				// 이번달_일
+
+    let appendTag = '';
+    console.log("thisDateEnd_date ---- " , thisDateEnd_date);
+
+    for (let i = 0; i < thisDateEnd_date; i++) {
+
+        appendTag = "<option value='" + parseInt(i+1) + "'>" + parseInt(i+1) + "</option>";
+
+        $('#section_wrap .select_wrap select[name="p_date"]').append(appendTag);
+
+    }
+
+}
+
+function initEvents() {
+    console.log('initEvents()');
+
+    // select 년도 변경 
+    $(document).on('change', '#section_wrap .select_wrap select[name="p_year"]', function() {
+        console.log('p_year change handler!');
+
+        setYearBySelectChange();
+
+    });
+
+    // select 년도 변경 
+    $(document).on('change', '#section_wrap .select_wrap select[name="p_month"]', function() {
+        console.log('p_month change handler!');
+
+        setMonthBySelectChange();
+
+    });
+
+    // select 년도 변경 
+    $(document).on('change', '#section_wrap .select_wrap select[name="p_date"]', function() {
+        console.log('p_date change handler!');
+
+        setDateBySelectChange();
+
+    });
+
+    // select 오늘 btn cklick
+    $(document).on('click', '#section_wrap .select_wrap input[name="p_today"]', function() {
+        console.log('p_today click handler!');
+
+        setDateByTodayBtnclick();
+
+    });
+
+
+}
+
+function addFranchiseeSalesListTable() {
+    console.log('addFranchiseeSalesListTable()');
+
+    ajax_getFranchiseeAllSalesInfo()
+
+}
+
+function setYearBySelectChange() {
+    console.log('setYearBySelectChange()');
+
+    let temp_year = $('select[name="p_year"]').val();
+	let temp_month = $('select[name="p_month"]').val();
+	let temp_date = $('select[name="p_date"]').val();
+
+    let selectedDate = new Date(temp_year, temp_month, temp_date);
+
+    setCurrentDate(selectedDate.getFullYear(), 
+                    selectedDate.getMonth(), 
+                    selectedDate.getDate(), 
+                    selectedDate.getDay())
+
+    removeFranchiseeSalesList();
+
+    ajax_getCurrentDateFranchiseeTotalSales();
+
+}
+
+function setMonthBySelectChange() {
+    console.log('setMonthBySelectChange()');
+
+    let temp_year = $('select[name="p_year"]').val();
+	let temp_month = $('select[name="p_month"]').val();
+	let temp_date = $('select[name="p_date"]').val();
+
+    let selectedDate = new Date(temp_year, temp_month, temp_date);
+
+    setCurrentDate(selectedDate.getFullYear(), 
+                    selectedDate.getMonth(), 
+                    selectedDate.getDate(), 
+                    selectedDate.getDay())
+
+    removeFranchiseeSalesList();
+
+    ajax_getCurrentDateFranchiseeTotalSales();
+
+}
+
+function setDateBySelectChange() {
+    console.log('setDateBySelectChange()');
+
+    let temp_year = $('select[name="p_year"]').val();
+	let temp_month = $('select[name="p_month"]').val();
+	let temp_date = $('select[name="p_date"]').val();
+
+    let selectedDate = new Date(temp_year, temp_month, temp_date);
+
+    setCurrentDate(selectedDate.getFullYear(), 
+                    selectedDate.getMonth(), 
+                    selectedDate.getDate(), 
+                    selectedDate.getDay())
+
+    removeFranchiseeSalesList();
+
+    ajax_getCurrentDateFranchiseeTotalSales();
+
+}
+
+function setDateByTodayBtnclick() {
+    console.log('setDateByTodayBtnclick()');
+
+    setCurrentDate(today_year, today_month, today_date);
+
+    setCurrentYearAndMonthSelectUI()
+
+    removeFranchiseeSalesList();
+
+    ajax_getCurrentDateFranchiseeTotalSales();
+
+}
+
+function removeFranchiseeSalesList() {
+    console.log('removeFranchiseeSalesList()');
+
+    $('#section_wrap table tbody tr').remove();
+
+}
+
+// ajax - 가맹점 총 매출 불러오기 
+function ajax_getFranchiseeAllSalesInfo() {
+    console.log('ajax_getFranchiseeAllSalesInfo');
+
+    $.ajax({
+        url: '/admin/sales/getFranchiseeAllSalesInfo', 
+        method: 'post', 
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function(data) {
+            console.log('ajax success!!');
+
+            let salesDtos = data.franchiseeSalesDtos;
+            let appendTag = '';
+			
+            for (let i = 0; i < salesDtos.length; i++) {
+                
+                appendTag = '<tr>';
+                    
+                    appendTag += '<td>' + salesDtos[i].fcm_no + '</td>';
+                    appendTag += '<td>' + salesDtos[i].fcm_name + '</td>';
+                    appendTag += '<td>' + salesDtos[i].cash_total_price + '</td>';
+                    appendTag += '<td>' + salesDtos[i].card_total_price + '</td>';
+                    appendTag += '<td>' + parseInt(salesDtos[i].card_total_price+salesDtos[i].cash_total_price) + '</td>';
+
+                appendTag += '</tr>';
+
+                $('#section_wrap table tbody').append(appendTag);
+
+            }
+
+        },
+        error: function(data) {
+            console.log('ajax error!!')
+
+        }
+
+    })
+
+}
+
+// ajax - current date total sales 목록 가져오기 
+function ajax_getCurrentDateFranchiseeTotalSales() {
+    console.log('ajax_getCurrentDateFranchiseeTotalSales()');
+
+    let currentDate = {
+        year: current_year,
+        month: current_month,
+        date: current_date
+    }
+
+    $.ajax({
+        url: '/admin/sales/getSelectDateFranchiseeSalesInfo',
+        method: 'post',
+        data: JSON.stringify(currentDate),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function(data) {
+            console.log('ajax success!');
+
+            let selectDtos = data.selectFranchiseeSalesDtos;
+            
+            for (let i = 0; i < selectDtos.length; i++) {
+                let appendTag = '';
+                
+                appendTag = '<tr>';
+                    
+                    appendTag += '<td>' + selectDtos[i].fcm_no + '</td>';
+                    appendTag += '<td>' + selectDtos[i].fcm_name + '</td>';
+                    appendTag += '<td>' + selectDtos[i].cash_total_price + '</td>';
+                    appendTag += '<td>' + selectDtos[i].card_total_price + '</td>';
+                    appendTag += '<td>' + parseInt(selectDtos[i].card_total_price+selectDtos[i].cash_total_price) + '</td>';
+
+                appendTag += '</tr>';
+
+                $('#section_wrap table tbody').append(appendTag);
+
+            }
+
+        },
+        error: function(data) {
+            console.log('ajax error!!')
+
+        }
+
+    })
+
+}
+
+
+</script>

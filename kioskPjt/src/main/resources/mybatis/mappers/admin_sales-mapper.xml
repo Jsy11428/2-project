@@ -44,8 +44,8 @@
 	<!-- ajax fcs_name, 기간별 sales 목록 가져오기 -->
 	<!-- ajax fcm_name, 기간별 sales 목록 가져오기 -->
 	<!-- ajax pm_type, 기간별 sales 목록 가져오기 -->
-	<!-- <select id="selectSalesInfoByFcsName"
-			parameterType="com.office.kiosk.franchisee.dto.SearchSalesDto" 
+<!-- 	<select id="selectSalesInfoByFcsName"
+			parameterType="String" 
 			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto" >
 			
 		SELECT 
@@ -61,26 +61,64 @@
 		ON 
 			FCM.FCM_NO = FCS.FCM_NO 
 		WHERE CASE 
-        	WHEN #{search_term} = '1d' 
+        	WHEN '#{searchTerm}' = '1d' 
             THEN FCSA_REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -1 DAY ) AND NOW() 
-            WHEN #{search_term} = '1w' 
+            WHEN '#{searchTerm}' = '1w' 
             THEN FCSA_REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -1 WEEK ) AND NOW() 
-            WHEN #{search_term} = '1m' 
+            WHEN '#{searchTerm}' = '1m' 
             THEN FCSA_REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -1 MONTH ) AND NOW() 
-            WHEN #{search_term} = '6m' 
+            WHEN '#{searchTerm}' = '6m' 
             THEN FCSA_REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -6 MONTH ) AND NOW() 
-            WHEN #{search_term} = '1y' 
+            WHEN '#{searchTerm}' = '1y' 
             THEN FCSA_REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -1 YEAR ) AND NOW() 
-            WHEN #{search_term} = 'ALL' 
+            WHEN '#{searchTerm}' = 'ALL' 
             THEN FCSA_REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -100 YEAR ) AND NOW() 
 		AND 
-			FCS.FCS_NAME LIKE CONCAT('%',#{search_word},'%')) 
+			FCS.FCS_NAME LIKE '%#{searchWord}%' 
+	
+		SELECT 
+			* 
+		FROM 
+			TBL_FC_SALES FCSA 
+		JOIN 
+			TBL_FC_STORE FCS 
+		ON 
+			FCSA.FCS_NO = FCS.FCS_NO 
+		JOIN 
+			TBL_FC_MEMBER FCM 
+		ON 
+			FCM.FCM_NO = FCS.FCM_NO 
+		WHERE 
+			FCSA_REG_DATE BETWEEN
+            <choose>
+                <when test="${searchTerm} == '1d'">
+                    DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+                </when>
+                <when test="${searchTerm} == '1w'">
+                    DATE_SUB(CURDATE(), INTERVAL 1 WEEK)
+                </when>
+                <when test="${searchTerm} == '1m'">
+                    DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+                </when>
+                <when test="${searchTerm} == '6m'">
+                    DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+                </when>
+                <when test="${searchTerm} == '1y'">
+                    DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+                </when>
+                <otherwise>
+                    DATE_SUB(CURDATE(), INTERVAL 100 YEAR)
+                </otherwise>
+            </choose>
+        	AND NOW()
+		AND 
+			FCS.FCS_NAME LIKE '%${searchWord}%' 
 	
 	</select>
 	
 	
 	<select id="selectSalesInfoByFcmName"
-			parameterType="com.office.kiosk.franchisee.dto.SearchSalesDto" 
+			parameterType="String" 
 			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto" >
 			
 		SELECT 
@@ -96,26 +134,64 @@
 		ON 
 			FCM.FCM_NO = FCS.FCM_NO 
 		WHERE CASE 
-        	WHEN #{search_term} = '1d' 
+        	WHEN '#{searchTerm}' = '1d' 
             THEN FCSA_REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -1 DAY ) AND NOW() 
-            WHEN #{search_term} = '1w' 
+            WHEN '#{searchTerm}' = '1w' 
             THEN FCSA_REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -1 WEEK ) AND NOW() 
-            WHEN #{search_term} = '1m' 
+            WHEN '#{searchTerm}' = '1m' 
             THEN FCSA_REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -1 MONTH ) AND NOW() 
-            WHEN #{search_term} = '6m' 
+            WHEN '#{searchTerm}' = '6m' 
             THEN FCSA_REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -6 MONTH ) AND NOW() 
-            WHEN #{search_term} = '1y' 
+            WHEN '#{searchTerm}' = '1y' 
             THEN FCSA_REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -1 YEAR ) AND NOW() 
-            WHEN #{search_term} = 'ALL' 
+            WHEN '#{searchTerm}' = 'ALL' 
             THEN FCSA_REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -100 YEAR ) AND NOW() 
 		AND 
-			FCM.FCM_NAME LIKE CONCAT('%',#{search_word},'%')) 
+			FCM.FCM_NAME LIKE '%#{searchWord}%'
+			 
+		SELECT 
+			* 
+		FROM 
+			TBL_FC_SALES FCSA 
+		JOIN 
+			TBL_FC_STORE FCS 
+		ON 
+			FCSA.FCS_NO = FCS.FCS_NO 
+		JOIN 
+			TBL_FC_MEMBER FCM 
+		ON 
+			FCM.FCM_NO = FCS.FCM_NO 
+		WHERE 
+			FCSA_REG_DATE BETWEEN
+            <choose>
+                <when test="${searchTerm} == '1d'">
+                    DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+                </when>
+                <when test="${searchTerm} == '1w'">
+                    DATE_SUB(CURDATE(), INTERVAL 1 WEEK)
+                </when>
+                <when test="${searchTerm} == '1m'">
+                    DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+                </when>
+                <when test="${searchTerm} == '6m'">
+                    DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+                </when>
+                <when test="${searchTerm} == '1y'">
+                    DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+                </when>
+                <otherwise>
+                    DATE_SUB(CURDATE(), INTERVAL 100 YEAR)
+                </otherwise>
+            </choose>
+        	AND NOW()
+		AND 
+			FCM.FCM_NAME LIKE '%#{searchWord}%' 
 	
 	</select>
 	
 
 	<select id="selectSalesInfoByPmType"
-			parameterType="com.office.kiosk.franchisee.dto.SearchSalesDto" 
+			parameterType="String" 
 			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto" >
 			
 		SELECT 
@@ -131,25 +207,66 @@
 		ON 
 			FCM.FCM_NO = FCS.FCM_NO 
 		WHERE CASE 
-        	WHEN #{search_term} = '1d' 
+        	WHEN '#{searchTerm}' = '1d' 
             THEN FCSA_REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -1 DAY ) AND NOW() 
-            WHEN #{search_term} = '1w' 
+            WHEN '#{searchTerm}' = '1w' 
             THEN FCSA_REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -1 WEEK ) AND NOW() 
-            WHEN #{search_term} = '1m' 
+            WHEN '#{searchTerm}' = '1m' 
             THEN FCSA_REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -1 MONTH ) AND NOW() 
-            WHEN #{search_term} = '6m' 
+            WHEN '#{searchTerm}' = '6m' 
             THEN FCSA_REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -6 MONTH ) AND NOW() 
-            WHEN #{search_term} = '1y' 
+            WHEN '#{searchTerm}' = '1y' 
             THEN FCSA_REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -1 YEAR ) AND NOW() 
-            WHEN #{search_term} = 'ALL' 
+            WHEN '#{searchTerm}' = 'ALL' 
             THEN FCSA_REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL -100 YEAR ) AND NOW() 
 		AND 
-			FCSA.PM_TYPE LIKE CONCAT('%',#{search_word},'%')) 
+			FCSA.PM_TYPE LIKE '%#{searchWord}%' 
+			
+		SELECT 
+			* 
+		FROM 
+			TBL_FC_SALES FCSA 
+		JOIN 
+			TBL_FC_STORE FCS 
+		ON 
+			FCSA.FCS_NO = FCS.FCS_NO 
+		JOIN 
+			TBL_FC_MEMBER FCM 
+		ON 
+			FCM.FCM_NO = FCS.FCM_NO 
+		WHERE 
+			FCSA_REG_DATE BETWEEN
+            <choose>
+                <when test="${searchTerm} == '1d'">
+                    DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+                </when>
+                <when test="${searchTerm} == '1w'">
+                    DATE_SUB(CURDATE(), INTERVAL 1 WEEK)
+                </when>
+                <when test="${searchTerm} == '1m'">
+                    DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+                </when>
+                <when test="${searchTerm} == '6m'">
+                    DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+                </when>
+                <when test="${searchTerm} == '1y'">
+                    DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+                </when>
+                <otherwise>
+                    DATE_SUB(CURDATE(), INTERVAL 100 YEAR)
+                </otherwise>
+            </choose>
+        	AND NOW()
+		AND 
+			FCSA.PM_TYPE LIKE '%#{searchWord}%' 
 	
-	</select> -->
+	</select>  -->
+	
+	
+	
 	
 	<!-- FcsName = 기간별 조회 -->
-	<select id="selectSalesInfoByFcsNameForOneDay"
+ 	<select id="selectSalesInfoByFcsNameForOneDay"
 			parameterType="com.office.kiosk.franchisee.dto.SearchSalesDto" 
 			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto" >
 			
@@ -560,6 +677,81 @@
 			FCM.FCM_NO = FCS.FCM_NO 
 		WHERE 
 			FCSA.PM_TYPE LIKE '%${searchWord}%' 
+	
+	</select> 
+
+	
+	<!-- 가맹점별 총 매출 조회 -->
+	<select id="selectStoreTotalSales" 
+			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
+	
+		SELECT
+		    FCSA.FCS_NO,
+		    FCS.FCS_NAME,
+		    FCM.FCM_NAME,
+		    SUM(CASE WHEN FCSA.PM_TYPE = '카드' THEN FCSA.FCSA_PRICE END) AS CARD_TOTAL_PRICE,
+		    SUM(CASE WHEN FCSA.PM_TYPE = '현금' THEN FCSA.FCSA_PRICE END) AS CASH_TOTAL_PRICE
+		FROM TBL_FC_SALES FCSA 
+		JOIN TBL_FC_STORE FCS ON FCS.FCS_NO = FCSA.FCS_NO
+		JOIN TBL_FC_MEMBER FCM ON FCM.FCM_NO = FCS.FCM_NO
+		WHERE DATE(FCSA.FCSA_REG_DATE) = CURDATE() 
+		GROUP BY FCS_NO 
+	
+	</select>
+	
+	<!-- 특정 날짜 가맹점별 매출 조회 -->
+	<select id="selectDateTotalSales" 
+			parameterType="String"
+			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
+	
+		SELECT
+		    FCSA.FCS_NO,
+		    FCS.FCS_NAME,
+		    FCM.FCM_NAME,
+		    SUM(CASE WHEN FCSA.PM_TYPE = '카드' THEN FCSA.FCSA_PRICE END) AS CARD_TOTAL_PRICE,
+		    SUM(CASE WHEN FCSA.PM_TYPE = '현금' THEN FCSA.FCSA_PRICE END) AS CASH_TOTAL_PRICE
+		FROM TBL_FC_SALES FCSA 
+		JOIN TBL_FC_STORE FCS ON FCS.FCS_NO = FCSA.FCS_NO
+		JOIN TBL_FC_MEMBER FCM ON FCM.FCM_NO = FCS.FCM_NO
+		WHERE DATE(FCSA.FCSA_REG_DATE) = #{selectDate}
+		GROUP BY FCS_NO 
+	
+	</select>
+
+	<!-- 회원별 총 매출 조회 -->
+	<select id="selectFranchiseeTotalSales" 
+			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
+	
+		SELECT 
+			FCM.FCM_NO,
+		    FCM.FCM_NAME,
+			SUM(CASE WHEN FCSA.PM_TYPE = '카드' THEN FCSA.FCSA_PRICE END) AS CARD_TOTAL_PRICE,
+		    SUM(CASE WHEN FCSA.PM_TYPE = '현금' THEN FCSA.FCSA_PRICE END) AS CASH_TOTAL_PRICE
+		FROM 
+			TBL_FC_MEMBER FCM 
+		JOIN TBL_FC_STORE FCS ON FCS.FCM_NO = FCM.FCM_NO 
+		JOIN TBL_FC_SALES FCSA ON FCS.FCS_NO = FCSA.FCS_NO 
+		WHERE DATE(FCSA.FCSA_REG_DATE) = CURDATE() 
+		GROUP BY FCM_NO;
+	
+	</select>
+	
+		<!-- 특정 날짜 회원별 매출 조회 -->
+	<select id="selectDateFranchiseeTotalSales" 
+			parameterType="String"
+			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
+	
+		SELECT 
+			FCM.FCM_NO,
+		    FCM.FCM_NAME,
+			SUM(CASE WHEN FCSA.PM_TYPE = '카드' THEN FCSA.FCSA_PRICE END) AS CARD_TOTAL_PRICE,
+		    SUM(CASE WHEN FCSA.PM_TYPE = '현금' THEN FCSA.FCSA_PRICE END) AS CASH_TOTAL_PRICE
+		FROM 
+			TBL_FC_MEMBER FCM 
+		JOIN TBL_FC_STORE FCS ON FCS.FCM_NO = FCM.FCM_NO 
+		JOIN TBL_FC_SALES FCSA ON FCS.FCS_NO = FCSA.FCS_NO 
+		WHERE DATE(FCSA.FCSA_REG_DATE) = #{selectDate}
+		GROUP BY FCM_NO;
 	
 	</select>
 

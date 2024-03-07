@@ -1,0 +1,31 @@
+#section_wrap .admin_section_view_wrap .select_wrap {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+#section_wrap .admin_section_view_wrap .select_wrap select {
+	padding: 5px;
+	text-align: center;
+}
+
+#section_wrap .admin_section_view_wrap .select_wrap input[name="p_today"] {
+	padding: 5px;
+}
+
+#section_wrap .admin_section_view_wrap .admin_franchisee_sales_list {
+	width: 100%;
+}
+
+#section_wrap .admin_section_view_wrap .admin_franchisee_sales_list table {
+	margin: 0 10px;
+	border-collapse: collapse;
+	margin: 0 auto;
+}
+
+#section_wrap .admin_section_view_wrap .admin_franchisee_sales_list table tr td {
+	border: 1px solid #000;
+	text-align: center;
+	font-size: .9em;
+	padding: 5px;
+}
+
