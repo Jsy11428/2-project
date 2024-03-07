@@ -10,14 +10,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.office.kiosk.franchisee.menu.FranchiseeMenuCategoryDto;
-import com.office.kiosk.franchisee.menu.FranchiseeMenuDto;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -186,5 +182,23 @@ public class AdminMenuService {
 
 		return menuDtos;
 	}
+	
+	// 모달창으로 선택한 메뉴의 정보 가져오기
+	
+
+	public AdminMenuDto getSelectMenuInfo(String fc_menu_no) {
+		
+		log.info("getSelectMenuInfo()"); 
+		log.info(fc_menu_no);
+		
+		AdminMenuDto dto = iAdminMenuDao.selectMenuInfo(fc_menu_no);
+		
+		return dto;
+	}
+	
+	// 모달창에서 기존에 선택된 메뉴 카테고리 불러오기
+	
+	
+	
 
 }

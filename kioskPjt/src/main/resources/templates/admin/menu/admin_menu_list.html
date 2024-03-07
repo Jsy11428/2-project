@@ -42,14 +42,66 @@
 				<div class="admin_section_view_wrap">
 
 					<div class="word">admin menu list</div>
-					
+
 					<div class="menu_category_change_wrap">
-   						 <!-- 카테고리 버튼들 -->
+						<!-- 카테고리 버튼들 -->
 					</div>
 
 					<table id="admin_menu_list">
-					
+
 					</table>
+
+	<div class="modal_wrap">
+	
+		<div class="modify_menu_modal">
+
+						<form th:action="@{/admin/menu/modifyMenuAccountConfirm}" name="modify_menu_account_form" method="post" enctype="multipart/form-data">
+
+							<div class="modify_menu_wrap">
+								<table>
+									<tr>
+										<td><span>기존 사진</span></td>
+										<td><img class="img_section"></td>
+									</tr>
+									<tr>
+										<td><span>메뉴 이미지 첨부</span></td>
+										<td><input type="file" name="file"></td>
+									</tr>
+									<tr>
+										<td><span>카테고리 선택</span></td>
+										<td><select name="fcmc_no" id="menu_category_select"></select></td>
+									</tr>
+									<tr>
+										<td><span>메 뉴 명</span></td>
+										<td><input type="text" name="fc_menu_name" class="basic_txt_input" placeholder="메뉴의 이름을 입력하세요."></td>
+									</tr>
+									<tr>
+										<td><span>메뉴 가격</span></td>
+										<td><input type="number" name="fc_menu_price" class="basic_txt_input" placeholder="메뉴의 가격을 입력하세요."></td>
+									</tr>
+									<tr>
+										<td><span>메뉴 설명</span></td>
+										<td>
+											<textarea name="fc_menu_text" id="" cols="30" rows="10" class="long_txt_input"></textarea>
+										</td>										
+									</tr>									
+								
+									<tr>
+										<td colspan="3">
+											<input type="button" value="메뉴수정" onclick="modifyMenuAccountForm()">
+											<input type="button" value="메뉴삭제" onclick="deleteMenuAccountForm()">
+											<input type="reset" value="초기화" >											
+										</td>
+									</tr>
+								</table>
+							</div>
+
+						</form>
+		</div>
+		
+		</div>
+
+
 
 				</div>
 
@@ -59,7 +111,13 @@
 		<footer th:replace="~{admin/include/admin_include.html::admin_footer}">
 		</footer>
 
+	
+
+
 	</div>
+
+
+
 
 </body>
 </html>

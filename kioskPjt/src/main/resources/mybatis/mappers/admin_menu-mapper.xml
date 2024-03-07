@@ -4,54 +4,71 @@
 <mapper namespace="com.office.kiosk.admin.menu.IAdminMenuDao">
 
 
-<select id="selectAllCategory" resultType="com.office.kiosk.admin.menu.AdminMenuCategoryDto">
+	<select id="selectAllCategory"
+		resultType="com.office.kiosk.admin.menu.AdminMenuCategoryDto">
 
-	SELECT * 
-	FROM TBL_FC_MENU_CATEGORY;
+		SELECT *
+		FROM TBL_FC_MENU_CATEGORY;
 
-</select>
+	</select>
 
-<insert id="insertMenuCategory" parameterType="com.office.kiosk.admin.menu.AdminMenuCategoryDto">
+	<insert id="insertMenuCategory"
+		parameterType="com.office.kiosk.admin.menu.AdminMenuCategoryDto">
 
-	INSERT INTO TBL_FC_MENU_CATEGORY(FCMC_NAME, FCMC_REG_DATE, FCMC_MOD_DATE) 
-	VALUES(#{fcmc_name}, NOW(), NOW());
+		INSERT INTO TBL_FC_MENU_CATEGORY(FCMC_NAME, FCMC_REG_DATE, FCMC_MOD_DATE)
+		VALUES(#{fcmc_name}, NOW(), NOW());
 
-</insert>
+	</insert>
 
-<select id="isMenuCategory" parameterType="String" resultType="boolean">
+	<select id="isMenuCategory" parameterType="String"
+		resultType="boolean">
 
-	SELECT COUNT(*) FROM TBL_FC_MENU_CATEGORY WHERE FCMC_NAME = #{FCMC_NAME}
+		SELECT COUNT(*) FROM TBL_FC_MENU_CATEGORY WHERE FCMC_NAME = #{FCMC_NAME}
 
-</select>
-
-
-<select id="selectAllMenus" resultType="com.office.kiosk.admin.menu.AdminMenuDto">
-
-	SELECT * 
-	FROM TBL_FC_MENU;
-
-</select>
-
-<select id="selectMenusByCategory" parameterType="String" resultType="com.office.kiosk.admin.menu.AdminMenuDto">
-    
-    SELECT * FROM TBL_FC_MENU WHERE FCMC_NO = #{FCMC_NO}
-
-</select>
+	</select>
 
 
-<insert id="insertMenu" parameterType="com.office.kiosk.admin.menu.AdminMenuDto"> 
+	<select id="selectAllMenus"
+		resultType="com.office.kiosk.admin.menu.AdminMenuDto">
 
-	INSERT INTO TBL_FC_MENU(FC_MENU_NAME, FCMC_NO, FC_MENU_TEXT, FC_MENU_PRICE, FC_MENU_IMG_NAME, FC_MENU_QUANTITY, FC_MENU_REG_DATE, FC_MENU_MOD_DATE) 
-	
-	VALUES (#{fc_menu_name}, #{fcmc_no}, #{fc_menu_text}, #{fc_menu_price}, #{fc_menu_img_name}, #{fc_menu_quantity}, NOW(), NOW());
-	
+		SELECT *
+		FROM TBL_FC_MENU;
 
-</insert>
+	</select>
 
-<select id="isMenu" parameterType="String" resultType="boolean"> 
+	<select id="selectMenusByCategory" parameterType="String"
+		resultType="com.office.kiosk.admin.menu.AdminMenuDto">
 
-	SELECT COUNT(*) FROM TBL_FC_MENU WHERE FC_MENU_NAME = #{fc_menu_name};
+		SELECT * FROM TBL_FC_MENU WHERE FCMC_NO = #{FCMC_NO}
 
-</select>
+	</select>
+
+	<select id="selectMenuInfo" parameterType="String"
+		resultType="com.office.kiosk.admin.menu.AdminMenuDto">
+
+		SELECT * FROM TBL_FC_MENU WHERE FC_MENU_NO = #{fc_menu_no}
+
+	</select>
+
+
+
+	<insert id="insertMenu"
+		parameterType="com.office.kiosk.admin.menu.AdminMenuDto">
+
+		INSERT INTO TBL_FC_MENU(FC_MENU_NAME, FCMC_NO, FC_MENU_TEXT, FC_MENU_PRICE,
+		FC_MENU_IMG_NAME, FC_MENU_QUANTITY, FC_MENU_REG_DATE,
+		FC_MENU_MOD_DATE)
+
+		VALUES (#{fc_menu_name}, #{fcmc_no}, #{fc_menu_text}, #{fc_menu_price},
+		#{fc_menu_img_name}, #{fc_menu_quantity}, NOW(), NOW());
+
+
+	</insert>
+
+	<select id="isMenu" parameterType="String" resultType="boolean">
+
+		SELECT COUNT(*) FROM TBL_FC_MENU WHERE FC_MENU_NAME = #{fc_menu_name};
+
+	</select>
 
 </mapper>

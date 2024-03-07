@@ -4,9 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.office.kiosk.franchisee.menu.FranchiseeMenuCategoryDto;
-import com.office.kiosk.franchisee.menu.FranchiseeMenuDto;
-
 @Mapper
 public interface IAdminMenuDao {
 
@@ -16,14 +13,15 @@ public interface IAdminMenuDao {
 
 	public boolean isMenuCategory(String fcmc_name);
 	
-
 	public List<AdminMenuDto> selectAllMenus();
 	
-
 	public int insertMenu(AdminMenuDto adminMenuDto);
 	
 	public boolean isMenu(String fc_menu_name);
 
 	public List<AdminMenuDto> selectMenusByCategory(String fcmc_no);
+
+	public AdminMenuDto selectMenuInfo(String fc_menu_no);
+
 
 }

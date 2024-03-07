@@ -136,5 +136,29 @@ public class AdminMenuController {
 		return menuDtos;
 
 	}
+	
+	
+
+	// 모달창으로 선택한 메뉴의 정보 가져오기
+	
+	@PostMapping("/getSelectMenuInfo")
+	@ResponseBody
+	public AdminMenuDto getSelectMenuInfo(Model model ,@RequestParam("fc_menu_no") String fc_menu_no) {
+		log.info("getSelectMenuInfo()"); 
+		log.info(fc_menu_no);
+		log.info(adminMenuService.getSelectMenuInfo(fc_menu_no));
+		
+		AdminMenuDto dto = adminMenuService.getSelectMenuInfo(fc_menu_no);
+	
+		
+	    return dto;
+	}
+	
+	// 모달창에서 기존에 선택된 메뉴 카테고리 불러오기
+	
+	
+	
+	
+	
 
 }
