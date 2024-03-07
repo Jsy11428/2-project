@@ -87,7 +87,7 @@ public class AdminMenuController {
    public String createMenuCategoryAccountConfirm(Model model, AdminMenuCategoryDto adminMenuCategoryDto) {
       log.info("createMenuCategoryAccountConfirm");
       
-      String nextPage = "/admin/menu/create_menu_account_ok";
+      String nextPage = "redirect:/admin/menu/createMenuForm";
       
       int result = -1;
       
