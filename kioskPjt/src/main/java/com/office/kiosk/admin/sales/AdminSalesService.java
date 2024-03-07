@@ -1,5 +1,6 @@
 package com.office.kiosk.admin.sales;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,8 +44,157 @@ public class AdminSalesService {
 		
 		Map<String, Object> map = new HashMap<>();
 		
-		List<FranchiseeSalesDto> searchSalesDtos = 
-				iAdminSalesDao.selectAllSalesInfoForAjax();
+		String searchValue = searchSalesDto.getSearch_value();
+		String searchTerm = searchSalesDto.getSearch_term();
+		String searchWord = searchSalesDto.getSearch_word();
+		
+		List<FranchiseeSalesDto> searchSalesDtos = new ArrayList<>();
+		
+		switch (searchValue) {
+		case "fcs_name":
+			
+//			searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcsName(searchSalesDto);
+			
+			switch (searchTerm) {
+			case "1d":
+				
+				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcsNameForOneDay(searchWord);
+				
+				break;
+			
+			case "1w":
+				
+				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcsNameForOneWeek(searchWord);
+				
+				break;
+				
+			case "1m":
+				
+				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcsNameForOneMonth(searchWord);
+				
+				break;
+			
+			case "6m":
+				
+				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcsNameForSixMonth(searchWord);
+				
+				break;
+				
+			case "1y":
+				
+				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcsNameForOneYear(searchWord);
+				
+				break;
+			
+			case "all":
+				
+				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcsName(searchWord);
+				
+				break;
+				
+			}
+			
+			break;
+			
+		case "fcm_name":
+			
+//			searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcmName(searchSalesDto);
+			
+			switch (searchTerm) {
+			case "1d":
+				
+				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcmNameForOneDay(searchWord);
+				
+				break;
+			
+			case "1w":
+				
+				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcmNameForOneWeek(searchWord);
+				
+				break;
+				
+			case "1m":
+				
+				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcmNameForOneMonth(searchWord);
+				
+				break;
+			
+			case "6m":
+				
+				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcmNameForSixMonth(searchWord);
+				
+				break;
+				
+			case "1y":
+				
+				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcmNameForOneYear(searchWord);
+				
+				break;
+			
+			case "all":
+				
+				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcmName(searchWord);
+				
+				break;
+				
+			}
+			
+			break;
+			
+		case "pm_type":
+			
+//			searchSalesDtos = iAdminSalesDao.selectSalesInfoByPmType(searchSalesDto);
+			
+			switch (searchTerm) {
+			case "1d":
+				
+				searchSalesDtos = iAdminSalesDao.selectSalesInfoByPmTypeForOneDay(searchWord);
+				
+				break;
+			
+			case "1w":
+				
+				searchSalesDtos = iAdminSalesDao.selectSalesInfoByPmTypeForOneWeek(searchWord);
+				
+				break;
+				
+			case "1m":
+				
+				searchSalesDtos = iAdminSalesDao.selectSalesInfoByPmTypeForOneMonth(searchWord);
+				
+				break;
+			
+			case "6m":
+				
+				searchSalesDtos = iAdminSalesDao.selectSalesInfoByPmTypeForSixMonth(searchWord);
+				
+				break;
+				
+			case "1y":
+				
+				searchSalesDtos = iAdminSalesDao.selectSalesInfoByPmTypeForOneYear(searchWord);
+				
+				break;
+			
+			case "all":
+				
+				searchSalesDtos = iAdminSalesDao.selectSalesInfoByPmType(searchWord);
+				
+				break;
+				
+			}
+			
+			break;
+		}
+		
+//		if (searchValue == "fcs_name") {
+//			searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcsName(searchSalesDto);
+//		} else if (searchValue == "fcm_name") {
+//			searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcmName(searchSalesDto);
+//		} else if (searchValue == "pm_type") {
+//			searchSalesDtos = iAdminSalesDao.selectSalesInfoByPmType(searchSalesDto);
+//		}
+		
 		
 		map.put("searchSalesDtos", searchSalesDtos);
 		

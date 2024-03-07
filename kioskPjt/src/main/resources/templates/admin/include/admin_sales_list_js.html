@@ -6,14 +6,14 @@ $(document).ready(function(){
 
     addSalesListTable()
 
+    initEvents()
+
 })
 
 function addSalesListTable() {
     console.log('addSalesListTable()');
 
     ajax_getAllSalesInfo()
-
-    initEvents()
 
 }
 
@@ -44,7 +44,7 @@ function initEvents() {
 function removeSalesList() {
     console('removeSalesList()');
 
-    $('#section_wrap table tbody tr').remove();
+    $('#section_wrap .admin_sales_list table tbody tr').remove();
 }
 
 // ajax - 모든 매출 목록 불러오기 
@@ -95,6 +95,8 @@ function ajax_getAllSalesInfo() {
 function ajax_searchSalesList(search_term, search_value, search_word) {
     console.log('ajax_searchSalesList()')
 
+    
+
     let formData = new FormData();
     formData.append('search_term', search_term);
     formData.append('search_value', search_value);
@@ -111,7 +113,7 @@ function ajax_searchSalesList(search_term, search_value, search_word) {
 
             removeSalesList();
 
-            let searchDtos = data.franchiseeSalesDtos;
+            let searchDtos = data.searchSalesDtos;
             let appendTag = '';
 			
             for (let i = 0; i < searchDtos.length; i++) {

@@ -80,6 +80,8 @@ public class AdminSalesController {
 		Map<String, Object> resultMap = 
 				adminSalesService.getSearchSales(searchSalesDto);
 		
+		log.info("resultMap----" + resultMap);
+		
 		return resultMap;
 	}
 	
