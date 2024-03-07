@@ -5,7 +5,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.office.kiosk.franchisee.menu.FranchiseeMenuCategoryDto;
 import com.office.kiosk.franchisee.menu.FranchiseeMenuDto;
@@ -32,6 +40,9 @@ public class AdminMenuService {
 	
 	@Autowired
 	IAdminMenuDao iAdminMenuDao;
+	
+	@Autowired
+	RestTemplate restTemplate;
 	
 	public Map<String, Object> getCategory() {
 		log.info("getCategory()");
@@ -130,6 +141,35 @@ public class AdminMenuService {
 			return ADMIN_MENU_ALREADT_EXIST;
 		}
 		
+	}
+
+
+
+	public ResponseEntity<String> uploadFile(MultipartFile file) {
+		
+		System.out.println("file: "+file);
+				
+		//RestTemplate
+		
+		//RestTemplate 객체생성
+//		RestTemplate restTemplate = new RestTemplate();
+		
+		// Request Header 설정
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+		
+		// Request body 설정
+		MultiValueMap<String, Object> requestBody = new LinkedMultiValueMap<>();
+		requestBody.add("file", file.getResource());		
+		
+		//Request Entity
+		HttpEntity<MultiValueMap<String, Object>> responseEntity = new HttpEntity<>(requestBody, headers);
+		
+		//API 호출
+		String severURL = "http://14.42.124.93:8091/upload_file";
+		ResponseEntity<String> response = restTemplate.postForEntity(severURL, responseEntity, String.class);
+				
+		return response;
 	}
 	
 }
