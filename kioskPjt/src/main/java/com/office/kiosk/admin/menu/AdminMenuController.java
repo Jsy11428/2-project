@@ -61,7 +61,7 @@ public class AdminMenuController {
       if(result <= 0) nextPage = "/admin/menu/create_menu_account_ng";
        
       } else { nextPage = "/admin/menu/create_menu_account_ng"; 
-       
+      	
       }
        
       return nextPage;
