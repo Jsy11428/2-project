@@ -17,12 +17,18 @@
     
  	<select id="getOrdersByNo" resultType="com.office.kiosk.franchisee.order.FranchiseeOrderDto">
    		   	
-		 SELECT FO.*, FS.*, FM.*, FMC.* 
+		SELECT FO.*, FS.*, FM.*, FMC.* 
+		
 	    FROM TBL_FC_ORDER FO 
+	    
 	    JOIN TBL_FC_STORE FS ON FO.FCS_NO = FS.FCS_NO 
+	    
 	    JOIN TBL_FC_MENU FM ON FO.FC_MENU_NO = FM.FC_MENU_NO 
+	    
 	    JOIN TBL_FC_MENU_CATEGORY FMC ON FO.FCMC_NO = FMC.FCMC_NO 
+	    
 	    JOIN TBL_FC_MEMBER FM2 ON FS.FCM_NO = FM2.FCM_NO 
+	    
 	    WHERE FM2.FCM_NO = #{loginNo}
 		   		    		   
   	</select>
