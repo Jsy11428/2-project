@@ -31,9 +31,13 @@ public interface IAdminMemberDao {
 
 	public List<FranchiseeStoreDto> selectAllFranchiseeStoreInfo();
 
-	public List<AdminMemberDto> selectPagingList(Map<String, Integer> pagingParams);
+	public List<AdminMemberDto> selectAdminMemberPagingList(Map<String, Integer> pagingParams);
 
 	public int selcetAllAdminListCnt();
+
+	public List<AdminMemberDto> selectFranchiseePagingList(Map<String, Integer> pagingParams);
+
+	public int selcetAllFranchiseeListCnt();
 
 
 }

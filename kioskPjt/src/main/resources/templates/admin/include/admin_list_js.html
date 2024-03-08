@@ -73,33 +73,37 @@ function ajax_getAllAdminInfo(pageNum = 1) {
             }
           	
             if(adminMemberListPageDto.page <= 1){
-            	$('#section_wrap div.page_no_wrap').append("<span>[이전]</span>");
+                $('#section_wrap div.page_no_wrap').append(`<span >&#8810;</span>`);
+            	$('#section_wrap div.page_no_wrap').append("<span >[이전]</span>");
             }else{
             	/* $('#section_wrap div.page_no_wrap').append("<a href='/admin/member/getAdminList?page="+adminMemberListPageDto.page - 1+"'>[이전]</a>"); */
-            	$('#section_wrap div.page_no_wrap').append(`<a href="#none" class="pre_page_btn" page_num='${(adminMemberListPageDto.page-1)}'>[이전]</a>`);
+            	$('#section_wrap div.page_no_wrap').append(`<a style='font-weight: bold' href="#none" class="pre_page_btn" page_num='1'>&#8810;</a>`);
+            	$('#section_wrap div.page_no_wrap').append(`<a style='font-weight: bold' href="#none" class="pre_page_btn" page_num='${(adminMemberListPageDto.page-1)}'>[이전]</a>`);
             }
                         
             for(let i = adminMemberListPageDto.startPage; i <= adminMemberListPageDto.endPage; i++){
             	let appendPageNum = '';
             	appendPageNum += "<span class='page_num_wrap'>";
             	if(i === adminMemberListPageDto.page){
-            		appendPageNum += i;
+            		appendPageNum += "<b style='color:#555'>"+i+"</b>";
             	}else{
             		/* appendPageNum += "<a href='/admin/member/getAdminList?page="+i+"'>"+i+"</a>"; */
             		appendPageNum += `<a href="#none" class="page_num_btn" page_num='${i}'>${i}</a>`;
             	}
             	appendPageNum += "</span>";
-            	$('#section_wrap div.page_no_wrap').append(appendPageNum);                  	
+            	$('#section_wrap div.page_no_wrap').append(appendPageNum); 
             }
             
             if(adminMemberListPageDto.page >= adminMemberListPageDto.maxPage){
             	$('#section_wrap div.page_no_wrap').append("<span>[다음]</span>");
+            	$('#section_wrap div.page_no_wrap').append(`<span>&#8811;</span>`);
+
             }else{
             	/* $('#section_wrap div.page_no_wrap').append("<a href='/admin/member/getAdminList?page="+(adminMemberListPageDto.page+1)+"'>[다음]</a>"); */
-            	$('#section_wrap div.page_no_wrap').append(`<a href="#none" class="next_page_btn" page_num='${(adminMemberListPageDto.page+1)}'>[다음]</a>`);
+            	$('#section_wrap div.page_no_wrap').append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(adminMemberListPageDto.page+1)}'>[다음]</a>`);
+            	$('#section_wrap div.page_no_wrap').append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(adminMemberListPageDto.maxPage)}'>&#8811;</a>`);
             }
             
-
         },
         error: function(data) {
             console.log('ajax error!!');

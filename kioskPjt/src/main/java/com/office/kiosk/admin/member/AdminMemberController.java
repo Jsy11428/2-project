@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.office.kiosk.franchisee.FranchiseeStoreDto;
 import com.office.kiosk.franchisee.member.FranchiseeMemberDto;
+import com.office.kiosk.paging.kioskPageDto;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
@@ -150,17 +151,42 @@ public class AdminMemberController {
 	/*
 	 *  franchisee list 불러오기
 	 */
+//	@GetMapping("/franchiseeList")
+//	public String franchiseeList(Model model) {
+//		log.info("franchiseeList()");
+//		
+//		String nextPage = "/admin/member/franchisee_list";
+//		
+//		List<FranchiseeMemberDto> franchiseeMemberDtos = adminMemberService.franchiseeList();
+//		
+//		model.addAttribute("franchiseeMemberDtos", franchiseeMemberDtos);
+//		
+//		return nextPage;
+//		
+//	}
 	@GetMapping("/franchiseeList")
 	public String franchiseeList(Model model) {
 		log.info("franchiseeList()");
 		
 		String nextPage = "/admin/member/franchisee_list";
 		
-		List<FranchiseeMemberDto> franchiseeMemberDtos = adminMemberService.franchiseeList();
-		
-		model.addAttribute("franchiseeMemberDtos", franchiseeMemberDtos);
-		
 		return nextPage;
+		
+	}
+	
+	@GetMapping("/getFranchiseeList")
+	@ResponseBody
+	public Object franchiseeList(@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+		log.info("franchiseeList()");
+		log.info("page: "+page);
+		
+		Map<String, Object> pagingFranchiseeMemberDtos = adminMemberService.pagingFranchiseeList(page);
+		
+		kioskPageDto franchiseeMemberListPageDto = adminMemberService.getAllFranchiseeListPageNum(page);
+		
+		pagingFranchiseeMemberDtos.put("franchiseeMemberListPageDto", franchiseeMemberListPageDto);
+				
+		return pagingFranchiseeMemberDtos;
 		
 	}
 	
@@ -256,7 +282,7 @@ public class AdminMemberController {
 			
 			Map<String, Object> pagingAdminMemberDtos = adminMemberService.pagingAdminList(page);
 			
-			AdminMemberListPageDto adminMemberListPageDto = adminMemberService.getAllAdminListPageNum(page);
+			kioskPageDto adminMemberListPageDto = adminMemberService.getAllAdminListPageNum(page);
 			
 			pagingAdminMemberDtos.put("adminMemberListPageDto", adminMemberListPageDto);
 			
@@ -268,20 +294,7 @@ public class AdminMemberController {
 		}
 				
 	}
-	
-	/*
-	 * admin_list paging
-	 */
-//	@GetMapping("/adminList/paging")
-//	@ResponseBody
-//	public Object adminListPageing (@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
-//		log.info("adminListPageing()");
-//				
-//		Map<String, Object> pagingAdminMemberDtos = adminMemberService.pagingAdminList(page);
-//				
-//		return pagingAdminMemberDtos;
-//	}
-	
+		
 	/*
 	 * 	admin 승인하기
 	 */

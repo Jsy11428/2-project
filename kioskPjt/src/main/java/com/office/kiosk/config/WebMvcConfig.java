@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
-import com.office.kiosk.admin.member.AdminMemberListPageDto;
+import com.office.kiosk.paging.kioskPageDto;
 
 @Configuration
 public class WebMvcConfig {
