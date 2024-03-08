@@ -166,7 +166,7 @@
 	
 	</select>
 	
-	<select id="selectPagingList" parameterType="java.util.Map" resultType="com.office.kiosk.admin.member.AdminMemberDto">
+	<select id="selectAdminMemberPagingList" parameterType="java.util.Map" resultType="com.office.kiosk.admin.member.AdminMemberDto">
 		
 		SELECT 
 			* 
@@ -184,6 +184,52 @@
 			COUNT(AM_NO) 
 		FROM 
 			TBL_ADMIN_MEMBER
+		
+	</select>
+	
+	<select id="selectFranchiseePagingList" parameterType="java.util.Map" resultType="com.office.kiosk.franchisee.member.FranchiseeMemberDto">
+		
+		SELECT 
+			* 
+		FROM 
+			TBL_FC_MEMBER 
+		ORDER BY FCM_NO ASC 
+		LIMIT 
+			#{start},#{limit}
+		
+	</select>
+	
+	<select id="selcetAllFranchiseeListCnt" resultType="Integer">
+		
+		SELECT 
+			COUNT(FCM_NO) 
+		FROM 
+			TBL_FC_MEMBER
+		
+	</select>
+	
+	<select id="selectAllFranchiseeStorePagingList" parameterType="java.util.Map" resultType="com.office.kiosk.franchisee.FranchiseeStoreDto">
+		
+		SELECT 
+			* 
+		FROM 
+			TBL_FC_STORE FCS 
+		JOIN 
+			TBL_FC_MEMBER FCM 
+		ON 
+			FCS.FCM_NO = FCM.FCM_NO
+		ORDER BY FCS_NO ASC 
+		LIMIT 
+			#{start},#{limit}
+		
+	</select>
+	
+	<select id="selcetAllStoreListCnt" resultType="Integer">
+		
+		SELECT 
+			COUNT(FCS_NO) 
+		FROM 
+			TBL_FC_STORE
 		
 	</select>
 
