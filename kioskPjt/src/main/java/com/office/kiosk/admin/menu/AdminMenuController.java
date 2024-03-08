@@ -25,48 +25,45 @@ public class AdminMenuController {
 
 	// 메뉴 등록 화면 페이지 이동(뷰 변경)
 
-	 @GetMapping("/createMenuForm")
-	   public String createMenuForm(Model model, AdminMenuCategoryDto adminMenuCategoryDto) {
-	      log.info("createMenuForm()");
-	      
-	      String nextPage = "/admin/menu/create_menu_account_form";
-	      
-	      model.addAttribute("adminMenuCategoryDto", adminMenuCategoryDto);
-	      
-	      return nextPage;
-	      
-	   }
-	 
-	  @PostMapping("/createMenuAccountConfirm")
-	   public String createMenuAccountConfirm(AdminMenuDto adminMenuDto,
-	         @RequestParam("file") MultipartFile file) {
-	      log.info("createMenuAccountConfirm()");
-	      
-	      String nextPage = "redirect:/admin/menu/menuList";
-	      
-	      log.info(file);      
-	      
-	      ResponseEntity<String> saveFileName = adminMenuService.uploadFile(file);
-	      
-	         
-	      if(saveFileName != null) {
-	         adminMenuDto.setFc_menu_img_name(saveFileName.getBody()); 
-	      
-	      int result =
-	      adminMenuService.createMenuAccountConfirm(adminMenuDto);
-	       
-	      if(result <= 0) nextPage = "/admin/menu/create_menu_account_ng";
-	       
-	      } else { nextPage = "/admin/menu/create_menu_account_ng"; 
-	      	
-	      }
-	       
-	      return nextPage;
-	   }
-   
+	@GetMapping("/createMenuForm")
+	public String createMenuForm(Model model, AdminMenuCategoryDto adminMenuCategoryDto) {
+		log.info("createMenuForm()");
+
+		String nextPage = "/admin/menu/create_menu_account_form";
+
+		model.addAttribute("adminMenuCategoryDto", adminMenuCategoryDto);
+
+		return nextPage;
+
+	}
 
 	// 메뉴 등록
 
+	@PostMapping("/createMenuAccountConfirm")
+	public String createMenuAccountConfirm(AdminMenuDto adminMenuDto, @RequestParam("file") MultipartFile file) {
+		log.info("createMenuAccountConfirm()");
+
+		String nextPage = "redirect:/admin/menu/menuList";
+
+		log.info(file);
+
+		ResponseEntity<String> saveFileName = adminMenuService.uploadFile(file);
+
+		if (saveFileName != null) {
+			adminMenuDto.setFc_menu_img_name(saveFileName.getBody());
+
+			int result = adminMenuService.createMenuAccountConfirm(adminMenuDto);
+
+			if (result <= 0)
+				nextPage = "/admin/menu/create_menu_account_ng";
+
+		} else {
+			nextPage = "/admin/menu/create_menu_account_ng";
+
+		}
+
+		return nextPage;
+	}
 
 	// 모든 카테고리 가져오기
 
@@ -126,7 +123,7 @@ public class AdminMenuController {
 		return menuDtos;
 
 	}
-	
+
 	// 카테고리에 따른 메뉴 불러오기
 
 	@PostMapping("/getMenusByCategory")
@@ -139,29 +136,66 @@ public class AdminMenuController {
 		return menuDtos;
 
 	}
-	
-	
 
 	// 모달창으로 선택한 메뉴의 정보 가져오기
-	
+
 	@PostMapping("/getSelectMenuInfo")
 	@ResponseBody
-	public AdminMenuDto getSelectMenuInfo(Model model ,@RequestParam("fc_menu_no") String fc_menu_no) {
-		log.info("getSelectMenuInfo()"); 
+	public AdminMenuDto getSelectMenuInfo(Model model, @RequestParam("fc_menu_no") String fc_menu_no) {
+		log.info("getSelectMenuInfo()");
 		log.info(fc_menu_no);
 		log.info(adminMenuService.getSelectMenuInfo(fc_menu_no));
-		
+
 		AdminMenuDto dto = adminMenuService.getSelectMenuInfo(fc_menu_no);
-	
-		
-	    return dto;
+
+		return dto;
 	}
-	
-	// 모달창에서 기존에 선택된 메뉴 카테고리 불러오기
-	
-	
-	
-	
-	
+
+	// 메뉴 정보 수정 버튼 컨펌
+
+	@PostMapping("/modifyMenuAccountConfirm")
+	public String modifyMenuAccountConfirm(AdminMenuDto adminMenuDto, @RequestParam("file") MultipartFile file) {
+		log.info("modifyMenuAccountConfirm()");
+		log.info(adminMenuDto);
+
+		String nextPage = "redirect:/admin/menu/menuList";
+
+		log.info(file);
+
+		ResponseEntity<String> saveFileName = adminMenuService.uploadFile(file);
+
+		if (saveFileName != null) {
+			adminMenuDto.setFc_menu_img_name(saveFileName.getBody());
+
+			int result = adminMenuService.modifyMenuAccountConfirm(adminMenuDto);
+
+			if (result <= 0)
+				nextPage = "/admin/menu/modify_menu_account_ng";
+
+		}
+
+		return nextPage;
+	}
+
+	// 메뉴 삭제 확인 컨펌
+
+	@GetMapping({ "/deleteMenuConfirm", "/admin/menu/deleteMenuConfirm" })
+	public String deleteMenuConfirm(@RequestParam("fc_menu_no") String fc_menu_no) {
+		log.info("deleteMenuConfirm");
+
+		String nextPage = "redirect:/admin/menu/menuList";
+
+		int result = -1;
+
+		result = adminMenuService.deleteMenuConfirm(fc_menu_no);
+
+		if (result <= 0) {
+
+			nextPage = "/admin/menu/delete_menu_account_ng";
+		}
+
+		return nextPage;
+
+	}
 
 }

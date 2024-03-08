@@ -23,6 +23,7 @@ $(document).ready(function(){
     // select_wrap 현재 일자 세팅
     setCurrentYearAndMonthSelectUI();
 
+    // input[type="date"] 기본 날짜 세팅
     setCurrentDateSearchInput();
 
     // 가맹점별 일 매출 테이블 <tr> 추가
@@ -42,6 +43,7 @@ function setCurrentDate(year, month, date) {
 	
 }
 
+// select_wrap 현재 일자 세팅
 function setCurrentYearAndMonthSelectUI() {
 	console.log('setCurrentYearAndMonthSelectUI()');
 	
@@ -51,6 +53,7 @@ function setCurrentYearAndMonthSelectUI() {
 
 }
 
+// input[type="date"] 기본 날짜 세팅
 function setCurrentDateSearchInput() {
     console.log('setCurrentDateSearchInput()');
 
@@ -62,11 +65,14 @@ function setCurrentDateSearchInput() {
     let preMonthDateStr = `${year}-${preMonth}-${day}`;
     let dateStr = `${year}-${month}-${day}`;
 
+    // 한달전 날짜 세팅
     $('#section_wrap .list_search input[name="start_date"]').val(preMonthDateStr);
+    // 현재 날짜 세팅
     $('#section_wrap .list_search input[name="end_date"]').val(dateStr);
 
 }
 
+// select_wrap 현재 일자 세팅
 function setCurrentDateSelectOption() {
     console.log('setCurrentDateSelectOption()');
 
@@ -85,6 +91,7 @@ function setCurrentDateSelectOption() {
     let appendTag = '';
     console.log("thisDateEnd_date ---- " , thisDateEnd_date);
 
+    // 현재 달 일수 만큼 select option 생성
     for (let i = 0; i < thisDateEnd_date; i++) {
 
         appendTag = "<option value='" + parseInt(i+1) + "'>" + parseInt(i+1) + "</option>";
@@ -129,6 +136,14 @@ function initEvents() {
         setDateByTodayBtnclick();
 
     });
+
+    // .list_search input[name="search"] btn ckick
+    $(document).on('click', '#section_wrap .list_search input[name="search"]', function() {
+        console.log('search btn click handler!');
+
+        searchBtnClick();
+
+    })
 
 
 }
@@ -210,6 +225,15 @@ function setDateByTodayBtnclick() {
     removeFranchiseeSalesList();
 
     ajax_getCurrentDateFranchiseeTotalSales();
+
+}
+
+function searchBtnClick() {
+    console.log('searchBtnClick()');
+
+    removeFranchiseeSalesList();
+
+    ajax_getFranchiseeTotalSalesByInputPeriod();
 
 }
 
@@ -305,6 +329,53 @@ function ajax_getCurrentDateFranchiseeTotalSales() {
 
         }
 
+    })
+
+}
+
+// 선택 기간 회원별 매출 불러오기
+function ajax_getFranchiseeTotalSalesByInputPeriod() {
+    console.log('ajax_getFranchiseeTotalSalesByInputPeriod()');
+
+    let startDate = $('input[name="start_date"]').val();
+    let endDate = $('input[name="end_date"]').val();
+    let period = {
+        startDate: startDate,
+        endDate: endDate
+    }
+
+    $.ajax({
+        url: '/admin/sales/getFranchiseeTotalSalesByInputPeriod',
+        method: 'post',
+        data: JSON.stringify(period),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function(data) {
+            console.log('ajax success!')
+
+            let selectDtos = data.selectFranchiseeSalesDtosByInputFeriod;
+            
+            for (let i = 0; i < selectDtos.length; i++) {
+                let appendTag = '';
+                
+                appendTag = '<tr>';
+                    
+                    appendTag += '<td>' + selectDtos[i].fcm_no + '</td>';
+                    appendTag += '<td>' + selectDtos[i].fcm_name + '</td>';
+                    appendTag += '<td>' + selectDtos[i].cash_total_price + '</td>';
+                    appendTag += '<td>' + selectDtos[i].card_total_price + '</td>';
+                    appendTag += '<td>' + parseInt(selectDtos[i].card_total_price+selectDtos[i].cash_total_price) + '</td>';
+
+                appendTag += '</tr>';
+
+                $('#section_wrap table tbody').append(appendTag);
+
+            }
+        },
+        error: function(data) {
+            console.log('ajax error!')
+
+        }
     })
 
 }

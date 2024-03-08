@@ -29,3 +29,11 @@
 	padding: 5px;
 }
 
+#section_wrap .admin_section_view_wrap .list_search {
+	margin-top: 20px;
+	text-align: center;
+}
+
+#section_wrap .admin_section_view_wrap .list_search input {
+	padding: 5px;
+}

@@ -1,6 +1,7 @@
 package com.office.kiosk.admin.sales;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -69,6 +70,12 @@ public interface IAdminSalesDao {
 	public List<FranchiseeSalesDto> selectFranchiseeTotalSales();
 
 	public List<FranchiseeSalesDto> selectDateFranchiseeTotalSales(String selectDate);
+
+	public List<FranchiseeSalesDto> selectFranchiseeSalesDtosByInputFeriod(Map<String, String> period);
+
+	public List<FranchiseeSalesDto> selectStoreSalesDtosByInputFeriod(Map<String, String> period);
+
+	public List<FranchiseeSalesDto> selectOrderInfoByOriNo(int fco_ori_no);
 
 
 }

@@ -17,30 +17,30 @@ import lombok.extern.log4j.Log4j2;
 @Configuration
 public class AdminMemberDao {
 
-	@Autowired
-	JdbcTemplate jdbcTemplate;
+   @Autowired
+   JdbcTemplate jdbcTemplate;
 
-	public List<FranchiseeMemberDto> selectAllFranchiseeInfo() {
-		log.info("selectAllFranchiseeInfo");
-		
-		String sql = "SELECT * FROM TBL_FC_MEMBER";
-		
-		List<FranchiseeMemberDto> franchiseeMemberDtos = new ArrayList<>();
-		
-		try {
-			
-			RowMapper<FranchiseeMemberDto> rowMapper =
-					BeanPropertyRowMapper.newInstance(FranchiseeMemberDto.class);
-			franchiseeMemberDtos = jdbcTemplate.query(sql, rowMapper);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		
-		}
-		
-		return franchiseeMemberDtos;
-	}
-	
-	
+   public List<FranchiseeMemberDto> selectAllFranchiseeInfo() {
+      log.info("selectAllFranchiseeInfo");
+      
+      String sql = "SELECT * FROM TBL_FC_MEMBER";
+      
+      List<FranchiseeMemberDto> franchiseeMemberDtos = new ArrayList<>();
+      
+      try {
+         
+         RowMapper<FranchiseeMemberDto> rowMapper =
+               BeanPropertyRowMapper.newInstance(FranchiseeMemberDto.class);
+         franchiseeMemberDtos = jdbcTemplate.query(sql, rowMapper);
+         
+      } catch (Exception e) {
+         e.printStackTrace();
+      
+      }
+      
+      return franchiseeMemberDtos;
+   }
+   
+   
 
 }

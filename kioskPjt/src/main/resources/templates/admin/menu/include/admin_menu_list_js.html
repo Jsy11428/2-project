@@ -167,6 +167,9 @@
 					appendTag += '<li class="fc_menu_name">';
 					appendTag += menusDtos[index].fc_menu_name;
 					appendTag += '</li>';
+					appendTag += '<li class="fc_menu_price">';
+					appendTag += menusDtos[index].fc_menu_price;
+					appendTag += '</li>';
 					appendTag += '</ul>';
 					appendTag += '</div>';
 					appendTag += '</td>';
@@ -207,6 +210,9 @@
 							"http://14.42.124.93:8091/kioskUploadImg/"
 									+ data.fc_menu_img_name);
 
+					
+					$("div.modify_menu_wrap input[name='fc_menu_no']").attr(
+							"value", `${data.fc_menu_no}`);
 					$("div.modify_menu_wrap input[name='fcmc_no']").attr(
 							"value", `${data.fcmc_no}`);
 					$("div.modify_menu_wrap input[name='fc_menu_name']").attr(
