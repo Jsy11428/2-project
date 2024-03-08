@@ -97,7 +97,7 @@ public class AdminMenuService {
 		log.info("getCategory()");
 
 		log.info("getMenus()");
-		
+
 		Map<String, Object> menuDtos = new HashMap<>();
 
 		List<AdminMenuDto> menusDtos = (List<AdminMenuDto>) iAdminMenuDao.selectAllMenus();
@@ -106,6 +106,8 @@ public class AdminMenuService {
 
 		return menuDtos;
 	}
+
+	// 메뉴 등록
 
 	public int createMenuAccountConfirm(AdminMenuDto adminMenuDto) {
 		log.info("createMenuAccountConfirm()");
@@ -146,21 +148,21 @@ public class AdminMenuService {
 
 	public ResponseEntity<String> uploadFile(MultipartFile file) {
 
-		System.out.println("file: " + file);
+		log.info("uploadFile()");
+		log.info("file: " + file);
 
 		// RestTemplate
 
 		// RestTemplate 객체생성
 //		RestTemplate restTemplate = new RestTemplate();
 
-		
-		System.out.println("file: "+file);
-				
-		//RestTemplate
-		
-		//RestTemplate 객체생성
-		//RestTemplate restTemplate = new RestTemplate();
-		
+		System.out.println("file: " + file);
+
+		// RestTemplate
+
+		// RestTemplate 객체생성
+		// RestTemplate restTemplate = new RestTemplate();
+
 		// Request Header 설정
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.MULTIPART_FORM_DATA);
@@ -178,7 +180,7 @@ public class AdminMenuService {
 
 		return response;
 	}
-	
+
 	// 카테고리에 따른 메뉴 불러오기
 
 	public Map<String, Object> getMenusByCategory(String fcmc_no) {
@@ -192,23 +194,38 @@ public class AdminMenuService {
 
 		return menuDtos;
 	}
-	
+
 	// 모달창으로 선택한 메뉴의 정보 가져오기
-	
 
 	public AdminMenuDto getSelectMenuInfo(String fc_menu_no) {
-		
-		log.info("getSelectMenuInfo()"); 
+
+		log.info("getSelectMenuInfo()");
 		log.info(fc_menu_no);
-		
+
 		AdminMenuDto dto = iAdminMenuDao.selectMenuInfo(fc_menu_no);
-		
+
 		return dto;
 	}
-	
+
+	// 메뉴 수정 컨펌
+
+	public int modifyMenuAccountConfirm(AdminMenuDto adminMenuDto) {
+		log.info("modifyMenuAccountConfirm()");
+
+		return iAdminMenuDao.updateSelectMenu(adminMenuDto);
+
+	}
+
+	public int deleteMenuConfirm(String fc_menu_no) {
+		log.info("deleteMenuConfirm");
+		
+		int result = -1;
+		
+		result = iAdminMenuDao.deleteSelectMenu(fc_menu_no);
+		
+		return result;
+	}
+
 	// 모달창에서 기존에 선택된 메뉴 카테고리 불러오기
-	
-	
-	
 
 }

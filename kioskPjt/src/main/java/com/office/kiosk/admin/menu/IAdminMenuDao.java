@@ -23,5 +23,9 @@ public interface IAdminMenuDao {
 
 	public AdminMenuDto selectMenuInfo(String fc_menu_no);
 
+	public int updateSelectMenu(AdminMenuDto adminMenuDto);
+
+	public int deleteSelectMenu(String fc_menu_no);
+
 
 }
