@@ -210,12 +210,62 @@ public class AdminMemberService {
 		iAdminMemberDao.updateAdminApproval(am_no);
 		
 	}
-
-
-	public List<FranchiseeStoreDto> storeList() {
+	
+	/*
+	 * store list paging 처리
+	 */
+//	public List<FranchiseeStoreDto> storeList() {
+//		log.info("storeList()");
+//		
+//		return iAdminMemberDao.selectAllFranchiseeStoreInfo();
+//	}
+	public Map<String, Object> storeList(int page) {
 		log.info("storeList()");
 		
-		return iAdminMemberDao.selectAllFranchiseeStoreInfo();
+		int pageingStart = (page - 1) * pageLimit;
+		
+		Map<String, Object> pagingList = new HashMap<>();
+		
+		Map<String, Integer> pagingParams = new HashMap<>();
+		pagingParams.put("start", pageingStart);
+		pagingParams.put("limit", pageLimit);
+		
+		List<FranchiseeStoreDto> franchiseeStoreDtos = iAdminMemberDao.selectAllFranchiseeStorePagingList(pagingParams);
+		
+		pagingList.put("franchiseeStoreDtos", franchiseeStoreDtos);
+		
+		return pagingList;
+	}
+	
+	public kioskPageDto getAllStoreListPageNum(int page) {
+		log.info("getAllStoreListPageNum()");	
+		
+		//전체 admin 갯수 조회
+		int adminListCnt = iAdminMemberDao.selcetAllStoreListCnt();
+		
+		//전체 페이지 갯수 계산
+		int maxPage = (int) (Math.ceil((double) adminListCnt / pageLimit));
+		
+		//시작 페이지 값 계산 (페이지 번호를 3개씩 보여줄 경우 = (1,4,7,10,~~~~))
+		int startPage = (((int)(Math.ceil((double) page / blockLimit))) - 1 ) * blockLimit + 1;
+		
+		//마지막 페이지 값 계산 (페이지 번호를 3개씩 보여줄 경우 = (3,6,9,12,~~~~~))
+		int endPage = startPage + blockLimit - 1;
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		kioskPageDto storeListPageDto = new kioskPageDto();
+		storeListPageDto.setPage(page);
+		storeListPageDto.setMaxPage(maxPage);
+		storeListPageDto.setStartPage(startPage);
+		storeListPageDto.setEndPage(endPage);
+		
+		log.info("page: "+page);
+		log.info("maxPage: "+maxPage);
+		log.info("startPage: "+startPage);
+		log.info("endPage: "+endPage);
+		
+		return storeListPageDto;
 	}
 
 	
@@ -279,5 +329,6 @@ public class AdminMemberService {
 		
 		return adminMemberListPageDto;
 	}
+
 
 }

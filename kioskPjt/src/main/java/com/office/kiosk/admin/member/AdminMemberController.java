@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -313,17 +314,40 @@ public class AdminMemberController {
 	/*
 	 * 	store list 불러오기
 	 */
+//	@GetMapping("/storeList")
+//	public String storeList(Model model) {
+//		log.info("storeList()");
+//		
+//		String nextPage = "/admin/member/franchisee_store_list";
+//		
+//		List<FranchiseeStoreDto> franchiseeSotreDtos = adminMemberService.storeList();
+//		
+//		model.addAttribute("franchiseeSotreDtos", franchiseeSotreDtos);
+//		
+//		return nextPage;
+//		
+//	}
 	@GetMapping("/storeList")
 	public String storeList(Model model) {
 		log.info("storeList()");
 		
 		String nextPage = "/admin/member/franchisee_store_list";
-		
-		List<FranchiseeStoreDto> franchiseeSotreDtos = adminMemberService.storeList();
-		
-		model.addAttribute("franchiseeSotreDtos", franchiseeSotreDtos);
-		
+				
 		return nextPage;
+		
+	}
+	@GetMapping("/getAllFranchiseeStoreInfo")
+	@ResponseBody
+	public Object storeList(@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+		log.info("storeList()");
+				
+		Map<String, Object> franchiseeSotreDtos = adminMemberService.storeList(page);
+		
+		kioskPageDto storeListPageDto = adminMemberService.getAllStoreListPageNum(page);
+		
+		franchiseeSotreDtos.put("storeListPageDto", storeListPageDto);
+				
+		return franchiseeSotreDtos;
 		
 	}
 	

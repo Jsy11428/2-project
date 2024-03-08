@@ -21,15 +21,15 @@ public interface IAdminMemberDao {
 
 	public AdminMemberDto selectLastesAdminInfo(int am_no);
 
-	public List<FranchiseeMemberDto> selectAllFranchiseeInfo();
+	public List<FranchiseeMemberDto> selectAllFranchiseeInfo();//안 씀
 
 	public void updateFranchiseeApproval(int fcm_no);
 
-	public List<AdminMemberDto> selectAllAdminInfo();
+	public List<AdminMemberDto> selectAllAdminInfo();//안 씀
 
 	public void updateAdminApproval(int am_no);
 
-	public List<FranchiseeStoreDto> selectAllFranchiseeStoreInfo();
+	public List<FranchiseeStoreDto> selectAllFranchiseeStoreInfo();//안 씀 
 
 	public List<AdminMemberDto> selectAdminMemberPagingList(Map<String, Integer> pagingParams);
 
@@ -39,5 +39,9 @@ public interface IAdminMemberDao {
 
 	public int selcetAllFranchiseeListCnt();
 
+	public List<FranchiseeStoreDto> selectAllFranchiseeStorePagingList(Map<String, Integer> pagingParams);
+
+	public int selcetAllStoreListCnt();
+	
 
 }
