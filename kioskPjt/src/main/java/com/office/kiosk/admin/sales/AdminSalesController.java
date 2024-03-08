@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.office.kiosk.franchisee.dto.SearchSalesDto;
+import com.office.kiosk.paging.kioskPageDto;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -54,15 +55,33 @@ public class AdminSalesController {
 		
 	}
 	
+//	/*
+//	 * 	get all sales info
+//	 */
+//	@PostMapping("/getAllSalesInfo")
+//	@ResponseBody
+//	public Object getAllSalesInfo() {
+//		log.info("getAllSalesInfo()");
+//		
+//		Map<String, Object> resultMap = adminSalesService.getAllSalesInfo();
+//		
+//		return resultMap;
+//	}
+	
 	/*
 	 * 	get all sales info
 	 */
 	@PostMapping("/getAllSalesInfo")
 	@ResponseBody
-	public Object getAllSalesInfo() {
+	public Object getAllSalesInfo(@RequestParam("page") int page) {
 		log.info("getAllSalesInfo()");
+		log.info("page" + page);
 		
-		Map<String, Object> resultMap = adminSalesService.getAllSalesInfo();
+		Map<String, Object> resultMap = adminSalesService.pagingAllSalesInfo(page);
+		
+		kioskPageDto allSalesListPageDto = adminSalesService.allSalesListPageNum(page);
+		
+		resultMap.put("allSalesListPageDto", allSalesListPageDto);
 		
 		return resultMap;
 	}

@@ -7,11 +7,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.ls.LSException;
 
 import com.office.kiosk.admin.member.IAdminMemberDao;
 import com.office.kiosk.franchisee.dto.SearchSalesDto;
 import com.office.kiosk.franchisee.sales.FranchiseeSalesDto;
+import com.office.kiosk.paging.kioskPageDto;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -24,6 +24,9 @@ public class AdminSalesService {
 	
 	@Autowired
 	IAdminMemberDao iAdminMemberDao;
+	
+	private int pageLimit = 5; 		// 한 페이지당 보여줄 admin정보 갯수
+	private int blockLimit = 3; 	// 하단에 보여줄 페이지 번호 갯수
 
 	public List<FranchiseeSalesDto> salesList() {
 		log.info("salesList()");
@@ -31,17 +34,62 @@ public class AdminSalesService {
 		return iAdminSalesDao.selectAllSalesInfo();
 	}
 
-	public Map<String, Object> getAllSalesInfo() {
-		log.info("getAllSalesInfo()");
+//	public Map<String, Object> getAllSalesInfo() {
+//		log.info("getAllSalesInfo()");
+//		
+//		Map<String, Object> map = new HashMap<>();
+//		
+//		List<FranchiseeSalesDto> franchiseeSalesDtos = 
+//				iAdminSalesDao.selectAllSalesInfoForAjax();
+//		
+//		map.put("franchiseeSalesDtos", franchiseeSalesDtos);
+//		
+//		return map;
+//	}
+	
+	public Map<String, Object> pagingAllSalesInfo(int page) {
+		log.info("pagingAllSalesInfo()");
 		
-		Map<String, Object> map = new HashMap<>();
+		int pagingStart = (page - 1) * pageLimit;
 		
-		List<FranchiseeSalesDto> franchiseeSalesDtos = 
-				iAdminSalesDao.selectAllSalesInfoForAjax();
+		Map<String, Object> pagingList = new HashMap<>();
 		
-		map.put("franchiseeSalesDtos", franchiseeSalesDtos);
+		Map<String, Integer> pagingParams = new HashMap<>();
+		pagingParams.put("start", pagingStart);
+		pagingParams.put("limit", pageLimit);
 		
-		return map;
+		List<FranchiseeSalesDto> allFranchiseeSalesDtos = iAdminSalesDao.selectSalesListForPaging(pagingParams);
+		
+		pagingList.put("allFranchiseeSalesDtos", allFranchiseeSalesDtos);
+		
+		return pagingList;
+	}
+	
+	public kioskPageDto allSalesListPageNum(int page) {
+		log.info("allSalesListPageNum()");
+		
+		//전체 franchisee member 갯수 조회
+		int allSalesListCnt = iAdminSalesDao.selectAllSalesListCnt();
+		
+		//전체 페이지 갯수 계산
+		int maxPage = (int) (Math.ceil((double) allSalesListCnt / pageLimit));
+		
+		//시작 페이지 값 계산 (페이지 번호를 3개씩 보여줄 경우 = (1,4,7,10,~~~~))
+		int startPage = (((int)(Math.ceil((double) page / blockLimit))) - 1 ) * blockLimit + 1;
+		
+		//마지막 페이지 값 계산 (페이지 번호를 3개씩 보여줄 경우 = (3,6,9,12,~~~~~))
+		int endPage = startPage + blockLimit - 1;
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		
+		kioskPageDto allSalesListPageDto = new kioskPageDto();
+		allSalesListPageDto.setPage(page);
+		allSalesListPageDto.setMaxPage(maxPage);
+		allSalesListPageDto.setStartPage(startPage);
+		allSalesListPageDto.setEndPage(endPage);
+		
+		return allSalesListPageDto;
 	}
 
 	public Map<String, Object> getSearchSales(SearchSalesDto searchSalesDto) {
@@ -55,151 +103,7 @@ public class AdminSalesService {
 		
 		List<FranchiseeSalesDto> searchSalesDtos = new ArrayList<>();
 		
-		switch (searchValue) {
-		case "fcs_name":
-			
-//			searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcsName(searchTerm, searchWord);
-			
-			switch (searchTerm) {
-			case "1d":
-				
-				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcsNameForOneDay(searchWord);
-				
-				break;
-			
-			case "1w":
-				
-				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcsNameForOneWeek(searchWord);
-				
-				break;
-				
-			case "1m":
-				
-				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcsNameForOneMonth(searchWord);
-				
-				break;
-			
-			case "6m":
-				
-				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcsNameForSixMonth(searchWord);
-				
-				break;
-				
-			case "1y":
-				
-				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcsNameForOneYear(searchWord);
-				
-				break;
-			
-			case "all":
-				
-				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcsName(searchWord);
-				
-				break;
-				
-			}
-			
-			break;
-			
-		case "fcm_name":
-			
-//			searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcmName(searchTerm, searchWord);
-			
-			switch (searchTerm) {
-			case "1d":
-				
-				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcmNameForOneDay(searchWord);
-				
-				break;
-			
-			case "1w":
-				
-				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcmNameForOneWeek(searchWord);
-				
-				break;
-				
-			case "1m":
-				
-				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcmNameForOneMonth(searchWord);
-				
-				break;
-			
-			case "6m":
-				
-				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcmNameForSixMonth(searchWord);
-				
-				break;
-				
-			case "1y":
-				
-				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcmNameForOneYear(searchWord);
-				
-				break;
-			
-			case "all":
-				
-				searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcmName(searchWord);
-				
-				break;
-				
-			}
-			
-			break;
-			
-		case "pm_type":
-			
-//			searchSalesDtos = iAdminSalesDao.selectSalesInfoByPmType(searchTerm, searchWord);
-			
-			switch (searchTerm) {
-			case "1d":
-				
-				searchSalesDtos = iAdminSalesDao.selectSalesInfoByPmTypeForOneDay(searchWord);
-				
-				break;
-			
-			case "1w":
-				
-				searchSalesDtos = iAdminSalesDao.selectSalesInfoByPmTypeForOneWeek(searchWord);
-				
-				break;
-				
-			case "1m":
-				
-				searchSalesDtos = iAdminSalesDao.selectSalesInfoByPmTypeForOneMonth(searchWord);
-				
-				break;
-			
-			case "6m":
-				
-				searchSalesDtos = iAdminSalesDao.selectSalesInfoByPmTypeForSixMonth(searchWord);
-				
-				break;
-				
-			case "1y":
-				
-				searchSalesDtos = iAdminSalesDao.selectSalesInfoByPmTypeForOneYear(searchWord);
-				
-				break;
-			
-			case "all":
-				
-				searchSalesDtos = iAdminSalesDao.selectSalesInfoByPmType(searchWord);
-				
-				break;
-				
-			}
-			
-			break;
-		}
-		
-//		if (searchValue == "fcs_name") {
-//			searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcsName(searchSalesDto);
-//		} else if (searchValue == "fcm_name") {
-//			searchSalesDtos = iAdminSalesDao.selectSalesInfoByFcmName(searchSalesDto);
-//		} else if (searchValue == "pm_type") {
-//			searchSalesDtos = iAdminSalesDao.selectSalesInfoByPmType(searchSalesDto);
-//		}
-		
+		searchSalesDtos = iAdminSalesDao.selectSalesInfo(searchSalesDto);
 		
 		map.put("searchSalesDtos", searchSalesDtos);
 		
@@ -315,5 +219,7 @@ public class AdminSalesService {
 		
 		return map;
 	}
+
+
 
 }
