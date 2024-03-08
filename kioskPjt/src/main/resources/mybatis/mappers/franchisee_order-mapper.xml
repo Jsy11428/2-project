@@ -1,13 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.office.kiosk.franchisee.order.IFranchiseeOrderDao">
-    <select id="selectAllOrder" resultType="com.office.kiosk.franchisee.order.FranchiseeOrderDto">
+ <mapper namespace="com.office.kiosk.franchisee.order.IFranchiseeOrderDao">
+
+  <!-- 	<select id="selectAllOrder" resultType="com.office.kiosk.franchisee.order.FranchiseeOrderDto">
+  
         SELECT * FROM TBL_FC_ORDER FO 
         
         JOIN TBL_FC_STORE FS ON FO.FCS_NO = FS.FCS_NO 
         
-        JOIN TBL_FC_MENU FM ON FO.FC_MENU_NO = FM.FC_MENU_NO                
-
-    </select>
+        JOIN TBL_FC_MENU FM ON FO.FC_MENU_NO = FM.FC_MENU_NO
+           
+   		JOIN TBL_FC_MENU_CATEGORY FMC ON FO.FCMC_NO = FMC.FCMC_NO
+                      			
+	</select>  -->
+    
+ 	<select id="getOrdersByNo" resultType="com.office.kiosk.franchisee.order.FranchiseeOrderDto">
+   		   	
+		 SELECT FO.*, FS.*, FM.*, FMC.* 
+	    FROM TBL_FC_ORDER FO 
+	    JOIN TBL_FC_STORE FS ON FO.FCS_NO = FS.FCS_NO 
+	    JOIN TBL_FC_MENU FM ON FO.FC_MENU_NO = FM.FC_MENU_NO 
+	    JOIN TBL_FC_MENU_CATEGORY FMC ON FO.FCMC_NO = FMC.FCMC_NO 
+	    JOIN TBL_FC_MEMBER FM2 ON FS.FCM_NO = FM2.FCM_NO 
+	    WHERE FM2.FCM_NO = #{loginNo}
+		   		    		   
+  	</select>
+    
+      
 </mapper>
