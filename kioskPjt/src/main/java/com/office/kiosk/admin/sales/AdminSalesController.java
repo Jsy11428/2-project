@@ -78,10 +78,24 @@ public class AdminSalesController {
 		Map<String, Object> resultMap = 
 				adminSalesService.getSearchSales(searchSalesDto);
 		
-		log.info("resultMap----" + resultMap);
+		return resultMap;
+		
+	}
+	
+	/*
+	 * 	선택 fco_ori_no detail info modal
+	 */
+	@PostMapping("/getSalesDetailInfo")
+	@ResponseBody
+	public Object getSalesDetailInfo(@RequestParam("fco_ori_no") int fco_ori_no) {
+		log.info("getSalesDetailInfo()");
+		
+		Map<String, Object> resultMap = 
+				adminSalesService.getSalesDetailInfo(fco_ori_no);
 		
 		return resultMap;
 	}
+	
 	
 	
 	
@@ -113,7 +127,7 @@ public class AdminSalesController {
 	}
 	
 	/*
-	 * 	선택 날짜 매출 리스트 불러오기
+	 * 	선택 날짜 가맹첨 매출 리스트 불러오기
 	 */
 	@PostMapping("/getSelectDateSalesInfo")
 	@ResponseBody
@@ -124,6 +138,21 @@ public class AdminSalesController {
 				adminSalesService.getSelectDateSalesInfo(currentDate);
 		
 		return resultMap;
+	}
+	
+	/*
+	 * 	선택 기간 가맹점별 매출 리스트 불러오기
+	 */
+	@PostMapping("/getStoreTotalSalesByInputPeriod")
+	@ResponseBody
+	public Object getStoreTotalSalesByInputPeriod(@RequestBody Map<String, String> period) {
+		log.info("getStoreTotalSalesByInputPeriod()");
+		
+		Map<String, Object> resultMap = 
+				adminSalesService.getStoreTotalSalesByInputPeriod(period);
+		
+		return resultMap;
+		
 	}
 	
 	/*
@@ -154,7 +183,7 @@ public class AdminSalesController {
 	}
 	
 	/*
-	 * 	선택 날짜 매출 리스트 불러오기
+	 * 	선택 날짜 회원별 매출 리스트 불러오기
 	 */
 	@PostMapping("/getSelectDateFranchiseeSalesInfo")
 	@ResponseBody
@@ -165,6 +194,21 @@ public class AdminSalesController {
 				adminSalesService.getSelectDateFranchiseeSalesInfo(currentDate);
 		
 		return resultMap;
+	}
+	
+	/*
+	 * 	선택 기간 회원별 매출 리스트 불러오기
+	 */
+	@PostMapping("/getFranchiseeTotalSalesByInputPeriod")
+	@ResponseBody
+	public Object getFranchiseeTotalSalesByInputPeriod(@RequestBody Map<String, String> period) {
+		log.info("getFranchiseeTotalSalesByInputPeriod()");
+		
+		Map<String, Object> resultMap = 
+				adminSalesService.getFranchiseeTotalSalesByInputPeriod(period);
+		
+		return resultMap;
+		
 	}
 	
 	

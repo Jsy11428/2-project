@@ -25,6 +25,9 @@ $(document).ready(function(){
     // select_wrap 현재 일자 세팅
     setCurrentYearAndMonthSelectUI();
 
+    // input[type="date"] 기본 날짜 세팅
+    setCurrentDateSearchInput();
+
     // 가맹점별 일 매출 테이블 <tr> 추가
     addStoreSalesListTable();
 
@@ -48,6 +51,25 @@ function setCurrentYearAndMonthSelectUI() {
 	$('#section_wrap select[name="p_year"]').val(current_year).prop('selected', true);
 	$('#section_wrap select[name="p_month"]').val(current_month).prop('selected', true);
 	$('#section_wrap select[name="p_date"]').val(current_date).prop('selected', true);
+}
+
+// input[type="date"] 기본 날짜 세팅
+function setCurrentDateSearchInput() {
+    console.log('setCurrentDateSearchInput()');
+
+    let date = new Date();
+    let year = date.getFullYear();
+    let preMonth = ('0' + (date.getMonth())).slice(-2);
+    let month = ('0' + (date.getMonth() + 1)).slice(-2);
+    let day = ('0' + date.getDate()).slice(-2);
+    let preMonthDateStr = `${year}-${preMonth}-${day}`;
+    let dateStr = `${year}-${month}-${day}`;
+
+    // 한달전 날짜 세팅
+    $('#section_wrap .list_search input[name="start_date"]').val(preMonthDateStr);
+    // 현재 날짜 세팅
+    $('#section_wrap .list_search input[name="end_date"]').val(dateStr);
+
 }
 
 function setCurrentDateSelectOption() {
@@ -121,6 +143,14 @@ function initEvents() {
 
     });
 
+    // .list_search input[name="search"] btn ckick
+    $(document).on('click', '#section_wrap .list_search input[name="search"]', function() {
+        console.log('search btn click handler!');
+
+        searchBtnClick();
+
+    })
+
 }
 
 function setYearBySelectChange() {
@@ -193,6 +223,15 @@ function setDateByTodayBtnclick() {
     removeStoreSalesList();
 
     ajax_getCurrentDateTotalSales();
+
+}
+
+function searchBtnClick() {
+    console.log('searchBtnClick()');
+
+    removeStoreSalesList();
+
+    ajax_getStoreTotalSalesByInputPeriod();
 
 }
 
@@ -294,5 +333,51 @@ function ajax_getCurrentDateTotalSales() {
 
 }
 
+function ajax_getStoreTotalSalesByInputPeriod() {
+    console.log('ajax_getStoreTotalSalesByInputPeriod()');
+
+    let startDate = $('input[name="start_date"]').val();
+    let endDate = $('input[name="end_date"]').val();
+    let period = {
+        startDate: startDate,
+        endDate: endDate
+    }
+
+    $.ajax({
+        url: '/admin/sales/getStoreTotalSalesByInputPeriod',
+        method: 'post',
+        data: JSON.stringify(period),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function(data) {
+            console.log('ajax success!')
+
+            let selectDtos = data.selectStoreSalesDtosByInputFeriod;
+            
+            for (let i = 0; i < selectDtos.length; i++) {
+                let appendTag = '';
+                
+                appendTag = '<tr>';
+                    
+                    appendTag += '<td>' + selectDtos[i].fcs_no + '</td>';
+                    appendTag += '<td>' + selectDtos[i].fcs_name + '</td>';
+                    appendTag += '<td>' + selectDtos[i].fcm_name + '</td>';
+                    appendTag += '<td>' + selectDtos[i].cash_total_price + '</td>';
+                    appendTag += '<td>' + selectDtos[i].card_total_price + '</td>';
+                    appendTag += '<td>' + parseInt(selectDtos[i].card_total_price+selectDtos[i].cash_total_price) + '</td>';
+
+                appendTag += '</tr>';
+
+                $('#section_wrap table tbody').append(appendTag);
+
+            }
+        },
+        error: function(data) {
+            console.log('ajax error!')
+
+        }
+    })
+
+}
 
 </script>

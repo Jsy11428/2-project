@@ -60,26 +60,14 @@
 							
 							<tbody>
 
-								<!-- addSalesListTable() -->
-
 							</tbody>
 
-<!-- 							
-							<tr th:each="fs_dto : ${franchiseeSalesDtos}">
-								<td th:text="${fs_dto.fcsa_no}"></td>
-								<td th:text="${fs_dto.fco_ori_no}"></td>
-								<td th:text="${fs_dto.fcs_name}"></td>
-								<td th:text="${fs_dto.fcsa_price}"></td>
-								<td th:text="${fs_dto.pm_type}"></td>
-								<td th:text="${fs_dto.fcsa_reg_date}"></td>
-								<td th:text="${fs_dto.fcsa_mod_date}"></td>
-							</tr> -->
 						</table> 
 						
 					</div>
 
 					<div class="list_search">
-						<!-- /admin/sales/getSearchSales -->
+
 						<form>
 							<select name="search_term">
 								<option value="all">전체기간</option>
@@ -98,6 +86,44 @@
 							<input type="button" value="search">
 						</form>
 
+					</div>
+
+					<div class="sales_detail_modal">
+
+						<div class="store_info">
+							<ul>
+								<!-- <li>지점명</li>
+								<li>대표자</li>
+								<li>주소</li>
+								<li>연락처</li>
+								<li>결제수단</li> -->
+							</ul>
+						</div>
+
+						<div class="order_info">
+							<table>
+								<thead>
+									<tr>
+										<th>메뉴명</th>
+										<th>단가</th>
+										<th>수량</th>
+										<th>금액</th>
+									</tr>
+								</thead>
+								<tbody>
+									
+								</tbody>
+							</table>
+						</div>
+	
+						<div class="price_info">
+							
+						</div>
+	
+						<div class="close_box">
+							close
+						</div>
+	
 					</div>
 				
 				</div>

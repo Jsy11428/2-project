@@ -36,9 +36,38 @@
 			TBL_FC_MEMBER FCM 
 		ON 
 			FCM.FCM_NO = FCS.FCM_NO 
+		WHERE DATE(FCSA.FCSA_REG_DATE) = CURDATE() 
 		ORDER BY 
 			FCSA_NO DESC 
 	
+	</select>
+	
+	<!-- 선택 ori_no order info 가져오기 -->
+	<select id="selectOrderInfoByOriNo"
+			parameterType="Integer"
+			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
+			
+		SELECT 
+			FCS_NAME, 
+		    FCS_LOCATION,
+		    FCS_PHONE, 
+		    FCM_NAME, 
+		    FCO.FCO_NO,
+			FCO.FCO_ORI_NO, 
+		    FCO.PM_TYPE, 
+		    FCO.FC_MENU_NO, 
+		    FCO_MENU_CNT, 
+		    M.FC_MENU_NAME, 
+		    M.FC_MENU_PRICE, 
+		    FCSA.FCSA_REG_DATE, 
+		    FCSA.FCSA_PRICE 
+		FROM TBL_FC_ORDER FCO
+		JOIN TBL_FC_STORE FCS ON FCS.FCS_NO = FCO.FCS_NO 
+		JOIN TBL_FC_MEMBER FCM ON FCM.FCM_NO = FCS.FCM_NO 
+		JOIN TBL_FC_MENU M ON M.FC_MENU_NO = FCO.FC_MENU_NO
+		JOIN TBL_FC_SALES FCSA ON FCSA.FCO_ORI_NO = FCO.FCO_ORI_NO 
+		WHERE FCO.FCO_ORI_NO = #{fco_ori_no} 
+			
 	</select>
 	
 	<!-- ajax fcs_name, 기간별 sales 목록 가져오기 -->
@@ -704,18 +733,37 @@
 			parameterType="String"
 			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
 	
-		SELECT
-		    FCSA.FCS_NO,
-		    FCS.FCS_NAME,
-		    FCM.FCM_NAME,
-		    SUM(CASE WHEN FCSA.PM_TYPE = '카드' THEN FCSA.FCSA_PRICE END) AS CARD_TOTAL_PRICE,
-		    SUM(CASE WHEN FCSA.PM_TYPE = '현금' THEN FCSA.FCSA_PRICE END) AS CASH_TOTAL_PRICE
+		SELECT 
+		    FCSA.FCS_NO, 
+		    FCS.FCS_NAME, 
+		    FCM.FCM_NAME, 
+		    SUM(CASE WHEN FCSA.PM_TYPE = '카드' THEN FCSA.FCSA_PRICE END) AS CARD_TOTAL_PRICE, 
+		    SUM(CASE WHEN FCSA.PM_TYPE = '현금' THEN FCSA.FCSA_PRICE END) AS CASH_TOTAL_PRICE 
 		FROM TBL_FC_SALES FCSA 
-		JOIN TBL_FC_STORE FCS ON FCS.FCS_NO = FCSA.FCS_NO
-		JOIN TBL_FC_MEMBER FCM ON FCM.FCM_NO = FCS.FCM_NO
-		WHERE DATE(FCSA.FCSA_REG_DATE) = #{selectDate}
-		GROUP BY FCS_NO 
+		JOIN TBL_FC_STORE FCS ON FCS.FCS_NO = FCSA.FCS_NO 
+		JOIN TBL_FC_MEMBER FCM ON FCM.FCM_NO = FCS.FCM_NO 
+		WHERE DATE(FCSA.FCSA_REG_DATE) = #{selectDate} 
+		GROUP BY FCS_NO  
 	
+	</select>
+	
+	<!-- 선택기간 가맹점별 매출 조회 -->
+	<select id="selectStoreSalesDtosByInputFeriod"
+			parameterType="map"
+			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
+			
+		SELECT 
+		    FCSA.FCS_NO, 
+		    FCS.FCS_NAME, 
+		    FCM.FCM_NAME, 
+		    SUM(CASE WHEN FCSA.PM_TYPE = '카드' THEN FCSA.FCSA_PRICE END) AS CARD_TOTAL_PRICE, 
+		    SUM(CASE WHEN FCSA.PM_TYPE = '현금' THEN FCSA.FCSA_PRICE END) AS CASH_TOTAL_PRICE 
+		FROM TBL_FC_SALES FCSA 
+		JOIN TBL_FC_STORE FCS ON FCS.FCS_NO = FCSA.FCS_NO 
+		JOIN TBL_FC_MEMBER FCM ON FCM.FCM_NO = FCS.FCM_NO 
+		WHERE FCSA.FCSA_REG_DATE BETWEEN #{startDate} AND #{endDate} 
+		GROUP BY FCS_NO 
+			
 	</select>
 
 	<!-- 회원별 총 매출 조회 -->
@@ -736,7 +784,7 @@
 	
 	</select>
 	
-		<!-- 특정 날짜 회원별 매출 조회 -->
+	<!-- 특정 날짜 회원별 매출 조회 -->
 	<select id="selectDateFranchiseeTotalSales" 
 			parameterType="String"
 			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
@@ -754,5 +802,26 @@
 		GROUP BY FCM_NO;
 	
 	</select>
+	
+	<!-- 선택 기간 회원별 매출 조회 -->
+	<select id="selectFranchiseeSalesDtosByInputFeriod" 
+			parameterType="map" 
+			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
+	
+		SELECT 
+			FCM.FCM_NO,
+		    FCM.FCM_NAME,
+			SUM(CASE WHEN FCSA.PM_TYPE = '카드' THEN FCSA.FCSA_PRICE END) AS CARD_TOTAL_PRICE,
+		    SUM(CASE WHEN FCSA.PM_TYPE = '현금' THEN FCSA.FCSA_PRICE END) AS CASH_TOTAL_PRICE
+		FROM 
+			TBL_FC_MEMBER FCM 
+		JOIN TBL_FC_STORE FCS ON FCS.FCM_NO = FCM.FCM_NO 
+		JOIN TBL_FC_SALES FCSA ON FCS.FCS_NO = FCSA.FCS_NO 
+		WHERE FCSA.FCSA_REG_DATE BETWEEN #{startDate} AND #{endDate} 
+		GROUP BY FCM_NO 
+	
+	</select>
+	
+
 
 </mapper>
