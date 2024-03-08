@@ -4,45 +4,46 @@
 $(document).ready(function(){
     console.log('DOCUMENT READY!!')
 
-    addFranchiseeStoreListTable()
+    addFranchiseeStoreListTable();
 
-    initEvents()
-
-})
+});
 
 function addFranchiseeStoreListTable() {
     console.log('addFranchiseeStoreListTable()');
 
-    ajax_getAllFranchiseeStoreInfo()
-
-}
-
-
-function initEvents() {
-    console.log('initEvents()');
+    ajax_getAllFranchiseeStoreInfo();
 
 }
 
 function removeFranchiseeStoreList() {
     console.log('removeFranchiseeStoreList()');
+    $('#section_wrap table tbody tr').remove();
 
-
+}
+function removePageNo() {
+    console.log('removePageNo()');
+    $('#section_wrap div.page_no_wrap').empty();
 }
 
 // ajax - 모든 가맹점 목록 불러오기 
-function ajax_getAllFranchiseeStoreInfo() {
+function ajax_getAllFranchiseeStoreInfo(pageNum = 1) {
     console.log('ajax_getAllFranchiseeStoreInfo');
 
     $.ajax({
         url: '/admin/member/getAllFranchiseeStoreInfo', 
-        method: 'post', 
+        method: 'get', 
+        data: 'page='+pageNum,
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function(data) {
             console.log('ajax success!!');
 
             let storeDtos = data.franchiseeStoreDtos;
+            let storeListPageDto = data.storeListPageDto;
             let appendTag = '';
+            
+            removeFranchiseeStoreList();
+            removePageNo();
 			
             for (let i = 0; i < storeDtos.length; i++) {
                 
@@ -63,86 +64,65 @@ function ajax_getAllFranchiseeStoreInfo() {
                 $('#section_wrap table tbody').append(appendTag);
 
             }
-
-        },
-        error: function(data) {
-            console.log('ajax error!!')
-
-        }
-
-    })
-
-}
-
-// ajax sales list 검색
-function ajax_searchSalesList(search_term, search_value, search_word) {
-    console.log('ajax_searchSalesList()')
-
-    let formData = new FormData();
-    formData.append('search_term', search_term);
-    formData.append('search_value', search_value);
-    formData.append('search_word', search_word);
-
-    $.ajax({
-        url: '/admin/sales/getSearchSales',
-        method: 'post', 
-        processData: false,
-        contentType: false,
-        data: formData,
-        success: function (data) {
-            console.log('ajax success!!');
             
-            let searchDtos = data.searchSalesDtos;
-            console.log("searchDtos--", searchDtos);
-            let appendTag = '';
+            if(storeListPageDto.page <= 1){
+                $('#section_wrap div.page_no_wrap').append(`<span >&#8810;</span>`);
+            	$('#section_wrap div.page_no_wrap').append("<span >[이전]</span>");
+            }else{            	
+            	$('#section_wrap div.page_no_wrap').append(`<a style='font-weight: bold' href="#none" class="pre_page_btn" page_num='1'>&#8810;</a>`);
+            	$('#section_wrap div.page_no_wrap').append(`<a style='font-weight: bold' href="#none" class="pre_page_btn" page_num='${(storeListPageDto.page-1)}'>[이전]</a>`);
+            }
+                        
+            for(let i = storeListPageDto.startPage; i <= storeListPageDto.endPage; i++){
+            	let appendPageNum = '';
+            	appendPageNum += "<span class='page_num_wrap'>";
+            	if(i === storeListPageDto.page){
+            		appendPageNum += "<b style='color:#555'>"+i+"</b>";
+            	}else{
+            		appendPageNum += `<a href="#none" class="page_num_btn" page_num='${i}'>${i}</a>`;
+            	}
+            	appendPageNum += "</span>";
+            	$('#section_wrap div.page_no_wrap').append(appendPageNum); 
+            }
             
-            removeFranchiseeStoreList();
+            if(storeListPageDto.page >= storeListPageDto.maxPage){
+            	$('#section_wrap div.page_no_wrap').append("<span>[다음]</span>");
+            	$('#section_wrap div.page_no_wrap').append(`<span>&#8811;</span>`);
 
-            if (searchDtos.length !== 0) {
-
-
-                for (let i = 0; i < searchDtos.length; i++) {
-
-                appendTag = '<tr>';
-
-                    appendTag += '<td>' + searchDtos[i].fcsa_no + '</td>';
-                    appendTag += '<td>' + searchDtos[i].fco_ori_no + '</td>';
-                    appendTag += '<td>' + searchDtos[i].fcs_name + '</td>';
-                    appendTag += '<td>' + searchDtos[i].fcm_name + '</td>';
-                    appendTag += '<td>' + searchDtos[i].fcsa_price + '</td>';
-                    appendTag += '<td>' + searchDtos[i].pm_type + '</td>';
-                    appendTag += '<td>' + searchDtos[i].fcsa_reg_date + '</td>';
-                    appendTag += '<td>' + searchDtos[i].fcsa_mod_date + '</td>';
-
-                appendTag += '</tr>';
-
-                $('#section_wrap table tbody').append(appendTag);
-
-                }
-
-            } else {
-
-                appendTag = '<tr>';
-
-                    appendTag += '<td colspan="8"> 검색된 데이타가 없습니다.  </td>';
-
-                appendTag += '</tr>';
-
-                $('#section_wrap table tbody').append(appendTag);
-
+            }else{ 
+            	$('#section_wrap div.page_no_wrap').append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(storeListPageDto.page+1)}'>[다음]</a>`);
+            	$('#section_wrap div.page_no_wrap').append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(storeListPageDto.maxPage)}'>&#8811;</a>`);
             }
 
-			
-            
-
         },
         error: function(data) {
             console.log('ajax error!!')
 
+        },
+        complete: function(){
+        	console.log('ajax complete!!');
+        	
+        	$('#section_wrap div.page_no_wrap .next_page_btn').click(function(){
+            	console.log('nextPageBtnClick()')
+            	
+            	ajax_getAllFranchiseeStoreInfo(this.getAttribute('page_num'));
+            });
+        	
+        	$('#section_wrap div.page_no_wrap .pre_page_btn').click(function(){
+            	console.log('prePageBtnClick()')
+            	
+            	ajax_getAllFranchiseeStoreInfo(this.getAttribute('page_num'));
+            });
+        	
+        	$('#section_wrap div.page_no_wrap .page_num_btn').click(function(){
+            	console.log('pageNumBtnClick()')
+            	
+            	ajax_getAllFranchiseeStoreInfo(this.getAttribute('page_num'));
+            });
+        	
         }
 
     })
-    
 
 }
 

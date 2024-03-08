@@ -20,7 +20,6 @@ public class FranchiseeOrderDto {
 	//프렌차이즈 메뉴
 	private int fc_menu_no;
 	private String fc_menu_name;
-	private int fcmc_no;
 	private String fc_menu_text;
 	private int fc_menu_price;
 	private String fc_menu_img_name;
@@ -28,14 +27,12 @@ public class FranchiseeOrderDto {
 	private String fc_menu_reg_date;
 	private String fc_menu_mod_date;
 	
+	private int fcmc_no;
+	private int fcmc_p_no;
+	private String fcmc_name;
+	private String fcmc_reg_date; 
+	private String fcmc_mod_date;
 	
-//	FCMC_NO int 
-
-//	private int fcmc_p_no;
-//	private String fcmc_name;
-//	private String fcmc_reg_date; 
-//	private String fcmc_mod_date;
-//	
 // fcs_no int	
 	
 	//프렌차이즈 가게 정보
@@ -58,11 +55,6 @@ public class FranchiseeOrderDto {
 	private int fcm_approval;
 	private String fcm_reg_date;
 	private String fcm_mod_date;
-	
-	
-	 
-
-	
 	
 	
 }

@@ -1,9 +1,9 @@
-package com.office.kiosk.admin.member;
+package com.office.kiosk.paging;
 
 import lombok.Data;
 
 @Data
-public class AdminMemberListPageDto {
+public class kioskPageDto {
 	
 	private int page; //현재 페이지
 	private int maxPage; // 전체 필요한 페이지 갯수

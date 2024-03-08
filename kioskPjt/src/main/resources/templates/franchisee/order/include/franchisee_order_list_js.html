@@ -8,7 +8,7 @@ function ajax_get_all_order() {
     console.log('ajax_get_all_order');
 
     $.ajax({
-        url: '/franchisee/order/getOrders', 
+        url: '/franchisee/order/getOrdersByLogin', 
         method: 'post', 
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -17,24 +17,28 @@ function ajax_get_all_order() {
 
             let orderDtos = data.ordersDtos;
 			
-            console.log("orderDtos.length=====>" + orderDtos.length);
+            
             
             for (let i = 0; i < orderDtos.length; i++) {
+            	
+            	let packaging = orderDtos[i].fco_packaging === 0 ? '매장식사' : '포장';
+            	
             	let appendTag = '';
                
             	appendTag += '<tr>';
-                appendTag += '<td>' + '주문 번호: ' + orderDtos[i].fco_no + '</td>';
-                appendTag += '<td>' +  '상품 번호: ' + orderDtos[i].fco_ori_no + '</td>';
-                appendTag += '<td>' + '포장: ' + orderDtos[i].fco_packaging + '</td>';
-                appendTag += '<td>' + '메뉴번호: ' + orderDtos[i].fc_menu_no + '</td>';
-                appendTag += '<td>' + '주문 수량: ' + orderDtos[i].fco_menu_cnt + '</td>';
-                appendTag += '<td>' + '가게 번호: ' + orderDtos[i].fcs_no + '</td>';
-                appendTag += '<td>' + '주문일: ' + orderDtos[i].fco_reg_date + '</td>';
-                appendTag += '<td>' + '수정일: ' + orderDtos[i].fco_mod_date + '</td>';
+                appendTag += '<td>' + orderDtos[i].fco_no + '</td>';
+                appendTag += '<td>' + orderDtos[i].fco_ori_no +'번' + '</td>';
+                appendTag += '<td>' + packaging + '</td>';
+                appendTag += '<td>' + orderDtos[i].fcmc_name + '</td>';
+                appendTag += '<td>' + orderDtos[i].fc_menu_name + '</td>';
+                appendTag += '<td>' + orderDtos[i].fco_menu_cnt +'개'+ '</td>';
+                appendTag += '<td>' + orderDtos[i].fcs_name + '</td>';
+                appendTag += '<td>' + orderDtos[i].fco_reg_date + '</td>';
+                appendTag += '<td>' + orderDtos[i].fco_mod_date + '</td>';
                 appendTag += '</tr>';
               
                 $('#franchisee_order_list tbody').append(appendTag);
-
+                
             }
 
         },

@@ -15,6 +15,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
 <script type="text/javascript" th:replace="~{admin/include/section_side_menu_js.html::jquery_js}"></script>
+<script type="text/javascript" th:replace="~{admin/include/franchisee_list_js.html::franchisee_list_js}"></script>
 
 </head>
 <body>
@@ -43,7 +44,7 @@
 						
 					<div class="franchisee_list">
 					
-		  				<table>
+		  				<!-- <table>
 							<tr>
 								<td>NO</td>
 								<td>ID</td>
@@ -67,8 +68,27 @@
 								<td th:text="${f.fcm_reg_date}"></td>
 								<td th:text="${f.fcm_mod_date}"></td>
 							</tr>
-						</table> 
+						</table> -->
 						
+						<table>
+							<thead>
+								<tr>
+									<th>NO</th>
+									<th>ID</th>
+									<th>이름</th>
+									<th>연락처</th>
+									<th>메일</th>
+									<th>승인</th>
+									<th>등록일</th>
+									<th>수정일</th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>
+						<div class="page_no_wrap">
+						</div>
 					</div>
 					
 				</div>
