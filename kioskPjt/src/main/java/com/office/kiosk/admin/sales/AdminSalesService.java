@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.ls.LSException;
 
 import com.office.kiosk.admin.member.IAdminMemberDao;
 import com.office.kiosk.franchisee.dto.SearchSalesDto;
@@ -271,6 +272,46 @@ public class AdminSalesService {
 				iAdminSalesDao.selectDateFranchiseeTotalSales(selectDate);
 		
 		map.put("selectFranchiseeSalesDtos", selectFranchiseeSalesDtos);
+		
+		return map;
+	}
+
+	public Map<String, Object> getFranchiseeTotalSalesByInputPeriod(Map<String, String> period) {
+		log.info("getFranchiseeTotalSalesByInputPeriod()");
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		List<FranchiseeSalesDto> selectFranchiseeSalesDtosByInputFeriod =
+				iAdminSalesDao.selectFranchiseeSalesDtosByInputFeriod(period);
+		
+		map.put("selectFranchiseeSalesDtosByInputFeriod", selectFranchiseeSalesDtosByInputFeriod);
+		
+		return map;
+		
+	}
+
+	public Map<String, Object> getStoreTotalSalesByInputPeriod(Map<String, String> period) {
+		log.info("getStoreTotalSalesByInputPeriod()");
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		List<FranchiseeSalesDto> selectStoreSalesDtosByInputFeriod =
+				iAdminSalesDao.selectStoreSalesDtosByInputFeriod(period);
+		
+		map.put("selectStoreSalesDtosByInputFeriod", selectStoreSalesDtosByInputFeriod);
+		
+		return map;
+	}
+
+	public Map<String, Object> getSalesDetailInfo(int fco_ori_no) {
+		log.info("getSalesDetailInfo()");
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		List<FranchiseeSalesDto> salesDetailInfo = 
+				iAdminSalesDao.selectOrderInfoByOriNo(fco_ori_no);
+		
+		map.put("salesDetailInfo", salesDetailInfo);
 		
 		return map;
 	}
