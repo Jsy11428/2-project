@@ -211,6 +211,7 @@ public class AdminMenuService {
 
 	public int modifyMenuAccountConfirm(AdminMenuDto adminMenuDto) {
 		log.info("modifyMenuAccountConfirm()");
+		log.info(adminMenuDto);
 
 		return iAdminMenuDao.updateSelectMenu(adminMenuDto);
 

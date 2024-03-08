@@ -61,6 +61,13 @@ function removeSalesList() {
 
 }
 
+function removePageNo() {
+    console.log('removePageNo');
+
+    $('#section_wrap div.page_no_wrap').empty();
+
+}
+
 function removeDetailModal() {
     console.log('removeDetailModal()');
 
@@ -71,18 +78,22 @@ function removeDetailModal() {
 }
 
 // ajax - 모든 매출 목록 불러오기 
-function ajax_getAllSalesInfo() {
+function ajax_getAllSalesInfo(pageNum = 1) {
     console.log('ajax_getAllSalesInfo');
 
     $.ajax({
         url: '/admin/sales/getAllSalesInfo', 
         method: 'post', 
-        contentType: 'application/json; charset=utf-8',
+        data: { 'page' : pageNum },
         dataType: 'json',
         success: function(data) {
             console.log('ajax success!!');
 
-            let salesDtos = data.franchiseeSalesDtos;
+            removeSalesList();
+            removePageNo();
+
+            let pageDto = data.allSalesListPageDto;
+            let salesDtos = data.allFranchiseeSalesDtos;
             let appendTag = '';
 			
             for (let i = 0; i < salesDtos.length; i++) {
@@ -104,6 +115,42 @@ function ajax_getAllSalesInfo() {
 
             }
 
+            if (pageDto.page <= 1) {
+                $('#section_wrap div.page_no_wrap').append(`<span >&#8810;</span>`);
+            	$('#section_wrap div.page_no_wrap').append("<span >[이전]</span>");
+            } else {
+            	$('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="pre_page_btn" page_num='1'>&#8810;</a>`);
+            	$('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="pre_page_btn" page_num='${(pageDto.page-1)}'>[이전]</a>`);
+            }
+
+            for (let i = pageDto.startPage; i <= pageDto.endPage; i++) {
+                let appendPageNum = '';
+
+                appendPageNum += "<span class='page_num_wrap'>";
+                if (i === pageDto.page) {
+                    appendPageNum += "<b style='color:#555'>"+i+"</b>";
+                } else {
+                    appendPageNum += `<a href="#none" class="page_num_btn" page_num='${i}'>${i}</a>`;
+                }
+                appendPageNum += "</span>";
+
+            	$('#section_wrap div.page_no_wrap').append(appendPageNum); 
+
+            }
+
+            if(pageDto.page >= pageDto.maxPage){
+            	$('#section_wrap div.page_no_wrap').append("<span>[다음]</span>");
+            	$('#section_wrap div.page_no_wrap').append(`<span>&#8811;</span>`);
+
+            }else{ 
+            	$('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(pageDto.page+1)}'>[다음]</a>`);
+            	$('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(pageDto.maxPage)}'>&#8811;</a>`);
+            }
+
         },
         error: function(data) {
             console.log('ajax error!!')
@@ -121,6 +168,27 @@ function ajax_getAllSalesInfo() {
                 $('#section_wrap .admin_section_view_wrap .sales_detail_modal').css('display', 'block');
 
             })
+
+
+            $('#section_wrap div.page_no_wrap .next_page_btn').click(function(){
+                console.log('nextPageBtnClick()')
+
+                ajax_getAllSalesInfo(this.getAttribute('page_num'));
+
+            });
+
+            $('#section_wrap div.page_no_wrap .pre_page_btn').click(function(){
+            	console.log('prePageBtnClick()')
+
+                ajax_getAllSalesInfo(this.getAttribute('page_num'));
+            });
+        	
+        	$('#section_wrap div.page_no_wrap .page_num_btn').click(function(){
+            	console.log('pageNumBtnClick()')
+
+                ajax_getAllSalesInfo(this.getAttribute('page_num'));
+
+            });
 
         }
 

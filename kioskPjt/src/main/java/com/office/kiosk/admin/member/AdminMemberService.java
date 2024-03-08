@@ -136,7 +136,7 @@ public class AdminMemberService {
 		
 		Map<String, Integer> pagingParams = new HashMap<>();
 		pagingParams.put("start", pageingStart);
-		pagingParams.put("limit", pageLimit);		
+		pagingParams.put("limit", pageLimit);
 		
 		List<AdminMemberDto> franchiseeMemberDtos = iAdminMemberDao.selectFranchiseePagingList(pagingParams);
 		log.info("franchiseeMemberDtos: "+franchiseeMemberDtos);
