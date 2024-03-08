@@ -152,28 +152,49 @@ public class AdminMenuController {
 	}
 
 	// 메뉴 정보 수정 버튼 컨펌
-
 	@PostMapping("/modifyMenuAccountConfirm")
-	public String modifyMenuAccountConfirm(AdminMenuDto adminMenuDto, @RequestParam("file") MultipartFile file) {
+	public String modifyMenuAccountConfirm(AdminMenuDto adminMenuDto, @RequestParam(value = "file", required = false) MultipartFile file, @RequestParam("fc_menu_no") String fc_menu_no) {
 		log.info("modifyMenuAccountConfirm()");
 		log.info(adminMenuDto);
 
 		String nextPage = "redirect:/admin/menu/menuList";
+		/*
+		 * if (file.getOriginalFilename().equals("")) { log.info("file is null!!"); }
+		 * else { log.info("file is not null!!"); }
+		 */
 
-		log.info(file);
+		log.info("=====> {}", file);
 
-		ResponseEntity<String> saveFileName = adminMenuService.uploadFile(file);
-
-		if (saveFileName != null) {
+		if (!file.getOriginalFilename().equals("")) {
+			log.info("-----------> not null");
+			ResponseEntity<String> saveFileName = adminMenuService.uploadFile(file);
 			adminMenuDto.setFc_menu_img_name(saveFileName.getBody());
 
-			int result = adminMenuService.modifyMenuAccountConfirm(adminMenuDto);
+//			int result = adminMenuService.modifyMenuAccountConfirm(adminMenuDto);
+			
+//			log.info("---------------------------------->" + result);
 
-			if (result <= 0)
-				nextPage = "/admin/menu/modify_menu_account_ng";
+			
 
+		} else {													// 기존의 img name 불러오기 추가돼야함!!!
+			log.info("-----------> null");
+			
+			AdminMenuDto currentMenuDto = adminMenuService.getSelectMenuInfo(fc_menu_no);
+			
+			adminMenuDto.setFc_menu_img_name(currentMenuDto.getFc_menu_img_name());
+			log.info("-----------> ",adminMenuDto.getFc_menu_img_name());
+			
 		}
+		
+		int result = adminMenuService.modifyMenuAccountConfirm(adminMenuDto);
 
+		log.info("---------------------------------->" + result);
+		
+		
+		 if (result <= 0) {
+		        nextPage = "/admin/menu/modify_menu_account_ng";
+		    }
+		
 		return nextPage;
 	}
 
