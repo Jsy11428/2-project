@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.office.kiosk.paging.kioskPageDto;
+
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -113,14 +115,19 @@ public class AdminMenuController {
 
 	// 메뉴리스트 화면 기존 메뉴 리스트 불러오기 메서드
 
-	@PostMapping("/getMenus")
+	@GetMapping("/getMenus")
 	@ResponseBody
-	public Object getMenus() {
+	public Object getMenus(@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
 		log.info("getMenus()");
+		log.info("page:" + page);
 
-		Map<String, Object> menuDtos = adminMenuService.getMenus();
+		Map<String, Object> pagingAdminMenuDtos = adminMenuService.pagingAdminMenuList(page);
+		
+		kioskPageDto adminMenuListPageDto = adminMenuService.getAllAdminMenuListPageNum(page);
 
-		return menuDtos;
+		pagingAdminMenuDtos.put("adminMenuListPageDto", adminMenuListPageDto);
+		
+		return pagingAdminMenuDtos;
 
 	}
 
@@ -131,9 +138,9 @@ public class AdminMenuController {
 	public Object getMenusByCategory(Model model, @RequestParam("fcmc_no") String fcmc_no) {
 		log.info("getMenusByCategory()");
 
-		Map<String, Object> menuDtos = adminMenuService.getMenusByCategory(fcmc_no);
+		Map<String, Object> adminMenuDtos = adminMenuService.getMenusByCategory(fcmc_no);
 
-		return menuDtos;
+		return adminMenuDtos;
 
 	}
 

@@ -37,6 +37,28 @@
 		FROM TBL_FC_MENU;
 
 	</select>
+	
+	<select id="selectAdminMenuPagingList" parameterType="java.util.Map" resultType="com.office.kiosk.admin.menu.AdminMenuDto">
+	
+		SELECT 
+		* 
+		FROM
+		TBL_FC_MENU 
+		ORDER BY FC_MENU_NO ASC 
+		LIMIT
+		#{start}, #{limit}
+	
+	</select>
+	
+	<select id="selcetAllAdminMenuListCnt" resultType="Integer">
+		
+		SELECT 
+			COUNT(FC_MENU_NO) 
+		FROM 
+			TBL_FC_MENU
+		
+	</select>
+	
 
 	<select id="selectMenusByCategory" parameterType="String"
 		resultType="com.office.kiosk.admin.menu.AdminMenuDto">
