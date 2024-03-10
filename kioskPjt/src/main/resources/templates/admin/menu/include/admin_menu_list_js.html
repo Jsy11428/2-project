@@ -93,13 +93,17 @@
 			dataType : 'json',
 			success : function(data) {
 				let cateDtos = data.categoryDtos;
+				
+				// 이전 카테고리 제거
+				
+				$('#menu_category_select').empty();		
+				
 				for (let i = 0; i < cateDtos.length; i++) {
 					// 카테고리 버튼 추가
 
 					$('#menu_category_select').append(
 							'<option value="' + cateDtos[i].fcmc_no + '">'
 									+ cateDtos[i].fcmc_name + '</option>');
-
 				}
 
 				isCategoryMenuLoaded = true;
