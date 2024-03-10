@@ -239,6 +239,8 @@ public class AdminMenuService {
 
 	// 한페이지의 메뉴 리스트 불러오기
 	
+	
+	
 	public Map<String, Object> pagingAdminMenuList(int page) {
 		log.info("pagingAdminMenuList");
 		
@@ -263,6 +265,8 @@ public class AdminMenuService {
 		
 		return pagingList;
 	}
+
+
 
 	// 모든 페이지 number 불러오기
 	
@@ -297,6 +301,64 @@ public class AdminMenuService {
 		return adminMenuListPageDto;
 	}
 
+	public Map<String, Object> pagingAdminMenuListByCate(int page, String fcmc_no) {
+		log.info("pagingAdminMenuList");
+		
+		 /*
+		 1페이지에 보여지는 리스트 갯수 12개
+		 1page => 0 (시작 인덱스)
+		 2page => 12 (시작 인덱스)
+		 3page => 24 (시작 인덱스)		 
+		 */
+		
+		int pageingStart = (page - 1) * pageLimit;
+		
+		Map<String, Object> pagingList = new HashMap<>();
+		
+		Map<String, Integer> pagingParams = new HashMap<>();
+		pagingParams.put("start", pageingStart);
+		pagingParams.put("limit", pageLimit);
+		pagingParams.put("fcmc_no", Integer.parseInt(fcmc_no));
+		
+		List<AdminMenuDto> adminMenuDtos = iAdminMenuDao.selectAdminMenuPagingListByCate(pagingParams);
+		
+		pagingList.put("adminMenuDtos", adminMenuDtos);
+		
+		return pagingList;
+	}
+
+	public kioskPageDto getAllAdminMenuListPageNumByCate(int page, String fcmc_no) {
+		log.info("getAllAdminMenuListPageNumByCate");
+		
+		// 전체 menu 갯수 조회
+		int menuListcnt = iAdminMenuDao.selcetAllAdminMenuListCntByCate(fcmc_no);
+		
+		// 전체 페이지 갯수 계산
+		int maxPage = (int) (Math.ceil((double) menuListcnt / pageLimit));
+		
+		//시작 페이지 값 계산 (페이지 번호를 3개씩 보여줄 경우 = (1,4,7,10,~~~~))
+		int startPage = (((int)(Math.ceil((double) page / blockLimit))) - 1 ) * blockLimit + 1;
+		
+		// 마지막 페이지 값 계산
+		int endPage = startPage + blockLimit - 1;
+		if (endPage > maxPage) {
+			endPage = maxPage;
+		}
+		kioskPageDto adminMenuListPageDto = new kioskPageDto();
+		adminMenuListPageDto.setPage(page);
+		adminMenuListPageDto.setMaxPage(maxPage);
+		adminMenuListPageDto.setStartPage(startPage);
+		adminMenuListPageDto.setEndPage(endPage);
+		
+		log.info("page :" + page);
+		log.info("maxPage :" + maxPage);
+		log.info("startPage :" + startPage);
+		log.info("endPage :" + endPage);
+		
+		return adminMenuListPageDto;
+	}
+	}
+
 	// 모달창에서 기존에 선택된 메뉴 카테고리 불러오기
 
-}
+

@@ -32,6 +32,10 @@ public interface IAdminMenuDao {
 
 	public int selcetAllAdminMenuListCnt();
 
+	public List<AdminMenuDto> selectAdminMenuPagingListByCate(Map<String, Integer> pagingParams);
+
+	public int selcetAllAdminMenuListCntByCate(String fcmc_no);
+
 
 
 }

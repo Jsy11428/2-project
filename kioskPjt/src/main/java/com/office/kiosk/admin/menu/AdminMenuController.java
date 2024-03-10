@@ -131,7 +131,9 @@ public class AdminMenuController {
 
 	}
 
-	// 카테고리에 따른 메뉴 불러오기
+	// 카테고리에 따른 메뉴 불러오기(기존)
+	
+	/*
 
 	@PostMapping("/getMenusByCategory")
 	@ResponseBody
@@ -139,11 +141,34 @@ public class AdminMenuController {
 		log.info("getMenusByCategory()");
 
 		Map<String, Object> adminMenuDtos = adminMenuService.getMenusByCategory(fcmc_no);
+		
 
+		
 		return adminMenuDtos;
 
 	}
+	
+	*/
 
+
+	// 카테고리에 따른 메뉴 불러오기(페이지네이션추가)
+
+	@GetMapping("/getMenusByCategory")
+	@ResponseBody
+	public Object getMenusByCategory(Model model, @RequestParam("fcmc_no") String fcmc_no, @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+		log.info("getMenusByCategory()");
+
+		Map<String, Object> pagingAdminMenuDtos = adminMenuService.pagingAdminMenuListByCate(page, fcmc_no);
+		
+		kioskPageDto adminMenuListPageDto = adminMenuService.getAllAdminMenuListPageNumByCate(page, fcmc_no);
+
+		pagingAdminMenuDtos.put("adminMenuListPageDto", adminMenuListPageDto);
+		
+		return pagingAdminMenuDtos;
+
+	}
+	
+	
 	// 모달창으로 선택한 메뉴의 정보 가져오기
 
 	@PostMapping("/getSelectMenuInfo")
