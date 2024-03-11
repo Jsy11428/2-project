@@ -36,6 +36,9 @@
 	    JOIN TBL_FC_MEMBER FME ON FS.FCM_NO = FME.FCM_NO 
 	    
 	    WHERE FME.FCM_NO = #{loginNo}
+
+	    ORDER BY FCO_NO ASC 
+
 	    
 	    ORDER BY FCO_NO ASC 
 	    

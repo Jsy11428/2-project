@@ -25,22 +25,6 @@ public class AdminSalesController {
 
 	@Autowired
 	AdminSalesService adminSalesService;
-//	/*
-//	 * 	sales list 불러오기
-//	 */
-//	@GetMapping("/salesList")
-//	public String salesList(Model model) {
-//		log.info("salesList()");
-//		
-//		String nextPage = "/admin/sales/admin_sales_list";
-//		
-//		List<FranchiseeSalesDto> franchiseeSalesDtos = adminSalesService.salesList();
-//		
-//		model.addAttribute("franchiseeSalesDtos", franchiseeSalesDtos);
-//		
-//		return nextPage;
-//		
-//	}
 	
 	/*
 	 * 	전체 매출 리스트
@@ -55,18 +39,6 @@ public class AdminSalesController {
 		
 	}
 	
-//	/*
-//	 * 	get all sales info
-//	 */
-//	@PostMapping("/getAllSalesInfo")
-//	@ResponseBody
-//	public Object getAllSalesInfo() {
-//		log.info("getAllSalesInfo()");
-//		
-//		Map<String, Object> resultMap = adminSalesService.getAllSalesInfo();
-//		
-//		return resultMap;
-//	}
 	
 	/*
 	 * 	get all sales info
@@ -75,7 +47,6 @@ public class AdminSalesController {
 	@ResponseBody
 	public Object getAllSalesInfo(@RequestParam("page") int page) {
 		log.info("getAllSalesInfo()");
-		log.info("page" + page);
 		
 		Map<String, Object> resultMap = adminSalesService.pagingAllSalesInfo(page);
 		
@@ -94,8 +65,11 @@ public class AdminSalesController {
 	public Object getSearchSales(SearchSalesDto searchSalesDto) {
 		log.info("getSearchSales()");
 		
-		Map<String, Object> resultMap = 
-				adminSalesService.getSearchSales(searchSalesDto);
+		Map<String, Object> resultMap = adminSalesService.pagingSearchSalesInfo(searchSalesDto);
+		
+		kioskPageDto searchSalesListPageDto = adminSalesService.SearchSalesListPageNum(searchSalesDto);
+		
+		resultMap.put("searchSalesListPageDto", searchSalesListPageDto);
 		
 		return resultMap;
 		
@@ -131,22 +105,42 @@ public class AdminSalesController {
 		
 	}
 	
+	
 	/*
 	 * 	전체 가맹점 매출 불러오기
 	 */
 	@PostMapping("/getStoreAllSalesInfo")
 	@ResponseBody
-	public Object getStoreAllSalesInfo() {
+	public Object getStoreAllSalesInfo(@RequestParam("page") int page) {
 		log.info("getStoreAllSalesInfo()");
 		
 		Map<String, Object> resultMap = 
-				adminSalesService.getStoreAllSalesInfo();
+				adminSalesService.pagingStoreAllSalesInfo(page);
+		
+		kioskPageDto allStoreSalesListPageDto = adminSalesService.allStoreSalesListPageNum(page);
+		
+		resultMap.put("allStoreSalesListPageDto", allStoreSalesListPageDto);
 		
 		return resultMap;
 	}
 	
+	
+//	/*
+//	 * 	선택 날짜 가맹점 매출 리스트 불러오기
+//	 */
+//	@PostMapping("/getSelectDateSalesInfo")
+//	@ResponseBody
+//	public Object getSelectDateSalesInfo(@RequestBody Map<String, String> currentDate) {
+//		log.info("getSelectDateSalesInfo()");
+//		
+//		Map<String, Object> resultMap = 
+//				adminSalesService.getSelectDateSalesInfo(currentDate);
+//		
+//		return resultMap;
+//	}
+	
 	/*
-	 * 	선택 날짜 가맹첨 매출 리스트 불러오기
+	 * 	선택 날짜 가맹점 매출 리스트 불러오기
 	 */
 	@PostMapping("/getSelectDateSalesInfo")
 	@ResponseBody
@@ -154,13 +148,18 @@ public class AdminSalesController {
 		log.info("getSelectDateSalesInfo()");
 		
 		Map<String, Object> resultMap = 
-				adminSalesService.getSelectDateSalesInfo(currentDate);
+				adminSalesService.pagingSelectDateSalesInfo(currentDate);
+		
+		kioskPageDto StoreSalesListPageDtoBySelectDate = 
+				adminSalesService.StoreSalesListPageNumBySelectDate(currentDate);
+		
+		resultMap.put("StoreSalesListPageDtoBySelectDate", StoreSalesListPageDtoBySelectDate);
 		
 		return resultMap;
 	}
 	
 	/*
-	 * 	선택 기간 가맹점별 매출 리스트 불러오기
+	 * 	선택 기간 가맹점별 매출 리스트 
 	 */
 	@PostMapping("/getStoreTotalSalesByInputPeriod")
 	@ResponseBody
@@ -168,11 +167,18 @@ public class AdminSalesController {
 		log.info("getStoreTotalSalesByInputPeriod()");
 		
 		Map<String, Object> resultMap = 
-				adminSalesService.getStoreTotalSalesByInputPeriod(period);
+				adminSalesService.pagingStoreSalesListByInputPeriod(period);
+		
+		log.info("resultMap-----------" + resultMap);
+		
+		kioskPageDto storeSalesListPageDtoByInputPeriod = 
+				adminSalesService.storeSalesListPageNumByInputPeriod(period);
+		
+		resultMap.put("storeSalesListPageDtoByInputPeriod", storeSalesListPageDtoByInputPeriod);
 		
 		return resultMap;
-		
 	}
+	
 	
 	/*
 	 * 	가맹회원별 매출 리스트 뷰
@@ -187,19 +193,53 @@ public class AdminSalesController {
 		
 	}
 	
+//	/*
+//	 * 	가맹 회원별 매출 불러오기
+//	 */
+//	@PostMapping("/getFranchiseeAllSalesInfo")
+//	@ResponseBody
+//	public Object getFranchiseeAllSalesInfo() {
+//		log.info("getFranchiseeAllSalesInfo()");
+//		
+//		Map<String, Object> resultMap = 
+//				adminSalesService.getFranchiseeAllSalesInfo();
+//		
+//		return resultMap;
+//	}
+	
 	/*
-	 * 	전체 회원별 매출 불러오기
+	 * 	가맹 회원별 매출 불러오기
 	 */
 	@PostMapping("/getFranchiseeAllSalesInfo")
 	@ResponseBody
-	public Object getFranchiseeAllSalesInfo() {
+	public Object getFranchiseeAllSalesInfo(@RequestParam("page") int page) {
 		log.info("getFranchiseeAllSalesInfo()");
 		
 		Map<String, Object> resultMap = 
-				adminSalesService.getFranchiseeAllSalesInfo();
+				adminSalesService.pagingFranchiseeAllSalesInfo(page);
+		
+		kioskPageDto allFranchiseeSalesListPageDto = 
+				adminSalesService.allFranchiseeSalesListPageNum(page);
+		
+		resultMap.put("allFranchiseeSalesListPageDto", allFranchiseeSalesListPageDto);
 		
 		return resultMap;
 	}
+	
+	
+//	/*
+//	 * 	선택 날짜 회원별 매출 리스트 불러오기
+//	 */
+//	@PostMapping("/getSelectDateFranchiseeSalesInfo")
+//	@ResponseBody
+//	public Object getSelectDateFranchiseeSalesInfo(@RequestBody Map<String, String> currentDate) {
+//		log.info("getSelectDateFranchiseeSalesInfo()");
+//		
+//		Map<String, Object> resultMap = 
+//				adminSalesService.getSelectDateFranchiseeSalesInfo(currentDate);
+//		
+//		return resultMap;
+//	}
 	
 	/*
 	 * 	선택 날짜 회원별 매출 리스트 불러오기
@@ -210,10 +250,30 @@ public class AdminSalesController {
 		log.info("getSelectDateFranchiseeSalesInfo()");
 		
 		Map<String, Object> resultMap = 
-				adminSalesService.getSelectDateFranchiseeSalesInfo(currentDate);
+				adminSalesService.pagingFranchiseeSalesInfoBySelectDate(currentDate);
+		
+		kioskPageDto FranchiseeSalesListPageDtoBySelectDate = 
+				adminSalesService.franchiseeSalesListPageNumBySelectDate(currentDate);
+		
+		resultMap.put("FranchiseeSalesListPageDtoBySelectDate", FranchiseeSalesListPageDtoBySelectDate);
 		
 		return resultMap;
 	}
+	
+//	/*
+//	 * 	선택 기간 회원별 매출 리스트 불러오기
+//	 */
+//	@PostMapping("/getFranchiseeTotalSalesByInputPeriod")
+//	@ResponseBody
+//	public Object getFranchiseeTotalSalesByInputPeriod(@RequestBody Map<String, String> period) {
+//		log.info("getFranchiseeTotalSalesByInputPeriod()");
+//		
+//		Map<String, Object> resultMap = 
+//				adminSalesService.getFranchiseeTotalSalesByInputPeriod(period);
+//		
+//		return resultMap;
+//		
+//	}
 	
 	/*
 	 * 	선택 기간 회원별 매출 리스트 불러오기
@@ -224,7 +284,12 @@ public class AdminSalesController {
 		log.info("getFranchiseeTotalSalesByInputPeriod()");
 		
 		Map<String, Object> resultMap = 
-				adminSalesService.getFranchiseeTotalSalesByInputPeriod(period);
+				adminSalesService.pagingFranchiseeTotalSalesByInputPeriod(period);
+		
+		kioskPageDto franchiseeSalesListPageDtoByInputPeriod = 
+				adminSalesService.franchiseeSalesListPageNumByInputPeriod(period);
+		
+		resultMap.put("franchiseeSalesListPageDtoByInputPeriod", franchiseeSalesListPageDtoByInputPeriod);
 		
 		return resultMap;
 		

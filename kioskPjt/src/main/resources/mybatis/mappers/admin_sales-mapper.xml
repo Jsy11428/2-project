@@ -105,11 +105,66 @@
 			
 	</select>
 	
+	<!-- 매출 검색 count -->
+	<select id="selectSearchSalesListCnt" 
+			parameterType="com.office.kiosk.franchisee.dto.SearchSalesDto">
+			
+		SELECT 
+			COUNT(FCSA.FCSA_NO) 
+		FROM 
+			TBL_FC_SALES FCSA 
+		JOIN 
+			TBL_FC_STORE FCS 
+		ON 
+			FCSA.FCS_NO = FCS.FCS_NO 
+		JOIN 
+			TBL_FC_MEMBER FCM 
+		ON 
+			FCM.FCM_NO = FCS.FCM_NO 
+		<where>
+			FCSA_REG_DATE BETWEEN
+            <choose>
+                <when test="search_term == '1d'">
+                    DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+                </when>
+                <when test="search_term == '1w'">
+                    DATE_SUB(CURDATE(), INTERVAL 1 WEEK)
+                </when>
+                <when test="search_term == '1m'">
+                    DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+                </when>
+                <when test="search_term == '6m'">
+                    DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+                </when>
+                <when test="search_term == '1y'">
+                    DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+                </when>
+                <otherwise>
+                    DATE_SUB(CURDATE(), INTERVAL 100 YEAR)
+                </otherwise>
+            </choose>
+        	AND NOW()
+		AND 
+			<choose>
+				<when test="search_value == 'fcs_name'">
+					FCS.FCS_NAME LIKE '%${search_word}%' 
+				</when>
+				<when test="search_value == 'fcm_name'">
+					FCM.FCM_NAME LIKE '%${search_word}%' 
+				</when>
+				<when test="search_value == 'pm_type'">
+					FCSA.PM_TYPE LIKE '%${search_word}%' 
+				</when>
+			</choose>
+		</where>
+			
+	</select>
+	
 	<!-- ajax fcs_name, 기간별 sales 목록 가져오기 -->
 	<!-- ajax fcm_name, 기간별 sales 목록 가져오기 -->
 	<!-- ajax pm_type, 기간별 sales 목록 가져오기 -->
-	<select id="selectSalesInfo"
-			parameterType="com.office.kiosk.franchisee.dto.SearchSalesDto" 
+	<select id="selectSearchSalesInfoForPaging" 
+			parameterType="map" 
 			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto" >
 			
 		SELECT 
@@ -160,15 +215,19 @@
 				</when>
 			</choose>
 		</where>
+		ORDER BY 
+			FCSA.FCSA_NO DESC 
+		LIMIT 
+			#{start},#{limit} 
 	
 	</select>
 	
-
 	
 	<!-- 가맹점별 총 매출 조회 -->
-	<select id="selectStoreTotalSales" 
+	<select id="selectStoreTotalSalesForPaging" 
+			parameterType="Integer" 
 			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
-	
+			
 		SELECT
 		    FCSA.FCS_NO,
 		    FCS.FCS_NAME,
@@ -178,10 +237,28 @@
 		FROM TBL_FC_SALES FCSA 
 		JOIN TBL_FC_STORE FCS ON FCS.FCS_NO = FCSA.FCS_NO
 		JOIN TBL_FC_MEMBER FCM ON FCM.FCM_NO = FCS.FCM_NO
-		WHERE DATE(FCSA.FCSA_REG_DATE) = CURDATE() 
-		GROUP BY FCS_NO 
-	
+		WHERE 
+			DATE(FCSA.FCSA_REG_DATE) = CURDATE() 
+		GROUP BY 
+			FCS_NO 
+		LIMIT 
+			#{start},#{limit} 
+			
 	</select>
+	
+	<!-- 가맹점 갯수 count -->
+	<select id="selectAllStoreSalesListCnt" 
+			resultType="Integer">
+			
+		SELECT 
+			COUNT(DISTINCT FCS.FCS_NO) 
+		FROM TBL_FC_SALES FCSA 
+		JOIN TBL_FC_STORE FCS ON FCS.FCS_NO = FCSA.FCS_NO 
+		JOIN TBL_FC_MEMBER FCM ON FCM.FCM_NO = FCS.FCM_NO 
+		WHERE DATE(FCSA.FCSA_REG_DATE) = CURDATE(); 
+			
+	</select>
+	
 	
 	<!-- 특정 날짜 가맹점별 매출 조회 -->
 	<select id="selectDateTotalSales" 
@@ -202,6 +279,42 @@
 	
 	</select>
 	
+	
+	<!-- 특정 날짜 가맹점별 매출 조회 페이징 -->
+	<select id="selectStoreSalesInfoBySelectDate" 
+			parameterType="map"
+			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
+			
+		SELECT 
+		    FCSA.FCS_NO, 
+		    FCS.FCS_NAME, 
+		    FCM.FCM_NAME, 
+		    SUM(CASE WHEN FCSA.PM_TYPE = '카드' THEN FCSA.FCSA_PRICE END) AS CARD_TOTAL_PRICE, 
+		    SUM(CASE WHEN FCSA.PM_TYPE = '현금' THEN FCSA.FCSA_PRICE END) AS CASH_TOTAL_PRICE 
+		FROM TBL_FC_SALES FCSA 
+		JOIN TBL_FC_STORE FCS ON FCS.FCS_NO = FCSA.FCS_NO 
+		JOIN TBL_FC_MEMBER FCM ON FCM.FCM_NO = FCS.FCM_NO 
+		WHERE DATE(FCSA.FCSA_REG_DATE) = #{selectDate} 
+		GROUP BY FCS_NO  
+		LIMIT 
+			#{start},#{limit} 
+			
+	</select>
+	 
+		<!-- 특정 날짜 가맹점 갯수 count -->
+	<select id="selectStoreSalesListCntBySelectDate"  
+			parameterType="String"
+			resultType="Integer">
+			
+		SELECT 
+		    COUNT(DISTINCT FCSA.FCS_NO) 
+		FROM TBL_FC_SALES FCSA 
+		JOIN TBL_FC_STORE FCS ON FCS.FCS_NO = FCSA.FCS_NO 
+		JOIN TBL_FC_MEMBER FCM ON FCM.FCM_NO = FCS.FCM_NO 
+		WHERE DATE(FCSA.FCSA_REG_DATE) = #{selectDate} 
+			
+	</select>
+	
 	<!-- 선택기간 가맹점별 매출 조회 -->
 	<select id="selectStoreSalesDtosByInputFeriod"
 			parameterType="map"
@@ -220,6 +333,21 @@
 		GROUP BY FCS_NO 
 			
 	</select>
+	
+	<!-- 회원별 총 매출 cnt for paging -->
+	<select id="selectFranchiseeSalesListCnt" 
+			parameterType="Integer">
+			
+		SELECT 
+			COUNT(DISTINCT FCM.FCM_NO) 
+		FROM 
+			TBL_FC_MEMBER FCM 
+		JOIN TBL_FC_STORE FCS ON FCS.FCM_NO = FCM.FCM_NO 
+		JOIN TBL_FC_SALES FCSA ON FCS.FCS_NO = FCSA.FCS_NO  
+		WHERE DATE(FCSA.FCSA_REG_DATE) = CURDATE() 
+        GROUP BY FCM.FCM_NO 
+	
+	</select>
 
 	<!-- 회원별 총 매출 조회 -->
 	<select id="selectFranchiseeTotalSales" 
@@ -235,8 +363,28 @@
 		JOIN TBL_FC_STORE FCS ON FCS.FCM_NO = FCM.FCM_NO 
 		JOIN TBL_FC_SALES FCSA ON FCS.FCS_NO = FCSA.FCS_NO 
 		WHERE DATE(FCSA.FCSA_REG_DATE) = CURDATE() 
-		GROUP BY FCM_NO;
+		GROUP BY FCM_NO 
 	
+	</select>
+	
+	<select id="selectFranchiseeSalesInfo" 
+			parameterType="map"
+			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
+			
+		SELECT 
+			FCM.FCM_NO,
+		    FCM.FCM_NAME,
+			SUM(CASE WHEN FCSA.PM_TYPE = '카드' THEN FCSA.FCSA_PRICE END) AS CARD_TOTAL_PRICE,
+		    SUM(CASE WHEN FCSA.PM_TYPE = '현금' THEN FCSA.FCSA_PRICE END) AS CASH_TOTAL_PRICE
+		FROM 
+			TBL_FC_MEMBER FCM  
+		JOIN TBL_FC_STORE FCS ON FCS.FCM_NO = FCM.FCM_NO  
+		JOIN TBL_FC_SALES FCSA ON FCS.FCS_NO = FCSA.FCS_NO  
+		WHERE DATE(FCSA.FCSA_REG_DATE) = CURDATE()  
+		GROUP BY FCM_NO 
+		LIMIT 
+			#{start},#{limit}  
+			
 	</select>
 	
 	<!-- 특정 날짜 회원별 매출 조회 -->
@@ -254,8 +402,41 @@
 		JOIN TBL_FC_STORE FCS ON FCS.FCM_NO = FCM.FCM_NO 
 		JOIN TBL_FC_SALES FCSA ON FCS.FCS_NO = FCSA.FCS_NO 
 		WHERE DATE(FCSA.FCSA_REG_DATE) = #{selectDate}
-		GROUP BY FCM_NO;
+		GROUP BY FCM_NO 
 	
+	</select>
+	
+	<select id="selectFranchiseeSalesInfoBySelectDate" 
+			parameterType="map"
+			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
+			
+		SELECT 
+			FCM.FCM_NO,
+		    FCM.FCM_NAME,
+			SUM(CASE WHEN FCSA.PM_TYPE = '카드' THEN FCSA.FCSA_PRICE END) AS CARD_TOTAL_PRICE,
+		    SUM(CASE WHEN FCSA.PM_TYPE = '현금' THEN FCSA.FCSA_PRICE END) AS CASH_TOTAL_PRICE
+		FROM 
+			TBL_FC_MEMBER FCM 
+		JOIN TBL_FC_STORE FCS ON FCS.FCM_NO = FCM.FCM_NO  
+		JOIN TBL_FC_SALES FCSA ON FCS.FCS_NO = FCSA.FCS_NO  
+		WHERE DATE(FCSA.FCSA_REG_DATE) = #{selectDate} 
+		GROUP BY FCM_NO 
+		LIMIT 
+			#{start},#{limit} 
+			
+	</select>
+	
+	<select id="selectFranchiseeSalesListCntBySelectDate" 
+			parameterType="String">
+			
+		SELECT 
+			COUNT(DISTINCT FCM.FCM_NO)
+		FROM 
+			TBL_FC_MEMBER FCM 
+		JOIN TBL_FC_STORE FCS ON FCS.FCM_NO = FCM.FCM_NO 
+		JOIN TBL_FC_SALES FCSA ON FCS.FCS_NO = FCSA.FCS_NO 
+		WHERE DATE(FCSA.FCSA_REG_DATE) = #{selectDate}
+		
 	</select>
 	
 	<!-- 선택 기간 회원별 매출 조회 -->
@@ -277,6 +458,71 @@
 	
 	</select>
 	
+	<select id="selectFranchiseeSalesInfoByInputPeriod"
+			parameterType="map"
+			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
+			
+		SELECT 
+			FCM.FCM_NO,
+		    FCM.FCM_NAME,
+			SUM(CASE WHEN FCSA.PM_TYPE = '카드' THEN FCSA.FCSA_PRICE END) AS CARD_TOTAL_PRICE,
+		    SUM(CASE WHEN FCSA.PM_TYPE = '현금' THEN FCSA.FCSA_PRICE END) AS CASH_TOTAL_PRICE
+		FROM 
+			TBL_FC_MEMBER FCM 
+		JOIN TBL_FC_STORE FCS ON FCS.FCM_NO = FCM.FCM_NO 
+		JOIN TBL_FC_SALES FCSA ON FCS.FCS_NO = FCSA.FCS_NO 
+		WHERE FCSA.FCSA_REG_DATE BETWEEN #{startDate} AND #{endDate} 
+		GROUP BY FCM_NO 
+		LIMIT 
+			#{start},#{limit} 
+			
+	</select>
+	
+	<select id="selectFranchiseeSalesListCntByInputPeriod" 
+			parameterType="map">
+	
+		SELECT 
+			COUNT(DISTINCT FCM.FCM_NO)
+		FROM 
+			TBL_FC_MEMBER FCM 
+		JOIN TBL_FC_STORE FCS ON FCS.FCM_NO = FCM.FCM_NO 
+		JOIN TBL_FC_SALES FCSA ON FCS.FCS_NO = FCSA.FCS_NO 
+		WHERE FCSA.FCSA_REG_DATE BETWEEN #{startDate} AND #{endDate} 
+	
+	</select>
+	
+	<select id="selectStoreSalesListCntByInputPeriod"
+			parameterType="map"
+			>
 
+		SELECT 
+		    COUNT(DISTINCT FCSA.FCS_NO) 
+		FROM TBL_FC_SALES FCSA 
+		JOIN TBL_FC_STORE FCS ON FCS.FCS_NO = FCSA.FCS_NO 
+		JOIN TBL_FC_MEMBER FCM ON FCM.FCM_NO = FCS.FCM_NO 
+		WHERE DATE(FCSA.FCSA_REG_DATE) BETWEEN #{startDate} AND #{endDate} 
+	
+	</select>
+	
+	<select id="selectStoreSalesInfoByInputPeriod" 
+			parameterType="map" 
+			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto"> 
+	
+		SELECT 
+		    FCSA.FCS_NO, 
+		    FCS.FCS_NAME, 
+		    FCM.FCM_NAME, 
+		    SUM(CASE WHEN FCSA.PM_TYPE = '카드' THEN FCSA.FCSA_PRICE END) AS CARD_TOTAL_PRICE, 
+		    SUM(CASE WHEN FCSA.PM_TYPE = '현금' THEN FCSA.FCSA_PRICE END) AS CASH_TOTAL_PRICE 
+		FROM TBL_FC_SALES FCSA 
+		JOIN TBL_FC_STORE FCS ON FCS.FCS_NO = FCSA.FCS_NO 
+		JOIN TBL_FC_MEMBER FCM ON FCM.FCM_NO = FCS.FCM_NO 
+		WHERE DATE(FCSA.FCSA_REG_DATE) BETWEEN #{startDate} AND #{endDate} 
+		GROUP BY FCS_NO  
+		LIMIT 
+			#{start},#{limit} 
+	
+	</select>
+	
 
 </mapper>

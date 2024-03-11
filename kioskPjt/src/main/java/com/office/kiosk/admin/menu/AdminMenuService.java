@@ -210,7 +210,6 @@ public class AdminMenuService {
 	public AdminMenuDto getSelectMenuInfo(String fc_menu_no) {
 
 		log.info("getSelectMenuInfo()");
-		log.info(fc_menu_no);
 
 		AdminMenuDto dto = iAdminMenuDao.selectMenuInfo(fc_menu_no);
 

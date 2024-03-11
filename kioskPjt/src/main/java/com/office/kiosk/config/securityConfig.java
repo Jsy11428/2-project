@@ -36,14 +36,14 @@ public class securityConfig {
 		log.info("filterChain()");
 
 		http
-		.cors((cors) -> cors.disable())
-		.csrf((csrf) -> csrf.disable())
-				.authorizeHttpRequests((request) -> request
-						.requestMatchers("/franchisee/member/franchiseeModifyForm", 
-										"/franchisee/member/franchiseeModifyConfirm")
-							.authenticated()
-						.requestMatchers("/**")
-							.permitAll());
+			.cors((cors) -> cors.disable())
+			.csrf((csrf) -> csrf.disable());
+		
+		http
+			.authorizeHttpRequests((request) -> request
+					.requestMatchers("/franchisee/member/franchiseeModifyForm", 
+									 "/franchisee/member/franchiseeModifyConfirm").authenticated()
+					.requestMatchers("/**").permitAll());
 
 		http.formLogin(login -> login
 				.loginPage("/franchisee/member/franchiseeLoginForm")

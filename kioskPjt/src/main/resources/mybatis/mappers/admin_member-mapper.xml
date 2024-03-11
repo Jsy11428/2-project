@@ -158,11 +158,7 @@
 		SELECT 
 			* 
 		FROM 
-			TBL_FC_STORE FCS 
-		JOIN 
-			TBL_FC_MEMBER FCM 
-		ON 
-			FCS.FCM_NO = FCM.FCM_NO 
+			TBL_FC_MEMBER 
 	
 	</select>
 	
@@ -231,6 +227,55 @@
 		FROM 
 			TBL_FC_STORE
 		
+	</select>
+	
+	<select id="selectFranchiseeStoreInfoBySelect" 
+			parameterType="Integer" 
+			resultType="com.office.kiosk.franchisee.FranchiseeStoreDto">
+	
+		SELECT
+			*
+		FROM 
+			TBL_FC_MEMBER FCM 
+		JOIN TBL_FC_STORE FCS ON FCS.FCM_NO = FCM.FCM_NO 
+		WHERE FCM.FCM_NO = #{fcm_no} 
+	
+	</select>
+	
+	<insert id="insertFranchiseeStore"
+			parameterType="com.office.kiosk.franchisee.FranchiseeStoreDto">
+			
+	INSERT INTO 
+		TBL_FC_STORE(
+			FCS_NAME,
+	        FCS_LOCATION,
+	        FCS_PHONE,
+	        FCM_NO,
+	        FCS_REG_DATE,
+	        FCS_MOD_DATE) 
+	VALUES (#{fcs_name}, 
+			#{fcs_location},
+			#{fcs_phone},
+			#{fcm_no},
+			NOW(), NOW())
+			
+	</insert>
+	
+	<select id="selectFranchiseeStoreByFcmNo" 
+			parameterType="Integer" 
+			resultType="com.office.kiosk.franchisee.FranchiseeStoreDto">
+			
+		SELECT 
+			* 
+		FROM 
+			TBL_FC_STORE FCS 
+		JOIN 
+			TBL_FC_MEMBER FCM 
+		ON 
+			FCS.FCM_NO = FCM.FCM_NO
+		WHERE 
+			FCM.FCM_NO = #{fcm_no}
+			
 	</select>
 
 </mapper>

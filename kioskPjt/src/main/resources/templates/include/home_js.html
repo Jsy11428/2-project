@@ -1,11 +1,115 @@
 
 <script th:fragment="home_js" type="text/javascript">
 
-
 $(document).ready(function() {
-
-
+	
+	init();
+		
 });
+
+function init(){
+	
+	eventsHandler();
+	
+}
+
+function eventsHandler(){
+	
+	$("#section_wrap ul.section_menu_list li").click(function(){
+		console.log("section_menu_list li click!!!");
+		let menu_img = $(this).children('img').attr('src');
+		let fc_menu_price = parseInt($(this).children('p.item_price').children('span').text());
+		addCartItem(menu_img,/* fc_menu_no,fcmc_no,fco_packaging, */fc_menu_price);
+	});
+		
+}
+
+function totalPriceCalculator(){
+	let total_menu_price = 0;
+	$("div.total_price_text h4 span").empty();
+	for(let i = 0; i < $("ul.cart_area_items li input[name='fc_menu_price']").length; i++){
+		
+		fc_menu_price = parseInt($("ul.cart_area_items li input[name='fco_total_price']").eq(i).val());
+		
+		total_menu_price += fc_menu_price;
+	}
+	
+	$("div.total_price_text h4 span").text(total_menu_price);
+}
+
+//footer cart area
+
+function addCartItem(menu_img,/* fc_menu_no,fcmc_no,fco_packaging, */fc_menu_price){
+	console.log("addCartItem()");
+		
+	let fco_menu_cnt = 1;
+	let appendTag = "";
+	
+	appendTag = '<li>';
+		appendTag += '<img class="cart_area_cancel_btn" src="/img/home/cart_area_cancel_btn.png" alt="">';
+		appendTag += '<div class="cart_item_img"><img src="'+menu_img+'" alt=""></div>'
+		appendTag += '<div class="cart_item_select_wrap">';
+		
+			appendTag += '<div class="item_sub_btn"><img src="/img/home/cart_area_sub_btn.png" alt=""></div>';
+			appendTag += '<p class="fco_menu_cnt">'+fco_menu_cnt+'</p>';
+			appendTag += '<div class="item_add_btn"><img src="/img/home/cart_area_add_btn.png" alt=""></div>';
+			/* appendTag += '<input type="hidden" name="fc_menu_no" value="'+fc_menu_no+'">';
+			appendTag += '<input type="hidden" name="fcmc_no" value="'+fcmc_no+'">';
+			appendTag += '<input type="hidden" name="fco_packaging" value="'+fco_packaging+'">'; */
+			appendTag += '<input type="hidden" name="fc_menu_price" value="'+fc_menu_price+'">';
+			appendTag += '<input type="hidden" name="fco_total_price" value="'+(fco_menu_cnt*fc_menu_price)+'">';
+		appendTag += '</div>';
+	appendTag += '</li>';
+	
+	$("ul.cart_area_items").append(appendTag);
+	
+	totalPriceCalculator();
+	
+	//장바구니 특정 아이템 삭세 버튼 클릭
+	$("#footer_wrap div.cart_area_wrap ul.cart_area_items li img.cart_area_cancel_btn").click(function(){
+		console.log("cart_area_cancel_btn click!!!");
+		$(this).parent('li').remove();
+		
+	});
+	//장바구니 특정 아이템 +버튼 클릭
+	$("#footer_wrap div.cart_area_wrap ul.cart_area_items li div.cart_item_select_wrap div.item_add_btn").click(function(){
+		console.log("item_add_btn click!!!");
+		let item_cnt = parseInt($(this).siblings('p.fco_menu_cnt').text());
+		
+		if(item_cnt >= 20){
+			item_cnt = 20;
+		}else{
+			item_cnt += 1;
+		}
+		$(this).siblings('p.fco_menu_cnt').text(item_cnt);
+		totalPriceCalculator();
+	});
+	//장바구니 특정 아이템 -버튼 클릭
+	$("#footer_wrap div.cart_area_wrap ul.cart_area_items li div.cart_item_select_wrap div.item_sub_btn").click(function(){
+		console.log("item_sub_btn click!!!");
+		let item_cnt = parseInt($(this).siblings('p.fco_menu_cnt').text());
+		
+		if(item_cnt <= 1){
+			item_cnt = 1;
+		}else{
+			item_cnt -= 1;
+		}
+		$(this).siblings('p.fco_menu_cnt').text(item_cnt);
+		totalPriceCalculator();
+	});
+	//결제하기 버튼 클릭
+	/* $("#footer_wrap div.price_area_wrap div.payment_btn").click(function(){
+		console.log("payment_btn click!!!");
+		
+		let fco_menu_cnt = parseInt($("#footer_wrap div.cart_area_wrap ul.cart_area_items li p.fco_menu_cnt").text());
+		let fc_menu_no = parseInt($("#footer_wrap div.cart_area_wrap ul.cart_area_items li input[name='fc_menu_no']").val());
+		let fcmc_no = parseInt($("#footer_wrap div.cart_area_wrap ul.cart_area_items li input[name='fcmc_no']").val());
+		let fco_packaging = $("#footer_wrap div.cart_area_wrap ul.cart_area_items li input[name='fco_packaging']").val();
+		let fc_menu_price = $("#footer_wrap div.cart_area_wrap ul.cart_area_items li input[name='fc_menu_price']").val();
+		let totalPrice = fc_menu_price * fco_menu_cnt;
+	}); */
+	
+}
 
 
 

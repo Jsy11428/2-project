@@ -67,7 +67,22 @@ public class AdminMenuController {
 		return nextPage;
 	}
 
-	// 모든 카테고리 가져오기
+	// 모든 카테고리 가져오기 (기존)
+
+	/*
+	@PostMapping("/getCategory")
+	@ResponseBody
+	public Object getCategory() {
+		log.info("getCategory()");
+
+		Map<String, Object> cateDtos = adminMenuService.getCategory();
+
+		return cateDtos;
+
+	}
+	*/
+	
+	// 모든 카테고리 가져오기 (수정)
 
 	@PostMapping("/getCategory")
 	@ResponseBody
@@ -175,8 +190,6 @@ public class AdminMenuController {
 	@ResponseBody
 	public AdminMenuDto getSelectMenuInfo(Model model, @RequestParam("fc_menu_no") String fc_menu_no) {
 		log.info("getSelectMenuInfo()");
-		log.info(fc_menu_no);
-		log.info(adminMenuService.getSelectMenuInfo(fc_menu_no));
 
 		AdminMenuDto dto = adminMenuService.getSelectMenuInfo(fc_menu_no);
 
