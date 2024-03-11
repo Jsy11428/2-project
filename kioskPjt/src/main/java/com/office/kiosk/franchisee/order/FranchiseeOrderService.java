@@ -116,12 +116,13 @@ public class FranchiseeOrderService {
 		}
 
 
-	public Map<String, Object> getMenusByCategory(int fcmc_no) {
-		log.info("getMenusByCategoryser()");
+	public Map<String, Object> getMenus() {
+		
+		log.info("getMenus()");
 
 		Map<String, Object> franchiseeMenuDtos = new HashMap<>();
 
-		List<FranchiseeOrderDto> franchiseeMenusDtos = (List<FranchiseeOrderDto>) iFranchiseeOrderDao.selectMenusByCategory(fcmc_no);
+		List<FranchiseeOrderDto> franchiseeMenusDtos = (List<FranchiseeOrderDto>) iFranchiseeOrderDao.selectAllMenu();
 
 		franchiseeMenuDtos.put("franchiseeMenusDtos", franchiseeMenusDtos);
 

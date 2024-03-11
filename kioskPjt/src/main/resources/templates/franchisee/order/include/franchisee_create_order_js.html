@@ -11,6 +11,13 @@ $('#order_category_select').change(function() {
     ajax_getMenu(selectedCategory);
 });
 
+$('#order_category_select').change(function() {
+    // 선택된 값 가져오기
+    let selectedValue = $(this).val();
+    // 콘솔에 출력
+    console.log('Selected value: ', selectedValue);
+});
+
 function ajax_getCategorie() {
     console.log('ajax_getCategorie');
 
@@ -32,6 +39,7 @@ function ajax_getCategorie() {
                     '<option value="' + cateDtos[i].fcmc_no + '">'
                     + cateDtos[i].fcmc_name + '</option>');
             }
+           
 
         },
         error : function(data) {
@@ -40,7 +48,8 @@ function ajax_getCategorie() {
     });
 }
 
-function ajax_getMenu() {
+
+function ajax_getMenu(fcmc_no) {
     console.log('ajax_getMenu()');
 
     $.ajax({

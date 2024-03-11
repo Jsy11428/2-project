@@ -23,4 +23,6 @@ public interface IFranchiseeOrderDao {
 
 	public List<FranchiseeOrderDto> selectMenusByCategory(int fcmc_no);
 
+	public List<FranchiseeOrderDto> selectAllMenu();
+
 }

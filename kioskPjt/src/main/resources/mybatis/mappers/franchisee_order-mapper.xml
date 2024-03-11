@@ -73,14 +73,10 @@
 
 	</select>
 	
-	<select id="selectMenusByCategory" parameterType="String"
+	<select id="selectAllMenu" parameterType="String"
 		resultType="com.office.kiosk.franchisee.order.FranchiseeOrderDto">
 
-		SELECT * FROM TBL_FC_MENU_CATEGORY FMC
-		
-		JOIN TBL_FC_MENU FM ON FMC.FCMC_NO = FM.FCMC_NO
-		
-		WHERE FM.FCMC_NO = #{fcmc_no}
+		SELECT * FROM TBL_FC_MENU;
 
 	</select>
 

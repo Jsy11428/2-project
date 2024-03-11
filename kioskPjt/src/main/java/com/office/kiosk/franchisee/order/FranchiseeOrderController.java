@@ -110,11 +110,11 @@ public class FranchiseeOrderController {
 	// 카테고리에 따른 메뉴 가져오기
 	@GetMapping("/getMenusByCategory")
 	@ResponseBody
-	public Object getMenusByCategory(Model model, @RequestParam(value = "fcmc_no", required=false) Integer fcmc_no) {
-		log.info("getMenusByCategory()");
-		log.info("fcmc_no=====>" + fcmc_no);
+	public Object getMenusByCategory() {
+		log.info("getMenus()");
 
-		Map<String, Object> franchiseeMenuDtos = franchiseeOrderService.getMenusByCategory(fcmc_no);
+		Map<String, Object> franchiseeMenuDtos = franchiseeOrderService.getMenus();
+		
 		return franchiseeMenuDtos;
 
 	}
