@@ -202,7 +202,7 @@ function ajax_searchSalesList(search_term, search_value, search_word, pageNum = 
     formData.append('search_term', search_term);
     formData.append('search_value', search_value);
     formData.append('search_word', search_word);
-    formData.append('page', pageNum)
+    formData.append('page', pageNum);
 
     $.ajax({
         url: '/admin/sales/getSearchSales',

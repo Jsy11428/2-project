@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.office.kiosk.franchisee.FranchiseeStoreDto;
 import com.office.kiosk.franchisee.member.FranchiseeMemberDto;
+import com.office.kiosk.franchisee.sales.FranchiseeSalesDto;
 
 @Mapper
 public interface IAdminMemberDao {
@@ -29,7 +30,7 @@ public interface IAdminMemberDao {
 
 	public void updateAdminApproval(int am_no);
 
-	public List<FranchiseeStoreDto> selectAllFranchiseeStoreInfo();//안 씀 
+	public List<FranchiseeStoreDto> selectAllFranchiseeStoreInfo();
 
 	public List<AdminMemberDto> selectAdminMemberPagingList(Map<String, Integer> pagingParams);
 
@@ -42,6 +43,12 @@ public interface IAdminMemberDao {
 	public List<FranchiseeStoreDto> selectAllFranchiseeStorePagingList(Map<String, Integer> pagingParams);
 
 	public int selcetAllStoreListCnt();
-	
+
+	public List<FranchiseeStoreDto> selectFranchiseeStoreInfoBySelect(int fcm_no);
+
+	public int insertFranchiseeStore(FranchiseeSalesDto franchiseeSalesDto);
+
+	public List<FranchiseeStoreDto> selectFranchiseeStoreByFcmNo(int fcm_no);
+
 
 }
