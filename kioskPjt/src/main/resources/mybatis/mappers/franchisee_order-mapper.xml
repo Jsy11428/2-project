@@ -35,7 +35,7 @@
 	    
 	    JOIN TBL_FC_MEMBER FM2 ON FS.FCM_NO = FM2.FCM_NO 
 	    
-	    ORDER BY FCM_NO ASC 
+	    ORDER BY FCO_NO ASC 
 	    
 		LIMIT 
 			#{start},#{limit}

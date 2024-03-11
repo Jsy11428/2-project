@@ -117,11 +117,11 @@ function ajax_getAllSalesInfo(pageNum = 1) {
 
             if (pageDto.page <= 1) {
                 $('#section_wrap div.page_no_wrap').append(`<span >&#8810;</span>`);
-            	$('#section_wrap div.page_no_wrap').append("<span >[이전]</span>");
+                $('#section_wrap div.page_no_wrap').append("<span >[이전]</span>");
             } else {
-            	$('#section_wrap div.page_no_wrap')
+                $('#section_wrap div.page_no_wrap')
                     .append(`<a style='font-weight: bold' href="#none" class="pre_page_btn" page_num='1'>&#8810;</a>`);
-            	$('#section_wrap div.page_no_wrap')
+                $('#section_wrap div.page_no_wrap')
                     .append(`<a style='font-weight: bold' href="#none" class="pre_page_btn" page_num='${(pageDto.page-1)}'>[이전]</a>`);
             }
 
@@ -136,18 +136,18 @@ function ajax_getAllSalesInfo(pageNum = 1) {
                 }
                 appendPageNum += "</span>";
 
-            	$('#section_wrap div.page_no_wrap').append(appendPageNum); 
+                $('#section_wrap div.page_no_wrap').append(appendPageNum); 
 
             }
 
             if(pageDto.page >= pageDto.maxPage){
-            	$('#section_wrap div.page_no_wrap').append("<span>[다음]</span>");
-            	$('#section_wrap div.page_no_wrap').append(`<span>&#8811;</span>`);
+                $('#section_wrap div.page_no_wrap').append("<span>[다음]</span>");
+                $('#section_wrap div.page_no_wrap').append(`<span>&#8811;</span>`);
 
             }else{ 
-            	$('#section_wrap div.page_no_wrap')
+                $('#section_wrap div.page_no_wrap')
                     .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(pageDto.page+1)}'>[다음]</a>`);
-            	$('#section_wrap div.page_no_wrap')
+                $('#section_wrap div.page_no_wrap')
                     .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(pageDto.maxPage)}'>&#8811;</a>`);
             }
 
@@ -174,20 +174,18 @@ function ajax_getAllSalesInfo(pageNum = 1) {
                 console.log('nextPageBtnClick()')
 
                 ajax_getAllSalesInfo(this.getAttribute('page_num'));
-
             });
 
             $('#section_wrap div.page_no_wrap .pre_page_btn').click(function(){
-            	console.log('prePageBtnClick()')
+                console.log('prePageBtnClick()')
 
                 ajax_getAllSalesInfo(this.getAttribute('page_num'));
             });
-        	
-        	$('#section_wrap div.page_no_wrap .page_num_btn').click(function(){
-            	console.log('pageNumBtnClick()')
+
+            $('#section_wrap div.page_no_wrap .page_num_btn').click(function(){
+                console.log('pageNumBtnClick()')
 
                 ajax_getAllSalesInfo(this.getAttribute('page_num'));
-
             });
 
         }
@@ -197,13 +195,14 @@ function ajax_getAllSalesInfo(pageNum = 1) {
 }
 
 // ajax sales list 검색
-function ajax_searchSalesList(search_term, search_value, search_word) {
+function ajax_searchSalesList(search_term, search_value, search_word, pageNum = 1) {
     console.log('ajax_searchSalesList()')
 
     let formData = new FormData();
     formData.append('search_term', search_term);
     formData.append('search_value', search_value);
     formData.append('search_word', search_word);
+    formData.append('page', pageNum);
 
     $.ajax({
         url: '/admin/sales/getSearchSales',
@@ -214,11 +213,13 @@ function ajax_searchSalesList(search_term, search_value, search_word) {
         success: function (data) {
             console.log('ajax success!!');
             
+            let pageDto = data.searchSalesListPageDto;
             let searchDtos = data.searchSalesDtos;
             console.log("searchDtos--", searchDtos);
             let appendTag = '';
             
             removeSalesList();
+            removePageNo();
 
             if (searchDtos.length !== 0) {
 
@@ -254,6 +255,42 @@ function ajax_searchSalesList(search_term, search_value, search_word) {
 
             }
 
+            if (pageDto.page <= 1) {
+                $('#section_wrap div.page_no_wrap').append(`<span >&#8810;</span>`);
+                $('#section_wrap div.page_no_wrap').append("<span >[이전]</span>");
+            } else {
+                $('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="pre_page_btn" page_num='1'>&#8810;</a>`);
+                $('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="pre_page_btn" page_num='${(pageDto.page-1)}'>[이전]</a>`);
+            }
+
+            for (let i = pageDto.startPage; i <= pageDto.endPage; i++) {
+                let appendPageNum = '';
+
+                appendPageNum += "<span class='page_num_wrap'>";
+                if (i === pageDto.page) {
+                    appendPageNum += "<b style='color:#555'>"+i+"</b>";
+                } else {
+                    appendPageNum += `<a href="#none" class="page_num_btn" page_num='${i}'>${i}</a>`;
+                }
+                appendPageNum += "</span>";
+
+                $('#section_wrap div.page_no_wrap').append(appendPageNum); 
+
+            }
+
+            if(pageDto.page >= pageDto.maxPage){
+                $('#section_wrap div.page_no_wrap').append("<span>[다음]</span>");
+                $('#section_wrap div.page_no_wrap').append(`<span>&#8811;</span>`);
+
+            }else{ 
+                $('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(pageDto.page+1)}'>[다음]</a>`);
+                $('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(pageDto.maxPage)}'>&#8811;</a>`);
+            }
+
         },
         error: function(data) {
             console.log('ajax error!!')
@@ -271,6 +308,35 @@ function ajax_searchSalesList(search_term, search_value, search_word) {
                 $('#section_wrap .admin_section_view_wrap .sales_detail_modal').css('display', 'block');
 
             })
+
+            $('#section_wrap div.page_no_wrap .next_page_btn').click(function(){
+                console.log('nextPageBtnClick()')
+
+                ajax_searchSalesList($('#section_wrap .list_search select[name="search_term"]').val() 
+                                    ,$('#section_wrap .list_search select[name="search_value"]').val() 
+                                    ,$('#section_wrap .list_search input[name="search_word"]').val() 
+                                    ,this.getAttribute('page_num'));
+
+            });
+
+            $('#section_wrap div.page_no_wrap .pre_page_btn').click(function(){
+                console.log('prePageBtnClick()')
+
+                ajax_searchSalesList($('#section_wrap .list_search select[name="search_term"]').val() 
+                                    ,$('#section_wrap .list_search select[name="search_value"]').val() 
+                                    ,$('#section_wrap .list_search input[name="search_word"]').val() 
+                                    ,this.getAttribute('page_num'));
+            });
+
+            $('#section_wrap div.page_no_wrap .page_num_btn').click(function(){
+                console.log('pageNumBtnClick()')
+
+                ajax_searchSalesList($('#section_wrap .list_search select[name="search_term"]').val() 
+                                    ,$('#section_wrap .list_search select[name="search_value"]').val() 
+                                    ,$('#section_wrap .list_search input[name="search_word"]').val() 
+                                    ,this.getAttribute('page_num'));
+
+            });
 
         }
     })

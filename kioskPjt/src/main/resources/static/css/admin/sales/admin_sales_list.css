@@ -84,6 +84,10 @@
 	top: 5px;
 }
 
-#section_wrap .admin_sales_list .page_no_wrap {
-	
+#section_wrap .admin_section_view_wrap div.page_no_wrap {
+	width: 250px;
+	text-align: center;
+	margin: 20px auto;
+	display: flex;
+	justify-content: space-between;
 }

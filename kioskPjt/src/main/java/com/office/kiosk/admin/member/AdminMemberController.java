@@ -1,24 +1,21 @@
 package com.office.kiosk.admin.member;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.office.kiosk.franchisee.FranchiseeStoreDto;
-import com.office.kiosk.franchisee.member.FranchiseeMemberDto;
+import com.office.kiosk.franchisee.sales.FranchiseeSalesDto;
 import com.office.kiosk.paging.kioskPageDto;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Log4j2
@@ -311,22 +308,11 @@ public class AdminMemberController {
 		
 	}
 	
+
+	
 	/*
 	 * 	store list 불러오기
 	 */
-//	@GetMapping("/storeList")
-//	public String storeList(Model model) {
-//		log.info("storeList()");
-//		
-//		String nextPage = "/admin/member/franchisee_store_list";
-//		
-//		List<FranchiseeStoreDto> franchiseeSotreDtos = adminMemberService.storeList();
-//		
-//		model.addAttribute("franchiseeSotreDtos", franchiseeSotreDtos);
-//		
-//		return nextPage;
-//		
-//	}
 	@GetMapping("/storeList")
 	public String storeList(Model model) {
 		log.info("storeList()");
@@ -350,6 +336,64 @@ public class AdminMemberController {
 		return franchiseeSotreDtos;
 		
 	}
+	
+	/*
+	 * 	신규 가맹점 등록 폼
+	 */
+	@GetMapping("/createFranchiseeStore")
+	public String createFranchiseeStore() {
+		log.info("createFranchiseeStore()");
+		
+		String nextPage = "/admin/member/create_franchisee_store_form";
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * 	all franchisee info 불러오기
+	 */
+	@GetMapping("/franchiseeInfoList")
+	@ResponseBody
+	public Object franchiseeInfoList() {
+		log.info("franchiseeInfoList()");
+		
+		Map<String, Object> resultMap = adminMemberService.franchiseeInfoList();
+		
+		
+		return resultMap;
+		
+	}
+	
+	/*
+	 * 	select franchisee store info 불러오기
+	 */
+	@PostMapping("/getFranchiseeStoreListBySelect")
+	@ResponseBody
+	public Object getFranchiseeStoreListBySelect(@RequestParam("fcm_no") int fcm_no) {
+		log.info("getFranchiseeStoreListBySelect()");
+		
+		Map<String, Object> resultMap = adminMemberService.getFranchiseeStoreListBySelect(fcm_no);
+		
+		return resultMap;
+		
+	}
+	
+	/*
+	 * 	create franchisee store confirm 
+	 */
+	@PostMapping("/createFranchiseeStoreConfirm")
+	@ResponseBody
+	public Object createFranchiseeStoreConfirm(FranchiseeSalesDto franchiseeSalesDto) {
+		log.info("createFranchiseeStoreConfirm()");
+		
+		Map<String, Object> resultMap = adminMemberService.createFranchiseeStoreConfirm(franchiseeSalesDto);
+
+		return resultMap;
+	}
+	
+	
+	
 	
 
 }
