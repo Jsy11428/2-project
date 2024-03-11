@@ -4,20 +4,34 @@ $(document).ready(function(){
     ajax_get_all_order();
 });
 
-function ajax_get_all_order() {
+function removeOrderList() {
+	console.log('removeOrderList()');
+	$('#section_wrap table tbody tr').remove();
+}
+
+function removePageNo() {
+    console.log('removePageNo()');
+    $('#section_wrap div.page_no_wrap').empty();
+}
+
+function ajax_get_all_order(pageNum = 1) {
     console.log('ajax_get_all_order');
 
     $.ajax({
         url: '/franchisee/order/getOrdersByLogin', 
-        method: 'post', 
+        method: 'get',
+        data: 'page='+pageNum,
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function(data) {
             console.log('ajax success!!');
-
-            let orderDtos = data.ordersDtos;
-			
+            console.log('pageNum>>>>>>>>>>>>>>>>>>'+pageNum);
             
+          	let orderDtos = data.franchiseeOrderDtos;
+          	let orderListPageDto = data.orderListPageDto;
+			                     
+            removeOrderList();
+            removePageNo();
             
             for (let i = 0; i < orderDtos.length; i++) {
             	
@@ -40,14 +54,69 @@ function ajax_get_all_order() {
                 $('#franchisee_order_list tbody').append(appendTag);
                 
             }
+            
+            if(orderListPageDto.page <= 1){
+                $('#section_wrap div.page_no_wrap').append(`<span >&#8810;</span>`);
+            	$('#section_wrap div.page_no_wrap').append("<span >[이전]</span>");
+            }else{
+            	/* $('#section_wrap div.page_no_wrap').append("<a href='/admin/member/getAdminList?page="+orderListPageDto.page - 1+"'>[이전]</a>"); */
+            	$('#section_wrap div.page_no_wrap').append(`<a style='font-weight: bold' href="#none" class="pre_page_btn" page_num='1'>&#8810;</a>`);
+            	$('#section_wrap div.page_no_wrap').append(`<a style='font-weight: bold' href="#none" class="pre_page_btn" page_num='${(orderListPageDto.page-1)}'>[이전]</a>`);
+            }
+                        
+            for(let i = orderListPageDto.startPage; i <= orderListPageDto.endPage; i++){
+            	let appendPageNum = '';
+            	appendPageNum += "<span class='page_num_wrap'>";
+            	if(i === orderListPageDto.page){
+            		appendPageNum += "<b style='color:#555'>"+i+"</b>";
+            	}else{
+            		/* appendPageNum += "<a href='/admin/member/getAdminList?page="+i+"'>"+i+"</a>"; */
+            		appendPageNum += `<a href="#none" class="page_num_btn" page_num='${i}'>${i}</a>`;
+            	}
+            	appendPageNum += "</span>";
+            	$('#section_wrap div.page_no_wrap').append(appendPageNum); 
+            }
+            
+            if(orderListPageDto.page >= orderListPageDto.maxPage){
+            	$('#section_wrap div.page_no_wrap').append("<span>[다음]</span>");
+            	$('#section_wrap div.page_no_wrap').append(`<span>&#8811;</span>`);
+
+            }else{
+            	/* $('#section_wrap div.page_no_wrap').append("<a href='/admin/member/getAdminList?page="+(orderListPageDto.page+1)+"'>[다음]</a>"); */
+            	$('#section_wrap div.page_no_wrap').append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(orderListPageDto.page+1)}'>[다음]</a>`);
+            	$('#section_wrap div.page_no_wrap').append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(orderListPageDto.maxPage)}'>&#8811;</a>`);
+            }
 
         },
         error: function(data) {
             console.log('ajax error!!')
 
+        },complete: function(){
+        	console.log('ajax complete!!');
+        	
+        	$('#section_wrap div.page_no_wrap .next_page_btn').click(function(){
+            	console.log('nextPageBtnClick()')
+            	
+            	ajax_get_all_order(this.getAttribute('page_num'));
+            	console.log('page_num--->>>'+this.getAttribute('page_num'));
+            });
+        	
+        	$('#section_wrap div.page_no_wrap .pre_page_btn').click(function(){
+            	console.log('prePageBtnClick()')
+            	
+            	ajax_get_all_order(this.getAttribute('page_num'));
+            });
+        	
+        	$('#section_wrap div.page_no_wrap .page_num_btn').click(function(){
+            	console.log('pageNumBtnClick()')
+            	
+            	ajax_get_all_order(this.getAttribute('page_num'));
+            	console.log('page_num--->>>'+this.getAttribute('page_num'));
+            });
+        	
         }
 
-    })
+    });
 
 }
 

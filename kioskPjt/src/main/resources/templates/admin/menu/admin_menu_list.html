@@ -45,7 +45,7 @@
 
 				<div class="admin_section_view_wrap">
 
-					<div class="menu_category_change_wrap">
+					<div class="menu_category_change_wrap" id="menu_category_change_wrap">
 						<!-- 카테고리 버튼들 -->
 					</div>
 
@@ -75,12 +75,12 @@
 									<table>
 										<tr>
 											<td><span>메뉴 이미지</span></td>
-											<td><img class="img_section"></td>
+											<td><img class="img_section" id="img_section"></td>
 											<td><input type="hidden" name="fc_menu_no"></td>
 										</tr>
 										<tr>
 											<td><span>메뉴 이미지 첨부</span></td>
-											<td><input type="file" name="file"></td>
+											<td><input type="file" name="file" id="file"></td>
 										</tr>
 										<tr>
 											<td><span>카테고리 선택</span></td>
@@ -98,15 +98,19 @@
 										</tr>
 										<tr>
 											<td><span>메뉴 설명</span></td>
-											<td><textarea name="fc_menu_text" id="" cols="30"
-													rows="10" class="long_txt_input"></textarea></td>
+											<td>
+												<textarea name="fc_menu_text" id="" cols="30" rows="10" class="long_txt_input"></textarea>
+											</td>
 										</tr>
 
 										<tr>
-											<td colspan="3"><input type="button" value="메뉴수정"
+											<td colspan="3">
+											<input type="button" value="메뉴수정"
 												onclick="modifyMenuAccountConfirm()"> <input
 												type="button" value="메뉴삭제" onclick="deleteMenuConfirm()">
-												<input type="reset" value="초기화"></td>
+												<input type="reset" value="초기화" >
+												<input type="button" value="취소">
+												</td>
 										</tr>
 									</table>
 									

@@ -14,8 +14,7 @@
 </head>
 <body>
 
-	<nav
-		th:replace="~{/franchisee/include/franchisee_include.html::franchisee_nav}">
+	<nav th:replace="~{/franchisee/include/franchisee_include.html::franchisee_nav}">
 	</nav>
 
 	<section>
@@ -26,8 +25,10 @@
 			<div class="pos_section_info_wrap">
 
 				<div id="word">오더 리스트</div>
+					
+				<div  id="franchisee_order_list">
 							
-				<table id="franchisee_order_list">
+				<table>
 				
 					  <thead>
 					    <tr>
@@ -41,15 +42,18 @@
 					      <th>주문일</th>
 					      <th>수정일</th>
 					    </tr>
-					  </thead>
-					  
+					  </thead>					  
 					  <tbody>
 					    
-					  </tbody>
-				  
+					  </tbody>				  
 				</table>
 				
+				<div class="page_no_wrap">
+				</div>
+				
 			</div>
+			
+		</div>
 
 			<div class="pos_section_detail_view_wrap"></div>
 		</div>
