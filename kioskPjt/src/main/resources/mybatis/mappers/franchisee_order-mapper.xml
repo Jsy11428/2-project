@@ -22,7 +22,7 @@
   	</select>  -->
   	
   	<select id="selectOrderPagingList" resultType="com.office.kiosk.franchisee.order.FranchiseeOrderDto">
-  	
+  	 	
   		SELECT FO.*, FS.*, FM.*, FMC.* 
 		
 	    FROM TBL_FC_ORDER FO 
@@ -33,20 +33,54 @@
 	    
 	    JOIN TBL_FC_MENU_CATEGORY FMC ON FO.FCMC_NO = FMC.FCMC_NO 
 	    
-	    JOIN TBL_FC_MEMBER FM2 ON FS.FCM_NO = FM2.FCM_NO 
+	    JOIN TBL_FC_MEMBER FME ON FS.FCM_NO = FME.FCM_NO 
 	    
-	    ORDER BY FCM_NO ASC 
+	    WHERE FME.FCM_NO = #{loginNo}
 	    
-		LIMIT 
-			#{start},#{limit}
+	    ORDER BY FCO_NO ASC 
+	    
+		LIMIT #{pagingParams.start}, #{pagingParams.limit}
   	
+  		
+  		
   	</select>
   	
   	<select id="selectAllOrderListCnt" resultType="Integer">
   	
-  		SELECT COUNT(FCS_NO) FROM TBL_FC_ORDER
-  	
+  		SELECT COUNT(FO.FCS_NO) 
+  		
+		FROM TBL_FC_ORDER FO
+		
+		JOIN TBL_FC_STORE FS ON FO.FCS_NO = FS.FCS_NO
+		
+		WHERE FS.FCS_NO = #{loginNo}
+	
   	</select>
+  	
+  	<delete id="deleteSelectOrder" parameterType="int">
+  	
+    DELETE FROM TBL_FC_ORDER WHERE FCO_NO = #{fco_no}
     
-      
+	</delete>
+	
+	<select id="selectAllCategory"
+		resultType="com.office.kiosk.franchisee.order.FranchiseeOrderDto">
+
+		SELECT * FROM TBL_FC_MENU_CATEGORY;
+
+	</select>
+	
+	<select id="selectMenusByCategory" parameterType="String"
+		resultType="com.office.kiosk.franchisee.order.FranchiseeOrderDto">
+
+		SELECT * FROM TBL_FC_MENU_CATEGORY FMC
+		
+		JOIN TBL_FC_MENU FM ON FMC.FCMC_NO = FM.FCMC_NO
+		
+		WHERE FM.FCMC_NO = #{fcmc_no}
+
+	</select>
+
+    
+    
 </mapper>

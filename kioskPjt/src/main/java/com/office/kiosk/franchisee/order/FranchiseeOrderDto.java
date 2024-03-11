@@ -10,6 +10,7 @@ public class FranchiseeOrderDto {
 	private int fco_ori_no;		
 	private int fco_packaging;
 	private int fco_menu_cnt;
+	private String pm_type;
 	private String fco_reg_date;
 	private String fco_mod_date;
 	
@@ -27,6 +28,7 @@ public class FranchiseeOrderDto {
 	private String fc_menu_reg_date;
 	private String fc_menu_mod_date;
 	
+	//카테고리
 	private int fcmc_no;
 	private int fcmc_p_no;
 	private String fcmc_name;

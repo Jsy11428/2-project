@@ -2,8 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+
+<title th:replace="~{/include/include_title.html::title}"></title>
+
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+<!-- <script type="text/javascript" th:src="@{/js/franchisee/member/franchisee_member.js}"></script> -->
+<script type="text/javascript" th:src="@{/js/franchisee/order/franchisee_order.js}"></script>
 
 <script type="text/javascript"
 	th:replace="~{/franchisee/order/include/franchisee_order_list_js.html::js}"></script>
@@ -25,22 +30,25 @@
 			<div class="pos_section_info_wrap">
 
 				<div id="word">오더 리스트</div>
-					
-				<div  id="franchisee_order_list">
+				<button><a th:href="@{/franchisee/order/createOrderList}">주문하기 이동</a></button> 
+				
+				<div id="franchisee_order_list">
 							
 				<table>
 				
 					  <thead>
 					    <tr>
-					      <th>NO</th>
+					      <th hidden>NO</th>
 					      <th>주문 번호</th>
 					      <th>포장</th>
 					      <th>카테고리</th>
 					      <th>메뉴 이름</th>
 					      <th>주문 수량</th>
 					      <th>가게 이름</th>
+					      <th>결제 수단</th>
 					      <th>주문일</th>
 					      <th>수정일</th>
+					      <th>삭제</th>
 					    </tr>
 					  </thead>					  
 					  <tbody>

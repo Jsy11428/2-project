@@ -6,9 +6,12 @@ import java.util.Map;
 
 import javax.print.DocFlavor.BYTE_ARRAY;
 
+import org.apache.ibatis.ognl.ASTBitNegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.office.kiosk.admin.menu.AdminMenuCategoryDto;
+import com.office.kiosk.admin.menu.AdminMenuDto;
 import com.office.kiosk.paging.kioskPageDto;
 
 import lombok.extern.log4j.Log4j2;
@@ -39,7 +42,7 @@ public class FranchiseeOrderService {
 //	}
 
 
-	public Map<String, Object> pagingOrderList(int page) {
+	public Map<String, Object> pagingOrderList(int page, int loginNo) {
 		log.info("pagingOrderList()");
 		
 		int pageingStart = (page - 1) * pageLimit;
@@ -50,7 +53,7 @@ public class FranchiseeOrderService {
 		pagingParams.put("start", pageingStart);
 		pagingParams.put("limit", pageLimit);
 		
-		List<FranchiseeOrderDto> franchiseeOrderDtos = iFranchiseeOrderDao.selectOrderPagingList(pagingParams);
+		List<FranchiseeOrderDto> franchiseeOrderDtos = iFranchiseeOrderDao.selectOrderPagingList(pagingParams, loginNo);
 		
 		pagingList.put("franchiseeOrderDtos", franchiseeOrderDtos);
 		
@@ -58,11 +61,11 @@ public class FranchiseeOrderService {
 	}
 
 
-	public kioskPageDto getAllOrderListPageNum(int page) {
+	public kioskPageDto getAllOrderListPageNum(int page, int loginNo) {
 		log.info("getAllOrderListPageNum()");
 		
 		//전체 admin 갯수 조회
-		int orderListCnt = iFranchiseeOrderDao.selectAllOrderListCnt();
+		int orderListCnt = iFranchiseeOrderDao.selectAllOrderListCnt(loginNo);
 		log.info("orderListCnt------->>"+orderListCnt);
 		//전체 페이지 갯수 계산
 		int maxPage = (int) (Math.ceil((double) orderListCnt / pageLimit));
@@ -88,6 +91,45 @@ public class FranchiseeOrderService {
 				
 		return orderListPageDto;
 	}
-	 
+
+
+	public int deleteOrderListConfirm(int fco_no) {
+		log.info("deleteOrderListConfirm()");
+		
+		int result = iFranchiseeOrderDao.deleteSelectOrder(fco_no);
+		
+		return result;
+	}
+
+	
+	public Map<String, Object> getCategory() {
+		
+			log.info("getCategoryser()");
+
+			Map<String, Object> cateDtos = new HashMap<>();
+
+			List<FranchiseeOrderDto> categoryDtos = (List<FranchiseeOrderDto>) iFranchiseeOrderDao.selectAllCategory();
+
+			cateDtos.put("categoryDtos", categoryDtos);
+
+			return cateDtos;
+		}
+
+
+	public Map<String, Object> getMenusByCategory(int fcmc_no) {
+		log.info("getMenusByCategoryser()");
+
+		Map<String, Object> franchiseeMenuDtos = new HashMap<>();
+
+		List<FranchiseeOrderDto> franchiseeMenusDtos = (List<FranchiseeOrderDto>) iFranchiseeOrderDao.selectMenusByCategory(fcmc_no);
+
+		franchiseeMenuDtos.put("franchiseeMenusDtos", franchiseeMenusDtos);
+
+		return franchiseeMenuDtos;
+	}
+	
+
+
+
 
 }

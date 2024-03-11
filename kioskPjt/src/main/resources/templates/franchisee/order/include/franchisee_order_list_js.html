@@ -40,15 +40,18 @@ function ajax_get_all_order(pageNum = 1) {
             	let appendTag = '';
                
             	appendTag += '<tr>';
-                appendTag += '<td>' + orderDtos[i].fco_no + '</td>';
+            	appendTag += '<td hidden>' + orderDtos[i].fco_no + '</td>';
                 appendTag += '<td>' + orderDtos[i].fco_ori_no +'번' + '</td>';
                 appendTag += '<td>' + packaging + '</td>';
                 appendTag += '<td>' + orderDtos[i].fcmc_name + '</td>';
                 appendTag += '<td>' + orderDtos[i].fc_menu_name + '</td>';
                 appendTag += '<td>' + orderDtos[i].fco_menu_cnt +'개'+ '</td>';
                 appendTag += '<td>' + orderDtos[i].fcs_name + '</td>';
+                appendTag += '<td>' + orderDtos[i].pm_type + '</td>';
                 appendTag += '<td>' + orderDtos[i].fco_reg_date + '</td>';
-                appendTag += '<td>' + orderDtos[i].fco_mod_date + '</td>';
+                appendTag += '<td>' + orderDtos[i].fco_mod_date + '</td>';          
+                appendTag += '<td><button onclick="orderListDeleteConfirm(' + orderDtos[i].fco_no + ')">삭제</button></td>';
+
                 appendTag += '</tr>';
               
                 $('#franchisee_order_list tbody').append(appendTag);

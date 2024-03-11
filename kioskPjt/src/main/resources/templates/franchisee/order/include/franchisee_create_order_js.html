@@ -1,0 +1,70 @@
+<script th:fragment="js" type="text/javascript">
+$(document).ready(function() {
+    // 페이지가 로드되면 카테고리와 메뉴들을 가져오는 함수 호출
+    ajax_getCategorie();
+    ajax_getMenu();
+});
+
+// 카테고리 선택이 변경될 때마다 해당 카테고리의 메뉴를 가져오는 함수 호출
+$('#order_category_select').change(function() {
+    var selectedCategory = $(this).val();
+    ajax_getMenu(selectedCategory);
+});
+
+function ajax_getCategorie() {
+    console.log('ajax_getCategorie');
+
+    $.ajax({
+        url : '/franchisee/order/getCategory',
+        method : 'post',
+        contentType : 'application/json; charset=utf-8',
+        dataType : 'json',
+        success : function(data) {
+            console.log('CATEajsx sucess!!')
+            let cateDtos = data.categoryDtos;
+
+            // 이전 카테고리 제거
+            $('#order_category_select').empty();
+
+            for (let i = 0; i < cateDtos.length; i++) {
+                // 카테고리 옵션 추가
+                $('#order_category_select').append(
+                    '<option value="' + cateDtos[i].fcmc_no + '">'
+                    + cateDtos[i].fcmc_name + '</option>');
+            }
+
+        },
+        error : function(data) {
+            console.log('CATEajax error!!');
+        }
+    });
+}
+
+function ajax_getMenu() {
+    console.log('ajax_getMenu()');
+
+    $.ajax({
+        url : '/franchisee/order/getMenusByCategory',
+        method : 'get',
+        dataType : 'json',
+        success : function(data) {
+            console.log('menuajsx sucess!!')
+            
+            let MenuDtos = data.franchiseeMenusDtos;
+                        
+            $('#order_menu_select').empty();
+            
+            for (let i = 0; i < MenuDtos.length; i++) {
+                // 메뉴 옵션 추가
+                $('#order_menu_select').append(
+                    '<option value="' + MenuDtos[i].fc_menu_name + '">'
+                    + MenuDtos[i].fc_menu_name + '</option>');
+            }
+        },
+        error : function(data) {
+            console.log('menuajax error!!');
+        },
+    });
+}
+
+</script>
