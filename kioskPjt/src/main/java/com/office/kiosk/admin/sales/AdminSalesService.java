@@ -1,6 +1,5 @@
 package com.office.kiosk.admin.sales;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,7 @@ public class AdminSalesService {
 	@Autowired
 	IAdminMemberDao iAdminMemberDao;
 	
-	private int pageLimit = 5; 		// 한 페이지당 보여줄 admin정보 갯수
+	private int pageLimit = 1; 		// 한 페이지당 보여줄 admin정보 갯수
 	private int blockLimit = 3; 	// 하단에 보여줄 페이지 번호 갯수
 
 	public List<FranchiseeSalesDto> salesList() {
@@ -92,35 +91,103 @@ public class AdminSalesService {
 		return allSalesListPageDto;
 	}
 
-	public Map<String, Object> getSearchSales(SearchSalesDto searchSalesDto) {
-		log.info("getSearchSales()");
+	public Map<String, Object> pagingSearchSalesInfo(SearchSalesDto searchSalesDto) {
+		log.info("pagingSearchSalesInfo()");
 		
-		Map<String, Object> map = new HashMap<>();
+		int pagingStart = (searchSalesDto.getPage() - 1) * pageLimit;
 		
-		String searchValue = searchSalesDto.getSearch_value();
-		String searchTerm = searchSalesDto.getSearch_term();
-		String searchWord = searchSalesDto.getSearch_word();
+		Map<String, Object> pagingList = new HashMap<>();
 		
-		List<FranchiseeSalesDto> searchSalesDtos = new ArrayList<>();
+		Map<String, Object> pagingParams = new HashMap<>();
 		
-		searchSalesDtos = iAdminSalesDao.selectSalesInfo(searchSalesDto);
+		pagingParams.put("start", pagingStart);
+		pagingParams.put("limit", pageLimit);
+		pagingParams.put("search_term", searchSalesDto.getSearch_term());
+		pagingParams.put("search_value", searchSalesDto.getSearch_value());
+		pagingParams.put("search_word", searchSalesDto.getSearch_word());
 		
-		map.put("searchSalesDtos", searchSalesDtos);
+		List<FranchiseeSalesDto> searchSalesDtos = iAdminSalesDao.selectSearchSalesInfoForPaging(pagingParams);
 		
-		return map;
+		pagingList.put("searchSalesDtos", searchSalesDtos);
+		
+		return pagingList;
+		
 	}
-
-	public Map<String, Object> getStoreAllSalesInfo() {
-		log.info("getStoreAllSalesInfo()");
+	
+	public kioskPageDto SearchSalesListPageNum(SearchSalesDto searchSalesDto) {
+		log.info("SearchSalesListPageNum()");
 		
-		Map<String, Object> map = new HashMap<>();
+		//전체 franchisee member 갯수 조회
+		int searchSalesListCnt = iAdminSalesDao.selectSearchSalesListCnt(searchSalesDto);
+		
+		//전체 페이지 갯수 계산
+		int maxPage = (int) (Math.ceil((double) searchSalesListCnt / pageLimit));
+		
+		//시작 페이지 값 계산 (페이지 번호를 3개씩 보여줄 경우 = (1,4,7,10,~~~~))
+		int startPage = (((int)(Math.ceil((double) searchSalesDto.getPage() / blockLimit))) - 1 ) * blockLimit + 1;
+		
+		//마지막 페이지 값 계산 (페이지 번호를 3개씩 보여줄 경우 = (3,6,9,12,~~~~~))
+		int endPage = startPage + blockLimit - 1;
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		
+		kioskPageDto searchSalesListPageDto = new kioskPageDto();
+		searchSalesListPageDto.setPage(searchSalesDto.getPage());
+		searchSalesListPageDto.setMaxPage(maxPage);
+		searchSalesListPageDto.setStartPage(startPage);
+		searchSalesListPageDto.setEndPage(endPage);
+		
+		return searchSalesListPageDto;
+	}
+	
+
+	public Map<String, Object> pagingStoreAllSalesInfo(int page) {
+		log.info("pagingStoreAllSalesInfo()");
+		
+		int pagingStart = (page - 1) * pageLimit;
+		
+		Map<String, Object> pagingList = new HashMap<>();
+		
+		Map<String, Integer> pagingParams = new HashMap<>();
+		pagingParams.put("start", pagingStart);
+		pagingParams.put("limit", pageLimit);
 		
 		List<FranchiseeSalesDto> storeSalesDtos = 
-				iAdminSalesDao.selectStoreTotalSales();
+				iAdminSalesDao.selectStoreTotalSalesForPaging(pagingParams);
 		
-		map.put("storeSalesDtos", storeSalesDtos);
+		pagingList.put("storeSalesDtos", storeSalesDtos);
 		
-		return map;
+		return pagingList;
+		
+	}
+
+	
+	public kioskPageDto allStoreSalesListPageNum(int page) {
+		log.info("allStoreSalesListPageNum()");
+		
+		//전체 franchisee member 갯수 조회
+		int allStoreSalesListCnt = iAdminSalesDao.selectAllStoreSalesListCnt();
+		
+		//전체 페이지 갯수 계산
+		int maxPage = (int) (Math.ceil((double) allStoreSalesListCnt / pageLimit));
+		
+		//시작 페이지 값 계산 (페이지 번호를 3개씩 보여줄 경우 = (1,4,7,10,~~~~))
+		int startPage = (((int)(Math.ceil((double) page / blockLimit))) - 1 ) * blockLimit + 1;
+		
+		//마지막 페이지 값 계산 (페이지 번호를 3개씩 보여줄 경우 = (3,6,9,12,~~~~~))
+		int endPage = startPage + blockLimit - 1;
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		
+		kioskPageDto allStoreSalesListPageDto = new kioskPageDto();
+		allStoreSalesListPageDto.setPage(page);
+		allStoreSalesListPageDto.setMaxPage(maxPage);
+		allStoreSalesListPageDto.setStartPage(startPage);
+		allStoreSalesListPageDto.setEndPage(endPage);
+		
+		return allStoreSalesListPageDto;
 	}
 
 	public Map<String, Object> getSelectDateSalesInfo(Map<String, String> currentDate) {
@@ -144,6 +211,78 @@ public class AdminSalesService {
 		
 		return map;
 	}
+	
+	public Map<String, Object> pagingSelectDateSalesInfo(Map<String, String> currentDate) {
+		log.info("getSelectDateSalesInfo()");
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		String year = currentDate.get("year");
+        String month = currentDate.get("month");
+        String date = currentDate.get("date");
+
+        String selectDate = String.format("%04d-%02d-%02d",
+                Integer.parseInt(year),
+                Integer.parseInt(month),
+                Integer.parseInt(date));
+        
+		int pagingStart = (Integer.parseInt(currentDate.get("page")) - 1) * pageLimit;
+		
+		Map<String, Object> pagingList = new HashMap<>();
+		
+		Map<String, Object> pagingParams = new HashMap<>();
+		pagingParams.put("start", pagingStart);
+		pagingParams.put("limit", pageLimit);
+		pagingParams.put("selectDate", selectDate);
+		
+		List<FranchiseeSalesDto> selectSalesDtosBySelectDate = 
+				iAdminSalesDao.selectStoreSalesInfoBySelectDate(pagingParams);
+		
+		pagingList.put("selectSalesDtosBySelectDate", selectSalesDtosBySelectDate);
+		
+		return pagingList;
+		
+	}
+
+	
+	public kioskPageDto StoreSalesListPageNumBySelectDate(Map<String, String> currentDate) {
+		log.info("StoreSalesListPageNumBySelectDate()");
+		
+		int page = Integer.parseInt(currentDate.get("page"));
+		
+		String year = currentDate.get("year");
+        String month = currentDate.get("month");
+        String date = currentDate.get("date");
+
+        String selectDate = String.format("%04d-%02d-%02d",
+                Integer.parseInt(year),
+                Integer.parseInt(month),
+                Integer.parseInt(date));
+		
+		//전체 franchisee member 갯수 조회
+		int StoreSalesListCntBySelectDate = iAdminSalesDao.selectStoreSalesListCntBySelectDate(selectDate);
+		
+		//전체 페이지 갯수 계산
+		int maxPage = (int) (Math.ceil((double) StoreSalesListCntBySelectDate / pageLimit));
+		
+		//시작 페이지 값 계산 (페이지 번호를 3개씩 보여줄 경우 = (1,4,7,10,~~~~))
+		int startPage = (((int)(Math.ceil((double) page / blockLimit))) - 1 ) * blockLimit + 1;
+		
+		//마지막 페이지 값 계산 (페이지 번호를 3개씩 보여줄 경우 = (3,6,9,12,~~~~~))
+		int endPage = startPage + blockLimit - 1;
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		
+		kioskPageDto StoreSalesListPageDtoBySelectDate = new kioskPageDto();
+		StoreSalesListPageDtoBySelectDate.setPage(page);
+		StoreSalesListPageDtoBySelectDate.setMaxPage(maxPage);
+		StoreSalesListPageDtoBySelectDate.setStartPage(startPage);
+		StoreSalesListPageDtoBySelectDate.setEndPage(endPage);
+		
+		return StoreSalesListPageDtoBySelectDate;
+	}
+
 
 	public Map<String, Object> getFranchiseeAllSalesInfo() {
 		log.info("getFranchiseeAllSalesInfo()");
@@ -194,19 +333,6 @@ public class AdminSalesService {
 		
 	}
 
-	public Map<String, Object> getStoreTotalSalesByInputPeriod(Map<String, String> period) {
-		log.info("getStoreTotalSalesByInputPeriod()");
-		
-		Map<String, Object> map = new HashMap<>();
-		
-		List<FranchiseeSalesDto> selectStoreSalesDtosByInputFeriod =
-				iAdminSalesDao.selectStoreSalesDtosByInputFeriod(period);
-		
-		map.put("selectStoreSalesDtosByInputFeriod", selectStoreSalesDtosByInputFeriod);
-		
-		return map;
-	}
-
 	public Map<String, Object> getSalesDetailInfo(int fco_ori_no) {
 		log.info("getSalesDetailInfo()");
 		
@@ -219,6 +345,252 @@ public class AdminSalesService {
 		
 		return map;
 	}
+
+	public kioskPageDto storeSalesListPageNumByInputPeriod(Map<String, String> period) {
+		log.info("storeSalesListPageNumByInputPeriod()");
+		
+		int page = Integer.parseInt(period.get("page"));
+
+		//전체 franchisee member 갯수 조회
+		int StoreSalesListCntByInputPeriod = iAdminSalesDao.selectStoreSalesListCntByInputPeriod(period);
+		
+		//전체 페이지 갯수 계산
+		int maxPage = (int) (Math.ceil((double) StoreSalesListCntByInputPeriod / pageLimit));
+		
+		//시작 페이지 값 계산 (페이지 번호를 3개씩 보여줄 경우 = (1,4,7,10,~~~~))
+		int startPage = (((int)(Math.ceil((double) page / blockLimit))) - 1 ) * blockLimit + 1;
+		
+		//마지막 페이지 값 계산 (페이지 번호를 3개씩 보여줄 경우 = (3,6,9,12,~~~~~))
+		int endPage = startPage + blockLimit - 1;
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		
+		kioskPageDto StoreSalesListPageDtoByInputPeriod = new kioskPageDto();
+		StoreSalesListPageDtoByInputPeriod.setPage(page);
+		StoreSalesListPageDtoByInputPeriod.setMaxPage(maxPage);
+		StoreSalesListPageDtoByInputPeriod.setStartPage(startPage);
+		StoreSalesListPageDtoByInputPeriod.setEndPage(endPage);
+		
+		
+		return StoreSalesListPageDtoByInputPeriod;
+		
+	}
+
+	public Map<String, Object> pagingStoreSalesListByInputPeriod(Map<String, String> period) {
+		log.info("pagingStoreSalesListByInputPeriod()");
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		String startDate = period.get("startDate");
+		String endDate = period.get("endDate");
+        
+		int pagingStart = (Integer.parseInt(period.get("page")) - 1) * pageLimit;
+		
+		Map<String, Object> pagingList = new HashMap<>();
+		
+		Map<String, Object> pagingParams = new HashMap<>();
+		pagingParams.put("start", pagingStart);
+		pagingParams.put("limit", pageLimit);
+		pagingParams.put("startDate", startDate);
+		pagingParams.put("endDate", endDate);
+		
+		
+		List<FranchiseeSalesDto> sotreSalesDtosByInputPeriod = 
+				iAdminSalesDao.selectStoreSalesInfoByInputPeriod(pagingParams);
+		
+		pagingList.put("sotreSalesDtosByInputPeriod", sotreSalesDtosByInputPeriod);
+		
+		return pagingList;
+	}
+
+	public kioskPageDto allFranchiseeSalesListPageNum(int page) {
+		log.info("allFranchiseeSalesListPageNum()");
+		
+		//전체 franchisee member 갯수 조회
+		int franchiseeSalesListCnt = iAdminSalesDao.selectFranchiseeSalesListCnt();
+		
+		//전체 페이지 갯수 계산
+		int maxPage = (int) (Math.ceil((double) franchiseeSalesListCnt / pageLimit));
+		
+		//시작 페이지 값 계산 (페이지 번호를 3개씩 보여줄 경우 = (1,4,7,10,~~~~))
+		int startPage = (((int)(Math.ceil((double) page / blockLimit))) - 1 ) * blockLimit + 1;
+		
+		//마지막 페이지 값 계산 (페이지 번호를 3개씩 보여줄 경우 = (3,6,9,12,~~~~~))
+		int endPage = startPage + blockLimit - 1;
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		
+		kioskPageDto StoreSalesListPageDtoByInputPeriod = new kioskPageDto();
+		StoreSalesListPageDtoByInputPeriod.setPage(page);
+		StoreSalesListPageDtoByInputPeriod.setMaxPage(maxPage);
+		StoreSalesListPageDtoByInputPeriod.setStartPage(startPage);
+		StoreSalesListPageDtoByInputPeriod.setEndPage(endPage);
+		
+		
+		return StoreSalesListPageDtoByInputPeriod;
+		
+	}
+
+	public Map<String, Object> pagingFranchiseeAllSalesInfo(int page) {
+		log.info("pagingFranchiseeAllSalesInfo()");
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		int pagingStart = (page - 1) * pageLimit;
+		
+		Map<String, Object> pagingList = new HashMap<>();
+		
+		Map<String, Object> pagingParams = new HashMap<>();
+		pagingParams.put("start", pagingStart);
+		pagingParams.put("limit", pageLimit);
+		
+		List<FranchiseeSalesDto> franchiseeSalesDtos = 
+				iAdminSalesDao.selectFranchiseeSalesInfo(pagingParams);
+		
+		pagingList.put("franchiseeSalesDtos", franchiseeSalesDtos);
+		
+		return pagingList;
+	}
+
+	public kioskPageDto franchiseeSalesListPageNumBySelectDate(Map<String, String> currentDate) {
+		log.info("franchiseeSalesListPageNumBySelectDate()");
+		
+		String year = currentDate.get("year");
+        String month = currentDate.get("month");
+        String date = currentDate.get("date");
+
+        String selectDate = String.format("%04d-%02d-%02d",
+                Integer.parseInt(year),
+                Integer.parseInt(month),
+                Integer.parseInt(date));
+		
+		//전체 franchisee member 갯수 조회
+		int franchiseeSalesListCnt = iAdminSalesDao.selectFranchiseeSalesListCntBySelectDate(selectDate);
+		
+		//전체 페이지 갯수 계산
+		int maxPage = (int) (Math.ceil((double) franchiseeSalesListCnt / pageLimit));
+		
+		//시작 페이지 값 계산 (페이지 번호를 3개씩 보여줄 경우 = (1,4,7,10,~~~~))
+		int startPage = (((int)(Math.ceil((double) Integer.parseInt(currentDate.get("page")) / blockLimit))) - 1 ) * blockLimit + 1;
+		
+		//마지막 페이지 값 계산 (페이지 번호를 3개씩 보여줄 경우 = (3,6,9,12,~~~~~))
+		int endPage = startPage + blockLimit - 1;
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		
+		kioskPageDto StoreSalesListPageDtoByInputPeriod = new kioskPageDto();
+		StoreSalesListPageDtoByInputPeriod.setPage(Integer.parseInt(currentDate.get("page")));
+		StoreSalesListPageDtoByInputPeriod.setMaxPage(maxPage);
+		StoreSalesListPageDtoByInputPeriod.setStartPage(startPage);
+		StoreSalesListPageDtoByInputPeriod.setEndPage(endPage);
+		
+		
+		return StoreSalesListPageDtoByInputPeriod;
+	}
+
+	public Map<String, Object> pagingFranchiseeSalesInfoBySelectDate(Map<String, String> currentDate) {
+		log.info("pagingFranchiseeSalesInfoBySelectDate()");
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		int pagingStart = (Integer.parseInt(currentDate.get("page")) - 1) * pageLimit;
+		
+		String year = currentDate.get("year");
+        String month = currentDate.get("month");
+        String date = currentDate.get("date");
+
+        String selectDate = String.format("%04d-%02d-%02d",
+                Integer.parseInt(year),
+                Integer.parseInt(month),
+                Integer.parseInt(date));
+        
+        log.info("selectDate---" + selectDate);
+		
+		Map<String, Object> pagingList = new HashMap<>();
+		
+		Map<String, Object> pagingParams = new HashMap<>();
+		pagingParams.put("start", pagingStart);
+		pagingParams.put("limit", pageLimit);
+		pagingParams.put("selectDate", selectDate);
+		
+		List<FranchiseeSalesDto> franchiseeSalesDtosBySelectDate = 
+				iAdminSalesDao.selectFranchiseeSalesInfoBySelectDate(pagingParams);
+		
+		log.info("franchiseeSalesDtosBySelectDate --- " + franchiseeSalesDtosBySelectDate);
+		
+		pagingList.put("franchiseeSalesDtosBySelectDate", franchiseeSalesDtosBySelectDate);
+		
+		return pagingList;
+	}
+
+	public kioskPageDto franchiseeSalesListPageNumByInputPeriod(Map<String, String> period) {
+		log.info("franchiseeSalesListPageNumByInputPeriod()");
+		
+		int page = Integer.parseInt(period.get("page"));
+
+		//전체 franchisee member 갯수 조회
+		int franchiseeSalesListCntByInputPeriod = iAdminSalesDao.selectFranchiseeSalesListCntByInputPeriod(period);
+		
+		//전체 페이지 갯수 계산
+		int maxPage = (int) (Math.ceil((double) franchiseeSalesListCntByInputPeriod / pageLimit));
+		
+		//시작 페이지 값 계산 (페이지 번호를 3개씩 보여줄 경우 = (1,4,7,10,~~~~))
+		int startPage = (((int)(Math.ceil((double) page / blockLimit))) - 1 ) * blockLimit + 1;
+		
+		//마지막 페이지 값 계산 (페이지 번호를 3개씩 보여줄 경우 = (3,6,9,12,~~~~~))
+		int endPage = startPage + blockLimit - 1;
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		
+		kioskPageDto franchiseeSalesListPageDtoByInputPeriod = new kioskPageDto();
+		franchiseeSalesListPageDtoByInputPeriod.setPage(page);
+		franchiseeSalesListPageDtoByInputPeriod.setMaxPage(maxPage);
+		franchiseeSalesListPageDtoByInputPeriod.setStartPage(startPage);
+		franchiseeSalesListPageDtoByInputPeriod.setEndPage(endPage);
+		
+		
+		return franchiseeSalesListPageDtoByInputPeriod;
+	}
+
+	public Map<String, Object> pagingFranchiseeTotalSalesByInputPeriod(Map<String, String> period) {
+		log.info("pagingFranchiseeTotalSalesByInputPeriod()");
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		String startDate = period.get("startDate");
+		String endDate = period.get("endDate");
+        
+		int pagingStart = (Integer.parseInt(period.get("page")) - 1) * pageLimit;
+		
+		Map<String, Object> pagingList = new HashMap<>();
+		
+		Map<String, Object> pagingParams = new HashMap<>();
+		pagingParams.put("start", pagingStart);
+		pagingParams.put("limit", pageLimit);
+		pagingParams.put("startDate", startDate);
+		pagingParams.put("endDate", endDate);
+		
+		
+		List<FranchiseeSalesDto> franchiseeSalesDtosByInputPeriod = 
+				iAdminSalesDao.selectFranchiseeSalesInfoByInputPeriod(pagingParams);
+		
+		pagingList.put("franchiseeSalesDtosByInputPeriod", franchiseeSalesDtosByInputPeriod);
+		
+		return pagingList;
+	}
+
+
+
+
+
+
+
+
+
 
 
 
