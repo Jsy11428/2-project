@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.office.kiosk.paging.kioskPageDto;
+
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -113,30 +115,60 @@ public class AdminMenuController {
 
 	// 메뉴리스트 화면 기존 메뉴 리스트 불러오기 메서드
 
-	@PostMapping("/getMenus")
+	@GetMapping("/getMenus")
 	@ResponseBody
-	public Object getMenus() {
+	public Object getMenus(@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
 		log.info("getMenus()");
+		log.info("page:" + page);
 
-		Map<String, Object> menuDtos = adminMenuService.getMenus();
+		Map<String, Object> pagingAdminMenuDtos = adminMenuService.pagingAdminMenuList(page);
+		
+		kioskPageDto adminMenuListPageDto = adminMenuService.getAllAdminMenuListPageNum(page);
 
-		return menuDtos;
+		pagingAdminMenuDtos.put("adminMenuListPageDto", adminMenuListPageDto);
+		
+		return pagingAdminMenuDtos;
 
 	}
 
-	// 카테고리에 따른 메뉴 불러오기
+	// 카테고리에 따른 메뉴 불러오기(기존)
+	
+	/*
 
 	@PostMapping("/getMenusByCategory")
 	@ResponseBody
 	public Object getMenusByCategory(Model model, @RequestParam("fcmc_no") String fcmc_no) {
 		log.info("getMenusByCategory()");
 
-		Map<String, Object> menuDtos = adminMenuService.getMenusByCategory(fcmc_no);
+		Map<String, Object> adminMenuDtos = adminMenuService.getMenusByCategory(fcmc_no);
+		
 
-		return menuDtos;
+		
+		return adminMenuDtos;
 
 	}
+	
+	*/
 
+
+	// 카테고리에 따른 메뉴 불러오기(페이지네이션추가)
+
+	@GetMapping("/getMenusByCategory")
+	@ResponseBody
+	public Object getMenusByCategory(Model model, @RequestParam("fcmc_no") String fcmc_no, @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+		log.info("getMenusByCategory()");
+
+		Map<String, Object> pagingAdminMenuDtos = adminMenuService.pagingAdminMenuListByCate(page, fcmc_no);
+		
+		kioskPageDto adminMenuListPageDto = adminMenuService.getAllAdminMenuListPageNumByCate(page, fcmc_no);
+
+		pagingAdminMenuDtos.put("adminMenuListPageDto", adminMenuListPageDto);
+		
+		return pagingAdminMenuDtos;
+
+	}
+	
+	
 	// 모달창으로 선택한 메뉴의 정보 가져오기
 
 	@PostMapping("/getSelectMenuInfo")
