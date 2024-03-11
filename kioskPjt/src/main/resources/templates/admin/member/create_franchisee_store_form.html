@@ -10,12 +10,12 @@
 <link rel="stylesheet" th:href="@{/css/admin/common.css}">
 <link rel="stylesheet" th:href="@{/css/admin/admin_include.css}">
 <link rel="stylesheet" th:href="@{/css/admin/admin_home.css}">
-<link rel="stylesheet" th:href="@{/css/admin/member/franchisee_store_list.css}">
+<link rel="stylesheet" th:href="@{/css/admin/member/create_franchisee_store_form.css}">
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
 <script type="text/javascript" th:replace="~{admin/include/section_side_menu_js.html::jquery_js}"></script>
-<script type="text/javascript" th:replace="~{admin/include/franchisee_store_list_js.html::franchisee_store_list_js}"></script>
+<script type="text/javascript" th:replace="~{admin/include/create_franchisee_store_from_js.html::create_franchisee_store_from_js}"></script>
 
 </head>
 <body>
@@ -33,53 +33,47 @@
 		<section>
 		
 			<div id="section_wrap">
-			
+				
 				<div th:replace="~{admin/include/admin_include.html::admin_section_side_menu}"></div>
-			
+				
 				<div class="admin_section_view_wrap">
 				
 					<div class="word">
-						가맹점 목록
+						create franchisee store form
 					</div>
 						
-					<div class="franchisee_store_list">
+					<div class="create_form">
 					
-						<table>
-
-							<thead>
-								<tr>
-									<td>NO</td>
-									<td>지점명</td>
-									<td>주소</td>
-									<td>연락처</td>
-									<td>가맹회원 이름</td>
-									<td>가맹회원 ID</td>
-									<td>가맹회원 연락처</td>
-									<td>등록일</td>
-									<td>수정일</td>
-								</tr>
-							</thead>
-
-							<tbody>
-								
-							</tbody>
-							
-						</table>
 						
-						<div class="page_no_wrap">
-						</div>
-						
-						<div class="create_franchisee_store">
+						<form name="create_franchisee_store_form">
+							<div class="franchisee_info">
+	
+								<select name="fcm_no">
+								</select>
+	
+								<ul>
+								</ul>
+	
+							</div>
 							
-						</div>
-
+							<input type="text" name="fcs_name" placeholder="INPUT FRANCHISEE STORE NAME">
+							<br>
+							<input type="text" name="fcs_location" placeholder="INPUT FRANCHISEE STORE LOCATION">
+							<br>
+							<input type="text" name="fcs_phone" placeholder="INPUT FRANCHISEE STORE PHONE">
+							<br>
+							
+							<input type="button" value="create store">
+							<input type="reset" value="reset">
+						
+						</form>
+					
 					</div>
 					
 				</div>
-				
+	
 			</div>
 			
-		
 		</section>
 			
 		

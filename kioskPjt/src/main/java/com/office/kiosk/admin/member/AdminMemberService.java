@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.office.kiosk.franchisee.FranchiseeStoreDto;
-import com.office.kiosk.franchisee.member.FranchiseeMemberDto;
+import com.office.kiosk.franchisee.sales.FranchiseeSalesDto;
 import com.office.kiosk.paging.kioskPageDto;
 
 import lombok.extern.log4j.Log4j2;
@@ -211,14 +211,22 @@ public class AdminMemberService {
 		
 	}
 	
+	
+	public Map<String, Object> franchiseeInfoList() {
+		log.info("franchiseeInfoList()");
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		List<FranchiseeStoreDto> allFranchiseeInfoDtos = iAdminMemberDao.selectAllFranchiseeStoreInfo();
+		
+		map.put("allFranchiseeInfoDtos", allFranchiseeInfoDtos);
+		
+		return map;
+	}
+	
 	/*
 	 * store list paging 처리
 	 */
-//	public List<FranchiseeStoreDto> storeList() {
-//		log.info("storeList()");
-//		
-//		return iAdminMemberDao.selectAllFranchiseeStoreInfo();
-//	}
 	public Map<String, Object> storeList(int page) {
 		log.info("storeList()");
 		
@@ -328,6 +336,42 @@ public class AdminMemberService {
 		log.info("endPage: "+endPage);
 		
 		return adminMemberListPageDto;
+	}
+
+
+	public Map<String, Object> getFranchiseeStoreListBySelect(int fcm_no) {
+		log.info("getFranchiseeStoreListBySelect()");
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		List<FranchiseeStoreDto> franchiseeStoreDtos = iAdminMemberDao.selectFranchiseeStoreInfoBySelect(fcm_no);
+		
+		map.put("franchiseeStoreDtos", franchiseeStoreDtos);
+		
+		return map;
+	}
+
+
+	public Map<String, Object> createFranchiseeStoreConfirm(FranchiseeSalesDto franchiseeSalesDto) {
+		log.info("createFranchiseeStoreConfirm()");
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		int result = iAdminMemberDao.insertFranchiseeStore(franchiseeSalesDto);
+		
+		if (result > 0) {
+			List<FranchiseeStoreDto> franchiseeStoreDto = 
+					iAdminMemberDao.selectFranchiseeStoreByFcmNo(franchiseeSalesDto.getFcm_no());
+			
+			map.put("franchiseeStoreDto", franchiseeStoreDto);
+			return map;
+			
+		} else {
+			return map;
+			
+		}
+		
+		
 	}
 
 

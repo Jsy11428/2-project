@@ -167,8 +167,6 @@ function setYearBySelectChange() {
                     selectedDate.getDate(), 
                     selectedDate.getDay())
 
-    removeStoreSalesList();
-
     ajax_getCurrentDateTotalSales();
 
 }
@@ -186,8 +184,6 @@ function setMonthBySelectChange() {
                     selectedDate.getMonth(), 
                     selectedDate.getDate(), 
                     selectedDate.getDay())
-
-    removeStoreSalesList();
 
     ajax_getCurrentDateTotalSales();
 
@@ -207,8 +203,6 @@ function setDateBySelectChange() {
                     selectedDate.getDate(), 
                     selectedDate.getDay())
 
-    removeStoreSalesList();
-
     ajax_getCurrentDateTotalSales();
 
 }
@@ -220,16 +214,12 @@ function setDateByTodayBtnclick() {
 
     setCurrentYearAndMonthSelectUI()
 
-    removeStoreSalesList();
-
     ajax_getCurrentDateTotalSales();
 
 }
 
 function searchBtnClick() {
     console.log('searchBtnClick()');
-
-    removeStoreSalesList();
 
     ajax_getStoreTotalSalesByInputPeriod();
 
@@ -242,18 +232,29 @@ function removeStoreSalesList() {
 
 }
 
+function removePageNo() {
+    console.log('removePageNo');
+
+    $('#section_wrap div.page_no_wrap').empty();
+
+}
+
 // ajax - 가맹점 총 매출 불러오기 
-function ajax_getStoreAllSalesInfo() {
+function ajax_getStoreAllSalesInfo(pageNum = 1) {
     console.log('ajax_getStoreAllSalesInfo');
 
     $.ajax({
         url: '/admin/sales/getStoreAllSalesInfo', 
         method: 'post', 
-        contentType: 'application/json; charset=utf-8',
+        data: { 'page' : pageNum },
         dataType: 'json',
         success: function(data) {
             console.log('ajax success!!');
 
+            removeStoreSalesList();
+            removePageNo()
+
+            let pageDto = data.allStoreSalesListPageDto;
             let storeDtos = data.storeSalesDtos;
             let appendTag = '';
 			
@@ -274,9 +275,66 @@ function ajax_getStoreAllSalesInfo() {
 
             }
 
+            if (pageDto.page <= 1) {
+                $('#section_wrap div.page_no_wrap').append(`<span >&#8810;</span>`);
+                $('#section_wrap div.page_no_wrap').append("<span >[이전]</span>");
+            } else {
+                $('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="pre_page_btn" page_num='1'>&#8810;</a>`);
+                $('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="pre_page_btn" page_num='${(pageDto.page-1)}'>[이전]</a>`);
+            }
+
+            for (let i = pageDto.startPage; i <= pageDto.endPage; i++) {
+                let appendPageNum = '';
+
+                appendPageNum += "<span class='page_num_wrap'>";
+                if (i === pageDto.page) {
+                    appendPageNum += "<b style='color:#555'>"+i+"</b>";
+                } else {
+                    appendPageNum += `<a href="#none" class="page_num_btn" page_num='${i}'>${i}</a>`;
+                }
+                appendPageNum += "</span>";
+
+                $('#section_wrap div.page_no_wrap').append(appendPageNum); 
+
+            }
+
+            if(pageDto.page >= pageDto.maxPage){
+                $('#section_wrap div.page_no_wrap').append("<span>[다음]</span>");
+                $('#section_wrap div.page_no_wrap').append(`<span>&#8811;</span>`);
+
+            }else{ 
+                $('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(pageDto.page+1)}'>[다음]</a>`);
+                $('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(pageDto.maxPage)}'>&#8811;</a>`);
+            }
+
         },
         error: function(data) {
             console.log('ajax error!!')
+
+        }, 
+        complete: function() {
+
+            $('#section_wrap div.page_no_wrap .next_page_btn').click(function(){
+                console.log('nextPageBtnClick()')
+
+                ajax_getStoreAllSalesInfo(this.getAttribute('page_num'));
+            });
+
+            $('#section_wrap div.page_no_wrap .pre_page_btn').click(function(){
+                console.log('prePageBtnClick()')
+
+                ajax_getStoreAllSalesInfo(this.getAttribute('page_num'));
+            });
+
+            $('#section_wrap div.page_no_wrap .page_num_btn').click(function(){
+                console.log('pageNumBtnClick()')
+
+                ajax_getStoreAllSalesInfo(this.getAttribute('page_num'));
+            });
 
         }
 
@@ -285,14 +343,20 @@ function ajax_getStoreAllSalesInfo() {
 }
 
 // ajax - current date total sales 목록 가져오기 
-function ajax_getCurrentDateTotalSales() {
+function ajax_getCurrentDateTotalSales(pageNum = 1) {
     console.log('ajax_getCurrentDateTotalSales()');
 
     let currentDate = {
         year: current_year,
         month: current_month,
-        date: current_date
+        date: current_date, 
+        page: pageNum
     }
+
+    console.log("current_year----" , current_year);
+    console.log("current_month----" , current_month);
+    console.log("current_date----" , current_date);
+    console.log("page----" , pageNum);
 
     $.ajax({
         url: '/admin/sales/getSelectDateSalesInfo',
@@ -303,7 +367,11 @@ function ajax_getCurrentDateTotalSales() {
         success: function(data) {
             console.log('ajax success!');
 
-            let selectDtos = data.selectSalesDtos;
+            removeStoreSalesList();
+            removePageNo();
+
+            let pageDto = data.StoreSalesListPageDtoBySelectDate;
+            let selectDtos = data.selectSalesDtosBySelectDate;
             
             for (let i = 0; i < selectDtos.length; i++) {
                 let appendTag = '';
@@ -323,9 +391,66 @@ function ajax_getCurrentDateTotalSales() {
 
             }
 
+            if (pageDto.page <= 1) {
+                $('#section_wrap div.page_no_wrap').append(`<span >&#8810;</span>`);
+                $('#section_wrap div.page_no_wrap').append("<span >[이전]</span>");
+            } else {
+                $('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="pre_page_btn" page_num='1'>&#8810;</a>`);
+                $('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="pre_page_btn" page_num='${(pageDto.page-1)}'>[이전]</a>`);
+            }
+
+            for (let i = pageDto.startPage; i <= pageDto.endPage; i++) {
+                let appendPageNum = '';
+
+                appendPageNum += "<span class='page_num_wrap'>";
+                if (i === pageDto.page) {
+                    appendPageNum += "<b style='color:#555'>"+i+"</b>";
+                } else {
+                    appendPageNum += `<a href="#none" class="page_num_btn" page_num='${i}'>${i}</a>`;
+                }
+                appendPageNum += "</span>";
+
+                $('#section_wrap div.page_no_wrap').append(appendPageNum); 
+
+            }
+
+            if(pageDto.page >= pageDto.maxPage){
+                $('#section_wrap div.page_no_wrap').append("<span>[다음]</span>");
+                $('#section_wrap div.page_no_wrap').append(`<span>&#8811;</span>`);
+
+            }else{ 
+                $('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(pageDto.page+1)}'>[다음]</a>`);
+                $('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(pageDto.maxPage)}'>&#8811;</a>`);
+            }
+
         },
         error: function(data) {
             console.log('ajax error!!')
+
+        },
+        complete: function() {
+
+            $('#section_wrap div.page_no_wrap .next_page_btn').click(function(){
+                console.log('nextPageBtnClick()')
+
+                ajax_getCurrentDateTotalSales(this.getAttribute('page_num'));
+            });
+
+            $('#section_wrap div.page_no_wrap .pre_page_btn').click(function(){
+                console.log('prePageBtnClick()')
+
+                ajax_getCurrentDateTotalSales(this.getAttribute('page_num'));
+            });
+
+            $('#section_wrap div.page_no_wrap .page_num_btn').click(function(){
+                console.log('pageNumBtnClick()')
+
+                ajax_getCurrentDateTotalSales(this.getAttribute('page_num'));
+            });
 
         }
 
@@ -333,14 +458,15 @@ function ajax_getCurrentDateTotalSales() {
 
 }
 
-function ajax_getStoreTotalSalesByInputPeriod() {
+function ajax_getStoreTotalSalesByInputPeriod(pageNum = 1) {
     console.log('ajax_getStoreTotalSalesByInputPeriod()');
 
     let startDate = $('input[name="start_date"]').val();
     let endDate = $('input[name="end_date"]').val();
     let period = {
         startDate: startDate,
-        endDate: endDate
+        endDate: endDate,
+        page: pageNum
     }
 
     $.ajax({
@@ -352,7 +478,11 @@ function ajax_getStoreTotalSalesByInputPeriod() {
         success: function(data) {
             console.log('ajax success!')
 
-            let selectDtos = data.selectStoreSalesDtosByInputFeriod;
+            removeStoreSalesList();
+            removePageNo();
+
+            let pageDto = data.storeSalesListPageDtoByInputPeriod;
+            let selectDtos = data.sotreSalesDtosByInputPeriod;
             
             for (let i = 0; i < selectDtos.length; i++) {
                 let appendTag = '';
@@ -371,9 +501,67 @@ function ajax_getStoreTotalSalesByInputPeriod() {
                 $('#section_wrap table tbody').append(appendTag);
 
             }
+
+            if (pageDto.page <= 1) {
+                $('#section_wrap div.page_no_wrap').append(`<span >&#8810;</span>`);
+                $('#section_wrap div.page_no_wrap').append("<span >[이전]</span>");
+            } else {
+                $('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="pre_page_btn" page_num='1'>&#8810;</a>`);
+                $('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="pre_page_btn" page_num='${(pageDto.page-1)}'>[이전]</a>`);
+            }
+
+            for (let i = pageDto.startPage; i <= pageDto.endPage; i++) {
+                let appendPageNum = '';
+
+                appendPageNum += "<span class='page_num_wrap'>";
+                if (i === pageDto.page) {
+                    appendPageNum += "<b style='color:#555'>"+i+"</b>";
+                } else {
+                    appendPageNum += `<a href="#none" class="page_num_btn" page_num='${i}'>${i}</a>`;
+                }
+                appendPageNum += "</span>";
+
+                $('#section_wrap div.page_no_wrap').append(appendPageNum); 
+
+            }
+
+            if(pageDto.page >= pageDto.maxPage){
+                $('#section_wrap div.page_no_wrap').append("<span>[다음]</span>");
+                $('#section_wrap div.page_no_wrap').append(`<span>&#8811;</span>`);
+
+            }else{ 
+                $('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(pageDto.page+1)}'>[다음]</a>`);
+                $('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(pageDto.maxPage)}'>&#8811;</a>`);
+            }
+
         },
         error: function(data) {
             console.log('ajax error!')
+
+        },
+        complete: function() {
+
+            $('#section_wrap div.page_no_wrap .next_page_btn').click(function(){
+                console.log('nextPageBtnClick()')
+
+                ajax_getStoreTotalSalesByInputPeriod(this.getAttribute('page_num'));
+            });
+
+            $('#section_wrap div.page_no_wrap .pre_page_btn').click(function(){
+                console.log('prePageBtnClick()')
+
+                ajax_getStoreTotalSalesByInputPeriod(this.getAttribute('page_num'));
+            });
+
+            $('#section_wrap div.page_no_wrap .page_num_btn').click(function(){
+                console.log('pageNumBtnClick()')
+
+                ajax_getStoreTotalSalesByInputPeriod(this.getAttribute('page_num'));
+            });
 
         }
     })
