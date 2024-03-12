@@ -21,8 +21,8 @@ public interface IFranchiseeOrderDao {
 
 	public List<FranchiseeOrderDto> selectAllCategory();
 
-	public List<FranchiseeOrderDto> selectMenusByCategory(int fcmc_no);
+	public List<FranchiseeOrderDto> selectAllMenu(int fcmc_no);
 
-	public List<FranchiseeOrderDto> selectAllMenu();
+	public List<FranchiseeOrderDto> selectAllPrice(int fc_menu_no);
 
 }

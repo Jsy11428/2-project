@@ -17,3 +17,8 @@ function checkLoginAndRedirect() {
         alert('login please');
     }
 }
+
+function createOrderAccountForm() {
+		console.log('createOrderAccountForm()');
+	
+}

@@ -64,7 +64,6 @@ public class FranchiseeOrderController {
 	
 	// 주문 삭제
 	@GetMapping("/orderListDeleteConfirm")
-	@ResponseBody
 	public String orderListDeleteConfirm(@RequestParam("fco_no") int fco_no, HttpSession session) {
 		
 		log.info("orderListDeleteConfirm()");
@@ -96,29 +95,38 @@ public class FranchiseeOrderController {
 	}
 	
 	//카테고리 가져오기
-	@PostMapping("/getCategory")
+	@GetMapping("/getCategory")
 	@ResponseBody
 	public Object getCategory() {
-		log.info("getCategorycon()");
+	    log.info("getCategorycon()");
+	    
+	    Map<String, Object> cateDtos = franchiseeOrderService.getCategory();
 
-		Map<String, Object> cateDtos = franchiseeOrderService.getCategory();
-
-		return cateDtos;
-
+	    return cateDtos;
 	}
+
 	
 	// 카테고리에 따른 메뉴 가져오기
 	@GetMapping("/getMenusByCategory")
 	@ResponseBody
-	public Object getMenusByCategory() {
+	public Object getMenusByCategory(@RequestParam("fcmc_no") int fcmc_no) {
 		log.info("getMenus()");
 
-		Map<String, Object> franchiseeMenuDtos = franchiseeOrderService.getMenus();
+		Map<String, Object> MenuDtos = franchiseeOrderService.getMenus(fcmc_no);
 		
-		return franchiseeMenuDtos;
+		return MenuDtos;
 
 	}
 	
-	
-	
+	@GetMapping("/getPriceByCategory")
+	@ResponseBody
+	public Object getPriceByCategory(@RequestParam("fc_menu_no") int fc_menu_no) {
+		log.info("getPriceByCategory()");
+		
+		Map<String, Object> PriceDtos = franchiseeOrderService.getPrice(fc_menu_no);
+				
+		return PriceDtos;
+				
+	}
+		
 }

@@ -38,9 +38,6 @@
 	    WHERE FME.FCM_NO = #{loginNo}
 
 	    ORDER BY FCO_NO ASC 
-
-	    
-	    ORDER BY FCO_NO ASC 
 	    
 		LIMIT #{pagingParams.start}, #{pagingParams.limit}
   	
@@ -66,17 +63,24 @@
     
 	</delete>
 	
-	<select id="selectAllCategory"
+	<select id="selectAllCategory" parameterType="int"
 		resultType="com.office.kiosk.franchisee.order.FranchiseeOrderDto">
 
-		SELECT * FROM TBL_FC_MENU_CATEGORY;
+		SELECT * FROM TBL_FC_MENU_CATEGORY
 
 	</select>
 	
-	<select id="selectAllMenu" parameterType="String"
-		resultType="com.office.kiosk.franchisee.order.FranchiseeOrderDto">
+	<select id="selectAllMenu" parameterType="int"
+		resultType="com.office.kiosk.franchisee.order.FranchiseeOrderDto"> 
+		
+		SELECT * FROM TBL_FC_MENU WHERE FCMC_NO = #{fcmc_no}
 
-		SELECT * FROM TBL_FC_MENU;
+	</select>
+	
+	<select id="selectAllPrice" parameterType="int"
+		resultType="com.office.kiosk.franchisee.order.FranchiseeOrderDto"> 
+		
+		SELECT * FROM TBL_FC_MENU WHERE FC_MENU_NO = #{fc_menu_no}
 
 	</select>
 

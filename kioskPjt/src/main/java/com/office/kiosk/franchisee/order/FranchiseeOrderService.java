@@ -117,17 +117,31 @@ public class FranchiseeOrderService {
 		}
 
 
-	public Map<String, Object> getMenus() {
+	public Map<String, Object> getMenus(int fcmc_no) {
 		
-		log.info("getMenus()");
+			log.info("getMenus()");
+	
+			Map<String, Object> MenuDtos = new HashMap<>();
+	
+			List<FranchiseeOrderDto> franchiseeMenusDtos = (List<FranchiseeOrderDto>) iFranchiseeOrderDao.selectAllMenu(fcmc_no);
+			log.info("franchiseeMenusDtos: "+franchiseeMenusDtos);
+			MenuDtos.put("franchiseeMenusDtos", franchiseeMenusDtos);
+	
+			return MenuDtos;
+	}
 
-		Map<String, Object> franchiseeMenuDtos = new HashMap<>();
 
-		List<FranchiseeOrderDto> franchiseeMenusDtos = (List<FranchiseeOrderDto>) iFranchiseeOrderDao.selectAllMenu();
-
-		franchiseeMenuDtos.put("franchiseeMenusDtos", franchiseeMenusDtos);
-
-		return franchiseeMenuDtos;
+	public Map<String, Object> getPrice(int fc_menu_no) {
+		
+		log.info("getPrice()");
+		
+		Map<String, Object> PriceDtos = new HashMap<>();
+		
+		List<FranchiseeOrderDto> franchiseePriceDtos = iFranchiseeOrderDao.selectAllPrice(fc_menu_no);
+		
+		PriceDtos.put("franchiseePriceDtos", franchiseePriceDtos);
+		
+		return PriceDtos;
 	}
 	
 
