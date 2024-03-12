@@ -51,10 +51,6 @@ function initEvents() {
 
 }
 
-
-
-
-
 function addFranchiseeInfoDiv() {
     console.log("addFranchiseeInfoDiv");
 
@@ -125,8 +121,6 @@ function ajax_getFranchiseeStoreInfoBySelect(fcm_no) {
 
             let dtos = data.franchiseeStoreDtos;
 
-            console.log('---------', dtos[0].fcs_name);
-
             for (let i = 0; i < dtos.length; i++) {
                 let appendTag = '';
                 
@@ -141,7 +135,6 @@ function ajax_getFranchiseeStoreInfoBySelect(fcm_no) {
         }, 
         error: function(data) {
             console.log('ajax error!')
-
 
         }
     })
@@ -166,9 +159,13 @@ function ajax_createFranchiseeStore(fcs_name, fcs_location, fcs_phone, fcm_no) {
         success: function() {
             console.log('ajax success!')
 
-            let dto = data.franchiseeStoreDto;
+            let fcm_no = $('#section_wrap .create_form .franchisee_info select[name="fcm_no"]').val();
 
-            
+            ajax_getFranchiseeStoreInfoBySelect(fcm_no);
+
+            $('#section_wrap .create_form input[name="fcs_name"]').val('');
+            $('#section_wrap .create_form input[name="fcs_location"]').val('');
+            $('#section_wrap .create_form input[name="fcs_phone"]').val('');
 
         }, 
         error: function() {

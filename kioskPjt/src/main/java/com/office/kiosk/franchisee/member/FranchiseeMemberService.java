@@ -1,8 +1,15 @@
 package com.office.kiosk.franchisee.member;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.office.kiosk.admin.member.IAdminMemberDao;
+import com.office.kiosk.franchisee.FranchiseeStoreDto;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -17,6 +24,9 @@ public class FranchiseeMemberService {
 
 	@Autowired
 	IFranchiseeMemberDao iFranchiseeMemberDao;
+	
+	@Autowired
+	IAdminMemberDao iAdminMemberDao;
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -90,6 +100,21 @@ public class FranchiseeMemberService {
 		return null;
 		
 	}
-	
-	
+
+
+	public Map<String, Object> getStoreList(String fcm_id) {
+		log.info("getStoreList()");
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		FranchiseeMemberDto dto = iFranchiseeMemberDao.selectFranchiseeInfoByFcmId(fcm_id);
+		
+		List<FranchiseeStoreDto> dtos = iFranchiseeMemberDao.selectFranchiseeStoreList(dto);
+		
+		map.put("storeListByFcmId", dtos);
+		
+		return map;
+	}
+
+
 }

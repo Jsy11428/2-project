@@ -58,6 +58,7 @@ function ajax_getAllFranchiseeStoreInfo(pageNum = 1) {
                     appendTag += '<td>' + storeDtos[i].fcm_phone + '</td>';
                     appendTag += '<td>' + storeDtos[i].fcs_reg_date + '</td>';
                     appendTag += '<td>' + storeDtos[i].fcs_mod_date + '</td>';
+                    appendTag += '<td><input type="button" value="삭제" name="deleteBtn" fcs_no='+ storeDtos[i].fcs_no +'></td>';
 
                 appendTag += '</tr>';
 
@@ -119,9 +120,48 @@ function ajax_getAllFranchiseeStoreInfo(pageNum = 1) {
             	
             	ajax_getAllFranchiseeStoreInfo(this.getAttribute('page_num'));
             });
+
+            $('#section_wrap table tbody td input[name="deleteBtn"').click(function(){
+                console.log('fcs_no delete btn click')
+
+                let fcs_no = $(this).attr("fcs_no");
+
+                let result = confirm('가맹점을 삭제하시겠습니까?');
+
+                if(result) {
+                    ajax_franchiseeStoreDelete(fcs_no)
+
+                }
+
+            })
         	
         }
 
+    })
+
+}
+
+function ajax_franchiseeStoreDelete(fcs_no){
+    console.log('ajax_franchiseeStoreDelete()');
+
+    $.ajax({
+        url: '/admin/member/franchiseeStoreDelete',
+        method: 'post',
+        data: { 'fcs_no' : fcs_no  },
+        success: function(data){
+            console.log('ajax success')
+
+            alert("삭제 완료");
+
+        },
+        error: function(data){
+            console.log('ajax error')
+        },
+        complete: function() {
+
+            ajax_getAllFranchiseeStoreInfo(1);
+
+        }
     })
 
 }
