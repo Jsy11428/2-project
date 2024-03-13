@@ -101,8 +101,9 @@ public class FranchiseeOrderController {
 	    log.info("getCategorycon()");
 	    
 	    Map<String, Object> cateDtos = franchiseeOrderService.getCategory();
-
+	    
 	    return cateDtos;
+
 	}
 
 	
@@ -127,6 +128,19 @@ public class FranchiseeOrderController {
 				
 		return PriceDtos;
 				
+	}
+	
+	// 오더리스트 테이블에 넣기
+	@GetMapping("/getAllOrderbyOrder")
+	@ResponseBody
+	public Object getAllOrderbyOrder(@RequestParam("map") Map<String, Object> map) {
+		
+		log.info("getAllOrderbyOrder()");
+		
+		Map<String, Object> getAllOrders = franchiseeOrderService.getAllOrder(map);
+				
+		return getAllOrders;
+		
 	}
 		
 }

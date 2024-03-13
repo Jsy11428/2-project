@@ -277,5 +277,15 @@
 			FCM.FCM_NO = #{fcm_no}
 			
 	</select>
-
+	
+	<delete id="deleteFranchiseeStoreByFcsNo" 
+			parameterType="Integer">
+			
+		DELETE FROM 
+			TBL_FC_STORE 
+		WHERE 
+			FCS_NO = #{fcs_no}
+				
+	</delete>
+	
 </mapper>

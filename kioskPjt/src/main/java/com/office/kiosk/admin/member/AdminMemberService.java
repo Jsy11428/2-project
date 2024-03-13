@@ -139,7 +139,6 @@ public class AdminMemberService {
 		pagingParams.put("limit", pageLimit);
 		
 		List<AdminMemberDto> franchiseeMemberDtos = iAdminMemberDao.selectFranchiseePagingList(pagingParams);
-		log.info("franchiseeMemberDtos: "+franchiseeMemberDtos);
 		pagingList.put("franchiseeMemberDtos", franchiseeMemberDtos);
 		
 		return pagingList;				
@@ -166,11 +165,6 @@ public class AdminMemberService {
 		franchiseeMemberListPageDto.setMaxPage(maxPage);
 		franchiseeMemberListPageDto.setStartPage(startPage);
 		franchiseeMemberListPageDto.setEndPage(endPage);
-		
-		log.info("page: "+page);
-		log.info("maxPage: "+maxPage);
-		log.info("startPage: "+startPage);
-		log.info("endPage: "+endPage);
 		
 		return franchiseeMemberListPageDto;
 	}
@@ -268,11 +262,6 @@ public class AdminMemberService {
 		storeListPageDto.setStartPage(startPage);
 		storeListPageDto.setEndPage(endPage);
 		
-		log.info("page: "+page);
-		log.info("maxPage: "+maxPage);
-		log.info("startPage: "+startPage);
-		log.info("endPage: "+endPage);
-		
 		return storeListPageDto;
 	}
 
@@ -330,11 +319,6 @@ public class AdminMemberService {
 		adminMemberListPageDto.setStartPage(startPage);
 		adminMemberListPageDto.setEndPage(endPage);
 		
-		log.info("page: "+page);
-		log.info("maxPage: "+maxPage);
-		log.info("startPage: "+startPage);
-		log.info("endPage: "+endPage);
-		
 		return adminMemberListPageDto;
 	}
 
@@ -370,6 +354,15 @@ public class AdminMemberService {
 			return map;
 			
 		}
+		
+		
+	}
+
+
+	public void franchiseeStoreDelete(int fcs_no) {
+		log.info("franchiseeStoreDelete()");
+		
+		iAdminMemberDao.deleteFranchiseeStoreByFcsNo(fcs_no);
 		
 		
 	}

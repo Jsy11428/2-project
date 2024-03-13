@@ -3,12 +3,16 @@ $(document).ready(function() {
     // 페이지가 로드되면 카테고리와 메뉴들을 가져오는 함수 호출
     ajax_getCategorie();
     orderBtnClick();
+    ajax_get_AllOrder_by_order();
 });
 
 $('#order_btn').click(function() {
     // 클릭 이벤트 발생 시 실행되는 코드
     ajax_get_all_info();
+    
 });
+
+
 
 //카테고리
 function ajax_getCategorie() {
@@ -155,17 +159,61 @@ function orderBtnClick() {
         	
         $("#order_table").append(appendTag);
         
-       /*  $('<tr>').append(
-        		'<td hidden></td>' +
-        	    //'<td>' + orderNumber + '</td>' + // 생성한 주문번호
-        	    '<td>' + category + '</td>' +
-        	    '<td>' + menu + '</td>' +
-        	    '<td>' + quantity + '</td>' +
-        	    //'<td>' + paymentMethod + '</td>' + // 사용자가 선택한 결제수단
-        	    '<td>' + new Date().toLocaleDateString() + '</td>' + // 현재 날짜를 주문일로 설정
-        	    '<td>' + new Date().toLocaleDateString() + '</td>' + // 현재 날짜를 수정일로 설정 (임시)
-        	    '</tr>');*/
+        
     });
+}
+
+function ajax_get_AllOrder_by_order() {
+	
+		console.log('ajax_get_AllOrder_by_order()');
+		let map = {};
+		
+	$.ajax({
+		 url: '/franchisee/order/getAllOrderbyOrder',
+	     method: 'get',
+	     data: JSON.stringify(map),
+	     dataType: 'json',	
+	     success: function() {
+	   	 console.log('menuajsx success!!');
+	     let menuDtos = data.franchiseeMenusDtos; 
+	      
+	$("#AllOrder_btn").click(function(data) {
+		
+		console.log('AllOrder_btn clicked');
+		
+		for(let i = 1, j = 0 ; i <= $("#order_table tr").length;  i++, j++){
+			
+		     let category = $("#order_table tr:nth-child("+i+")td:nth-child(1)").text();
+		     let menu = $("#order_table tr:nth-child("+i+")td:nth-child(2)").text();
+		     let quantity = $("#order_table tr:nth-child("+i+")td:nth-child(3)").val();
+		     let price = $("#order_table tr:nth-child("+i+")td:nth-child(4)").val();
+		     
+			     map[j] = {
+			        "fcmc_no" : category,
+		         	"fc_menu_no" : menu,
+		         	"fco_menu_cnt" : quantity,
+		         	"fc_menu_no" : menu,
+		         
+		     	}
+		    		     
+			}
+		 console.log("map[0]: "+map[0]);
+		 console.log("map[1]: "+map[1]);
+		 console.log("map[2]: "+map[2]);
+		 console.log("map[3]: "+map[3]);
+		 console.log("map[4]: "+map[4]);
+		
+		});
+	    	 
+	},
+	error: function(data) {
+        console.log('ajax error!!');
+	},
+	
+	
+	
+	});
+		
 }
                 
 </script>

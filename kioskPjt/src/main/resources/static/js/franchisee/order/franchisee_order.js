@@ -22,3 +22,7 @@ function createOrderAccountForm() {
 		console.log('createOrderAccountForm()');
 	
 }
+
+function OrderAccountForm() {
+	console.log('OrderAccountForm()')
+}

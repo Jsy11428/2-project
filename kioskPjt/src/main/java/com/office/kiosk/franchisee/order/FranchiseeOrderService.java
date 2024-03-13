@@ -143,6 +143,20 @@ public class FranchiseeOrderService {
 		
 		return PriceDtos;
 	}
+
+
+	public Map<String, Object> getAllOrder(Map<String, Object> map) {
+		
+		log.info("getAllOrder()");
+		
+		Map<String, Object> AllOrderDtos = new HashMap<>();
+		
+		List<FranchiseeOrderDto> franchiseeAllOrderDtos = iFranchiseeOrderDao.insertAllOrder(map);
+		
+		AllOrderDtos.put("franchiseeAllOrderDtos", franchiseeAllOrderDtos);
+			
+		return AllOrderDtos;
+	}
 	
 
 
