@@ -6,7 +6,7 @@
 <title th:replace="~{include/include_title.html::title}"></title>
 
 <link rel="stylesheet" th:href="@{/css/customer/common.css}">
-<link rel="stylesheet" th:href="@{/css/customer/home.css}">
+<link rel="stylesheet" th:href="@{/css/customer/home2.css}">
 
 <script type="text/javascript" th:src="@{/js/franchisee/member/home.js}"></script>
 
@@ -18,10 +18,15 @@
 <body>
 
 	<div id="wrap">
-		
+
 		<section>
 		
 			<div id="section_wrap">
+
+				<div class="word">
+					<span class="txt_1">C</span><span class="txt_2">ode</span><span class="txt_1">다방</span>
+					<span class="txt_3">kiosk</span>
+				</div>
 
 				<div class="store_list">
 					<table>
@@ -30,7 +35,7 @@
 								<th>지점명</th>
 								<th>주소</th>
 								<th>연락처</th>
-								<th></th>
+								<th><input type="button" value="close"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -39,21 +44,33 @@
 				</div>
 		
 				<div class="login_form">
-					
-					<form name="franchisee_store_login_form">
 
-						<span class="fcs_no"></span>
-						
-						<input type="text" name="fcm_id" placeholder="PLEASE INPUT FRANCHISEE ID">
-						<br>
-						<input type="button" name="select_store" value="오픈지점">
-						<span>123</span>
-						<br>
-						<input type="password" name="fcm_pw" placeholder="PLEASE INPUT FRANCHISEE PW">
-						<br>
-						
-						<input type="button" value="login">
-						<input type="reset" value="reset">
+					<form	action="/franchisee/member/franchiseeStoreLogin" 
+							method="post"
+							name="franchisee_store_login_form">
+							
+							<input type="hidden" name="fcs_no">
+
+					<table>
+						<tr>
+							<td>ID</td>
+							<td><input type="text" name="fcm_id" placeholder="PLEASE INPUT FRANCHISEE ID"></td>
+						</tr>
+						<tr>
+							<td><input type="button" name="fcs_name" value="오픈지점"></td>
+							<td><span class="txt_1">지점명  :  <span class="fcs_name"></span></span></td>
+						</tr>
+						<tr>
+							<td>PW</td>
+							<td><input type="password" name="fcm_pw" placeholder="PLEASE INPUT FRANCHISEE PW"></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<input class="input_btn" type="button" value="login" onclick="franchiseeStoreLogin()">
+								<input class="input_btn" type="reset" value="reset">
+							</td>
+						</tr>
+					</table>
 
 					</form>
 					

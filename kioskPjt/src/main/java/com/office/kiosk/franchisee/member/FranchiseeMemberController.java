@@ -1,6 +1,5 @@
 package com.office.kiosk.franchisee.member;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -181,6 +180,26 @@ public class FranchiseeMemberController {
 		
 		return resultMap;
 	}
+	
+	@PostMapping("/franchiseeStoreLogin")
+	public Object franchiseeStoreLogin(FranchiseeStoreDto franchiseeStoreDto,
+									HttpSession session) {
+		log.info("franchiseeStoreLogin()");
+		
+		String nextPage = "/customer/franchisee_store_login_result";
+		
+		FranchiseeStoreDto loginedFranchiseeStoreDto = franchiseeMemberService.franchiseeLoginConfirmForCustomer(franchiseeStoreDto);
+		loginedFranchiseeStoreDto.setFcs_no(franchiseeStoreDto.getFcs_no());
+		
+		
+		session.setAttribute("loginedFranchiseeStoreDto", loginedFranchiseeStoreDto);
+		session.setMaxInactiveInterval(60 * 720);
+		
+		return nextPage;
+		
+	}
+	
+
 	
 	
 	
