@@ -18,10 +18,15 @@
 <body>
 
 	<div id="wrap">
-		
+
 		<section>
 		
 			<div id="section_wrap">
+
+				<div class="word">
+					<span class="txt_1">C</span><span class="txt_2">ode</span><span class="txt_1">다방</span>
+					<span class="txt_3">kiosk</span>
+				</div>
 
 				<div class="store_list">
 					<table>
@@ -39,23 +44,33 @@
 				</div>
 		
 				<div class="login_form">
-					
+
 					<form	action="/franchisee/member/franchiseeStoreLogin" 
 							method="post"
 							name="franchisee_store_login_form">
+							
+							<input type="hidden" name="fcs_no">
 
-						<input type="hidden" name="fcs_no">
-						
-						<input type="text" name="fcm_id" placeholder="PLEASE INPUT FRANCHISEE ID">
-						<br>
-						<input type="button" name="fcs_name" value="오픈지점">
-						<span>지점명:<span class="fcs_name"></span></span>
-						<br>
-						<input type="password" name="fcm_pw" placeholder="PLEASE INPUT FRANCHISEE PW">
-						<br>
-						
-						<input type="button" value="login" onclick="franchiseeStoreLogin()">
-						<input type="reset" value="reset">
+					<table>
+						<tr>
+							<td>ID</td>
+							<td><input type="text" name="fcm_id" placeholder="PLEASE INPUT FRANCHISEE ID"></td>
+						</tr>
+						<tr>
+							<td><input type="button" name="fcs_name" value="오픈지점"></td>
+							<td><span class="txt_1">지점명  :  <span class="fcs_name"></span></span></td>
+						</tr>
+						<tr>
+							<td>PW</td>
+							<td><input type="password" name="fcm_pw" placeholder="PLEASE INPUT FRANCHISEE PW"></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<input class="input_btn" type="button" value="login" onclick="franchiseeStoreLogin()">
+								<input class="input_btn" type="reset" value="reset">
+							</td>
+						</tr>
+					</table>
 
 					</form>
 					
