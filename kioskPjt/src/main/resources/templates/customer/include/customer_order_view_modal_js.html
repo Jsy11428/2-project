@@ -14,32 +14,15 @@ $(document).ready(function() {
     });
   
 
-    $(".ice_poti button:nth-child(1)").click(function(){
-        $(this).css('border', '2px solid #fff').css('backgroundColor', 'blue').css('color', '#fff');
-        $(".ice_poti button:nth-child(2)").css('border', '2px solid blue').css('backgroundColor', 'inherit').css('color', 'blue');
-    });
-
-    $(".ice_poti button:nth-child(2)").click(function(){
-        $(this).css('border', '2px solid #fff').css('backgroundColor', 'blue').css('color', '#fff');
-        $(".ice_poti button:nth-child(1)").css('border', '2px solid blue').css('backgroundColor', 'inherit').css('color', 'blue');
-    });
-
     $(".select_oreder input[name='cancel']").click(function(){
         $(this).css('border', '2px solid #fff').css('backgroundColor', 'blue').css('color', '#fff');
         $(".select_oreder input[name='select']").css('border', '2px solid blue').css('backgroundColor', 'inherit').css('color', 'blue');
     });
 
     $(".select_oreder input[name='select']").click(function(){
-        
-        /* css 변화 */
         $(this).css('border', '2px solid #fff').css('backgroundColor', 'blue').css('color', '#fff');
         $(".select_oreder input[name='cancel']").css('border', '2px solid blue').css('backgroundColor', 'inherit').css('color', 'blue');
-    
     });
-    
-    
-    
-    
     
      menuSelectHandler();
     
@@ -49,6 +32,14 @@ function menuPrice() {
 	let menuPrice = $('p.menu_price').attr('fc_menu_price');
 	console.log("menuPrice: ", menuPrice);
 	return menuPrice;
+}
+
+
+function resetCss() {
+	
+	 $(".select_oreder input[name='cancel']").css('border', '2px solid blue').css('backgroundColor', '#fff').css('color', 'blue');
+	 $(".select_oreder input[name='select']").css('border', '2px solid blue').css('backgroundColor', 'inherit').css('color', 'blue');
+	
 }
 
 
@@ -69,7 +60,7 @@ function menuPrice() {
         menuCurrentValue = 1;
 	    shotCurrentValue = 0;
 	    purCurrentValue = 0;
-        
+
     }
 
  	const shotPrice = 500;

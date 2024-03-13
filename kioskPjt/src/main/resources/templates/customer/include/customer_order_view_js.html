@@ -36,21 +36,46 @@ function eventsHandler(){
 		// 메뉴 no
 		let fc_menu_no = $("div.header_sec p.menu_no").text();
 		
+		// 메뉴 카테고리 no
+		let fcmc_no = $("div.header_sec p.menu_category").text();
+		
 		// 메뉴 img URL
 		let fc_menu_img = $("div.header_sec img.img_section").attr("src");
 		
-		// 메뉴 가격
-		let fc_menu_price = $('div.modal_header p.menu_price').text();
+		// 선택 메뉴 한 잔 당 가격 (기본메뉴가격 * 1)
+		let fc_menu_price = $('div.modal_header p.menu_price_origin').text();
 		
-		// 선택메뉴 한 잔 당 가격((기본메뉴가격 * 1) + (옵션1가격 * 옵션추가수) + (옵션2가격 * 옵션추가수))
+		// 메뉴 커스텀 후 한 잔 당 가격((기본메뉴가격 * 1) + (옵션1가격 * 옵션추가수) + (옵션2가격 * 옵션추가수))
 		let fc_menu_price_one = $('div.modal_header p.menu_price_one').text();
+		
+		// 메뉴 토탈 가격
+		let fco_total_price = $('div.modal_header p.menu_price').text();
 		
 		// 메뉴 카운트
 		let fc_menu_cnt = $('div.modal_header p.menu_number').text();
-		console.log(fc_menu_cnt);
+		
+		// 샷 추가 갯수
+		let shot_number = $('div.euro_option p.shot_number').text();
+		
+		// 샷 가격 (샷 가격 * 샷 추가수)
+		let shot_price = shot_number * 500;
+		
+		// 펄 추가 갯수
+		let pur_number = $('div.euro_option p.pur_number').text();
+		
+		// 펄 가격 (펄 가격 * 펄 추가수)
+		let pur_price = pur_number * 1000;
 		
 		// 카트에 담는 함수 호출
-		addCartItem(fc_menu_img, fc_menu_price, fc_menu_no, fc_menu_cnt, fc_menu_price_one);
+		if($("ul.cart_area_items li").length !== 0){
+			if($("ul.cart_area_items li input[name='fc_menu_no']").val() === fc_menu_no ){
+				alert("이미 같은 메뉴가 주문에 있습니다");
+				return;
+			}
+		}
+		
+		addCartItem(fc_menu_img, fc_menu_price, fc_menu_no, fc_menu_cnt, fc_menu_price_one, fcmc_no, 
+				shot_number, shot_price, pur_number, pur_price, fco_total_price);
 		
 		// 모달창 닫히고 모달창의 value 초기화
 		$("#myModal").fadeOut();
@@ -92,7 +117,8 @@ function totalPriceCalculator(){
 
 
 //footer cart area
-function addCartItem(menu_img, fc_menu_price, menu_no, fco_menu_cnt, fc_menu_price_one){
+function addCartItem(menu_img, fc_menu_price, menu_no, fco_menu_cnt, fc_menu_price_one, fcmc_no,
+		shot_number, shot_price, pur_number, pur_price, fco_total_price){
 	console.log("addCartItem()");
 		
 	/*
@@ -108,11 +134,17 @@ function addCartItem(menu_img, fc_menu_price, menu_no, fco_menu_cnt, fc_menu_pri
 			appendTag += '<div class="item_sub_btn" ><img src="/img/home/cart_area_sub_btn.png" alt=""></div>';
 			appendTag += '<p class="fco_menu_cnt">'+fco_menu_cnt+'</p>';
 			appendTag += '<div class="item_add_btn" menu_no='+menu_no+'><img src="/img/home/cart_area_add_btn.png" alt=""></div>';
-			/* appendTag += '<input type="hidden" name="fc_menu_no" value="'+fc_menu_no+'">';
+			appendTag += '<input type="hidden" name="fc_menu_no" value="'+menu_no+'">';
 			appendTag += '<input type="hidden" name="fcmc_no" value="'+fcmc_no+'">';
-			appendTag += '<input type="hidden" name="fco_packaging" value="'+fco_packaging+'">'; */
+			/* appendTag += '<input type="hidden" name="fco_packaging" value="'+fco_packaging+'">'; */
 			appendTag += '<input type="hidden" name="fc_menu_price" value="'+fc_menu_price+'">';
-			appendTag += '<input type="hidden" name="fco_total_price" value="'+fc_menu_price+'">';
+			appendTag += '<input type="hidden" name="fco_total_price" value="'+fco_total_price+'">';
+			appendTag += '<input type="hidden" name="fc_menu_price_one" value="'+fc_menu_price_one+'">';
+			appendTag += '<input type="hidden" name="shot_number" value="'+shot_number+'">';
+			appendTag += '<input type="hidden" name="shot_price" value="'+shot_price+'">';
+			appendTag += '<input type="hidden" name="pur_number" value="'+pur_number+'">';
+			appendTag += '<input type="hidden" name="pur_price" value="'+pur_price+'">';
+			
 		appendTag += '</div>';
 	appendTag += '</li>';
 	

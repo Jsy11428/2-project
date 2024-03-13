@@ -205,7 +205,7 @@ div.modal_wrap {
 	border: 1px solid #888;
 	/* width: 100%; */
 	width: 770px;
-	height: 900px;
+	height: 700px;
 }
 
 /* 모달 닫기 버튼 스타일 */
@@ -243,6 +243,10 @@ div.modal_header img {
 
 
 .menu_no {
+	display: none;
+}
+
+.menu_category {
 	display: none;
 }
 
@@ -293,6 +297,10 @@ div.modal_header img {
 }
 
 p.menu_price_one {
+	display: none;
+}
+
+p.menu_price_origin {
 	display: none;
 }
 
@@ -475,9 +483,9 @@ p.menu_price_one {
 								<div class="header_sec">
 									<img class="img_section" id="img_section">
 									<div>
-										<p class="menu_no">
+										<p class="menu_no"></p>
 										<p class="menu_name"></p>
-
+										<p class="menu_category"></p>
 										<div class="modal_cnt">
 											<button class="menu_min">-</button>
 											<p class="menu_number">1</p>
@@ -487,19 +495,23 @@ p.menu_price_one {
 
 								</div>
 
+								<p class="menu_price_origin"></p>
 								<p class="menu_price"></p>
 								<p class="menu_price_one"></p>
 							</div>
 
+							<!-- 
 							<div class="select_ice">
 								<p>얼음</p>
 
+							
 								<div class="ice_poti">
 									<button>각얼음</button>
 									<button>간얼음</button>
 								</div>
 
 							</div>
+							 -->
 
 							<div class="euro_option">
 								<p class="subhead">유료옵션</p>
