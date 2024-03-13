@@ -1,0 +1,95 @@
+<html xmlns:th="http://www.thymeleaf.org">
+		<!-- customer header 영역 -->
+		<header th:fragment ="customer_header">
+            <div id="header_wrap">
+                <div class="home_btn">
+                    <img src="/img/home/home_icon.png" alt="home_icon">
+                </div>
+            </div>
+       	</header>
+        <!-- customer header 영역 END -->
+        
+        <!-- customer nav 영역 -->
+        <nav th:fragment ="customer_nav">
+            <div id="nav_wrap">
+                <div class="nav_pre_btn">
+                    <!-- 
+                    <img src="/img/home/nav_left_arrow.png" alt="left_arrow">
+                	 -->
+                </div>
+                <ul class="nav_menu_wrap" id="nav_menu_wrap">
+                	
+                </ul>
+                <div class="nav_next_btn">
+                <!-- 
+                    <img src="/img/home/nav_right_arrow.png" alt="right_arrow">
+                -->
+                </div>
+            </div>
+        </nav>       
+        <!-- customer nav 영역 END -->
+        
+        <!-- customer footer 영역 -->
+        <footer th:fragment ="customer_footer">
+            <div id="footer_wrap">
+                <div class="cart_area_wrap">
+                    <div class="cart_area_left_btn">
+                        <img src="/img/home/cart_area_left_btn.png" alt="cart_area_left_btn">
+                    </div>
+                    <div class="cart_area_item_wrap">
+                        <ul class="cart_area_items">
+                        
+                            <!-- <li>
+                                <img class="cart_area_cancel_btn" src="/img/home/cart_area_cancel_btn.png" alt="">
+                                <div class="cart_item_img">
+                                    <img src="/img/home/ice_ame.png" alt="">
+                                </div>
+                                <div class="cart_item_select_wrap">                               
+                                	
+                                    <div class="item_sub_btn">
+                                        <img src="/img/home/cart_area_sub_btn.png" alt="">
+                                    </div>                                    
+                                   
+                                    <p class="item_cnt">1</p>
+                                                                      
+                                    <div class="item_add_btn">
+                                        <img src="/img/home/cart_area_add_btn.png" alt="">
+                                    </div>
+                                    
+                                </div>
+                            </li> -->
+                            
+                        </ul>
+                       
+                    </div>
+                    <div class="cart_area_right_btn">
+                        <img src="/img/home/cart_area_right_btn.png" alt="cart_area_right_btn">
+                    </div>
+                </div>
+                <div class="price_area_wrap">
+                    <div class="total_price_area">
+                        <div class="total_price_text">
+                            <p>총 결재 금액</p>
+                            
+                            <!-- order menu sum(price*cnt) select 값 START -->
+                            <h4><span>10000</span>원</h4>
+                            <!-- order menu sum(price*cnt) select 값 END -->
+                            
+                        </div>
+                        <div class="order_cancel_btn">
+                            전체취소
+                        </div>
+                    </div>
+                    <div class="payment_btn">
+                        <div class="payment_btn_icon">
+                            <img src="/img/home/payment_icon.png" alt="payment_icon">
+                        </div>
+                        <div class="payment_btn_text">
+                            결제하기
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+		 <!-- customer footer 영역 END -->
+</html>

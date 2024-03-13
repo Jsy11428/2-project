@@ -13,7 +13,8 @@ public class HomeController {
 	public String home() {
 		log.info("home()");
 	
-		String nextPage = "/home2";
+//		String nextPage = "/home";
+		String nextPage = "/customer/customer_order_view";
 		
 		return nextPage;
 		
