@@ -1,25 +1,18 @@
+<script th:fragment="customer_order_view_modal_js" type="text/javascript">
+
 $(document).ready(function() {
-        
+    
     $(".openModal").click(function() {
         $("#myModal").fadeIn();
     });
 
-     $(".close, #myModal").click(function(e) {
+     $(".close, #myModal, #cancel").click(function(e) {
         if (e.target === this) {
             $("#myModal").fadeOut();
             resetValues();
         }
     });
   
-    $(".select_temper button:nth-child(2)").click(function(){
-        $(this).css('border','2px solid #fff').css('backgroundColor','blue').css('color','#fff');
-        $(".select_temper button:nth-child(1)").css('border','1px solid red').css('backgroundColor','inherit').css('color','red');
-    });
-
-    $(".select_temper button:nth-child(1)").click(function(){
-        $(this).css('border','2px solid #fff').css('backgroundColor','red').css('color','#fff');
-        $(".select_temper button:nth-child(2)").css('border','1px solid blue').css('backgroundColor','inherit').css('color','blue');
-    });
 
     $(".ice_poti button:nth-child(1)").click(function(){
         $(this).css('border', '2px solid #fff').css('backgroundColor', 'blue').css('color', '#fff');
@@ -37,9 +30,16 @@ $(document).ready(function() {
     });
 
     $(".select_oreder input[name='select']").click(function(){
+        
+        /* css 변화 */
         $(this).css('border', '2px solid #fff').css('backgroundColor', 'blue').css('color', '#fff');
         $(".select_oreder input[name='cancel']").css('border', '2px solid blue').css('backgroundColor', 'inherit').css('color', 'blue');
+    
     });
+    
+    
+    
+    
     
      menuSelectHandler();
     
@@ -51,21 +51,28 @@ function menuPrice() {
 	return menuPrice;
 }
 
+
 	// 초기화 함수
-    function resetValues() {
+    function resetValues(menuPrice) {
+		console.log('resetValues()');
+		
         $("p.menu_number").text("1"); // 메뉴 수량 초기화
         $("p.shot_number").text("0"); // 샷 수량 초기화
         $("p.pur_number").text("0"); // 퍼 수량 초기화
+        
         const shotPrice = 500.0000;
         const purPrice = 1000.0000;
-        $(".menu_price").text(menuPrice.toLocaleString('ko-KR')); // 메뉴 가격 초기화
-        $(".shot_price").text(shotPrice.toLocaleString('ko-KR')); // 샷 가격 초기화
-        $(".pur_price").text(purPrice.toLocaleString('ko-KR')); // 퍼 가격 초기화
+        $(".menu_price").text(menuPrice); // 메뉴 가격 초기화
+        $(".shot_price").text(shotPrice); // 샷 가격 초기화
+        $(".pur_price").text(purPrice); // 퍼 가격 초기화
+        
+        menuCurrentValue = 1;
+	    shotCurrentValue = 0;
+	    purCurrentValue = 0;
         
     }
 
-function menuSelectHandler() {
-    const shotPrice = 500;
+ 	const shotPrice = 500;
     const purPrice = 1000;
 
     // 초기 수량 설정
@@ -76,36 +83,18 @@ function menuSelectHandler() {
     // 가격 업데이트 함수
     function updatePrice() {
 		
-        const totalPrice = (menuPrice() * menuCurrentValue) + (shotPrice * shotCurrentValue) + (purPrice * purCurrentValue);
-        $(".menu_price").text(totalPrice);
+        const totalPrice = (menuPrice() * menuCurrentValue) + ((shotPrice * shotCurrentValue) * menuCurrentValue) + ((purPrice * purCurrentValue) * menuCurrentValue);
+        $(".menu_price").text("\\" + totalPrice);
         console.log("totalPrice: "+totalPrice);
+        
+        const oneCupPrice = (menuPrice() * 1) + (shotPrice * shotCurrentValue) + (purPrice * purCurrentValue);
+        $(".menu_price_one").text(oneCupPrice);
+        console.log("oneCupPrice: "+oneCupPrice);
+        
     }
 
-    // 초기화 함수
-    /*
-    function resetValues() {
-        menuCurrentValue = 1;
-        shotCurrentValue = 0;
-        purCurrentValue = 0;
 
-        $(".menu_number").text(menuCurrentValue);
-        $(".shot_number").text(shotCurrentValue);
-        $(".pur_number").text(purCurrentValue);
-
-        updatePrice();
-    }
-    */
-
-    // 모달 닫힐 때 초기화
-    $('#myModal').on('hidden.bs.modal', function () {
-        resetValues();
-    });
-
-
-
-
-    // 초기화
-    // resetValues();
+function menuSelectHandler() {
 
     // 메뉴 수량 버튼
     $(".menu_add").off("click").on("click", function() {
@@ -152,3 +141,5 @@ function menuSelectHandler() {
         }
     });
 }
+	
+</script>

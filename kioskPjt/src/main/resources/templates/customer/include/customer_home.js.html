@@ -3,26 +3,6 @@
 		// 페이지가 로드되면 카테고리와 메뉴들을 가져오는 함수 호출
 		ajax_getCategorie_menu();
 		ajax_get_all_menus();
-		
-		let previousImageUrl;
-		
-		// 썸네일 이미지 미리보기
-		/*
-		  $('#file').change(function () {
-		        let reader = new FileReader();
-		        reader.onload = function (e) {
-		        	previousImageUrl = $('#img_section').attr('src');
-		        	$('#img_section').attr('src', e.target.result).show();
-		        }
-		        reader.readAsDataURL(this.files[0]);
-		    })
-		    
-		 // 리셋버튼 누르면 이미지 변경 전으로 돌아가기
-		
-		    $('.modify_menu_wrap input[type="reset"]').click(function () {
-		        $('#img_section').attr('src', previousImageUrl).show();
-		        
-		   */
 		   
 		    });
 
@@ -47,14 +27,6 @@
 		}
 
 	})
-	
-	$(document).on('click', '.modify_menu_modal input[value="취소"]', function(e) {
-		$('.modal_wrap').css('display', 'none');	
-	})
-
-	$(document).on('click', '.modify_menu_modal', function(e) {
-		e.stopPropagation();
-	})
 
 	function removeAdminMenuList() {
 		console.log('removeAdminMenuList()');
@@ -73,74 +45,7 @@
 	}
 	
 	
-	// 모든 카테고리 가져오기 메뉴리스트 + 모달창 (기존)
 	
-	/*
-	function ajax_getCategorie_menu() {
-		$
-				.ajax({
-					url : '/admin/menu/getCategory',
-					method : 'post',
-					contentType : 'application/json; charset=utf-8',
-					dataType : 'json',
-					success : function(data) {
-						let cateDtos = data.categoryDtos;
-						for (let i = 0; i < cateDtos.length; i++) {
-							
-							removeCategory();
-							
-							// 카테고리 버튼 추가
-
-							// $('.menu_category_change_wrap')
-							//		.append(
-							//				'<input type="hidden" id="csrfToken" th:value="${_csrf.token}"/>');
-							
-							$('.menu_category_change_wrap').append(
-									'<a href="#" value="' + cateDtos[i].fcmc_no + '">'
-											+ cateDtos[i].fcmc_name + '</a>');
-
-							
-							// $('#menu_category_select').append(
-							//		'<option value="' + cateDtos[i].fcmc_no + '">'
-							//				+ cateDtos[i].fcmc_name
-							//				+ '</option>');
-							
-
-							
-							for (let i = 0; i < cateDtos.length; i++) {
-								// 카테고리 버튼 추가
-								let selectedItemNo = 5;
-								let tag = '<option value="' + cateDtos[i].fcmc_no + '" ';
-								
-								
-								if (cateDtos[i].fcmc_no == selectedItemNo) {
-									tag += 'selected ';	
-								}
-								
-								tag += '>';
-								tag += cateDtos[i].fcmc_name
-								tag += '</option>';
-								
-							
-								$('#menu_category_select').append(tag); 
-								
-								
-								// $('#menu_category_select').append(
-								//		'<option value="' + cateDtos[i].fcmc_no + '">'
-								//				+ cateDtos[i].fcmc_name + '</option>');
-							}
-
-							isCategoryMenuLoaded = true;
-							
-							
-						}
-					},
-					error : function(data) {
-						console.log('ajax error!!');
-					}
-				});
-	}
-	*/
 	
 	// 모든 카테고리 가져오기 메뉴리스트 + 모달창 (수정)
 	
@@ -156,29 +61,11 @@
 							removeCategory();
 						for (let i = 0; i < cateDtos.length; i++) {
 							
-							
 							// 카테고리 버튼 추가 (메뉴리스트)
 
 							$('.nav_menu_wrap').append(
 									'<li value="' + cateDtos[i].fcmc_no + '">'
 											+ cateDtos[i].fcmc_name + '</a>');
-							
-								// 카테고리 버튼 추가 (모달창)
-								
-								/*
-								let selectedItemNo = fcmc_no;
-								let tag = '<option value="' + cateDtos[i].fcmc_no + '" ';
-								
-								if (cateDtos[i].fcmc_no == selectedItemNo) {
-									tag += 'selected ';	
-								}
-								
-								tag += '>';
-								tag += cateDtos[i].fcmc_name
-								tag += '</option>';
-							
-								$('#menu_category_select').append(tag); 
-								*/
 
 							isCategoryMenuLoaded = true;
 							
@@ -193,28 +80,6 @@
 					}
 				});
 	}	
-
-	// 모든 메뉴 가져오기 (기존)
-	
-	/*
-	
-	function ajax_get_all_menus() {
-		$.ajax({
-			url : '/admin/menu/getMenus',
-			method : 'post',
-			contentType : 'application/json; charset=utf-8',
-			dataType : 'json',
-			success : function(data) {
-				// 메뉴 출력 함수 호출
-				renderMenus(data.menusDtos);
-			},
-			error : function(data) {
-				console.log('ajax error!!');
-			}
-		});
-	}
-
-	*/
 	
 	// 모든 메뉴 가져오기 (페이지네이션 추가)
 	
@@ -327,47 +192,6 @@
 		        }
 		});
 	}
-	
-	// 카테고리에 따른 메뉴 가져오기 (기존)
-	
-	/*
-	
-	function ajax_get_menus_by_category(fcmc_no,) {
-		console.log('ajax_get_menus_by_category()');
-		console.log(fcmc_no);
-
-		$.ajax({
-			url : '/admin/menu/getMenusByCategory',
-			method : 'post',
-			/*  beforeSend: function(xhr) {
-			     xhr.setRequestHeader("X-CSRF-TOKEN", $('#csrfToken').val());
-			 }, 
-			data : ({
-				'fcmc_no' : fcmc_no,
-			}),
-			// contentType: 'application/json; charset=utf-8',
-			dataType : 'json',
-			success : function(data) {
-				console.log('ajsx sucess!!')
-				
-				let adminMenuListPageDto = data.adminMenuListPageDto;
-				
-				removeAdminMenuList();
-				removePageNo();				
-				
-				// 메뉴 출력 함수 호출
-				renderMenus(data.adminMenusDtos);
-				
-			}
-			error : function(data) {
-				console.log('ajax error!!');
-			}
-		
-		});
-	}
-	
-	*/
-	
 	
 	// 카테고리에 따른 메뉴 가져오기 (페이지네이션 추가)
 	
@@ -513,33 +337,13 @@
 							"http://14.42.124.93:8091/kioskUploadImg/"
 									+ data.fc_menu_img_name);
 
-					/*
-					$("div.modify_menu_wrap input[name='fc_menu_no']").attr(
-							"value", `${data.fc_menu_no}`);
-					
-					
-					$("div.modify_menu_wrap select[name='fcmc_no']").val(data.fcmc_no).prop('selected', true);
-					
-					console.log(`${data.fcmc_no}`);
-					*/
-					
-					/*
-					$("div.header_sec p.menu_name").attr(
-							"value", `${data.fc_menu_name}`);
-					*/
-					
 					$("div.header_sec p.menu_no").text(data.fc_menu_no);
 					
 					$("div.header_sec p.menu_name").text(data.fc_menu_name);
 					
-					$('div.modal_header p.menu_price').text(data.fc_menu_price);
+					$('div.modal_header p.menu_price').text("\\" + data.fc_menu_price);
 					
 					$('div.modal_header p.menu_price').attr("fc_menu_price", data.fc_menu_price);
-					
-					// fc_menu_price='"+data.fc_menu_price+"'"
-					
-					// $("div.modify_menu_wrap input[name='fc_menu_price']").attr(
-					//		"value", `${data.fc_menu_price}`);
 					
 					$("div.modify_menu_wrap textarea[name='fc_menu_text']")
 					.text(data.fc_menu_text);

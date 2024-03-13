@@ -1,5 +1,5 @@
 
-<script th:fragment="home_js" type="text/javascript">
+<script th:fragment="customer_order_view_js" type="text/javascript">
 
 let cart = {};
 
@@ -17,14 +17,46 @@ function init(){
 
 function eventsHandler(){
 	
-	// 메뉴 리스트에 특정 메뉴 클릭
+	// (기존) 메뉴 리스트에 특정 메뉴 클릭 
+	/*
 	$("#section_wrap ul.section_menu_list li").click(function(){
 		console.log("section_menu_list li click!!!");
 		let menu_no = $(this).index();
 		
 		let menu_img = $(this).children('img').attr('src');
 		let fc_menu_price = parseInt($(this).children('p.item_price').children('span').text());
-		addCartItem(menu_img,/* fc_menu_no,fcmc_no,fco_packaging, */fc_menu_price,menu_no);
+		addCartItem(menu_img,// fc_menu_no,fcmc_no,fco_packaging, //fc_menu_price,menu_no);
+	});
+	*/
+	
+	// (수정) 메뉴 선택완료 버튼 클릭시 카트에 담기게 + 모달창 닫기
+	$(".select_oreder input[name='select']").click(function(){
+		console.log("select btn click!!!");
+		
+		// 메뉴 no
+		let fc_menu_no = $("div.header_sec p.menu_no").text();
+		
+		// 메뉴 img URL
+		let fc_menu_img = $("div.header_sec img.img_section").attr("src");
+		
+		// 메뉴 가격
+		let fc_menu_price = $('div.modal_header p.menu_price').text();
+		
+		// 선택메뉴 한 잔 당 가격((기본메뉴가격 * 1) + (옵션1가격 * 옵션추가수) + (옵션2가격 * 옵션추가수))
+		let fc_menu_price_one = $('div.modal_header p.menu_price_one').text();
+		
+		// 메뉴 카운트
+		let fc_menu_cnt = $('div.modal_header p.menu_number').text();
+		console.log(fc_menu_cnt);
+		
+		// 카트에 담는 함수 호출
+		addCartItem(fc_menu_img, fc_menu_price, fc_menu_no, fc_menu_cnt, fc_menu_price_one);
+		
+		// 모달창 닫히고 모달창의 value 초기화
+		$("#myModal").fadeOut();
+        resetValues();
+		
+		
 	});
 	
 	//오더 전체 취소 버튼 클릭
@@ -50,7 +82,7 @@ function totalPriceCalculator(){
 	$("div.total_price_text h4 span").empty();
 	for(let i = 0; i < $("ul.cart_area_items li input[name='fc_menu_price']").length; i++){
 		
-		fc_menu_price = parseInt($("ul.cart_area_items li input[name='fco_total_price']").eq(i).val());
+		fc_menu_price = parseInt($("ul.cart_area_items li input[name='fco_total_price']").eq(i).val().replace("\\", ""));
 		
 		total_menu_price += fc_menu_price;
 	}
@@ -60,10 +92,12 @@ function totalPriceCalculator(){
 
 
 //footer cart area
-function addCartItem(menu_img,/* fc_menu_no,fcmc_no,fco_packaging, */fc_menu_price,menu_no){
+function addCartItem(menu_img, fc_menu_price, menu_no, fco_menu_cnt, fc_menu_price_one){
 	console.log("addCartItem()");
 		
+	/*
 	let fco_menu_cnt = 1;
+	*/
 	let appendTag = "";
 	
 	appendTag = '<li id="cart_item_'+menu_no+'">';
@@ -106,7 +140,7 @@ function addCartItem(menu_img,/* fc_menu_no,fcmc_no,fco_packaging, */fc_menu_pri
 			}
 			$(this).siblings('p.fco_menu_cnt').text(item_cnt);
 			
-			$(this).siblings('input[name="fco_total_price"]').val(item_cnt*fc_menu_price);
+			$(this).siblings('input[name="fco_total_price"]').val(item_cnt*fc_menu_price_one);
 			
 			totalPriceCalculator();
 		
@@ -124,7 +158,7 @@ function addCartItem(menu_img,/* fc_menu_no,fcmc_no,fco_packaging, */fc_menu_pri
 		}
 		$(this).siblings('p.fco_menu_cnt').text(item_cnt);
 		
-		$(this).siblings('input[name="fco_total_price"]').val(item_cnt*fc_menu_price);
+		$(this).siblings('input[name="fco_total_price"]').val(item_cnt*fc_menu_price_one);
 		
 		totalPriceCalculator();
 	});
