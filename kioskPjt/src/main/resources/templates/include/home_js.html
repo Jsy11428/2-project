@@ -34,6 +34,24 @@ function eventsHandler(){
 		removeCartItem();
 		totalPriceCalculator();
 	});
+	
+	$('#footer_wrap div.cart_area_left_btn').click(function(){
+		console.log("cart_area_left_btn click!!!");
+		
+		if($('#footer_wrap ul.cart_area_items').innerWidth() > 600){
+			if($('#footer_wrap ul.cart_area_items').css()){
+				
+			}
+			$('#footer_wrap ul.cart_area_items').animate({
+				left: '-120px'
+			},300);
+			
+		}else{
+			$('#footer_wrap ul.cart_area_items').css('left','0');
+		}
+		
+		
+	});
 			
 }
 
