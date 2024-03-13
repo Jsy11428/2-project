@@ -21,19 +21,11 @@
 		
 			<div id="section_wrap">
 		
-				<div class="login_result">
-					
-					<table>
-						<tr>
-							<td>지점명</td>
-							<td>주소</td>
-							<td>연락처</td>
-						</tr>
-						<tr>
-							<td></td>
-						</tr>
-					</table>
-					
+				<div class="option">
+				
+					<span th:text="${session.loginedFranchiseeStoreDto.fcm_id}"></span>
+					<span th:text="${session.loginedFranchiseeStoreDto.fcs_no}"></span>
+				
 				</div>
 				
 			</div>

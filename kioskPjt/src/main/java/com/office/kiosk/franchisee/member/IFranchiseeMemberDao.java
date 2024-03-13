@@ -23,4 +23,6 @@ public interface IFranchiseeMemberDao {
 
 	public List<FranchiseeStoreDto> selectFranchiseeStoreList(FranchiseeMemberDto dto);
 
+	public FranchiseeStoreDto selectFranchiseeDto(FranchiseeStoreDto franchiseeStoreDto);
+
 }

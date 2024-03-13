@@ -30,7 +30,7 @@
 								<th>지점명</th>
 								<th>주소</th>
 								<th>연락처</th>
-								<th></th>
+								<th><input type="button" value="close"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -40,19 +40,21 @@
 		
 				<div class="login_form">
 					
-					<form name="franchisee_store_login_form">
+					<form	action="/franchisee/member/franchiseeStoreLogin" 
+							method="post"
+							name="franchisee_store_login_form">
 
-						<span class="fcs_no"></span>
+						<input type="hidden" name="fcs_no">
 						
 						<input type="text" name="fcm_id" placeholder="PLEASE INPUT FRANCHISEE ID">
 						<br>
-						<input type="button" name="select_store" value="오픈지점">
-						<span>123</span>
+						<input type="button" name="fcs_name" value="오픈지점">
+						<span>지점명:<span class="fcs_name"></span></span>
 						<br>
 						<input type="password" name="fcm_pw" placeholder="PLEASE INPUT FRANCHISEE PW">
 						<br>
 						
-						<input type="button" value="login">
+						<input type="button" value="login" onclick="franchiseeStoreLogin()">
 						<input type="reset" value="reset">
 
 					</form>

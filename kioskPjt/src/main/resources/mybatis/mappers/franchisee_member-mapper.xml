@@ -108,5 +108,18 @@
 	
 	</select>
 	
+	<select id="selectFranchiseeDto" 
+			parameterType="com.office.kiosk.franchisee.member.FranchiseeMemberDto"
+			resultType="com.office.kiosk.franchisee.FranchiseeStoreDto">
+			
+		SELECT 
+			*
+		FROM 
+			TBL_FC_MEMBER 
+		WHERE 
+			FCM_ID = #{fcm_id}
+			
+	</select>
+	
 
 </mapper>

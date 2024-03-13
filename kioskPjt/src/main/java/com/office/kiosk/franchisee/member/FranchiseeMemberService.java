@@ -71,7 +71,7 @@ public class FranchiseeMemberService {
 	}
 	
 
-	public FranchiseeMemberDto FranchiseeLoginConfirm(FranchiseeMemberDto franchiseeMemberDto) {
+	public FranchiseeMemberDto franchiseeLoginConfirm(FranchiseeMemberDto franchiseeMemberDto) {
 		log.info("FranchiseeLoginConfirm");
 		
 		FranchiseeMemberDto selectedFranchiseeMemberDtoById = 
@@ -116,5 +116,19 @@ public class FranchiseeMemberService {
 		return map;
 	}
 
+
+	public FranchiseeStoreDto franchiseeLoginConfirmForCustomer(FranchiseeStoreDto franchiseeStoreDto) {
+		log.info("franchiseeLoginConfirmForCustomer()");
+		
+		FranchiseeStoreDto selectedFranchiseeStoreDtoById = 
+				iFranchiseeMemberDao.selectFranchiseeDto(franchiseeStoreDto);
+		
+		if (passwordEncoder.matches(franchiseeStoreDto.getFcm_pw(), selectedFranchiseeStoreDtoById.getFcm_pw())) {
+			return selectedFranchiseeStoreDtoById;
+		} else {
+			return null;
+		}
+		
+	}
 
 }
