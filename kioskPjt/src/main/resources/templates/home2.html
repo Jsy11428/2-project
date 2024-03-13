@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+
+<title th:replace="~{include/include_title.html::title}"></title>
+
+<link rel="stylesheet" th:href="@{/css/customer/common.css}">
+<link rel="stylesheet" th:href="@{/css/customer/home.css}">
+
+<script type="text/javascript" th:src="@{/js/franchisee/member/home.js}"></script>
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+<script type="text/javascript" th:replace="~{include/home2_js.html::home2_js}"></script>
+
+</head>
+<body>
+
+	<div id="wrap">
+		
+		<section>
+		
+			<div id="section_wrap">
+
+				<div class="store_list">
+					<table>
+						<thead>
+							<tr>
+								<th>지점명</th>
+								<th>주소</th>
+								<th>연락처</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+		
+				<div class="login_form">
+					
+					<form name="franchisee_store_login_form">
+
+						<span class="fcs_no"></span>
+						
+						<input type="text" name="fcm_id" placeholder="PLEASE INPUT FRANCHISEE ID">
+						<br>
+						<input type="button" name="select_store" value="오픈지점">
+						<span>123</span>
+						<br>
+						<input type="password" name="fcm_pw" placeholder="PLEASE INPUT FRANCHISEE PW">
+						<br>
+						
+						<input type="button" value="login">
+						<input type="reset" value="reset">
+
+					</form>
+					
+				</div>
+				
+			</div>
+			
+		</section>
+		
+    </div>
+
+</body>
+</html>

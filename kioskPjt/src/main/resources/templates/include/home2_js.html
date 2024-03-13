@@ -1,0 +1,74 @@
+<script th:fragment="home2_js" type="text/javascript">
+
+$(document).ready(function() {
+	
+	init();
+		
+});
+
+function init(){
+	
+	$('#section_wrap .login_form input[name="select_store"]').click(function(){
+		
+		let fcm_id = $('#section_wrap .login_form input[name="fcm_id"]').val();
+		
+		ajax_selectStoreByFcmId(fcm_id);
+		
+	})
+	
+}
+
+function ajax_selectStoreByFcmId(fcm_id){
+
+	$.ajax({
+		url: '/franchisee/member/getStoreList',
+		method: 'post',
+		data: { 'fcm_id' : fcm_id },
+		dataType: 'json',
+		success: function(data){
+			console.log('ajax success!')
+			
+			let list = data.storeListByFcmId;
+			let appendTag = '';
+			
+			for (let i = 0; i < list.length; i++) {
+				
+				appendTag = '<tr>';
+
+					appendTag += '<td>' + list[i].fcs_name + '</td>';
+					appendTag += '<td>' + list[i].fcs_location + '</td>';
+					appendTag += '<td>' + list[i].fcs_phone + '</td>';
+					appendTag += '<td><input type="button" fcs_no="'+list[i].fcs_no+'" value="선택"></td>';
+
+				appendTag += '</tr>'
+				
+				$('#section_wrap .store_list table tbody').append(appendTag);
+
+			}
+
+		},
+		error: function(data){
+			console.log('ajax error!')
+
+		},
+		complete: function(){
+
+			$('#section_wrap .store_list table tbody input[value="선택"]').click(function(){
+				console.log('fcs_no btn 선택');
+
+				let fcs_no = $(this).attr("fcs_no");
+				
+				$('#section_wrap .login_form span.fcs_no').text(fcs_no);
+
+				$('#section_wrap .store_list table tbody').empty();
+
+				$('#section_wrap .store_list').hide();
+
+			})
+
+		}
+	})
+
+}
+
+</script>

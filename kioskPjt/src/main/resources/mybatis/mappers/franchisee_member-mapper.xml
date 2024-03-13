@@ -81,5 +81,32 @@
 	
 	</select>
 	
+	<select id="selectFranchiseeInfoByFcmId" 
+			parameterType="String" 
+			resultType="com.office.kiosk.franchisee.member.FranchiseeMemberDto">
+			
+		SELECT 
+			*
+		FROM 
+			TBL_FC_MEMBER 
+		WHERE 
+			FCM_ID = #{fcm_id} 
+	
+	</select>
+	
+	<select id="selectFranchiseeStoreList"
+			parameterType="com.office.kiosk.franchisee.member.FranchiseeMemberDto" 
+			resultType="com.office.kiosk.franchisee.FranchiseeStoreDto">
+			
+		SELECT 
+			* 
+		FROM 
+			TBL_FC_STORE FCS 
+		JOIN TBL_FC_MEMBER FCM ON FCM.FCM_NO = FCS.FCM_NO 
+		WHERE 
+			FCM.FCM_NO = #{fcm_no} 
+	
+	</select>
+	
 
 </mapper>

@@ -9,7 +9,8 @@
 	margin: 0 auto;
 }
 
-#section_wrap .admin_section_view_wrap .admin_list table tr td {
+#section_wrap .admin_section_view_wrap .admin_list table tr td,
+#section_wrap .admin_section_view_wrap .admin_list table tr th {
 	border: 1px solid #000;
 	text-align: center;
 	font-size: .9em;
