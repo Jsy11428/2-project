@@ -67,7 +67,6 @@ function eventsHandler(){
 		let pur_price = pur_number * 1000;
 		
 		// 카트에 담는 함수 호출
-	
 		
 		if($("ul.cart_area_items li").length !== 0){
 			console.log("$('ul.cart_area_items li').length !== 0");
@@ -80,17 +79,22 @@ function eventsHandler(){
 										
 					let item_cnt = parseInt($("ul.cart_area_items li").eq(i).children('div.cart_item_select_wrap').children('p.fco_menu_cnt').text());
 					let fc_menu_price_one = parseInt($("ul.cart_area_items li").eq(i).children('div.cart_item_select_wrap').children('input[name="fc_menu_price_one"]').val());
+					let add_item_cnt = parseInt($("div.modal_header p.menu_number").text());
+					
 					console.log("fc_menu_price_one: "+fc_menu_price_one);
 					if(item_cnt >= 20){
 						item_cnt = 20;
 					}else{
-						item_cnt += 1;
+						item_cnt += add_item_cnt;
 					}
 					$("ul.cart_area_items li").eq(i).children('div.cart_item_select_wrap').children('p.fco_menu_cnt').text(item_cnt);
 					
 					$("ul.cart_area_items li").eq(i).children('div.cart_item_select_wrap').children('input[name="fco_total_price"]').val(item_cnt*fc_menu_price_one);
 					
 					totalPriceCalculator();
+					
+					$("#myModal").fadeOut();
+			        resetValues();
 					
 					return;
 				}else{
@@ -106,12 +110,9 @@ function eventsHandler(){
 			addCartItem(fc_menu_img, fc_menu_price, fc_menu_no, fc_menu_cnt, fc_menu_price_one, fcmc_no, 
 					shot_number, shot_price, pur_number, pur_price, fco_total_price);
 		}
-				
-		
 		// 모달창 닫히고 모달창의 value 초기화
 		$("#myModal").fadeOut();
         resetValues();
-		
 		
 	});
 	
