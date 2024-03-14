@@ -16,6 +16,7 @@ import com.office.kiosk.franchisee.FranchiseeStoreDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 
+
 @Log4j2
 @Controller
 @RequestMapping("/franchisee/member")
@@ -198,6 +199,82 @@ public class FranchiseeMemberController {
 		return nextPage;
 		
 	}
+	
+	
+	@GetMapping("/customerOrderView")
+	public String customerOrderView(@RequestParam("fco_packaging") int fco_packaging,
+									Model model) {
+		log.info("customerOrderView()");
+		
+		String nextPage = "/customer/customer_order_view";
+		
+		model.addAttribute("fco_packaging", fco_packaging);	// 매장 or 포장 유무
+		
+		return nextPage;
+		
+	}
+	
+	@GetMapping("/sotreLoginResultView")
+	public String sotreLoginResultView(HttpSession session) {
+		log.info("sotreLoginResultView()");
+		
+		String nextPage = "/customer/franchisee_store_login_result";
+		
+		return nextPage;
+	
+	}
+	
+	/*
+	 * 	비밀번호 찾기 폼
+	 */
+	@GetMapping("/franchiseeFindPassword")
+	public String franchiseeFindPassword() {
+		log.info("franchiseeFindPassword()");
+		
+		String nextPage = "/franchisee/member/franchisee_find_password_form";
+		
+		return nextPage;		
+		
+	}
+	
+	/*
+	 * 	비밀번호 찾기 회원정보 확인
+	 */
+	@PostMapping("/franchiseeFindPasswordForm")
+	public String franchiseeFindPasswordForm(FranchiseeMemberDto franchiseeMemberDto,
+										Model model) {
+		log.info("franchiseeFindPasswordForm()");
+		
+		String nextPage = "/franchisee/member/franchisee_find_password_result";
+		
+		FranchiseeMemberDto resultDto =	
+				franchiseeMemberService.franchiseeFindPasswordForm(franchiseeMemberDto);
+		
+		model.addAttribute("resultDto", resultDto);
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * 	비밀번호 찾기 확인
+	 */
+	@PostMapping("/franchiseeFindPasswordConfirm")
+	public String franchiseeFindPasswordConfirm(FranchiseeMemberDto franchiseeMemberDto,
+												Model model) {
+		log.info("franchiseeFindPasswordConfirm()");
+		
+		String nextPage = "/franchisee/member/franchisee_find_password_confirm_result";
+
+		int findPasswordResult = 
+				franchiseeMemberService.franchiseeFindPasswordConfirm(franchiseeMemberDto);
+		
+		model.addAttribute("findPasswordResult", findPasswordResult);
+		
+		return nextPage;
+	}
+	
+	
 	
 
 	

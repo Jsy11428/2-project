@@ -5,43 +5,54 @@
 
 <title th:replace="~{/include/include_title.html::title}"></title>
 
+<link rel="stylesheet" th:href="@{/css/franchisee/common.css}">
+<link rel="stylesheet" th:href="@{/css/franchisee/franchisee_include.css}">
+<link rel="stylesheet" th:href="@{/css/franchisee/member/create_franchisee_account_result.css}">
+
 <script type="text/javascript" th:src="@{/js/franchisee/member/franchisee_member.js}"></script>
 
 </head>
 <body>
 	
-	<header th:replace="~{/franchisee/include/franchisee_include.html::franchisee_header}"></header>
+	<div id="wrap">
+
+		<header th:replace="~{/franchisee/include/franchisee_include.html::franchisee_header}">
+		</header>
 
 
-	<nav th:replace="~{/franchisee/include/franchisee_include.html::franchisee_nav}">
-	</nav>
-	
-	
-	<section>
-	
-		<div id="section_wrap">
-			
-			<div class="pos_section_info_wrap">
-				<div class="word">
-					create_franchisee_account_success	
+		<nav th:replace="~{/franchisee/include/franchisee_include.html::franchisee_nav}">
+		</nav>
+		
+		
+		<section>
+		
+			<div id="section_wrap">
+
+				<div th:replace="~{/franchisee/include/franchisee_include.html::section_menu_wrap}">
 				</div>
 				
-				<div class="others">
-					<a th:href="@{/franchisee/member/franchiseeLoginForm}">Franchisee Login Form</a>
+				<div class="pos_section_main">
+					<div class="pos_section_info_wrap">
+						<div class="word">
+							회원가입성공
+						</div>
+						
+						<div class="others">
+							<a th:href="@{/franchisee/member/franchiseeLoginForm}">로그인하러가기</a>
+						</div>
+						
+					</div>
 				</div>
 				
-			</div>
-			
-			<div class="pos_section_detail_view_wrap">
-
 			</div>
 		
-		</div>
-	
-	</section>
-	
-	
-	<footer th:replace="~{/franchisee/include/franchisee_include.html::franchisee_footer}"></footer>
-	
+		</section>
+		
+		
+		<footer th:replace="~{/franchisee/include/franchisee_include.html::franchisee_footer}">
+		</footer>
+		
+	<div id="wrap">
+
 </body>
 </html>
