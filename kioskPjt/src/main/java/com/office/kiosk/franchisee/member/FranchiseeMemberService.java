@@ -131,4 +131,34 @@ public class FranchiseeMemberService {
 		
 	}
 
+
+	public FranchiseeMemberDto franchiseeFindPasswordForm(FranchiseeMemberDto franchiseeMemberDto) {
+		log.info("franchiseeFindPassword()");
+		
+		FranchiseeMemberDto resultDto =
+				iFranchiseeMemberDao.selectFranchiseeMemberDtoForFindPw(franchiseeMemberDto);
+		
+		return resultDto;
+	}
+
+
+	public int franchiseeFindPasswordConfirm(FranchiseeMemberDto franchiseeMemberDto) {
+		log.info("franchiseeMemberDto()");
+		
+		franchiseeMemberDto.setFcm_pw(passwordEncoder.encode(franchiseeMemberDto.getFcm_pw()));
+		
+		int result = iFranchiseeMemberDao.updateFranchiseeMemberPassword(franchiseeMemberDto);
+		
+		return result;
+		
+	}
+
+
+	public List<FranchiseeStoreDto> getStoreListByDto(FranchiseeMemberDto loginedFranchiseeMemberDto) {
+		log.info("getStoreListByDto()");
+		
+		return iFranchiseeMemberDao.selectStoreDtosByDto(loginedFranchiseeMemberDto);
+		
+	}
+
 }
