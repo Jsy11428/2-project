@@ -6,8 +6,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.office.kiosk.admin.menu.AdminMenuDto;
-
 @Mapper
 public interface IFranchiseeOrderDao {
 
