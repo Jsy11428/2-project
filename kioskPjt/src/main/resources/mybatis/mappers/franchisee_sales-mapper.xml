@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper
+	namespace="com.office.kiosk.franchisee.sales.IFranchiseeSalesDao">
+
+	<select id="selectMyStoreAllSalesInfo"
+		parameterType="java.util.Map"
+		resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
+
+		SELECT 
+		* 
+		FROM 
+		TBL_FC_SALES 
+		WHERE 
+		FCS_NO = #{fcs_no} 
+		ORDER BY FCSA_NO DESC 
+		LIMIT 
+		#{start}, #{limit} 
+
+	</select>
+
+	<select id="selectMyStoreAllSalesInfoCnt"
+		resultType="Integer">
+
+		SELECT 
+		COUNT(FCSA_NO) 
+		FROM 
+		TBL_FC_SALES 
+		WHERE 
+		FCS_NO = #{fcs_no} 
+		 
+	</select>
+
+</mapper>
