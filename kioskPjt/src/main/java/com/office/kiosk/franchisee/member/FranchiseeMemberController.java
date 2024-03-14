@@ -284,6 +284,47 @@ public class FranchiseeMemberController {
 	}
 	
 	/*
+	 * 	비밀번호 변경
+	 */
+	@GetMapping("/franchiseeModifyPassword")
+	public String franchiseeModifyPassword() {
+		log.info("franchiseeModifyPassword()");
+		
+		String nextPage = "/franchisee/member/franchisee_modify_password_form";
+		
+		return nextPage;
+	
+	}
+	
+	/*
+	 * 	비밀번호 변경 확인
+	 */
+	@PostMapping("/franchiseeModifyPasswordConfirm")
+	public String franchiseeModifyPasswordConfirm(FranchiseeMemberDto franchiseeMemberDto,
+												HttpSession session, Model model) {
+		log.info("franchiseeModifyPasswordConfirm()");
+		
+		String nextPage = "/franchisee/member/franchisee_modify_password_result";
+		
+		FranchiseeMemberDto loginedFranchiseeMemberDto = 
+				(FranchiseeMemberDto) session.getAttribute("loginedFranchiseeMemberDto");
+		
+		franchiseeMemberDto.setFcm_no(loginedFranchiseeMemberDto.getFcm_no());
+		
+		FranchiseeMemberDto modifiedDto = 
+				franchiseeMemberService.franchiseeModifyPasswordConfirm(franchiseeMemberDto);
+		if (modifiedDto != null) {
+			session.setAttribute("loginedFranchiseeMemberDto", modifiedDto);
+			session.setMaxInactiveInterval(60 * 30);
+		}
+		
+		return nextPage;
+	
+	}
+	
+	
+	
+	/*
 	 * 	로그인 후 매장 선택
 	 */
 	@GetMapping("/sltStoreHome")
@@ -300,7 +341,10 @@ public class FranchiseeMemberController {
 		session.setAttribute("loginedFranchiseeMemberDto", loginedFranchiseeMemberDto);
 		
 		return nextPage;
+		
 	}
+	
+	
 	
 
 	

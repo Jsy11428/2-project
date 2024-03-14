@@ -156,3 +156,34 @@ function sltStoreBtn(fcs_no){
 	location.href = "/franchisee/member/sltStoreHome?fcs_no=" + fcs_no;
 	
 }
+
+function franchiseeModifyPassword() {
+	console.log('franchiseeModifyPassword()');
+	
+	location.href = "/franchisee/member/franchiseeModifyPassword";
+	
+}
+
+function franchiseeModifyPasswordConFirm(){
+	console.log('franchiseeModifyPasswordConFirm()');
+	
+	let form = document.franchisee_modify_password_confirm_form;
+	
+	if (form.fcm_pw.value === '') {
+		alert('INPUT FRANCHISEE PW');
+		form.fcm_pw.focus();
+		
+	} else if (form.fcm_pw_again.value === '') {
+		alert('INPUT FRANCHISEE PW AGAIN');
+		form.fcm_pw_again.focus();
+		
+	} else if (form.fcm_pw_again.value !== form.fcm_pw.value) {
+		alert('PASSWORDS DO NOT MATCH');
+		form.fcm_pw.focus();
+		
+	} else {
+		form.submit();
+		
+	}
+	
+}
