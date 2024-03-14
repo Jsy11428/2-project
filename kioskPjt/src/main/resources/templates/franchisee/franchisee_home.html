@@ -5,26 +5,44 @@
 
 <title th:replace="~{/include/include_title.html::title}"></title>
 
+<link rel="stylesheet" th:href="@{/css/franchisee/common.css}">
+<link rel="stylesheet" th:href="@{/css/franchisee/franchisee_include.css}">
+<link rel="stylesheet" th:href="@{/css/franchisee/franchisee_home.css}">
+
 <script type="text/javascript" th:src="@{/js/franchisee/member/franchisee_member.js}"></script>
 
 </head>
 <body>
 
-	<nav th:replace="~{/franchisee/include/franchisee_include.html::franchisee_nav}">
-	</nav>
-		
-	<section>
-	
-		<div id="section_wrap">
-			this is franchisee home
-		</div>
-		<a th:href="@{/franchisee/menu/franchiseeMenuHome}">프랜차이즈메뉴홈</a>
+	<div id="wrap">
 
-	</section>
-		
-	<footer th:replace="~{/franchisee/include/franchisee_include.html::franchisee_footer}">
+		<nav th:replace="~{/franchisee/include/franchisee_include.html::franchisee_nav}">
+		</nav>
+
+
+		<section>
+			<div id="section_wrap">
 	
-	</footer>
+				<div th:replace="~{/franchisee/include/franchisee_include.html::section_menu_wrap}">
+				</div>
+				
+				<div class="pos_section_main">
+					<div class="pos_section_info_wrap">
+					
+						<div class="word">
+							this is franchisee home
+						</div>
+						
+					</div>
+				</div>
+				
+			</div>
+		</section>
+
+		<footer th:replace="~{/franchisee/include/franchisee_include.html::franchisee_footer}">
+		</footer>
+
+	</div>
 
 </body>
 </html>

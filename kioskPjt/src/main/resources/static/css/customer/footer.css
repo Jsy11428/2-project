@@ -32,9 +32,13 @@
         #footer_wrap div.cart_area_wrap div.cart_area_item_wrap {
             width: 620px;
             height: 100%;
+            overflow: hidden;
+            position: relative;
         }
         #footer_wrap div.cart_area_wrap div.cart_area_item_wrap ul.cart_area_items {
-            overflow: hidden;
+            position: absolute;
+            left: 0;
+            top:0;
         }
         #footer_wrap div.cart_area_wrap div.cart_area_item_wrap ul.cart_area_items li {
             width: 100px;

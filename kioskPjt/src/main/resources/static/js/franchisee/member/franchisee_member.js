@@ -96,3 +96,94 @@ function franchiseeModifyForm() {
 	}
 	
 }
+
+function franchiseeFindPasswordForm() {
+	console.log('franchiseeFindPasswordForm()');
+	
+		let form = document.franchisee_find_password_form;
+	
+	if (form.fcm_id.value === '') {
+		alert('INPUT FRANCHISEE ID');
+		form.fcm_id.focus();
+		
+	} else if (form.fcm_name.value === '') {
+		alert('INPUT FRANCHISEE NAME');
+		form.fcm_name.focus();
+		
+	} else if (form.fcm_phone.value === '') {
+		alert('INPUT FRANCHISEE PHONE');
+		form.fcm_phone.focus();
+		
+	} else if (form.fcm_mail.value === '') {
+		alert('INPUT FRANCHISEE MAIL');
+		form.fcm_mail.focus();
+		
+	} else {
+		form.submit();
+		
+	}
+	
+}
+
+function franchiseeFindPasswordConFirm() {
+	console.log('franchiseeFindPasswordConFirm()');
+	
+	let form = document.franchisee_find_password_confirm_form;
+	
+	if (form.fcm_pw.value === '') {
+		alert('INPUT FRANCHISEE PW');
+		form.fcm_pw.focus();
+		
+	} else if (form.fcm_pw_again.value === '') {
+		alert('INPUT FRANCHISEE PW AGAIN');
+		form.fcm_pw_again.focus();
+		
+	} else if (form.fcm_pw_again.value !== form.fcm_pw.value) {
+		alert('PASSWORDS DO NOT MATCH');
+		form.fcm_pw.focus();
+		
+	} else {
+		form.submit();
+		
+	}
+	 
+}
+
+
+function sltStoreBtn(fcs_no){
+	console.log('sltStoreBtn()');
+	
+	location.href = "/franchisee/member/sltStoreHome?fcs_no=" + fcs_no;
+	
+}
+
+function franchiseeModifyPassword() {
+	console.log('franchiseeModifyPassword()');
+	
+	location.href = "/franchisee/member/franchiseeModifyPassword";
+	
+}
+
+function franchiseeModifyPasswordConFirm(){
+	console.log('franchiseeModifyPasswordConFirm()');
+	
+	let form = document.franchisee_modify_password_confirm_form;
+	
+	if (form.fcm_pw.value === '') {
+		alert('INPUT FRANCHISEE PW');
+		form.fcm_pw.focus();
+		
+	} else if (form.fcm_pw_again.value === '') {
+		alert('INPUT FRANCHISEE PW AGAIN');
+		form.fcm_pw_again.focus();
+		
+	} else if (form.fcm_pw_again.value !== form.fcm_pw.value) {
+		alert('PASSWORDS DO NOT MATCH');
+		form.fcm_pw.focus();
+		
+	} else {
+		form.submit();
+		
+	}
+	
+}

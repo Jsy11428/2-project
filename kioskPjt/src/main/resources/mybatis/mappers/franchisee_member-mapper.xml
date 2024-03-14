@@ -121,5 +121,51 @@
 			
 	</select>
 	
+	<select id="selectFranchiseeMemberDtoForFindPw" 
+			parameterType="com.office.kiosk.franchisee.member.FranchiseeMemberDto"
+			resultType="com.office.kiosk.franchisee.member.FranchiseeMemberDto">
+			
+		SELECT 
+			*
+		FROM 
+			TBL_FC_MEMBER 
+		WHERE 
+			FCM_ID = #{fcm_id} 
+		AND 
+			FCM_NAME = #{fcm_name} 
+		AND 
+			FCM_PHONE = #{fcm_phone} 
+		AND 
+			FCM_MAIL = #{fcm_mail} 
+			
+	</select>
+	
+	<update id="updateFranchiseeMemberPassword" 
+			parameterType="com.office.kiosk.franchisee.member.FranchiseeMemberDto">
+			
+		UPDATE 
+			TBL_FC_MEMBER 
+		SET 
+			FCM_PW = #{fcm_pw}, 
+			FCM_MOD_DATE = NOW()
+		WHERE 
+			FCM_NO = #{fcm_no} 
+			
+	</update>
+	
+	<select id="selectStoreDtosByDto"
+			parameterType="com.office.kiosk.franchisee.member.FranchiseeMemberDto"
+			resultType="com.office.kiosk.franchisee.FranchiseeStoreDto">
+	
+		SELECT 
+			* 
+		FROM 
+			TBL_FC_STORE FCS 
+		JOIN TBL_FC_MEMBER FCM ON FCM.FCM_NO = FCS.FCM_NO 
+		WHERE 
+			FCM.FCM_NO = #{fcm_no} 
+			
+	</select>
+	
 
 </mapper>

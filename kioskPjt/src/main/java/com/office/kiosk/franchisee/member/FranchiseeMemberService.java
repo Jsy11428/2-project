@@ -131,4 +131,49 @@ public class FranchiseeMemberService {
 		
 	}
 
+
+	public FranchiseeMemberDto franchiseeFindPasswordForm(FranchiseeMemberDto franchiseeMemberDto) {
+		log.info("franchiseeFindPassword()");
+		
+		FranchiseeMemberDto resultDto =
+				iFranchiseeMemberDao.selectFranchiseeMemberDtoForFindPw(franchiseeMemberDto);
+		
+		return resultDto;
+	}
+
+
+	public int franchiseeFindPasswordConfirm(FranchiseeMemberDto franchiseeMemberDto) {
+		log.info("franchiseeMemberDto()");
+		
+		franchiseeMemberDto.setFcm_pw(passwordEncoder.encode(franchiseeMemberDto.getFcm_pw()));
+		
+		int result = iFranchiseeMemberDao.updateFranchiseeMemberPassword(franchiseeMemberDto);
+		
+		return result;
+		
+	}
+
+
+	public List<FranchiseeStoreDto> getStoreListByDto(FranchiseeMemberDto loginedFranchiseeMemberDto) {
+		log.info("getStoreListByDto()");
+		
+		return iFranchiseeMemberDao.selectStoreDtosByDto(loginedFranchiseeMemberDto);
+		
+	}
+
+
+	public FranchiseeMemberDto franchiseeModifyPasswordConfirm(FranchiseeMemberDto franchiseeMemberDto) {
+		log.info("franchiseeModifyPasswordConfirm()");
+		
+		franchiseeMemberDto.setFcm_pw(passwordEncoder.encode(franchiseeMemberDto.getFcm_pw()));
+		
+		int result = iFranchiseeMemberDao.updateFranchiseeMemberPassword(franchiseeMemberDto);
+		
+		if(result > 0) 
+			return iFranchiseeMemberDao.selectLastesFranchiseeInfo(franchiseeMemberDto.getFcm_no());
+		else 
+			return null;
+		
+	}
+
 }

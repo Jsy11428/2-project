@@ -3,6 +3,10 @@
 
 let cart = {};
 
+let innerCartSlideMoveValue = 120;
+let leftMovedCount = 0;	
+let rightMovedCount = 0;
+
 $(document).ready(function() {
 	
 	init();
@@ -17,17 +21,6 @@ function init(){
 
 function eventsHandler(){
 	
-	// (기존) 메뉴 리스트에 특정 메뉴 클릭 
-	/*
-	$("#section_wrap ul.section_menu_list li").click(function(){
-		console.log("section_menu_list li click!!!");
-		let menu_no = $(this).index();
-		
-		let menu_img = $(this).children('img').attr('src');
-		let fc_menu_price = parseInt($(this).children('p.item_price').children('span').text());
-		addCartItem(menu_img,// fc_menu_no,fcmc_no,fco_packaging, //fc_menu_price,menu_no);
-	});
-	*/
 	
 	// (수정) 메뉴 선택완료 버튼 클릭시 카트에 담기게 + 모달창 닫기
 	$(".select_oreder input[name='select']").click(function(){
@@ -122,10 +115,59 @@ function eventsHandler(){
 		
 		removeCartItem();
 		totalPriceCalculator();
+		//cart slide 값 초기화
+		innerCartSlideMoveValue = 120;
+		leftMovedCount = 0;	
+		rightMovedCount = 0;
 	});
+	
+	//장바구니 슬라이드 영역
+	$('#footer_wrap div.cart_area_right_btn').click(function(){
+		console.log("cart_area_right_btn click!!!");				
+		let innerCartItemCnt = $('#footer_wrap ul.cart_area_items li').length;
+		let canMoveCount = innerCartItemCnt - 5;
 			
+		if(innerCartItemCnt > 5){
+			
+			if((canMoveCount - leftMovedCount) > 0){
+				leftMovedCount += 1;
+				
+				$('#footer_wrap ul.cart_area_items').animate({
+						
+					'left' : -(innerCartSlideMoveValue * leftMovedCount)+'px'
+					
+				},300);
+				rightMovedCount -= 1;
+				console.log("rightMovedCount: "+rightMovedCount);							
+			}			
+				
+		}//if(innerCartItemCnt > 5)
+						
+	});//$('#footer_wrap div.cart_area_right_btn').click
+	
+	$('#footer_wrap div.cart_area_left_btn').click(function(){
+		console.log("cart_area_left_btn click!!!");				
+		let innerCartItemCnt = $('#footer_wrap ul.cart_area_items li').length;
+		let canMoveCount = innerCartItemCnt - 5;
+			
+		if(innerCartItemCnt > 5){
+			
+			if((canMoveCount - leftMovedCount) < canMoveCount){
+				leftMovedCount -= 1;
+				
+				$('#footer_wrap ul.cart_area_items').animate({
+						
+					'left' : (innerCartSlideMoveValue * (rightMovedCount+1))+'px'
+					
+				},300);
+				rightMovedCount += 1;
+			}			
+				
+		}//if(innerCartItemCnt > 5)
+						
+	});//$('#footer_wrap div.cart_area_right_btn').click
+	
 }
-
 
 function removeCartItem(){
 	console.log("removeCartItem()");
@@ -188,6 +230,25 @@ function addCartItem(menu_img, fc_menu_price, menu_no, fco_menu_cnt, fc_menu_pri
 		console.log("cart_area_cancel_btn click!!!");
 		$(this).parent('li').remove();
 		totalPriceCalculator();
+		
+		let innerCartItemCnt = $('#footer_wrap ul.cart_area_items li').length;
+		let canMoveCount = innerCartItemCnt - 5;
+			
+		if(innerCartItemCnt >= 5){
+			
+			if((canMoveCount - leftMovedCount) < canMoveCount){
+				leftMovedCount -= 1;
+				
+				$('#footer_wrap ul.cart_area_items').animate({
+						
+					'left' : (innerCartSlideMoveValue * (rightMovedCount+1))+'px'
+					
+				},300);
+				rightMovedCount += 1;
+			}			
+				
+		}//if(innerCartItemCnt > 5)
+				
 	});
 	//장바구니 특정 아이템 +버튼 클릭
 	$("#cart_item_" + cartItemID + " div.cart_item_select_wrap div.item_add_btn").click(function(e){
