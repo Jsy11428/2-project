@@ -23,4 +23,12 @@ public interface IFranchiseeMemberDao {
 
 	public List<FranchiseeStoreDto> selectFranchiseeStoreList(FranchiseeMemberDto dto);
 
+	public FranchiseeStoreDto selectFranchiseeDto(FranchiseeStoreDto franchiseeStoreDto);
+
+	public FranchiseeMemberDto selectFranchiseeMemberDtoForFindPw(FranchiseeMemberDto franchiseeMemberDto);
+
+	public int updateFranchiseeMemberPassword(FranchiseeMemberDto franchiseeMemberDto);
+
+	public List<FranchiseeStoreDto> selectStoreDtosByDto(FranchiseeMemberDto loginedFranchiseeMemberDto);
+
 }

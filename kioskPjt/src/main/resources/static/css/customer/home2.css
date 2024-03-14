@@ -1,0 +1,137 @@
+#wrap {
+    width: 1000px;
+    height: 1030px;
+    position: relative;
+}
+
+#section_wrap {
+    margin: 0 auto;
+}
+
+#section_wrap .word {
+    padding-top: 100px;
+    margin-bottom: 80px;
+    text-align: center;
+}
+
+#section_wrap .word span.txt_1 {
+    font-size: 3em;
+    font-weight: bold;
+}
+
+#section_wrap .word span.txt_2 {
+    font-size: 0.4em;
+    color: #dadada;
+}
+
+#section_wrap .word span.txt_3 {
+    font-size: 1.8em;
+}
+
+#section_wrap .store_list {
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 1000px;
+    height: 1030px;
+    display: none;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+#section_wrap .store_list table {
+    position: absolute;
+    border-collapse: collapse;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: -300px;
+    background-color: #fff;
+    text-align: center;
+}
+
+#section_wrap .store_list table th, 
+#section_wrap .store_list table td {
+    border: 1px solid #000;
+    padding: 5px;
+}
+
+#section_wrap .store_list table thead tr th:nth-child(1),
+#section_wrap .store_list table tbody tr td:nth-child(1) {
+    width: 70px;
+}
+
+#section_wrap .store_list table thead tr th:nth-child(2),
+#section_wrap .store_list table tbody tr td:nth-child(2) {
+    width: 230px;
+}
+
+#section_wrap .store_list table thead tr th:nth-child(3),
+#section_wrap .store_list table tbody tr td:nth-child(3) {
+    width: 120px;
+}
+
+#section_wrap .store_list table thead tr th:nth-child(4),
+#section_wrap .store_list table tbody tr td:nth-child(4) {
+    width: 63px;
+}
+
+#section_wrap .store_list table input {
+    padding: 5px;
+}
+
+#section_wrap .login_form {
+    width: 400px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#section_wrap .login_form table {
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+#section_wrap .login_form table td {
+    border: 1px solid #000;
+}
+
+#section_wrap .login_form table input {
+    padding: 5px;
+}
+
+#section_wrap .login_form table input[name="fcm_id"],
+#section_wrap .login_form table input[name="fcm_pw"] {
+    width: 220px;
+    margin: 5px;
+}
+
+#section_wrap .login_form input[name="fcs_name"] {
+    margin: 5px;
+}
+
+#section_wrap .login_form table span.txt_1 {
+    float: left;
+    margin-left: 20px;
+}
+
+#section_wrap .login_form table span.fcs_name {
+    width: 90px;
+}
+
+#section_wrap .login_form table input.input_btn {
+    margin: 5px;
+}
+
+#section_wrap .session_chk .btn {
+    margin: 0 auto;
+	border: 1px solid #000;
+    width: 120px;
+    padding: 5px;
+    text-align: center;
+}
+
+#section_wrap .session_chk .btn:hover {
+    cursor: pointer;
+    background-color: #dadada;
+}

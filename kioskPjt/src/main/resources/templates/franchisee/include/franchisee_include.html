@@ -5,25 +5,41 @@
 	
 
 	<nav th:fragment="franchisee_nav">
-	
-		<div id="nav_wrap" th:if="${session.loginedFranchiseeMemberDto ==null}" >
+		<div id="nav_wrap" th:if="${session.loginedFranchiseeMemberDto == null}" >
 			<a th:href="@{/franchisee/home}">홈</a>
 			<a th:href="@{/franchisee/member/createFranchiseeAccountForm}">회원가입</a>
 			<a th:href="@{/franchisee/member/franchiseeLoginForm}">로그인</a>
 		</div>
 		
-		<div id="nav_wrap" th:unless="${session.loginedFranchiseeMemberDto ==null}" >
+		<div id="nav_wrap" th:unless="${session.loginedFranchiseeMemberDto == null}" >
 			<a th:href="@{/franchisee/home}">홈</a>
 			<a href="#none" >고객 뷰</a>
 			<a th:href="@{/franchisee/member/franchiseeModifyForm}">정보수정</a>
 			<a href="#none" th:onclick="franchiseeLogoutConfirm()">로그아웃</a>
-		</div>
-		
+			<span th:text="${session.loginedFranchiseeMemberDto.fcs_no}"></span>
+		</div> 
 	</nav>
+	
+
+	<div class="section_menu_wrap" th:fragment="section_menu_wrap">
+		
+	 	<ul>
+	 		<li><a th:href="@{/franchisee/sales/getSalesInfo}">SALES</a></li>
+			<li><a th:href="@{/franchisee/menu/franchiseeMenuHome}">MENU</a></li>
+			<li><a th:href="@{/franchisee/order/getTableOrderList}">ORDER</a></li>
+			<li><a href="#none">MAGAGEMENT</a></li>
+		</ul>
+	
+			<!-- <li><a th:href="@{/franchisee/menu/createMenuForm}">추가 메뉴 신청</a></li>
+			<li><a th:href="@{/franchisee/menu/getAllMenus}">메뉴 목록</a></li>
+			<li><a th:href="@{/franchisee/menu/modifySelectMenu}">메뉴 수정</a></li> -->
+	</div>
 	
 	
 	<footer th:fragment="franchisee_footer">
-		<p>© 2024 hell demon blade.</p>
+		<div id="footer_wrap">
+			<span class="txt_1">© 2024 C</span><span class="txt_2">ode</span><span class="txt_1">다방</span>
+		</div>
 	</footer>
 
 </html>

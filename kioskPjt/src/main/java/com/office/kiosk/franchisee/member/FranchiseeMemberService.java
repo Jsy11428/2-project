@@ -71,7 +71,7 @@ public class FranchiseeMemberService {
 	}
 	
 
-	public FranchiseeMemberDto FranchiseeLoginConfirm(FranchiseeMemberDto franchiseeMemberDto) {
+	public FranchiseeMemberDto franchiseeLoginConfirm(FranchiseeMemberDto franchiseeMemberDto) {
 		log.info("FranchiseeLoginConfirm");
 		
 		FranchiseeMemberDto selectedFranchiseeMemberDtoById = 
@@ -116,5 +116,64 @@ public class FranchiseeMemberService {
 		return map;
 	}
 
+
+	public FranchiseeStoreDto franchiseeLoginConfirmForCustomer(FranchiseeStoreDto franchiseeStoreDto) {
+		log.info("franchiseeLoginConfirmForCustomer()");
+		
+		FranchiseeStoreDto selectedFranchiseeStoreDtoById = 
+				iFranchiseeMemberDao.selectFranchiseeDto(franchiseeStoreDto);
+		
+		if (passwordEncoder.matches(franchiseeStoreDto.getFcm_pw(), selectedFranchiseeStoreDtoById.getFcm_pw())) {
+			return selectedFranchiseeStoreDtoById;
+		} else {
+			return null;
+		}
+		
+	}
+
+
+	public FranchiseeMemberDto franchiseeFindPasswordForm(FranchiseeMemberDto franchiseeMemberDto) {
+		log.info("franchiseeFindPassword()");
+		
+		FranchiseeMemberDto resultDto =
+				iFranchiseeMemberDao.selectFranchiseeMemberDtoForFindPw(franchiseeMemberDto);
+		
+		return resultDto;
+	}
+
+
+	public int franchiseeFindPasswordConfirm(FranchiseeMemberDto franchiseeMemberDto) {
+		log.info("franchiseeMemberDto()");
+		
+		franchiseeMemberDto.setFcm_pw(passwordEncoder.encode(franchiseeMemberDto.getFcm_pw()));
+		
+		int result = iFranchiseeMemberDao.updateFranchiseeMemberPassword(franchiseeMemberDto);
+		
+		return result;
+		
+	}
+
+
+	public List<FranchiseeStoreDto> getStoreListByDto(FranchiseeMemberDto loginedFranchiseeMemberDto) {
+		log.info("getStoreListByDto()");
+		
+		return iFranchiseeMemberDao.selectStoreDtosByDto(loginedFranchiseeMemberDto);
+		
+	}
+
+
+	public FranchiseeMemberDto franchiseeModifyPasswordConfirm(FranchiseeMemberDto franchiseeMemberDto) {
+		log.info("franchiseeModifyPasswordConfirm()");
+		
+		franchiseeMemberDto.setFcm_pw(passwordEncoder.encode(franchiseeMemberDto.getFcm_pw()));
+		
+		int result = iFranchiseeMemberDao.updateFranchiseeMemberPassword(franchiseeMemberDto);
+		
+		if(result > 0) 
+			return iFranchiseeMemberDao.selectLastesFranchiseeInfo(franchiseeMemberDto.getFcm_no());
+		else 
+			return null;
+		
+	}
 
 }

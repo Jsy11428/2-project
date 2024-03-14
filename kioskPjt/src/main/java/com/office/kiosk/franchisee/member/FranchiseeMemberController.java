@@ -17,6 +17,7 @@ import com.office.kiosk.franchisee.FranchiseeStoreDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 
+
 @Log4j2
 @Controller
 @RequestMapping("/franchisee/member")
@@ -98,10 +99,18 @@ public class FranchiseeMemberController {
 	 * 	로그인 성공
 	 */
 	@GetMapping("/franchiseeLoginSuccess")
-	public String franchiseeLoginSuccess() {
+	public String franchiseeLoginSuccess(HttpSession session, Model model) {
 		log.info("franchiseeLoginSuccess()");
 		
 		String nextPage = "/franchisee/member/franchisee_login_ok";
+		
+		FranchiseeMemberDto loginedFranchiseeMemberDto = 
+				(FranchiseeMemberDto) session.getAttribute("loginedFranchiseeMemberDto");
+		
+		List<FranchiseeStoreDto> result = 
+				franchiseeMemberService.getStoreListByDto(loginedFranchiseeMemberDto);
+		
+		model.addAttribute("result", result);
 	
 		return nextPage;
 	
@@ -181,6 +190,163 @@ public class FranchiseeMemberController {
 		
 		return resultMap;
 	}
+	
+	@PostMapping("/franchiseeStoreLogin")
+	public Object franchiseeStoreLogin(FranchiseeStoreDto franchiseeStoreDto,
+									HttpSession session) {
+		log.info("franchiseeStoreLogin()");
+		
+		String nextPage = "/customer/franchisee_store_login_result";
+		
+		FranchiseeStoreDto loginedFranchiseeStoreDto = franchiseeMemberService.franchiseeLoginConfirmForCustomer(franchiseeStoreDto);
+		loginedFranchiseeStoreDto.setFcs_no(franchiseeStoreDto.getFcs_no());
+		
+		
+		session.setAttribute("loginedFranchiseeStoreDto", loginedFranchiseeStoreDto);
+		session.setMaxInactiveInterval(60 * 720);
+		
+		return nextPage;
+		
+	}
+	
+	
+	@GetMapping("/customerOrderView")
+	public String customerOrderView(@RequestParam("fco_packaging") int fco_packaging,
+									Model model) {
+		log.info("customerOrderView()");
+		
+		String nextPage = "/customer/customer_order_view";
+		
+		model.addAttribute("fco_packaging", fco_packaging);	// 매장 or 포장 유무
+		
+		return nextPage;
+		
+	}
+	
+	@GetMapping("/sotreLoginResultView")
+	public String sotreLoginResultView(HttpSession session) {
+		log.info("sotreLoginResultView()");
+		
+		String nextPage = "/customer/franchisee_store_login_result";
+		
+		return nextPage;
+	
+	}
+	
+	/*
+	 * 	비밀번호 찾기 폼
+	 */
+	@GetMapping("/franchiseeFindPassword")
+	public String franchiseeFindPassword() {
+		log.info("franchiseeFindPassword()");
+		
+		String nextPage = "/franchisee/member/franchisee_find_password_form";
+		
+		return nextPage;		
+		
+	}
+	
+	/*
+	 * 	비밀번호 찾기 회원정보 확인
+	 */
+	@PostMapping("/franchiseeFindPasswordForm")
+	public String franchiseeFindPasswordForm(FranchiseeMemberDto franchiseeMemberDto,
+										Model model) {
+		log.info("franchiseeFindPasswordForm()");
+		
+		String nextPage = "/franchisee/member/franchisee_find_password_result";
+		
+		FranchiseeMemberDto resultDto =	
+				franchiseeMemberService.franchiseeFindPasswordForm(franchiseeMemberDto);
+		
+		model.addAttribute("resultDto", resultDto);
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * 	비밀번호 찾기 확인
+	 */
+	@PostMapping("/franchiseeFindPasswordConfirm")
+	public String franchiseeFindPasswordConfirm(FranchiseeMemberDto franchiseeMemberDto,
+												Model model) {
+		log.info("franchiseeFindPasswordConfirm()");
+		
+		String nextPage = "/franchisee/member/franchisee_find_password_confirm_result";
+
+		int findPasswordResult = 
+				franchiseeMemberService.franchiseeFindPasswordConfirm(franchiseeMemberDto);
+		
+		model.addAttribute("findPasswordResult", findPasswordResult);
+		
+		return nextPage;
+	}
+	
+	/*
+	 * 	비밀번호 변경
+	 */
+	@GetMapping("/franchiseeModifyPassword")
+	public String franchiseeModifyPassword() {
+		log.info("franchiseeModifyPassword()");
+		
+		String nextPage = "/franchisee/member/franchisee_modify_password_form";
+		
+		return nextPage;
+	
+	}
+	
+	/*
+	 * 	비밀번호 변경 확인
+	 */
+	@PostMapping("/franchiseeModifyPasswordConfirm")
+	public String franchiseeModifyPasswordConfirm(FranchiseeMemberDto franchiseeMemberDto,
+												HttpSession session, Model model) {
+		log.info("franchiseeModifyPasswordConfirm()");
+		
+		String nextPage = "/franchisee/member/franchisee_modify_password_result";
+		
+		FranchiseeMemberDto loginedFranchiseeMemberDto = 
+				(FranchiseeMemberDto) session.getAttribute("loginedFranchiseeMemberDto");
+		
+		franchiseeMemberDto.setFcm_no(loginedFranchiseeMemberDto.getFcm_no());
+		
+		FranchiseeMemberDto modifiedDto = 
+				franchiseeMemberService.franchiseeModifyPasswordConfirm(franchiseeMemberDto);
+		if (modifiedDto != null) {
+			session.setAttribute("loginedFranchiseeMemberDto", modifiedDto);
+			session.setMaxInactiveInterval(60 * 30);
+		}
+		
+		return nextPage;
+	
+	}
+	
+	
+	
+	/*
+	 * 	로그인 후 매장 선택
+	 */
+	@GetMapping("/sltStoreHome")
+	public String sltStoreHome(@RequestParam("fcs_no") int fcs_no, HttpSession session) {
+		log.info("sltStoreHome()");
+		
+		String nextPage = "/franchisee/franchisee_home";
+		
+		FranchiseeMemberDto loginedFranchiseeMemberDto = 
+				(FranchiseeMemberDto) session.getAttribute("loginedFranchiseeMemberDto");
+		
+		loginedFranchiseeMemberDto.setFcs_no(fcs_no);
+		
+		session.setAttribute("loginedFranchiseeMemberDto", loginedFranchiseeMemberDto);
+		
+		return nextPage;
+		
+	}
+	
+	
+	
+
 	
 	
 	

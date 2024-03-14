@@ -228,23 +228,26 @@ public class AdminMemberController {
 //		return nextPage;
 //		
 //	}
+	
 	@GetMapping("/adminList")
 	public String adminList(Model model, HttpSession session) {
 		log.info("adminList()");
 		
-		String nextPage = "/admin/member/admin_list";
+		String nextPage = null;
 		
 		AdminMemberDto loginedAdminMemberDto = 
 				(AdminMemberDto) session.getAttribute("loginedAdminMemberDto");
 		
-		if (!loginedAdminMemberDto.getAm_id().equals("super admin")) {
-			
+		if (loginedAdminMemberDto == null || !loginedAdminMemberDto.getAm_id().equals("super admin")) {
 			nextPage = "/admin/member/admin_list_fail";
-						
+			
+		} else if (loginedAdminMemberDto.getAm_id().equals("super admin")) {
+			nextPage = "/admin/member/admin_list";
+			
 		} 
 		
-		return nextPage;
 		
+		return nextPage;
 	}
 	
 //	@GetMapping("/getAdminList")
