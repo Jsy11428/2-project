@@ -7,10 +7,17 @@
 
 <script type="text/javascript" th:src="@{/js/admin/member/admin_member.js}"></script>
 
+<!-- 
 <link rel="stylesheet" th:href="@{/css/admin/common.css}">
 <link rel="stylesheet" th:href="@{/css/admin/admin_include.css}">
 <link rel="stylesheet" th:href="@{/css/admin/admin_home.css}">
+ -->
 <link rel="stylesheet" th:href="@{/css/admin/sales/admin_store_sales_list.css}">
+ 
+ 
+<link rel="stylesheet" th:href="@{/css/franchisee/common.css}">
+<link rel="stylesheet" th:href="@{/css/franchisee/franchisee_include.css}">
+<link rel="stylesheet" th:href="@{/css/franchisee/franchisee_home.css}">
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
@@ -24,13 +31,9 @@
 </head>
 <body>
 
-	<div id="admin_wrap">
+	<div id="wrap">
 
-		<header th:replace="~{admin/include/admin_include.html::admin_header}">
-		</header>
-	
-	
-		<nav th:replace="~{admin/include/admin_include.html::admin_nav}">
+	<nav th:replace="~{/franchisee/include/franchisee_include.html::franchisee_nav}">
 		</nav>
 		
 		
@@ -38,15 +41,22 @@
 		
 			<div id="section_wrap">
 			
-				<div th:replace="~{admin/include/admin_include.html::admin_section_side_menu}"></div>
+				<div th:replace="~{/franchisee/include/franchisee_include.html::section_menu_wrap}">
+				</div>
 				
 				<div class="admin_section_view_wrap">
 			
-					<div class="word">
-						우리매장 매출
+				<div class="pos_section_main">
+					<div class="pos_section_info_wrap">
+					
+						<div class="word">
+							우리매장 매출
+						</div>
+						
 					</div>
+				</div>
 
-					<!-- 
+					
 					<div class="select_wrap">
 			
 						<select name="p_year">
@@ -86,7 +96,7 @@
 						<input type="button" name="p_today" value="오늘">
 						
 					</div>
-					 -->
+					 
 						
 					<div class="admin_store_sales_list">
 					
@@ -129,7 +139,7 @@
 		</section>
 			
 		
-		<footer th:replace="~{admin/include/admin_include.html::admin_footer}">
+		<footer th:replace="~{/franchisee/include/franchisee_include.html::franchisee_footer}">
 		</footer>
 		
 	</div>
