@@ -1,0 +1,76 @@
+#wrap {
+    max-width: 1000px;
+    min-width: 1000px;
+    height: 1030px;
+}
+
+#section_wrap .main {
+    width: 1000px;
+    height: 880px;
+}
+
+#section_wrap .main .img_box {
+    width: 1000px;
+    height: 520px;
+    background-color: #0f0;
+}
+
+#section_wrap .main .auto_slide {
+    width: 560px;
+    height: 210px;
+    background-color: #c8c8c8;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+
+#section_wrap .main .auto_slide ul li {
+    max-width: 140px;
+    min-width: 140px;
+    height: 210px;
+    text-align: center;
+    float: left;
+}
+
+#section_wrap .main .auto_slide ul li img {
+    max-width: 140px;
+}
+
+#section_wrap .main .auto_slide ul li span {
+    font-size: 0.8em;
+}
+
+#section_wrap .main .text_box {
+    width: 1000px;
+    height: 150px;
+    background-color: #dadada;
+}
+
+#section_wrap .option {
+    width: 1000px;
+    height: 150px;
+    background-color: #00f;
+    display: flex;
+    justify-content: center;
+}
+
+#section_wrap .option div {
+    height: 150px;
+    line-height: 150px;
+    margin: 0 10px;
+}
+
+#section_wrap .option input[type="button"] {
+    border: 3px solid #fff;
+    border-radius: 40px;
+    padding: 18px 50px;
+    background-color: #00f;
+    color: #fff;
+    font-size: 1.5em;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#section_wrap .option input[type="button"]:hover {
+    background-color: rgba(0, 255, 255, .8);
+}

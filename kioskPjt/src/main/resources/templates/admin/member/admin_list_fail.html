@@ -10,6 +10,7 @@
 <link rel="stylesheet" th:href="@{/css/admin/common.css}">
 <link rel="stylesheet" th:href="@{/css/admin/admin_include.css}">
 <link rel="stylesheet" th:href="@{/css/admin/admin_home.css}">
+<link rel="stylesheet" th:href="@{/css/admin/member/admin_list_fail.css}">
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
@@ -40,33 +41,11 @@
 						admin list fail
 					</div>
 						
-					<div class="franchisee_list">
+					<div class="admin_list">
 					
-		  				<table>
-							<tr>
-								<td>admin no</td>
-								<td>admin id</td>
-								<td>admin 이름</td>
-								<td>admin 연락처</td>
-								<td>admin 메일</td>
-								<td>승인</td>
-								<td>admin 등록일</td>
-								<td>admin 수정일</td>
-							</tr>
-							<tr th:each="a : ${adminMemberDtos}">
-								<td th:text="${a.am_no}"></td>
-								<td th:text="${a.am_id}"></td>
-								<td th:text="${a.am_name}"></td>
-								<td th:text="${a.am_phone}"></td>
-								<td th:text="${a.am_mail}"></td>
-								<td th:if="${a.am_approval} == 0">
-									<button th:No="${a.am_no}" type="button" th:onclick="adminApproveBtn(this.getAttribute('No'))" th:text="승인"></button> 
-								</td>
-								<td th:unless="${a.am_approval} == 0" th:text="승인완료"></td>
-								<td th:text="${a.am_reg_date}"></td>
-								<td th:text="${a.am_mod_date}"></td>
-							</tr>
-						</table> 
+						super admin만 확인할 수 있습니다.
+						<br>
+						로그인후 확인해 주세요.
 						
 					</div>
 					
