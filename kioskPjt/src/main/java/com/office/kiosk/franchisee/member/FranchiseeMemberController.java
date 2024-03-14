@@ -1,5 +1,6 @@
 package com.office.kiosk.franchisee.member;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,10 +99,18 @@ public class FranchiseeMemberController {
 	 * 	로그인 성공
 	 */
 	@GetMapping("/franchiseeLoginSuccess")
-	public String franchiseeLoginSuccess() {
+	public String franchiseeLoginSuccess(HttpSession session, Model model) {
 		log.info("franchiseeLoginSuccess()");
 		
 		String nextPage = "/franchisee/member/franchisee_login_ok";
+		
+		FranchiseeMemberDto loginedFranchiseeMemberDto = 
+				(FranchiseeMemberDto) session.getAttribute("loginedFranchiseeMemberDto");
+		
+		List<FranchiseeStoreDto> result = 
+				franchiseeMemberService.getStoreListByDto(loginedFranchiseeMemberDto);
+		
+		model.addAttribute("result", result);
 	
 		return nextPage;
 	
@@ -274,7 +283,24 @@ public class FranchiseeMemberController {
 		return nextPage;
 	}
 	
-	
+	/*
+	 * 	로그인 후 매장 선택
+	 */
+	@GetMapping("/sltStoreHome")
+	public String sltStoreHome(@RequestParam("fcs_no") int fcs_no, HttpSession session) {
+		log.info("sltStoreHome()");
+		
+		String nextPage = "/franchisee/franchisee_home";
+		
+		FranchiseeMemberDto loginedFranchiseeMemberDto = 
+				(FranchiseeMemberDto) session.getAttribute("loginedFranchiseeMemberDto");
+		
+		loginedFranchiseeMemberDto.setFcs_no(fcs_no);
+		
+		session.setAttribute("loginedFranchiseeMemberDto", loginedFranchiseeMemberDto);
+		
+		return nextPage;
+	}
 	
 
 	

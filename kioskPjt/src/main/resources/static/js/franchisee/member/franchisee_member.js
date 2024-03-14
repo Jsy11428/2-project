@@ -148,3 +148,11 @@ function franchiseeFindPasswordConFirm() {
 	}
 	 
 }
+
+
+function sltStoreBtn(fcs_no){
+	console.log('sltStoreBtn()');
+	
+	location.href = "/franchisee/member/sltStoreHome?fcs_no=" + fcs_no;
+	
+}

@@ -29,4 +29,6 @@ public interface IFranchiseeMemberDao {
 
 	public int updateFranchiseeMemberPassword(FranchiseeMemberDto franchiseeMemberDto);
 
+	public List<FranchiseeStoreDto> selectStoreDtosByDto(FranchiseeMemberDto loginedFranchiseeMemberDto);
+
 }

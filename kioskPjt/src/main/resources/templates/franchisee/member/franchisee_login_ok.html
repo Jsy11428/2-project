@@ -9,6 +9,8 @@
 <link rel="stylesheet" th:href="@{/css/franchisee/franchisee_include.css}">
 <link rel="stylesheet" th:href="@{/css/franchisee/member/franchisee_login_result.css}">
 
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
 <script type="text/javascript" th:src="@{/js/franchisee/member/franchisee_member.js}"></script>
 
 </head>
@@ -37,8 +39,25 @@
 							franchisee_login_success
 						</div>
 						
-						<div class="others">
-							<a th:href="@{/franchisee/home}">HOME</a>
+						<div class="slt_fcs_no">
+							<table>
+								<tr>
+									<td>NO</td>
+									<td>지점명</td>
+									<td>주소</td>
+									<td>연락처</td>
+									<td></td>
+								</tr>
+								<tr th:each="rst : ${result}">
+									<td th:text="${rst.fcs_no}"></td>
+									<td th:text="${rst.fcs_name}"></td>
+									<td th:text="${rst.fcs_location}"></td>
+									<td th:text="${rst.fcs_phone}"></td>
+									<td>
+										<button th:fcs_no="${rst.fcs_no}" th:text="선택" th:onclick="sltStoreBtn(this.getAttribute('fcs_no'))"></button>
+									</td>
+								</tr>
+							</table>
 						</div>
 						
 					</div>

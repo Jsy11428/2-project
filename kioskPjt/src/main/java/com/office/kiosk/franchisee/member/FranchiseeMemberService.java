@@ -153,4 +153,12 @@ public class FranchiseeMemberService {
 		
 	}
 
+
+	public List<FranchiseeStoreDto> getStoreListByDto(FranchiseeMemberDto loginedFranchiseeMemberDto) {
+		log.info("getStoreListByDto()");
+		
+		return iFranchiseeMemberDao.selectStoreDtosByDto(loginedFranchiseeMemberDto);
+		
+	}
+
 }
