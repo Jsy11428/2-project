@@ -1,0 +1,143 @@
+<script type="text/javascript" th:fragment="franchisee_sales_list_js">
+
+
+$(document).ready(function(){
+    console.log('DOCUMENT READY!!')
+    
+    // 우리매장의 전체 매출 정보 불러오기 (페이지네이션적용)
+    ajax_getMyStoreAllSalesInfo();
+    
+})
+
+
+function removeStoreSalesList() {
+    console.log('removeStoreSalesList()');
+
+    $('#section_wrap table tbody tr').remove();
+
+}
+
+function removePageNo() {
+    console.log('removePageNo()');
+
+    $('#section_wrap div.page_no_wrap').empty();
+
+}
+
+// ajax - 우리가게 총 매출 불러오기 /* fcs_no, */ 
+function ajax_getMyStoreAllSalesInfo(fcs_no = 6, pageNum = 1) {
+    console.log('ajax_getMyStoreAllSalesInfo');
+    
+    $.ajax({
+        url: '/franchisee/sales/getMyStoreAllSalesInfo',
+        method: 'get', 
+        data: ({ 
+        	'fcs_no' : fcs_no, 
+        	'page' : pageNum,
+       	}),
+        dataType: 'json',
+        success: function(data) {
+            console.log('ajax success!!------------->', data);
+            
+            removeStoreSalesList();
+            removePageNo()
+
+            let myStoreAllSalesInfoDto = data.myStoreAllSalesInfo;
+            let myStoreAllSalesInfoPageDto = data.myStoreAllSalesPageDtos;
+            let appendTag = '';
+            
+            console.log(myStoreAllSalesInfoDto);
+            console.log(myStoreAllSalesInfoPageDto);
+			
+            for (let i = 0; i < myStoreAllSalesInfoDto.length; i++) {
+                
+                appendTag = '<tr>';
+                    
+                    appendTag += '<td>' + myStoreAllSalesInfoDto[i].fcsa_no + '</td>';
+                    appendTag += '<td>' + myStoreAllSalesInfoDto[i].fco_ori_no + '</td>';
+                    appendTag += '<td>' + myStoreAllSalesInfoDto[i].fcsa_price + '</td>';
+                    appendTag += '<td>' + myStoreAllSalesInfoDto[i].pm_type + '</td>';
+
+                appendTag += '</tr>';
+
+                $('#section_wrap table tbody').append(appendTag);
+
+            }
+
+            if (myStoreAllSalesInfoPageDto.page <= 1) {
+                $('#section_wrap div.page_no_wrap').append(`<span >&#8810;</span>`);
+                $('#section_wrap div.page_no_wrap').append("<span >[이전]</span>");
+            } else {
+                $('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="pre_page_btn" page_num='1'>&#8810;</a>`);
+                $('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="pre_page_btn" page_num='${(myStoreAllSalesInfoPageDto.page-1)}'>[이전]</a>`);
+            }
+
+            for (let i = myStoreAllSalesInfoPageDto.startPage; i <= myStoreAllSalesInfoPageDto.endPage; i++) {
+                let appendPageNum = '';
+
+                appendPageNum += "<span class='page_num_wrap'>";
+                if (i === myStoreAllSalesInfoPageDto.page) {
+                    appendPageNum += "<b style='color:#555'>"+i+"</b>";
+                } else {
+                    appendPageNum += `<a href="#none" class="page_num_btn" page_num='${i}'>${i}</a>`;
+                }
+                appendPageNum += "</span>";
+
+                $('#section_wrap div.page_no_wrap').append(appendPageNum); 
+
+            }
+
+            if(myStoreAllSalesInfoPageDto.page >= myStoreAllSalesInfoPageDto.maxPage){
+                $('#section_wrap div.page_no_wrap').append("<span>[다음]</span>");
+                $('#section_wrap div.page_no_wrap').append(`<span>&#8811;</span>`);
+
+            }else{ 
+                $('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(myStoreAllSalesInfoPageDto.page+1)}'>[다음]</a>`);
+                $('#section_wrap div.page_no_wrap')
+                    .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(myStoreAllSalesInfoPageDto.maxPage)}'>&#8811;</a>`);
+            }
+
+        },
+        error: function(data) {
+            console.log('ajax error!!')
+            console.log("----------------------->", data);
+            
+            let myStoreAllSalesInfoDto = data.myStoreAllSalesInfo;
+            let myStoreAllSalesInfoPageDto = data.myStoreAllSalesPageDtos;
+            
+            console.log(myStoreAllSalesInfoDto);
+            console.log(myStoreAllSalesInfoPageDto);
+            
+
+        }, 
+        complete: function() {
+
+            $('#section_wrap div.page_no_wrap .next_page_btn').click(function(){
+                console.log('nextPageBtnClick()')
+
+                ajax_getMyStoreAllSalesInfo(this.getAttribute('page_num'));
+            });
+
+            $('#section_wrap div.page_no_wrap .pre_page_btn').click(function(){
+                console.log('prePageBtnClick()')
+
+                ajax_getMyStoreAllSalesInfo(this.getAttribute('page_num'));
+            });
+
+            $('#section_wrap div.page_no_wrap .page_num_btn').click(function(){
+                console.log('pageNumBtnClick()')
+
+                ajax_getMyStoreAllSalesInfo(this.getAttribute('page_num'));
+            });
+
+        }
+
+    })
+
+}
+
+
+</script>
