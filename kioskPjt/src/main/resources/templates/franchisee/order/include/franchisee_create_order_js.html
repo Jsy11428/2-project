@@ -2,18 +2,14 @@
 $(document).ready(function() {
     // 페이지가 로드되면 카테고리와 메뉴들을 가져오는 함수 호출
     ajax_getCategorie();
+    
     orderBtnClick();
-    ajax_get_AllOrder_by_order();
-});
-
-$('#order_btn').click(function() {
-    // 클릭 이벤트 발생 시 실행되는 코드
-    ajax_get_all_info();
+    
+    ajax_store_select();
     
 });
 
-
-
+ 
 //카테고리
 function ajax_getCategorie() {
     console.log('ajax_getCategorie');
@@ -132,88 +128,176 @@ function ajax_get_price_by_category() {
 
 }
 
+// 가맹점 정보 
 
-function orderBtnClick() {
-    // "메뉴등록" 버튼 클릭 이벤트 핸들러
-    $('#order_btn').click(function() {
-        // 선택된 카테고리와 메뉴 가져오기
-        let category = $('#order_category_select option:selected').text();
-        
-        let menu = $('#order_menu_select option:selected').text();
-        // 주문 수량 가져오기
-        let quantity = $('.basic_count').val();
+/* function ajax_store_select() {
+    console.log('ajax_store_select');
+      
+    $.ajax({
+        url: '/franchisee/order/getStoreInfo',
+        method: 'get',
+        dataType: 'json',
+        success: function(data) {
+            console.log('Storejsx success!!');
+            
+            let storeDtos = data.franchiseeStoreDto;
 
-        // 주문 가격 가져오기
-        let price = $('.basic_price').val();
-
-        // 주문 목록에 추가
-        let appendTag = "<tr>";
-	        	appendTag += '<td hidden></td>'
-	        	appendTag += '<td>' + category + '</td>';
-	        	appendTag += '<td>' + menu + '</td>';
-	        	appendTag += '<td>' + quantity + '</td>';
-	        	appendTag += '<td></td>';
-	        	appendTag += '<td>' + new Date().toLocaleDateString() + '</td>'; // 현재 날짜를 주문일로 설정
-	        	appendTag += '<td>' + new Date().toLocaleDateString() + '</td>'; // 현재 날짜를 수정일로 설정 (임시)
-        	appendTag += '</tr>';
-        	
-        $("#order_table").append(appendTag);
-        
-        
+            $('#order_store_select').empty();
+            
+            for (let i = 0; i < storeDtos.length; i++) {
+                // 카테고리 옵션 추가
+                $('#order_store_select').append(
+                    '<option value="' + storeDtos[i].fcm_no + '">' +
+                    storeDtos[i].fcs_name + '</option>');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.log('Storejsx error:', error);
+        },
     });
 }
+ */
 
-function ajax_get_AllOrder_by_order() {
+
+function orderBtnClick() {
+	console.log("orderBtnClick()")
+    // "메뉴등록" 버튼 클릭 이벤트 핸들러
+   
+	/* orderBtnClick(); */
+    $('#order_btn').click(function() {
+   	
+   		
+       // 선택된 카테고리와 메뉴 가져오기      
+       let packaging = $('#order_packaging_select option:selected').val();
+       
+       let pay = $('#order_payment_select option:selected').text();
+       
+       let category = $('#order_category_select option:selected').val();
+       
+   		let fcmc_no = $('#order_category_select').val();
+       
+       let menu = $('#order_menu_select option:selected').val();
+   		let fc_menu_no = $('#order_menu_select').val();
+       // 주문 수량 가져오기
+       let quantity = $('.basic_count').val();
+
+       // 주문 가격 가져오기
+       let price = $('.basic_price').val();
+/////////////////////////////////////////////////////
+       
+
+       
+       // 주문 목록에 추가
+       let appendTag = "<tr>";
+	        	appendTag += '<td hidden fc_menu_no="'+fc_menu_no+'">'+ fc_menu_no +'</td>'
+	        	appendTag += '<td hidden fcmc_no="'+fcmc_no+'">'+ fcmc_no +'</td>'
+
+	        	
+	        	appendTag += '<td fco_packaging="'+packaging+'">' + packaging + '</td>';    
+	        	appendTag += '<td pm_type="'+pay+'">' + pay + '</td>';    
+	        	appendTag += '<td fcmc_no="'+category+'">' + category + '</td>';
+	        	appendTag += '<td fc_menu_no="'+menu+'">' + menu + '</td>';
+	        	appendTag += '<td fco_menu_cnt="'+quantity+'">' + quantity + '</td>';    
+	        	
+	        	appendTag += '<td>' + new Date().toLocaleDateString() + '</td>'; // 현재 날짜를 주문일로 설정
+	        	appendTag += '<td>' + new Date().toLocaleDateString() + '</td>'; // 현재 날짜를 수정일로 설정 (임시)
+       	appendTag += '</tr>';
+       	
+       $("#order_table").append(appendTag);                                  
+              
+       console.log('<td hidden fc_menu_no="'+fc_menu_no+'">'+ fc_menu_no +'</td>');
+       console.log('<td hidden fcmc_no="'+fcmc_no+'">'+ fcmc_no +'</td>');
+       
+       console.log('<td fco_packaging="'+packaging+'">'+ packaging +'</td>');
+       console.log('<td pm_type="'+pay+'">'+ pay +'</td>');
+       console.log('<td fcmc_no="'+category+'">'+ category +'</td>');
+       console.log('<td fc_menu_no="'+menu+'">'+ menu +'</td>');
+       console.log('<td fco_menu_cnt="'+quantity+'">'+ quantity +'</td>');
+       
+
+
+   });
+    $('#section_wrap input[name="AllOrder_btn"]').click(function() {
+  		// 클릭 이벤트 발생 시 실행되는 코드
+  		console.log(" eliments: --->>>", $('#order_table tr:nth-child(1) td').length);
+  		
+  		ajax_get_AllOrder_by_order();
+  	})
 	
-		console.log('ajax_get_AllOrder_by_order()');
-		let map = {};
-		
-	$.ajax({
-		 url: '/franchisee/order/getAllOrderbyOrder',
-	     method: 'get',
-	     data: JSON.stringify(map),
-	     dataType: 'json',	
-	     success: function() {
-	   	 console.log('menuajsx success!!');
-	     let menuDtos = data.franchiseeMenusDtos; 
-	      
-	$("#AllOrder_btn").click(function(data) {
-		
-		console.log('AllOrder_btn clicked');
-		
-		for(let i = 1, j = 0 ; i <= $("#order_table tr").length;  i++, j++){
-			
-		     let category = $("#order_table tr:nth-child("+i+")td:nth-child(1)").text();
-		     let menu = $("#order_table tr:nth-child("+i+")td:nth-child(2)").text();
-		     let quantity = $("#order_table tr:nth-child("+i+")td:nth-child(3)").val();
-		     let price = $("#order_table tr:nth-child("+i+")td:nth-child(4)").val();
-		     
-			     map[j] = {
-			        "fcmc_no" : category,
-		         	"fc_menu_no" : menu,
-		         	"fco_menu_cnt" : quantity,
-		         	"fc_menu_no" : menu,
-		         
-		     	}
-		    		     
-			}
-		 console.log("map[0]: "+map[0]);
-		 console.log("map[1]: "+map[1]);
-		 console.log("map[2]: "+map[2]);
-		 console.log("map[3]: "+map[3]);
-		 console.log("map[4]: "+map[4]);
-		
-		});
-	    	 
-	},
-	error: function(data) {
-        console.log('ajax error!!');
-	},
-	
-	
-	
-	});
-		
 }
-                
+
+$('#section_wrap input[name="AllOrder_delete_btn"]').click(function() {
+	$('#order_table tbody').empty();
+
+});
+
+
+
+function ajax_get_AllOrder_by_order() {	
+	
+		console.log('AllOrder_btn clicked');		
+		
+		let menuOrders = [];  
+		
+	    for(let i = 1, j = 0; i <= $("#order_table tr").length;  i++, j++){
+			
+	    	let no = 1;
+	    	
+	    	
+	    	let fco_packaging = $('#order_table tr:nth-child('+i+') td:nth-child(3)').attr("fco_packaging");
+	    	let pm_type = $('#order_table tr:nth-child('+i+') td:nth-child(4)').attr("pm_type");
+	    	let fcmc_no = $('#order_table tr:nth-child('+i+') td:nth-child(5)').attr("fcmc_no");
+	    	let fc_menu_no = $('#order_table tr:nth-child('+i+') td:nth-child(6)').attr("fc_menu_no");
+	    	let fco_menu_cnt = $('#order_table tr:nth-child('+i+') td:nth-child(7)').attr("fco_menu_cnt");
+	  
+
+	    
+		     console.log('fco_packaging---', fco_packaging);
+		     console.log('pm_type---', pm_type);
+		     console.log('fcmc_no---', fcmc_no);
+		     console.log('fc_menu_no---', fc_menu_no);
+		     console.log('fco_menu_cnt---', fco_menu_cnt);
+
+		     
+		     menuOrders[j] = {
+		    		"fco_packaging" : fco_packaging,
+		    		"pm_type" : pm_type,
+		    		"fcmc_no" : fcmc_no,
+			        "fc_menu_no" : fc_menu_no,
+		         	"fco_menu_cnt" : fco_menu_cnt,
+	    	
+		     	}		 
+		     
+		   /*    no++;  */
+		}
+	    
+	    console.log("menuOrders: ", menuOrders);
+		
+	    dataMsg = {
+	    		'menuOrders': menuOrders,
+	    };
+	    
+	    $.ajax({
+			 url: '/franchisee/order/OrderAccountConfirm',
+		     method: 'post',
+		     /* data: JSON.stringify(menuOrders), */
+		     data: JSON.stringify(dataMsg),
+		     contentType: 'application/json; charset=utf-8',
+		     dataType: 'json',	
+		     success: function(data) {
+		   	 	console.log('order_ajax success!!');
+		        		   		   										
+		     },
+		     
+			error: function(data) {
+	        	console.log('order_ajax error!!');
+	        
+		}
+		     
+	});
+
+} 
+
+
+ 
 </script>

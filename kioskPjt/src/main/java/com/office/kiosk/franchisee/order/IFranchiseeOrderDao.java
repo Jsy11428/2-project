@@ -25,6 +25,8 @@ public interface IFranchiseeOrderDao {
 
 	public List<FranchiseeOrderDto> selectAllPrice(int fc_menu_no);
 
-	public List<FranchiseeOrderDto> insertAllOrder(Map<String, Object> map);
+	public List<FranchiseeOrderDto> insertAllOrder(FranchiseeOrderDto franchiseeOrderDto);
+
+
 
 }

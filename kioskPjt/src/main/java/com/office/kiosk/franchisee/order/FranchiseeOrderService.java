@@ -4,14 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.print.DocFlavor.BYTE_ARRAY;
-
-import org.apache.ibatis.ognl.ASTBitNegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.office.kiosk.admin.menu.AdminMenuCategoryDto;
-import com.office.kiosk.admin.menu.AdminMenuDto;
 import com.office.kiosk.paging.kioskPageDto;
 
 import lombok.extern.log4j.Log4j2;
@@ -25,6 +20,7 @@ public class FranchiseeOrderService {
 	
 	@Autowired
 	IFranchiseeOrderDao iFranchiseeOrderDao;
+	
 
 
 //	public Map<String, Object> getOrdersNo(int loginNo) {
@@ -106,7 +102,6 @@ public class FranchiseeOrderService {
 		
 			log.info("getCategoryser()");
 			
-
 			Map<String, Object> cateDtos = new HashMap<>();
 
 			List<FranchiseeOrderDto> categoryDtos = (List<FranchiseeOrderDto>) iFranchiseeOrderDao.selectAllCategory();
@@ -124,7 +119,9 @@ public class FranchiseeOrderService {
 			Map<String, Object> MenuDtos = new HashMap<>();
 	
 			List<FranchiseeOrderDto> franchiseeMenusDtos = (List<FranchiseeOrderDto>) iFranchiseeOrderDao.selectAllMenu(fcmc_no);
+			
 			log.info("franchiseeMenusDtos: "+franchiseeMenusDtos);
+			
 			MenuDtos.put("franchiseeMenusDtos", franchiseeMenusDtos);
 	
 			return MenuDtos;
@@ -145,18 +142,38 @@ public class FranchiseeOrderService {
 	}
 
 
-	public Map<String, Object> getAllOrder(Map<String, Object> map) {
+	public Map<String, Object> getAllOrder(Map<String, Object> dataMsg) {
 		
 		log.info("getAllOrder()");
 		
 		Map<String, Object> AllOrderDtos = new HashMap<>();
 		
-		List<FranchiseeOrderDto> franchiseeAllOrderDtos = iFranchiseeOrderDao.insertAllOrder(map);
+		List<Map<String, Object>> objects = (List<Map<String, Object>>) dataMsg.get("menuOrders");
 		
-		AllOrderDtos.put("franchiseeAllOrderDtos", franchiseeAllOrderDtos);
+		for(int i = 0; i < objects.size(); i++) {
+			
+			Map<String, Object> dataMsgObj  = objects.get(i);
+			
+			FranchiseeOrderDto franchiseeOrderDto = new FranchiseeOrderDto();
+					
+			franchiseeOrderDto.setFco_packaging(Integer.parseInt((String)dataMsgObj.get("fco_packaging")));
+			franchiseeOrderDto.setPm_type((String)dataMsgObj.get("pm_type"));
+			franchiseeOrderDto.setFcmc_no(Integer.parseInt((String)dataMsgObj.get("fcmc_no")));
+			franchiseeOrderDto.setFc_menu_no(Integer.parseInt((String)dataMsgObj.get("fc_menu_no")));
+	        franchiseeOrderDto.setFco_menu_cnt(Integer.parseInt((String)dataMsgObj.get("fco_menu_cnt")));
+
+			
+			iFranchiseeOrderDao.insertAllOrder(franchiseeOrderDto);
+		}
+	
+//		List<FranchiseeOrderDto> franchiseeAllOrderDtos = 
+//		
+//		AllOrderDtos.put("franchiseeAllOrderDtos", franchiseeAllOrderDtos);
 			
 		return AllOrderDtos;
 	}
+
+
 	
 
 
