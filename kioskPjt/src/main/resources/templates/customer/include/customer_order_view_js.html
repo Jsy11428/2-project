@@ -67,15 +67,46 @@ function eventsHandler(){
 		let pur_price = pur_number * 1000;
 		
 		// 카트에 담는 함수 호출
-		if($("ul.cart_area_items li").length !== 0){
-			if($("ul.cart_area_items li input[name='fc_menu_no']").val() === fc_menu_no ){
-				alert("이미 같은 메뉴가 주문에 있습니다");
-				return;
-			}
-		}
+	
 		
-		addCartItem(fc_menu_img, fc_menu_price, fc_menu_no, fc_menu_cnt, fc_menu_price_one, fcmc_no, 
-				shot_number, shot_price, pur_number, pur_price, fco_total_price);
+		if($("ul.cart_area_items li").length !== 0){
+			console.log("$('ul.cart_area_items li').length !== 0");
+			
+			for(let i = 0; i < $("ul.cart_area_items li").length; i++){
+				console.log("for for for");
+				
+				if($("ul.cart_area_items li").eq(i).attr('id').replace("cart_item_", "") === fc_menu_no+shot_number+pur_number){
+					console.log("same menu");
+										
+					let item_cnt = parseInt($("ul.cart_area_items li").eq(i).children('div.cart_item_select_wrap').children('p.fco_menu_cnt').text());
+					let fc_menu_price_one = parseInt($("ul.cart_area_items li").eq(i).children('div.cart_item_select_wrap').children('input[name="fc_menu_price_one"]').val());
+					console.log("fc_menu_price_one: "+fc_menu_price_one);
+					if(item_cnt >= 20){
+						item_cnt = 20;
+					}else{
+						item_cnt += 1;
+					}
+					$("ul.cart_area_items li").eq(i).children('div.cart_item_select_wrap').children('p.fco_menu_cnt').text(item_cnt);
+					
+					$("ul.cart_area_items li").eq(i).children('div.cart_item_select_wrap').children('input[name="fco_total_price"]').val(item_cnt*fc_menu_price_one);
+					
+					totalPriceCalculator();
+					
+					return;
+				}else{
+					continue;
+				}
+				
+			}// for(let i = 0; i < $("ul.cart_area_items li").length; i++)
+			addCartItem(fc_menu_img, fc_menu_price, fc_menu_no, fc_menu_cnt, fc_menu_price_one, fcmc_no, 
+					shot_number, shot_price, pur_number, pur_price, fco_total_price);
+			
+		}else{
+			console.log("1번 fc_menu_price_one: ",fc_menu_price_one);
+			addCartItem(fc_menu_img, fc_menu_price, fc_menu_no, fc_menu_cnt, fc_menu_price_one, fcmc_no, 
+					shot_number, shot_price, pur_number, pur_price, fco_total_price);
+		}
+				
 		
 		// 모달창 닫히고 모달창의 value 초기화
 		$("#myModal").fadeOut();
@@ -120,13 +151,12 @@ function totalPriceCalculator(){
 function addCartItem(menu_img, fc_menu_price, menu_no, fco_menu_cnt, fc_menu_price_one, fcmc_no,
 		shot_number, shot_price, pur_number, pur_price, fco_total_price){
 	console.log("addCartItem()");
-		
 	/*
 	let fco_menu_cnt = 1;
 	*/
 	let appendTag = "";
-	
-	appendTag = '<li id="cart_item_'+menu_no+'">';
+	let cartItemID = menu_no + shot_number + pur_number;
+	appendTag = '<li id="cart_item_'+cartItemID+'">';
 		appendTag += '<img class="cart_area_cancel_btn" src="/img/home/cart_area_cancel_btn.png" alt="">';
 		appendTag += '<div class="cart_item_img"><img src="'+menu_img+'" alt=""></div>'
 		appendTag += '<div class="cart_item_select_wrap">';
@@ -153,13 +183,13 @@ function addCartItem(menu_img, fc_menu_price, menu_no, fco_menu_cnt, fc_menu_pri
 	totalPriceCalculator();
 	
 	//장바구니 특정 아이템 삭제 버튼 클릭
-	$("#footer_wrap div.cart_area_wrap ul.cart_area_items li img.cart_area_cancel_btn").click(function(){
+	$("#cart_item_" + cartItemID + " img.cart_area_cancel_btn").click(function(){
 		console.log("cart_area_cancel_btn click!!!");
 		$(this).parent('li').remove();
 		totalPriceCalculator();
 	});
 	//장바구니 특정 아이템 +버튼 클릭
-	$("#cart_item_" + menu_no + " div.cart_item_select_wrap div.item_add_btn").click(function(e){
+	$("#cart_item_" + cartItemID + " div.cart_item_select_wrap div.item_add_btn").click(function(e){
 		console.log("item_add_btn click!!!");
 							
 			let item_cnt = parseInt($(this).siblings('p.fco_menu_cnt').text());
@@ -178,10 +208,10 @@ function addCartItem(menu_img, fc_menu_price, menu_no, fco_menu_cnt, fc_menu_pri
 		
 	});
 	//장바구니 특정 아이템 -버튼 클릭
-	$("#cart_item_" + menu_no + " div.cart_item_select_wrap div.item_sub_btn").click(function(){
+	$("#cart_item_" + cartItemID + " div.cart_item_select_wrap div.item_sub_btn").click(function(){
 		console.log("item_sub_btn click!!!");
 		let item_cnt = parseInt($(this).siblings('p.fco_menu_cnt').text());
-		let fc_menu_price = parseInt($(this).siblings('input[name="fc_menu_price"]').val());
+		let fc_menu_price_one = parseInt($(this).siblings('input[name="fc_menu_price_one"]').val());
 		
 		if(item_cnt <= 1){
 			item_cnt = 1;

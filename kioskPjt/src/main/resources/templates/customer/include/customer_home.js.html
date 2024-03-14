@@ -19,7 +19,7 @@
 		console.log(fc_menu_no);
 		ajax_getSelectMenuInfo(fc_menu_no);
 		$('.myModal').css('display', 'block');
-
+		
 		if (!isCategoryMenuLoaded) {
 			ajax_getCategorie_menu();
 			isCategoryMenuLoaded = true;
@@ -357,6 +357,10 @@
 			error : function(data) {
 				console.log('ajax error!!');
 
+			},
+			complete : function(){
+				console.log('ajax complete!!');
+				updatePrice();
 			}
 
 		});

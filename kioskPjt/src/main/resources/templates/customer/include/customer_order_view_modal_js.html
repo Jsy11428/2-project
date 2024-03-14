@@ -4,6 +4,7 @@ $(document).ready(function() {
     
     $(".openModal").click(function() {
         $("#myModal").fadeIn();
+        
     });
 
      $(".close, #myModal, #cancel").click(function(e) {
@@ -79,7 +80,7 @@ function resetCss() {
         console.log("totalPrice: "+totalPrice);
         
         const oneCupPrice = (menuPrice() * 1) + (shotPrice * shotCurrentValue) + (purPrice * purCurrentValue);
-        $(".menu_price_one").text(oneCupPrice);
+        $("p.menu_price_one").text(oneCupPrice);
         console.log("oneCupPrice: "+oneCupPrice);
         
     }
