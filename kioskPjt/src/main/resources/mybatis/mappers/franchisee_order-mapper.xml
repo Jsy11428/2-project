@@ -84,10 +84,28 @@
 
 	</select>
 
-    <!-- <insert id="insertAllOrder" parameterType="com.office.kiosk.franchisee.order.FranchiseeOrderDto"> 
+<!--     <insert id="insertAllOrder" parameterType="com.office.kiosk.franchisee.order.FranchiseeOrderDto"> 
+			
+		INSERT INTO 
+			TBL_FC_ORDER(FCO_ORI_NO, 
+						FCO_PACKAGING, 
+						FCMC_NO, 
+						FC_MENU_NO, 
+						FCO_MENU_CNT, 
+						FCS_NO, 
+						PM_TYPE, 
+						FCO_REG_DATE, 
+						FCO_MOD_DATE)
+		VALUES(#{fco_ori_no},  
+				#{fco_packaging}, 
+				#{fcmc_no}, 
+				#{fc_menu_no}, 
+				#{fco_menu_cnt}, 
+				#{fcs_no}, 
+				#{pm_type}, 
+				NOW(), NOW())
 		
-		INSERT INTO TBL_FC_ORDER(FC0_NO, FCO_ORI_NO, FCO_PACKAING, FCMC_NO, FC_MENU_NO, FCO_MENU_CNT, FCS_NO, PM_TYPE, FCO_REG_DATE, FCO_MOD_DATE)
-		VALUES(#{fco_no}, #{}, #{}, #{}, #{}, #{}, #{}, #{}, Date(), Date())
-	</insert> -->
+	</insert>  -->
     
+  
 </mapper>

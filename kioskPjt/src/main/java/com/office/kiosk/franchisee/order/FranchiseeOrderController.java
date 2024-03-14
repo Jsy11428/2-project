@@ -1,10 +1,13 @@
 package com.office.kiosk.franchisee.order;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,13 +26,24 @@ public class FranchiseeOrderController {
 	@Autowired
 	FranchiseeOrderService franchiseeOrderService;
 	
+	//order누르면 가맹점 선택창 이동
 	@GetMapping("/getTableOrderList")
-	public String getTableOrderList() {
+	public String getTableOrderList(HttpSession session) {
 		log.info("getTableOrderList()");
 		
-		String nextPage ="/franchisee/order/get_order_list";
-				
-		return nextPage;
+		 FranchiseeMemberDto loginedFranchiseeMemberDto = 
+		            (FranchiseeMemberDto) session.getAttribute("loginedFranchiseeMemberDto");
+		 
+		 if(loginedFranchiseeMemberDto != null) {
+			 
+			 String nextPage ="/franchisee/order/get_order_list";
+			 
+			 return nextPage;
+			 
+		 } else {
+			return null;
+		}
+		
 	}
 	
 	// 주문 리스트 뿌리기
@@ -83,11 +97,24 @@ public class FranchiseeOrderController {
 	//오더 넣는곳 이동
 	@GetMapping("/createOrderList")
 	public String createOrderList(HttpSession session) {
-		log.info("createOrderList()");
 		
-			String nextPage ="/franchisee/order/create_order_form";
+		log.info("createOrderList()");
+				
+		FranchiseeMemberDto loginedFranchiseeMemberDto = 
+				(FranchiseeMemberDto) session.getAttribute("loginedFranchiseeMemberDto");
+					
+			if(loginedFranchiseeMemberDto != null) {
 			
-			return nextPage;
+				String nextPage ="/franchisee/order/create_order_form";
+				
+				return nextPage;
+				
+			} else {
+				
+				return null;
+			}
+		
+			
 					
 	}
 	
@@ -117,6 +144,7 @@ public class FranchiseeOrderController {
 
 	}
 	
+	// 카테고리에 따른 가격 가져오기
 	@GetMapping("/getPriceByCategory")
 	@ResponseBody
 	public Object getPriceByCategory(@RequestParam("fc_menu_no") int fc_menu_no) {
@@ -129,16 +157,21 @@ public class FranchiseeOrderController {
 	}
 	
 	// 오더리스트 테이블에 넣기
-	@GetMapping("/getAllOrderbyOrder")
+	@PostMapping("/OrderAccountConfirm")
 	@ResponseBody
-	public Object getAllOrderbyOrder(@RequestParam("map") Map<String, Object> map) {
+	public Object OrderAccountConfirm(@RequestBody Map<String, Object> dataMsg) {
 		
-		log.info("getAllOrderbyOrder()");
-		
-		Map<String, Object> getAllOrders = franchiseeOrderService.getAllOrder(map);
+		log.info("OrderAccountConfirm()");
 				
-		return getAllOrders;
-		
+		  List<Object> objects = (List<Object>) dataMsg.get("menuOrders");
+		  log.info("objects: {}", objects);
+		 		  
+		  Map<String, Object> object = franchiseeOrderService.getAllOrder(dataMsg);
+		 
+		  return objects;
+		 				
 	}
+	
 		
+
 }

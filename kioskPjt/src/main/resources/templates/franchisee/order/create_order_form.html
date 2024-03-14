@@ -38,6 +38,22 @@
 							<div class="input_create_menu_wrap">						
 								<table>
 									<tr>
+										<td><span>포장여부</span></td>
+										<td><select name="cof_packaging" id="order_packaging_select">
+											<option value="">----선택------</option>
+											<option value="1">포장</option>
+											<option value="0">매장</option>
+										</select></td>
+									</tr>
+									<tr>
+										<td><span>결제 방식</span></td>
+										<td><select name="cof_pay" id="order_payment_select">
+											<option value="">----선택------</option>
+											<option value="카드">카드</option>
+											<option value="현금">현금</option>
+										</select></td>
+									</tr>																																	
+									<tr>
 										<td><span>카테고리 선택</span></td>
 										<td><select name="cof_no" id="order_category_select"></select></td>
 									</tr>
@@ -48,7 +64,7 @@
 									<tr>
 										<td><span>주문 수량</span></td>
 										<td><input type="number"  name="fof_menu_count" class="basic_count" min="1" ></td>
-									</tr>
+									</tr>									
 									<tr>
 										<td><span>메뉴 가격</span></td>
 										<td>					
@@ -57,7 +73,7 @@
 									</tr>																										
 									<tr>
 										<td colspan="2">
-											<input id="order_btn" type="button" value="메뉴등록" onclick="createOrderAccountForm()">
+											<input id="order_btn" type="button" value="메뉴등록">
 											<input type="reset" value="초기화" >											
 										</td>
 									</tr>
@@ -68,21 +84,22 @@
 											
 							<table>							
 								  <thead>
-								    <tr>
-								      <th hidden>NO</th>
-								      <th>주문 번호</th>							   
+								    <tr>								      
+								      <th>포장여부</th>
+								      <th>결제방식</th>
 								      <th>카테고리</th>
-								      <th>주문 수량</th>
-								      <th>결제 수단</th>
+								      <th>메뉴</th>							   
+								      <th>주문 수량</th>								     							      								     							      
 								      <th>주문일</th>
-								      <th>수정일</th>
+								      <th>수정일</th>							    
 								    </tr>
 								  </thead>					  
 								  <tbody id="order_table">
 								  	
 								  </tbody>										  		  
 							</table>
-							<input id="AllOrder_btn" type="button" value="메뉴등록" onclick="OrderAccountForm()">
+							<input name="AllOrder_btn" type="button" value="오더등록">
+							<input name="AllOrder_delete_btn" type="reset" value="reset">
 		
 					</div>
 
