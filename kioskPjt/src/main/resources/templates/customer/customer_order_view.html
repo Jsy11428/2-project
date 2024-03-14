@@ -11,7 +11,7 @@
 <link rel="stylesheet" th:href="@{/css/customer/footer.css}">
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script type="text/javascript" th:replace="~{include/home_js.html::home_js}"></script>
+<script type="text/javascript" th:replace="~{customer/include/customer_order_view_js.html::customer_order_view_js}"></script>
 <style>
 
         /* customer section.css */
@@ -82,10 +82,10 @@
 	<a th:href="@{/admin/home}">어드민홈</a>
 	<div id="wrap">
 	
-        <header th:replace="~{include/customer_header_nav_footer.html::customer_header}">
+        <header th:replace="~{/customer/include/customer_header_nav_footer.html::customer_header}">
         </header>
         
-        <nav th:replace="~{include/customer_header_nav_footer.html::customer_nav}">           
+        <nav th:replace="~{/customer/include/customer_header_nav_footer.html::customer_nav}">           
         </nav>       
         
         <section>
@@ -95,15 +95,66 @@
                 
                     <li>
                         <img src="/img/home/ice_ame.png" alt="ice_americano">
-                        <p class="item_name">아메리카노</p>
+                        <p class="item_name">아메리카노1</p>
                         <p class="item_price"><span>2000</span>원</p>
                     </li>
                     
                     <li>
                         <img src="/img/home/ice_latte.png" alt="ice_latte">
-                        <p class="item_name">카페라떼</p>
+                        <p class="item_name">카페라떼2</p>
                         <p class="item_price"><span>3000</span>원</p>
                     </li> 
+                    
+                    <li>
+                        <img src="/img/home/ice_ame.png" alt="ice_americano">
+                        <p class="item_name">아메리카노3</p>
+                        <p class="item_price"><span>2000</span>원</p>
+                    </li>
+                    <li>
+                        <img src="/img/1_coffee/1_espresso.png" alt="ice_americano">
+                        <p class="item_name">아메리카노4</p>
+                        <p class="item_price"><span>2000</span>원</p>
+                    </li>
+                    <li>
+                        <img src="/img/1_coffee/12_caffe_mocha_hot.png" alt="ice_americano">
+                        <p class="item_name">아메리카노5</p>
+                        <p class="item_price"><span>2000</span>원</p>
+                    </li>
+                    <li>
+                        <img src="/img/1_coffee/13_caffe_mocha_ice.png" alt="ice_americano">
+                        <p class="item_name">아메리카노6</p>
+                        <p class="item_price"><span>2000</span>원</p>
+                    </li>
+                    <li>
+                        <img src="/img/1_coffee/2_americano_hot.png" alt="ice_americano">
+                        <p class="item_name">아메리카노7</p>
+                        <p class="item_price"><span>2000</span>원</p>
+                    </li>
+                    <li>
+                        <img src="/img/1_coffee/4_mix_coffee_hot.png" alt="ice_americano">
+                        <p class="item_name">아메리카노8</p>
+                        <p class="item_price"><span>2000</span>원</p>
+                    </li>
+                    <li>
+                        <img src="/img/1_coffee/5_mix_coffee_ice.png" alt="ice_americano">
+                        <p class="item_name">아메리카노9</p>
+                        <p class="item_price"><span>2000</span>원</p>
+                    </li>
+                    <li>
+                        <img src="/img/1_coffee/6_cmilk_latte_hot.png" alt="ice_americano">
+                        <p class="item_name">아메리카노10</p>
+                        <p class="item_price"><span>2000</span>원</p>
+                    </li>
+                    <li>
+                        <img src="/img/1_coffee/7_cmilk_latte_ice.png" alt="ice_americano">
+                        <p class="item_name">아메리카노11</p>
+                        <p class="item_price"><span>2000</span>원</p>
+                    </li>
+                    <li>
+                        <img src="/img/1_coffee/8_latte_hot.png" alt="ice_americano">
+                        <p class="item_name">아메리카노12</p>
+                        <p class="item_price"><span>2000</span>원</p>
+                    </li>
                                     
                 </ul>
                 
@@ -118,7 +169,7 @@
             </div>
         </section>
         
-        <footer th:replace="~{include/customer_header_nav_footer.html::customer_footer}">            
+        <footer th:replace="~{/customer/include/customer_header_nav_footer.html::customer_footer}">            
         </footer>
     </div>
 
