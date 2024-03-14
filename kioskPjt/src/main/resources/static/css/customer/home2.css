@@ -122,3 +122,16 @@
 #section_wrap .login_form table input.input_btn {
     margin: 5px;
 }
+
+#section_wrap .session_chk .btn {
+    margin: 0 auto;
+	border: 1px solid #000;
+    width: 120px;
+    padding: 5px;
+    text-align: center;
+}
+
+#section_wrap .session_chk .btn:hover {
+    cursor: pointer;
+    background-color: #dadada;
+}

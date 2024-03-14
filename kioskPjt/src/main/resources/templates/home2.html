@@ -43,37 +43,45 @@
 					</table>
 				</div>
 		
-				<div class="login_form">
-
-					<form	action="/franchisee/member/franchiseeStoreLogin" 
-							method="post"
-							name="franchisee_store_login_form">
-							
+				<div class="session_chk" th:if="${session.loginedFranchiseeStoreDto == null}">
+					<div class="login_form">
+	
+						<form	action="/franchisee/member/franchiseeStoreLogin" 
+								method="post"
+								name="franchisee_store_login_form">
+								
 							<input type="hidden" name="fcs_no">
-
-					<table>
-						<tr>
-							<td>ID</td>
-							<td><input type="text" name="fcm_id" placeholder="PLEASE INPUT FRANCHISEE ID"></td>
-						</tr>
-						<tr>
-							<td><input type="button" name="fcs_name" value="오픈지점"></td>
-							<td><span class="txt_1">지점명  :  <span class="fcs_name"></span></span></td>
-						</tr>
-						<tr>
-							<td>PW</td>
-							<td><input type="password" name="fcm_pw" placeholder="PLEASE INPUT FRANCHISEE PW"></td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<input class="input_btn" type="button" value="login" onclick="franchiseeStoreLogin()">
-								<input class="input_btn" type="reset" value="reset">
-							</td>
-						</tr>
-					</table>
-
-					</form>
-					
+	
+							<table>
+								<tr>
+									<td>ID</td>
+									<td><input type="text" name="fcm_id" placeholder="PLEASE INPUT FRANCHISEE ID"></td>
+								</tr>
+								<tr>
+									<td><input type="button" name="fcs_name" value="오픈지점"></td>
+									<td><span class="txt_1">지점명  :  <span class="fcs_name"></span></span></td>
+								</tr>
+								<tr>
+									<td>PW</td>
+									<td><input type="password" name="fcm_pw" placeholder="PLEASE INPUT FRANCHISEE PW"></td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<input class="input_btn" type="button" value="login" onclick="franchiseeStoreLogin()">
+										<input class="input_btn" type="reset" value="reset">
+									</td>
+								</tr>
+							</table>
+	
+						</form>
+						
+					</div>
+				</div>
+				
+				<div class="session_chk" th:unless="${session.loginedFranchiseeStoreDto == null}">
+					<div class="btn">
+						<a th:href="@{/franchisee/member/sotreLoginResultView}">주문하러 가기</a>
+					</div>
 				</div>
 				
 			</div>
