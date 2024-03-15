@@ -1,10 +1,17 @@
 package com.office.kiosk.franchisee.menu;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.office.kiosk.admin.menu.AdminMenuDto;
+import com.office.kiosk.paging.kioskPageDto;
 
 import ch.qos.logback.core.model.Model;
 import lombok.extern.log4j.Log4j2;
@@ -88,7 +95,50 @@ public class FranchiseeMenuController {
 		
 	}
 	
+	//프렌차이즈 모든 카테고리 가져오기
+	@PostMapping("/getCategory")
+	@ResponseBody
+	public Object getCategory() {
+		log.info("getCategory()");
+		
+		Map<String, Object> cateDtos = franchiseeMenuService.getCategory();
+		
+		return cateDtos;
+	}
+	
+	//프렌차이즈 메뉴 가져오기
+	@GetMapping("/getMenus")
+	@ResponseBody
+	public Object getMenus(@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+		log.info("getMenus()");
+		log.info("page:" + page);
 
+		Map<String, Object> pagingFranchiseeMenuDtos = franchiseeMenuService.pagingFranchiseeMenuList(page);
+		
+		kioskPageDto franchiseeMenuListPageDto = franchiseeMenuService.getAllFranchiseeMenuListPageNum(page);
+
+		pagingFranchiseeMenuDtos.put("franchiseeMenuListPageDto", franchiseeMenuListPageDto);
+		
+		return pagingFranchiseeMenuDtos;
+
+	}
+	
+	// 카테고리에 따른 메뉴 불러오기(페이지네이션추가)
+
+	@GetMapping("/getMenusByCategory")
+	@ResponseBody
+	public Object getMenusByCategory(Model model, @RequestParam("fcmc_no") String fcmc_no, @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+		log.info("getMenusByCategory()");
+
+		Map<String, Object> pagingFranchiseeMenuDtos = franchiseeMenuService.pagingFranchiseeMenuListByCate(page, fcmc_no);
+			
+		kioskPageDto FranchiseeMenuListPageDto = franchiseeMenuService.getAllFranchiseeMenuListPageNumByCate(page, fcmc_no);
+
+		pagingFranchiseeMenuDtos.put("FranchiseeMenuListPageDto", FranchiseeMenuListPageDto);
+			
+		return pagingFranchiseeMenuDtos;
+
+	}
 	
 	// 프랜차이즈 메뉴 수정 화면
 	
@@ -100,6 +150,16 @@ public class FranchiseeMenuController {
 		
 		return nextPage;
 		
+	}
+	
+	@PostMapping("/getSelectMenuInfo")
+	@ResponseBody
+	public FranchiseeMenuDto getSelectMenuInfo(Model model, @RequestParam("fc_menu_no") String fc_menu_no) {
+		log.info("getSelectMenuInfo()");
+
+		FranchiseeMenuDto dto = franchiseeMenuService.getSelectMenuInfo(fc_menu_no);
+
+		return dto;
 	}
 	
 	

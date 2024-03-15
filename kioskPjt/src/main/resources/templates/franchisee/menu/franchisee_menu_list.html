@@ -2,45 +2,168 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 
+<title th:replace="~{include/include_title.html::title}"></title>
+
+<script type="text/javascript"
+	th:src="@{/js/franchisee/member/franchisee_member.js}"></script>
+
+<link rel="stylesheet" th:href="@{/css/franchisee/common.css}">
+<link rel="stylesheet" th:href="@{/css/franchisee/franchisee_include.css}">
+<link rel="stylesheet" th:href="@{/css/franchisee/franchisee_home.css}">
+<link rel="stylesheet" th:href="@{/css/admin/menu/admin_menu_list.css}">
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+<script type="text/javascript"
+	th:replace="~{/franchisee/menu/include/create_menu_list_js.html::js}"></script>
+
+ <script>
+    $(document).ready(function() {
+        
+        document.getElementById("menu_category_select").disabled = true;
+    });
+</script>
+
+<style type="text/css">
+
+select[disabled] {
+    /* 화살표 숨김 */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* 배경색 변경 */
+    background-color: #fff ; /* 적절한 배경색으로 변경하세요 */
+    border: 0.5px solid #000 ;
+    color: #000000;
+    /* 흐림 효과 제거 */
+    filter: none;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+</style>
 
 </head>
 <body>
 
-
-	<nav
-		th:replace="~{/franchisee/include/franchisee_include.html::franchisee_nav}">
-	</nav>
-
-	<section>
-
-		<div id="section_wrap">
-			<div class="pos_section_side_menu_wrap">
-				<ul>
-					<li><a th:href="@{/franchisee/sales/getSalesInfo}">SALES</a></li>
-					<li><a th:href="@{/franchisee/menu/franchiseeMenuHome}">MENU</a></li>
-					<li><a th:href="@{/franchisee/order/getTableOrderList}">ORDER</a></li>
-					<li><a href="#none">MAGAGEMENT</a></li>
-				</ul>
-			</div>
-
-			<div class="pos_section_info_wrap">
-
-				<div id="word">메뉴 리스트</div>
-			 	
-
-			</div>
-
-			<div class="pos_section_detail_view_wrap"></div>
-			</div>
-
-	</section>
-
-	<footer
-		th:replace="~{/franchisee/include/franchisee_include.html::franchisee_footer}">
-
-	</footer>
-
+	<div id="wrap">
+	
+		<nav th:replace="~{/franchisee/include/franchisee_include.html::franchisee_nav}">
+		</nav>
+	
+		<section>
+			<div id="section_wrap">
+				
+				<div th:replace="~{/franchisee/include/franchisee_include.html::section_menu_wrap}">
+				</div>
+					
+				<!-- <div class="pos_section_side_menu_wrap">
+					<ul>
+						<li><a th:href="@{/franchisee/sales/getSalesInfo}">SALES</a></li>
+						<li><a th:href="@{/franchisee/menu/franchiseeMenuHome}">MENU</a></li>
+						<li><a th:href="@{/franchisee/order/getTableOrderList}">ORDER</a></li>
+						<li><a href="#none">MAGAGEMENT</a></li>
+					</ul>
+				</div>  -->
+	
+				<div class="admin_section_view_wrap">
+	
+					<div id="word">메뉴 리스트</div>
+				 	
+				 		<div class="menu_category_change_wrap" id="menu_category_change_wrap">
+							<!-- 카테고리 버튼들 -->
+						</div>
+	
+						<div class="admin_menu_list_wrap">
+		
+							<table id="admin_menu_list">
+		
+							</table>
+						
+						
+						</div>
+	
+						<div class="page_no_wrap">
+							
+						</div>
+	
+						<div class="modal_wrap">
+	
+							<div class="modify_menu_modal">
+	
+								<form th:action="@{/admin/menu/modifyMenuAccountConfirm}"
+									name="modify_menu_account_form" method="post"
+									enctype="multipart/form-data">
+	
+									<div class="modify_menu_wrap">
+										<table>
+											<thead>
+												<tr>
+												<th colspan="3">메뉴정보 수정
+												</th>
+												</tr>
+											</thead>
+											<tbody>
+											<tr>
+												<td><span>메뉴 이미지</span></td>
+												<td><img class="img_section" id="img_section"></td>
+												<td><input type="hidden" name="fc_menu_no"></td>
+											</tr>
+											<!-- <tr>
+												<td><span>메뉴 이미지 첨부</span></td>
+												<td><input type="file" name="file" id="file"></td>
+											</tr> -->
+											<tr>
+												<td><span>카테고리</span></td>
+												<td><select name="fcmc_no" id="menu_category_select"></select></td>
+											</tr>
+											<tr>
+												<td><span>메 뉴 명</span></td>
+												<td><input type="text" name="fc_menu_name"
+													class="basic_txt_input" readonly></td>
+											</tr>
+											<tr>
+												<td><span>메뉴 가격</span></td>
+												<td><input type="number" name="fc_menu_price"
+													class="basic_txt_input" readonly></td>
+											</tr>
+											<tr>
+												<td><span>메뉴 설명</span></td>
+												<td>
+													<textarea name="fc_menu_text" id="" cols="30" rows="10" class="long_txt_input" readonly></textarea>
+												</td>
+											</tr>
+	
+											<tr>									
+												<input type="button" value="취소">											
+											</tr>
+											</tbody>
+										</table>
+										
+										
+									</div>
+	
+								</form>
+							</div>
+	
+						</div>
+						
+				 	
+				 	
+	
+				</div>
+	
+				<!-- <div class="pos_section_detail_view_wrap"></div> -->
+				</div>
+	
+		</section>
+	
+		<footer th:replace="~{/franchisee/include/franchisee_include.html::franchisee_footer}">	
+		</footer>
+		
+	</div>
+	
 </body>
 </html>

@@ -1,7 +1,5 @@
 package com.office.kiosk.franchisee.menu;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import lombok.Data;
 
 @Data
@@ -16,5 +14,11 @@ public class FranchiseeMenuDto {
 	private int fc_menu_quantity;
 	private String fc_menu_reg_date;
 	private String fc_menu_mod_date;
+	
+	
+	private int fcmc_p_no;		
+	private String fcmc_name;
+	private String fcmc_reg_date;
+	private String fcmc_mod_date;
 	
 }
