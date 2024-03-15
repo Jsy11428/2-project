@@ -32,5 +32,68 @@
 		FCS_NO = #{fcs_no} 
 		 
 	</select>
+	
+	<select id="selectMyStoreSalesInfoBySelectDate"
+		parameterType="java.util.Map"
+		resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
+
+		SELECT 
+		* 
+		FROM 
+		TBL_FC_SALES 
+		WHERE 
+		FCS_NO = #{fcs_no} 
+		AND DATE(FCSA_REG_DATE) = #{selectDate} 
+		ORDER BY 
+		FCSA_NO DESC 
+		LIMIT 
+		#{start}, #{limit} 
+
+	</select>
+	
+	<select id="selectMyStoreSalesInfoBySelectDateCnt" 
+		resultType="Integer">
+
+		SELECT 
+		COUNT(FCSA_NO) 
+		FROM 
+		TBL_FC_SALES 
+		WHERE 
+		FCS_NO = #{fcs_no} 
+		AND DATE(FCSA_REG_DATE) = #{selectDate} 
+		 
+	</select>
+	
+		<select id="selectMyStoreSalesInfoByInputPeriod"
+		parameterType="java.util.Map"
+		resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
+
+		SELECT 
+		    * 
+		FROM 
+		    TBL_FC_SALES 
+		WHERE 
+		    FCS_NO = #{fcs_no} 
+		    AND DATE(FCSA_REG_DATE) BETWEEN #{startDate} AND #{endDate} 
+		ORDER BY 
+		    FCSA_NO DESC 
+		LIMIT 
+		    #{start}, #{limit}
+
+	</select>
+	
+	<select id="selectMyStoreSalesInfoByInputPeriodCnt" 
+		resultType="Integer">
+
+		SELECT 
+			COUNT(FCSA_NO) 
+		FROM 
+			TBL_FC_SALES 
+		WHERE 
+			FCS_NO = #{fcs_no} 
+			AND DATE(FCSA_REG_DATE) BETWEEN #{startDate} AND #{endDate} 
+		 
+	</select>
+	
 
 </mapper>
