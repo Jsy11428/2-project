@@ -29,7 +29,8 @@ $(document).ready(function(){
     setCurrentDateSearchInput();    
     
     // 우리매장의 전체 매출 정보 불러오기 (페이지네이션적용)
-	let fcs_no = $('#nav_wrap span').text();
+	let fcs_no = $('#fc_no').text();
+    console.log("fcs_no--------------->" + fcs_no);
     ajax_getMyStoreAllSalesInfo(fcs_no);
     
     // 이벤트 핸들러 초기화
@@ -165,7 +166,7 @@ function setYearBySelectChange() {
                     selectedDate.getDay())
                     
                     
-	let fcs_no = $('#nav_wrap span').text();
+	let fcs_no = $('#fc_no').text();
     ajax_getCurrentDateMyStoreSalesInfo(fcs_no);
 
 }
@@ -184,7 +185,7 @@ function setMonthBySelectChange() {
                     selectedDate.getDate(), 
                     selectedDate.getDay())
 
-    let fcs_no = $('#nav_wrap span').text(); 
+    let fcs_no = $('#fc_no').text();
     ajax_getCurrentDateMyStoreSalesInfo(fcs_no);
 
 }
@@ -203,7 +204,7 @@ function setDateBySelectChange() {
                     selectedDate.getDate(), 
                     selectedDate.getDay())
 
-    let fcs_no = $('#nav_wrap span').text();        
+    let fcs_no = $('#fc_no').text();       
     ajax_getCurrentDateMyStoreSalesInfo(fcs_no);
 
 }
@@ -215,7 +216,7 @@ function setDateByTodayBtnclick() {
 
     setCurrentYearAndMonthSelectUI()
 
-    let fcs_no = $('#nav_wrap span').text();
+    let fcs_no = $('#fc_no').text();
     ajax_getCurrentDateMyStoreSalesInfo(fcs_no);
 
 }
@@ -223,7 +224,7 @@ function setDateByTodayBtnclick() {
 function searchBtnClick() {
     console.log('searchBtnClick()');
 
-    let fcs_no = $('#nav_wrap span').text();
+    let fcs_no = $('#fc_no').text();
     ajax_getMyStoreSalesInfoByInputPeriod(fcs_no);
 
 }

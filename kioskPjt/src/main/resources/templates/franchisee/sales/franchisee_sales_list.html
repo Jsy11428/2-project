@@ -31,7 +31,7 @@
 			
 				<div th:replace="~{/franchisee/include/franchisee_include.html::section_menu_wrap}">
 				</div>
-				
+				<p hidden id="fc_no" th:text="${session.loginedFranchiseeMemberDto.fcs_no}"></p>
 				<div class="admin_section_view_wrap">
 			
 				<div class="pos_section_main">
