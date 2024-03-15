@@ -1,0 +1,9 @@
+diff a/kioskPjt/src/main/java/com/office/kiosk/admin/member/AdminMemberController.java b/kioskPjt/src/main/java/com/office/kiosk/admin/member/AdminMemberController.java	(rejected hunks)
+@@ -233,7 +233,6 @@
+ 	public String adminList(Model model, HttpSession session) {
+ 		log.info("adminList()");
+ 		
+-		String nextPage = "/admin/member/admin_list";
+ 		String nextPage = null;
+ 		
+ 		AdminMemberDto loginedAdminMemberDto = 

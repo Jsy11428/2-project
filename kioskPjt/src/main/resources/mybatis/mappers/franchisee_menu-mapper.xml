@@ -3,6 +3,63 @@
 
 <mapper namespace="com.office.kiosk.franchisee.menu.IFranchiseeMenuDao">
 
+	<select id="selectAllCategory" resultType="com.office.kiosk.franchisee.menu.FranchiseeMenuCategoryDto">
+	
+	SELECT * FROM TBL_FC_MENU_CATEGORY;
+	
+	</select>
 
+ 	<select id="selectFranchiseeMenuPagingList" parameterType="java.util.Map" resultType="com.office.kiosk.franchisee.menu.FranchiseeMenuDto">
+	
+		SELECT 
+		* 
+		FROM
+		TBL_FC_MENU 
+		ORDER BY FC_MENU_NO ASC 
+		LIMIT
+		#{start}, #{limit}
+	
+	</select>
+		
+	<select id="selcetAllFranchiseeMenuListCnt" resultType="Integer">
+		
+		SELECT 
+			COUNT(FC_MENU_NO) 
+		FROM 
+			TBL_FC_MENU
+		
+	</select>
 
+	<select id="selectFranchiseeMenuPagingListByCate" parameterType="java.util.Map" resultType="com.office.kiosk.franchisee.menu.FranchiseeMenuDto">
+	
+		SELECT 
+		* 
+		FROM
+		TBL_FC_MENU 
+		WHERE 
+		FCMC_NO = #{fcmc_no} 
+		ORDER BY FC_MENU_NO ASC 
+		LIMIT 
+		#{start}, #{limit}
+	
+	</select>
+	
+	<select id="selcetAllFranchiseeMenuListCntByCate" resultType="Integer">
+		
+		SELECT 
+			COUNT(FC_MENU_NO) 
+		FROM 
+			TBL_FC_MENU
+		WHERE 
+		FCMC_NO = #{fcmc_no} 
+		
+	</select>
+	
+	<select id="selectMenuInfo" parameterType="String"
+		resultType="com.office.kiosk.franchisee.menu.FranchiseeMenuDto">
+
+		SELECT * FROM TBL_FC_MENU WHERE FC_MENU_NO = #{fc_menu_no}
+
+	</select>
+	
 </mapper>
