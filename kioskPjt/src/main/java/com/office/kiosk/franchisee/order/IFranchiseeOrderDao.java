@@ -6,8 +6,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.office.kiosk.admin.menu.AdminMenuDto;
-
 @Mapper
 public interface IFranchiseeOrderDao {
 
@@ -21,8 +19,12 @@ public interface IFranchiseeOrderDao {
 
 	public List<FranchiseeOrderDto> selectAllCategory();
 
-	public List<FranchiseeOrderDto> selectMenusByCategory(int fcmc_no);
+	public List<FranchiseeOrderDto> selectAllMenu(int fcmc_no);
 
-	public List<FranchiseeOrderDto> selectAllMenu();
+	public List<FranchiseeOrderDto> selectAllPrice(int fc_menu_no);
+
+	public List<FranchiseeOrderDto> insertAllOrder(FranchiseeOrderDto franchiseeOrderDto);
+
+
 
 }

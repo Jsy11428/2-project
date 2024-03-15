@@ -17,3 +17,4 @@ function checkLoginAndRedirect() {
         alert('login please');
     }
 }
+
