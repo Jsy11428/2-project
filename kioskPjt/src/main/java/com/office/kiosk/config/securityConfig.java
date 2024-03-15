@@ -41,9 +41,14 @@ public class securityConfig {
 		
 		http
 			.authorizeHttpRequests((request) -> request
-					.requestMatchers("/franchisee/member/franchiseeModifyForm", 
-									 "/franchisee/member/franchiseeModifyConfirm").authenticated()
-					.requestMatchers("/**").permitAll());
+					.requestMatchers("/franchisee/order/**").authenticated()
+					.requestMatchers("/",
+									"/admin/**",
+									"/css/**",
+									"/js/**",
+									"/error/**",
+									"/img/**",
+									"/**").permitAll());
 
 		http.formLogin(login -> login
 				.loginPage("/franchisee/member/franchiseeLoginForm")

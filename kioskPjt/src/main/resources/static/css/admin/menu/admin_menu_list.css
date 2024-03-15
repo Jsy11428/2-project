@@ -196,7 +196,10 @@ div.modify_menu_modal input[type="reset"]:hover {
 	justify-content: space-between;
 }
 
-
+#section_wrap .admin_section_view_wrap .other {
+	text-align: center;
+	margin: 20px 0;
+}
 
 /* section.css END*/
 

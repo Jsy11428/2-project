@@ -5,10 +5,21 @@ $(document).ready(function() {
     
     orderBtnClick();
     
-
+    init();
     
 });
 
+function init() {
+    console.log('init()')
+
+}
+
+function removeOrderTable(){
+    console.log('removeOrderTable()')
+
+    $('#order_table').empty();
+
+}
  
 //카테고리
 function ajax_getCategorie() {
@@ -77,7 +88,6 @@ function ajax_get_order_by_category() {
 
             $('#order_menu_select').html(appendTag);
             
-          	                                                 
         },
         error: function(data) {
             console.log('ajax error!!');
@@ -165,71 +175,62 @@ function orderBtnClick() {
    
 	/* orderBtnClick(); */
     $('#order_btn').click(function() {
-   	
    		
        // 선택된 카테고리와 메뉴 가져오기      
-       let packaging = $('#order_packaging_select option:selected').val();
-       
-       let pay = $('#order_payment_select option:selected').text();
-       
-       let category = $('#order_category_select option:selected').val();
-       
-   	   let fcmc_no = $('#order_category_select').val();
-       
-       let menu = $('#order_menu_select option:selected').val();
-   		let fc_menu_no = $('#order_menu_select').val();
-       // 주문 수량 가져오기
-       let quantity = $('.basic_count').val();
+        let packaging = $('#order_packaging_select option:selected').val();     // 포장 여부
+        let pay = $('#order_payment_select option:selected').text();            // 결제 방법
+        let category = $('#order_category_select option:selected').val();       // 메뉴 카테코리 NO
+        let menu = $('#order_menu_select option:selected').val();
+        let quantity = parseInt($('.basic_count').val());       // 주문 수량 가져오기
+        let price = parseInt($('.basic_price').val());          // 주문 가격 가져오기
+        let shot_number = $('.shot_number').val();
+        let pur_number = $('.pur_number').val();
+        let fc_menu_option_price = parseInt(shot_number * 500) + (pur_number * 1000);
+        let fco_total_price = (fc_menu_option_price + price) * quantity;
 
-       // 주문 가격 가져오기
-       let price = $('.basic_price').val();
-/////////////////////////////////////////////////////
-              
-       // 주문 목록에 추가
-       let appendTag = "<tr>";
-	        	appendTag += '<td hidden fc_menu_no="'+fc_menu_no+'">'+ fc_menu_no +'</td>'
-	        	appendTag += '<td hidden fcmc_no="'+fcmc_no+'">'+ fcmc_no +'</td>'
-	        	
-	        	appendTag += '<td fco_packaging="'+packaging+'">' + packaging + '</td>';    
-	        	appendTag += '<td pm_type="'+pay+'">' + pay + '</td>';    
-	        	appendTag += '<td fcmc_no="'+category+'">' + category + '</td>';
-	        	appendTag += '<td fc_menu_no="'+menu+'">' + menu + '</td>';
-	        	appendTag += '<td fco_menu_cnt="'+quantity+'">' + quantity + '</td>';    
-	        	
-	        	appendTag += '<td>' + new Date().toLocaleDateString() + '</td>'; // 현재 날짜를 주문일로 설정
-	        	appendTag += '<td>' + new Date().toLocaleDateString() + '</td>'; // 현재 날짜를 수정일로 설정 (임시)
-       	appendTag += '</tr>';
-       	
-       $("#order_table").append(appendTag);                                  
-              
-       console.log('<td hidden fc_menu_no="'+fc_menu_no+'">'+ fc_menu_no +'</td>');
-       console.log('<td hidden fcmc_no="'+fcmc_no+'">'+ fcmc_no +'</td>');
-       
-       console.log('<td fco_packaging="'+packaging+'">'+ packaging +'</td>');
-       console.log('<td pm_type="'+pay+'">'+ pay +'</td>');
-       console.log('<td fcmc_no="'+category+'">'+ category +'</td>');
-       console.log('<td fc_menu_no="'+menu+'">'+ menu +'</td>');
-       console.log('<td fco_menu_cnt="'+quantity+'">'+ quantity +'</td>');
-       
+        let cof_packaging = $('#order_packaging_select').val();
+        let cof_pay = $('#order_payment_select').val();
 
+        if(cof_packaging === '' || cof_pay === '') {
+            alert("포장 여부 or 결제 방식을 선택하세요.")
+
+        } else {
+            // 주문 목록에 추가
+            let appendTag = "<tr>";
+                    appendTag += '<td fco_packaging="'+packaging+'">' + $('#order_packaging_select option:selected').text() + '</td>';    
+                    appendTag += '<td pm_type="'+pay+'">' + pay + '</td>';    
+                    appendTag += '<td fcmc_no="'+category+'">' + $('#order_category_select option:selected').text() + '</td>';
+                    appendTag += '<td fc_menu_no="'+menu+'">' + $('#order_menu_select option:selected').text() + '</td>';
+                    appendTag += '<td fco_menu_cnt="'+quantity+'">' + quantity + '</td>';
+                    appendTag += '<td>샷: '+ shot_number + ' , 펄: ' + pur_number + '</td>';
+                    appendTag += '<td fco_total_price="'+fco_total_price+'" fc_menu_option_price="'+fc_menu_option_price+'">'+fco_total_price+'</td>';
+                    appendTag += '<td>' + new Date().toLocaleDateString() + '</td>'; // 현재 날짜를 주문일로 설정
+                appendTag += '</tr>';
+            
+            $("#order_table").append(appendTag);
+
+            $('input.shot_number').val(0);
+
+            $('input.pur_number').val(0);
+        }
 
    });
+
     $('#section_wrap input[name="AllOrder_btn"]').click(function() {
   		// 클릭 이벤트 발생 시 실행되는 코드
   		console.log(" eliments: --->>>", $('#order_table tr:nth-child(1) td').length);
-  		
-  		ajax_get_AllOrder_by_order();
+
+        ajax_get_AllOrder_by_order();
   	})
   	
-  	$('#section_wrap input[name="AllOrder_delete_btn"]').click(function() {
-  		$('#order_table tbody').empty();
+      $('#section_wrap input[name="AllOrder_delete_btn"]').click(function() {
+        console.log('AllOrder_delete_btn click()');
+
+  		$('#order_table').empty();
 
   	});
+
 }
-
-
-
-
 
 function ajax_get_AllOrder_by_order() {	
 	
@@ -239,35 +240,33 @@ function ajax_get_AllOrder_by_order() {
 		
 	    for(let i = 1, j = 0; i <= $("#order_table tr").length;  i++, j++){
 			
-	    	let no = 1;
-	    	
-	    	
-	    	let fco_packaging = $('#order_table tr:nth-child('+i+') td:nth-child(3)').attr("fco_packaging");
-	    	let pm_type = $('#order_table tr:nth-child('+i+') td:nth-child(4)').attr("pm_type");
-	    	let fcmc_no = $('#order_table tr:nth-child('+i+') td:nth-child(5)').attr("fcmc_no");
-	    	let fc_menu_no = $('#order_table tr:nth-child('+i+') td:nth-child(6)').attr("fc_menu_no");
-	    	let fco_menu_cnt = $('#order_table tr:nth-child('+i+') td:nth-child(7)').attr("fco_menu_cnt");
-	  
+            let fco_packaging = $('#order_table tr:nth-child('+i+') td:nth-child(1)').attr("fco_packaging");
+            let pm_type = $('#order_table tr:nth-child('+i+') td:nth-child(2)').attr("pm_type");
+            let fcmc_no = $('#order_table tr:nth-child('+i+') td:nth-child(3)').attr("fcmc_no");
+            let fc_menu_no = $('#order_table tr:nth-child('+i+') td:nth-child(4)').attr("fc_menu_no");
+            let fco_menu_cnt = $('#order_table tr:nth-child('+i+') td:nth-child(5)').attr("fco_menu_cnt");
+            let fco_menu_option = $('#order_table tr:nth-child('+i+') td:nth-child(6)').text();
+            let fco_total_price = $('#order_table tr:nth-child('+i+') td:nth-child(7)').attr("fco_total_price");
+            let fco_menu_option_price = $('#order_table tr:nth-child('+i+') td:nth-child(7)').attr("fc_menu_option_price");
 
-	    
-		     console.log('fco_packaging---', fco_packaging);
-		     console.log('pm_type---', pm_type);
-		     console.log('fcmc_no---', fcmc_no);
-		     console.log('fc_menu_no---', fc_menu_no);
-		     console.log('fco_menu_cnt---', fco_menu_cnt);
+            // 'shot_number' : shot_number,
+            // 'shot_price' : shot_price,
+            // 'pur_number' : pur_number,
+            // 'pur_price' : pur_price,
 
-		     
-		     menuOrders[j] = {
+            
+            menuOrders[j] = {
 		    		"fco_packaging" : fco_packaging,
 		    		"pm_type" : pm_type,
 		    		"fcmc_no" : fcmc_no,
 			        "fc_menu_no" : fc_menu_no,
 		         	"fco_menu_cnt" : fco_menu_cnt,
-	    	
+                    "fco_menu_option" : fco_menu_option,
+                    "fco_menu_option_price" : fco_menu_option_price,
+                    "fco_total_price" : fco_total_price
 		     	}		 
-		     
-		   /*    no++;  */
-		}
+
+        }
 	    
 	    console.log("menuOrders: ", menuOrders);
 		
@@ -284,8 +283,10 @@ function ajax_get_AllOrder_by_order() {
 		     dataType: 'json',	
 		     success: function(data) {
 		   	 	console.log('order_ajax success!!');
-		        		   		   										
-		     },
+
+                removeOrderTable();
+
+            },
 		     
 			error: function(data) {
 	        	console.log('order_ajax error!!');

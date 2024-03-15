@@ -9,6 +9,7 @@
 <link rel="stylesheet" th:href="@{/css/customer/header.css}">
 <link rel="stylesheet" th:href="@{/css/customer/nav.css}">
 <link rel="stylesheet" th:href="@{/css/customer/footer.css}">
+<link rel="stylesheet" th:href="@{/css/customer/customer_payment_modal.css}">
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
@@ -481,9 +482,9 @@ p.menu_price_origin {
 					<div id="myModal" class="myModal">
 
 						<div class="modal-content">
-
+							
 							<span class="close">&times; </span>
-
+							
 							<div class="modal_header">
 								<div class="header_sec">
 									<img class="img_section" id="img_section">
@@ -563,6 +564,47 @@ p.menu_price_origin {
 		<footer
 			th:replace="~{customer/include/customer_header_nav_footer.html::customer_footer}">
 		</footer>
+		
+		<div id="payment_modal_wrap" >
+			<div class="payment_modal_close_btn"></div>
+			<div class="payment_modal_section">	
+				<div class="payment_modal_header">
+					
+				</div>			
+				<div class="payment_modal_title_wrap">
+					<h2>주문하신 내용이 맞나요?</h2>
+					<p>결제 후 취소나 변경이 어렵습니다.</p>
+				</div>
+				<div class="payment_modal_cart_wrap">
+					<ul class="payment_modal_cart">
+						<li>
+							<div class="payment_modal_cart_item_img">
+								<img src="/img/home/ice_ame.png" alt="">
+							</div>
+							<div class="payment_modal_cart_item_info">
+								<h3 class="payment_menu_name">아메리카노 X 1</h3>
+								<p class="payment_menu_option">샷:0 , 펄:0</p>
+							</div>
+							<div class="payment_modal_cart_price_wrap">
+								<h2 class="payment_modal_cart_price">1000원</h2>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="payment_modal_price_wrap">
+					<table>
+						<tr>
+							<td>결제 금액</td>
+							<td class="payment_modal_total_price">10000원</td>
+						</tr>
+					</table>
+				</div>
+				<div class="payment_modal_payment_type_wrap">
+					<button class="pay_card" pm_type="카드">카드</button>
+					<button class="pay_cash" pm_type="현금">현금</button>
+				</div>
+			</div>
+		</div>
 	</div>
 
 

@@ -1,5 +1,6 @@
 #section_wrap .admin_section_view_wrap .franchisee_list {
 	width: 100%;
+	text-align: center;
 }
 
 #section_wrap .admin_section_view_wrap .franchisee_list table {
@@ -16,11 +17,15 @@
 	font-size: .9em;
 	padding: 5px;
 }
+
 #section_wrap .admin_section_view_wrap div.page_no_wrap {
 	width: 250px;
 	text-align: center;
 	margin: 20px auto;
 	display: flex;
 	justify-content: space-between;
+}
+
+#section_wrap .admin_section_view_wrap .franchisee_list a {
 	
 }
