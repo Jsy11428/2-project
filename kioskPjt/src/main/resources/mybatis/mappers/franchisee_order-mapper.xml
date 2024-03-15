@@ -35,7 +35,7 @@
 	    
 	    JOIN TBL_FC_MEMBER FME ON FS.FCM_NO = FME.FCM_NO 
 	    
-	    WHERE FME.FCM_NO = #{loginNo}
+	    WHERE FS.FCS_NO = #{loginNo}
 
 	    ORDER BY FCO_NO ASC 
 	    
@@ -125,7 +125,7 @@
 			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
 	
 		SELECT
-			SUM(FCO_ORI_NO) AS FCSA_PRICE 
+			SUM(FCO_TOTAL_PRICE) AS FCSA_PRICE 
 		FROM 
 			TBL_FC_ORDER 
 		WHERE 

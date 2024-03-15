@@ -46,9 +46,7 @@ public class FranchiseeOrderController {
 	    FranchiseeMemberDto loginedFranchiseeMemberDto = 
 	            (FranchiseeMemberDto) session.getAttribute("loginedFranchiseeMemberDto");
 	         
-	    if(loginedFranchiseeMemberDto != null) {
-	    	
-	    	int loginNo = loginedFranchiseeMemberDto.getFcm_no();
+	    	int loginNo = loginedFranchiseeMemberDto.getFcs_no();
 	    	
 	    	Map<String, Object> pagingOrderDtos = franchiseeOrderService.pagingOrderList(page, loginNo);
 	    	
@@ -58,12 +56,6 @@ public class FranchiseeOrderController {
 	    	
 	    	return pagingOrderDtos;
 	    	
-	    } else {
-	    	
-	    	 String nextPage = "/franchisee/member/franchisee_login_form";
-			 
-	    	 return nextPage;
-		}
 	}
 	
 	// 주문 삭제
