@@ -181,6 +181,9 @@ public class FranchiseeMemberController {
 		return nextPage;
 	}
 	
+	/*
+	 * 	customer 로그인 화면 가맹점리스트 불러오기
+	 */
 	@PostMapping("/getStoreList")
 	@ResponseBody
 	public Object getStoreList(@RequestParam("fcm_id") String fcm_id) {
@@ -191,6 +194,9 @@ public class FranchiseeMemberController {
 		return resultMap;
 	}
 	
+	/*
+	 * 	customer 로그인 화면(가맹회원 로그인)
+	 */
 	@PostMapping("/franchiseeStoreLogin")
 	public Object franchiseeStoreLogin(FranchiseeStoreDto franchiseeStoreDto,
 									HttpSession session) {
@@ -209,7 +215,9 @@ public class FranchiseeMemberController {
 		
 	}
 	
-	
+	/*
+	 * 	매장 or 포장 유무 선택 후 오더 뷰 이동
+	 */
 	@GetMapping("/customerOrderView")
 	public String customerOrderView(@RequestParam("fco_packaging") int fco_packaging,
 									Model model) {
@@ -223,6 +231,9 @@ public class FranchiseeMemberController {
 		
 	}
 	
+	/*
+	 * 	customer login 후 포장유무 선택화면
+	 */
 	@GetMapping("/sotreLoginResultView")
 	public String sotreLoginResultView(HttpSession session) {
 		log.info("sotreLoginResultView()");
@@ -322,8 +333,6 @@ public class FranchiseeMemberController {
 	
 	}
 	
-	
-	
 	/*
 	 * 	로그인 후 매장 선택
 	 */
@@ -343,11 +352,6 @@ public class FranchiseeMemberController {
 		return nextPage;
 		
 	}
-	
-	
-	
-
-	
 	
 	
 }

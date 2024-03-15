@@ -13,10 +13,9 @@
 		
 		<div id="nav_wrap" th:unless="${session.loginedFranchiseeMemberDto == null}" >
 			<a th:href="@{/franchisee/home}">홈</a>
-			<a href="#none" >고객 뷰</a>
 			<a th:href="@{/franchisee/member/franchiseeModifyForm}">정보수정</a>
 			<a href="#none" th:onclick="franchiseeLogoutConfirm()">로그아웃</a>
-			<span th:text="${session.loginedFranchiseeMemberDto.fcs_no}"></span>
+			<span>fcs_no :</span><span th:text="${session.loginedFranchiseeMemberDto.fcs_no}"></span>
 		</div> 
 	</nav>
 	

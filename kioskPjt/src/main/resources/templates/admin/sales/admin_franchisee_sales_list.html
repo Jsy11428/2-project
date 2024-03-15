@@ -36,7 +36,7 @@
 			
 				<div th:replace="~{admin/include/admin_include.html::admin_section_side_menu}"></div>
 				
-				<div class="admin_section_view_wrap">
+				<div class="admin_section_view_wrap" th:if="${session.loginedAdminMemberDto != null}">
 			
 					<div class="word">
 						가맹 회원 일 매출
@@ -115,6 +115,18 @@
 		
 					</div>
 					
+				</div>
+				
+				<div class="admin_section_view_wrap" th:unless="${session.loginedAdminMemberDto != null}">
+			
+					<div class="word">
+						가맹 회원 일 매출
+						<br>
+						로그인 후 이용 가능
+						<br>
+						<a th:href="@{/admin/member/adminLoginForm}">로그인</a>
+					</div>
+
 				</div>
 
 			</div>
