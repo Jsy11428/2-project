@@ -5,7 +5,7 @@ $(document).ready(function() {
     
     orderBtnClick();
     
-    ajax_store_select();
+
     
 });
 
@@ -174,7 +174,7 @@ function orderBtnClick() {
        
        let category = $('#order_category_select option:selected').val();
        
-   		let fcmc_no = $('#order_category_select').val();
+   	   let fcmc_no = $('#order_category_select').val();
        
        let menu = $('#order_menu_select option:selected').val();
    		let fc_menu_no = $('#order_menu_select').val();
@@ -184,14 +184,11 @@ function orderBtnClick() {
        // 주문 가격 가져오기
        let price = $('.basic_price').val();
 /////////////////////////////////////////////////////
-       
-
-       
+              
        // 주문 목록에 추가
        let appendTag = "<tr>";
 	        	appendTag += '<td hidden fc_menu_no="'+fc_menu_no+'">'+ fc_menu_no +'</td>'
 	        	appendTag += '<td hidden fcmc_no="'+fcmc_no+'">'+ fcmc_no +'</td>'
-
 	        	
 	        	appendTag += '<td fco_packaging="'+packaging+'">' + packaging + '</td>';    
 	        	appendTag += '<td pm_type="'+pay+'">' + pay + '</td>';    
@@ -223,13 +220,14 @@ function orderBtnClick() {
   		
   		ajax_get_AllOrder_by_order();
   	})
-	
+  	
+  	$('#section_wrap input[name="AllOrder_delete_btn"]').click(function() {
+  		$('#order_table tbody').empty();
+
+  	});
 }
 
-$('#section_wrap input[name="AllOrder_delete_btn"]').click(function() {
-	$('#order_table tbody').empty();
 
-});
 
 
 

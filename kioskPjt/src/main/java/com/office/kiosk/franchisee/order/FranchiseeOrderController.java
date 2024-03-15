@@ -41,7 +41,10 @@ public class FranchiseeOrderController {
 			 return nextPage;
 			 
 		 } else {
-			return null;
+			 
+			 String nextPage = "/franchisee/member/franchisee_login_form";
+			 
+			return nextPage;
 		}
 		
 	}
@@ -69,7 +72,9 @@ public class FranchiseeOrderController {
 	    	
 	    } else {
 	    	
-			return null;
+	    	 String nextPage = "/franchisee/member/franchisee_login_form";
+			 
+	    	 return nextPage;
 		}
 	}
 	
@@ -111,7 +116,9 @@ public class FranchiseeOrderController {
 				
 			} else {
 				
-				return null;
+				 String nextPage = "/franchisee/member/franchisee_login_form";
+				 
+				return nextPage;
 			}
 		
 			
@@ -159,19 +166,27 @@ public class FranchiseeOrderController {
 	// 오더리스트 테이블에 넣기
 	@PostMapping("/OrderAccountConfirm")
 	@ResponseBody
-	public Object OrderAccountConfirm(@RequestBody Map<String, Object> dataMsg) {
+	public Object OrderAccountConfirm(@RequestBody Map<String, Object> dataMsg, HttpSession session) {
 		
 		log.info("OrderAccountConfirm()");
-				
-		  List<Object> objects = (List<Object>) dataMsg.get("menuOrders");
-		  log.info("objects: {}", objects);
-		 		  
-		  Map<String, Object> object = franchiseeOrderService.getAllOrder(dataMsg);
-		 
-		  return objects;
-		 				
-	}
-	
 		
+		FranchiseeOrderDto loginedFranchiseeMemberDto = (FranchiseeOrderDto) session.getAttribute("loginedFranchiseeMemberDto");
+		 		 
+		int fcs_no = loginedFranchiseeMemberDto.getFcs_no();
+		
+			 List<Object> objects = (List<Object>) dataMsg.get("menuOrders");
+			 	
+//			 Integer fcs_no = loginedFranchiseeMemberDto.getFcs_no();
+//			 
+//			 session.setAttribute("loginedFranchiseeMemberDto", loginedFranchiseeMemberDto);
+					 
+			 log.info("objects: {}", objects);
+			 
+			 Map<String, Object> object = franchiseeOrderService.getAllOrder(dataMsg, fcs_no);
+			 			 
+			 return objects;
+			 
+	}
+			
 
 }
