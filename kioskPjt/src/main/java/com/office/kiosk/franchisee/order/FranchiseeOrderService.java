@@ -1,14 +1,17 @@
 package com.office.kiosk.franchisee.order;
 
+import java.io.Console;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.ognl.ASTBitNegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.office.kiosk.paging.kioskPageDto;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -142,41 +145,57 @@ public class FranchiseeOrderService {
 	}
 
 
-	public Map<String, Object> getAllOrder(Map<String, Object> dataMsg) {
+	public Map<String, Object> getAllOrder(Map<String, Object> dataMsg, Integer fcs_no) {
 		
 		log.info("getAllOrder()");
 		
 		Map<String, Object> AllOrderDtos = new HashMap<>();
 		
 		List<Map<String, Object>> objects = (List<Map<String, Object>>) dataMsg.get("menuOrders");
-		
+				
+		int getOriNo = iFranchiseeOrderDao.getOriNo();
+			
 		for(int i = 0; i < objects.size(); i++) {
 			
-			Map<String, Object> dataMsgObj  = objects.get(i);
+			Map<String, Object> dataMsgObj = objects.get(i);
 			
 			FranchiseeOrderDto franchiseeOrderDto = new FranchiseeOrderDto();
-					
+			
 			franchiseeOrderDto.setFco_packaging(Integer.parseInt((String)dataMsgObj.get("fco_packaging")));
 			franchiseeOrderDto.setPm_type((String)dataMsgObj.get("pm_type"));
 			franchiseeOrderDto.setFcmc_no(Integer.parseInt((String)dataMsgObj.get("fcmc_no")));
 			franchiseeOrderDto.setFc_menu_no(Integer.parseInt((String)dataMsgObj.get("fc_menu_no")));
-	        franchiseeOrderDto.setFco_menu_cnt(Integer.parseInt((String)dataMsgObj.get("fco_menu_cnt")));
+		    franchiseeOrderDto.setFco_menu_cnt(Integer.parseInt((String)dataMsgObj.get("fco_menu_cnt")));		    
+		    franchiseeOrderDto.setFco_ori_no(getOriNo + 1);
+		    franchiseeOrderDto.setFcs_no(fcs_no);
 
-			
-			iFranchiseeOrderDao.insertAllOrder(franchiseeOrderDto);
+		    
+	        iFranchiseeOrderDao.insertAllOrder(franchiseeOrderDto);
+	        	        
 		}
-	
-//		List<FranchiseeOrderDto> franchiseeAllOrderDtos = 
-//		
-//		AllOrderDtos.put("franchiseeAllOrderDtos", franchiseeAllOrderDtos);
 			
 		return AllOrderDtos;
 	}
 
-
 	
 
+	/*
+	 * FranchiseeOrderDto franchiseeOrderOriNoDto = new FranchiseeOrderDto();
+	 * franchiseeOrderOriNoDto.setFco_ori_no(getOriNo + 1);
+	 */
+	
+	 /* franchiseeOrderDto.setFco_packaging(Integer.parseInt((int)dataMsgObj.get(
+	 * "fco_packaging")));
+	 * franchiseeOrderDto.setPm_type((String)dataMsgObj.get("pm_type"));
+	 * franchiseeOrderDto.setFcmc_no(Integer.parseInt((String)dataMsgObj.get(
+	 * "fcmc_no")));
+	 * franchiseeOrderDto.setFc_menu_no(Integer.parseInt((String)dataMsgObj.get(
+	 * "fc_menu_no")));
+	 * franchiseeOrderDto.setFco_menu_cnt(Integer.parseInt((String)dataMsgObj.get(
+	 * "fco_menu_cnt")));
+	 */
 
+	
 
 
 }

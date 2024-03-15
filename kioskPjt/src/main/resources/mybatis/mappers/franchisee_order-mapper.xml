@@ -40,8 +40,6 @@
 	    ORDER BY FCO_NO ASC 
 	    
 		LIMIT #{pagingParams.start}, #{pagingParams.limit}
-  	
-  		
   		
   	</select>
   	
@@ -84,7 +82,7 @@
 
 	</select>
 
-<!--     <insert id="insertAllOrder" parameterType="com.office.kiosk.franchisee.order.FranchiseeOrderDto"> 
+     <insert id="insertAllOrder" parameterType="com.office.kiosk.franchisee.order.FranchiseeOrderDto"> 
 			
 		INSERT INTO 
 			TBL_FC_ORDER(FCO_ORI_NO, 
@@ -96,6 +94,7 @@
 						PM_TYPE, 
 						FCO_REG_DATE, 
 						FCO_MOD_DATE)
+						
 		VALUES(#{fco_ori_no},  
 				#{fco_packaging}, 
 				#{fcmc_no}, 
@@ -105,7 +104,14 @@
 				#{pm_type}, 
 				NOW(), NOW())
 		
-	</insert>  -->
+	</insert> 
+	
+	<select id="getOriNo" parameterType="int" resultType="com.office.kiosk.franchisee.order.FranchiseeOrderDto">
+		
+		SELECT FCO_NO FROM TBL_FC_ORDER ORDER BY FCO_NO DESC  LIMIT 1
+	
+	</select>
+	
+
     
-  
 </mapper>
