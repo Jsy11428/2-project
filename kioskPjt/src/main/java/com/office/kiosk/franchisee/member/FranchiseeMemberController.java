@@ -348,6 +348,7 @@ public class FranchiseeMemberController {
 		loginedFranchiseeMemberDto.setFcs_no(fcs_no);
 		
 		session.setAttribute("loginedFranchiseeMemberDto", loginedFranchiseeMemberDto);
+		session.setMaxInactiveInterval(60 * 30);
 		
 		return nextPage;
 		

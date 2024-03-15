@@ -1,17 +1,17 @@
 package com.office.kiosk.franchisee.order;
 
-import java.io.Console;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.ognl.ASTBitNegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.office.kiosk.franchisee.sales.FranchiseeSalesDto;
 import com.office.kiosk.paging.kioskPageDto;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -143,38 +143,50 @@ public class FranchiseeOrderService {
 		
 		return PriceDtos;
 	}
-
-
-	public Map<String, Object> getAllOrder(Map<String, Object> dataMsg, Integer fcs_no) {
-		
+	
+	@Transactional
+	public int getAllOrder(Map<String, Object> dataMsg, int fcs_no) {
 		log.info("getAllOrder()");
 		
-		Map<String, Object> AllOrderDtos = new HashMap<>();
+		List<Map<String, Object>> dtos = (List<Map<String, Object>>) dataMsg.get("menuOrders");
+
+		FranchiseeOrderDto oriNoDto = iFranchiseeOrderDao.getOriNo();
+		int fco_ori_no = oriNoDto.getFco_no() + 1;
 		
-		List<Map<String, Object>> objects = (List<Map<String, Object>>) dataMsg.get("menuOrders");
-				
-		int getOriNo = iFranchiseeOrderDao.getOriNo();
+		for(int i = 0; i < dtos.size(); i++) {
 			
-		for(int i = 0; i < objects.size(); i++) {
-			
-			Map<String, Object> dataMsgObj = objects.get(i);
+			LinkedHashMap<String, Object> dataDto = (LinkedHashMap<String, Object>) dtos.get(i);
 			
 			FranchiseeOrderDto franchiseeOrderDto = new FranchiseeOrderDto();
 			
-			franchiseeOrderDto.setFco_packaging(Integer.parseInt((String)dataMsgObj.get("fco_packaging")));
-			franchiseeOrderDto.setPm_type((String)dataMsgObj.get("pm_type"));
-			franchiseeOrderDto.setFcmc_no(Integer.parseInt((String)dataMsgObj.get("fcmc_no")));
-			franchiseeOrderDto.setFc_menu_no(Integer.parseInt((String)dataMsgObj.get("fc_menu_no")));
-		    franchiseeOrderDto.setFco_menu_cnt(Integer.parseInt((String)dataMsgObj.get("fco_menu_cnt")));		    
-		    franchiseeOrderDto.setFco_ori_no(getOriNo + 1);
+			franchiseeOrderDto.setFco_packaging(Integer.parseInt((String)dataDto.get("fco_packaging")) );
+			franchiseeOrderDto.setPm_type((String)dataDto.get("pm_type"));
+			franchiseeOrderDto.setFcmc_no(Integer.parseInt((String)dataDto.get("fcmc_no")));
+			franchiseeOrderDto.setFc_menu_no(Integer.parseInt((String)dataDto.get("fc_menu_no")));
+		    franchiseeOrderDto.setFco_menu_cnt(Integer.parseInt((String)dataDto.get("fco_menu_cnt")));
+		    franchiseeOrderDto.setFco_menu_option((String)dataDto.get("fco_menu_option"));
+		    franchiseeOrderDto.setFco_menu_option_price(Integer.parseInt((String)dataDto.get("fco_menu_option_price")));
+		    franchiseeOrderDto.setFco_total_price(Integer.parseInt((String)dataDto.get("fco_total_price")));
+		    franchiseeOrderDto.setFco_ori_no(fco_ori_no);
 		    franchiseeOrderDto.setFcs_no(fcs_no);
-
 		    
-	        iFranchiseeOrderDao.insertAllOrder(franchiseeOrderDto);
-	        	        
+	        int result = iFranchiseeOrderDao.insertAllOrder(franchiseeOrderDto);
+	        
+	        if (result <= 0) {
+	        	break;
+	        }
+
 		}
-			
-		return AllOrderDtos;
+		
+		FranchiseeSalesDto salesDto = iFranchiseeOrderDao.selectOrderTotalPriceByOriNo(fco_ori_no);
+		salesDto.setFco_ori_no(fco_ori_no);
+		LinkedHashMap<String, Object> dataDto = (LinkedHashMap<String, Object>)dtos.get(0);
+		salesDto.setPm_type((String)dataDto.get("pm_type"));
+		salesDto.setFcs_no(fcs_no);
+		
+		int result = iFranchiseeOrderDao.insertSalesByOrder(salesDto);
+		
+		return result;
 	}
 
 	

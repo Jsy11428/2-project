@@ -31,22 +31,10 @@ public class FranchiseeOrderController {
 	public String getTableOrderList(HttpSession session) {
 		log.info("getTableOrderList()");
 		
-		 FranchiseeMemberDto loginedFranchiseeMemberDto = 
-		            (FranchiseeMemberDto) session.getAttribute("loginedFranchiseeMemberDto");
-		 
-		 if(loginedFranchiseeMemberDto != null) {
-			 
 			 String nextPage ="/franchisee/order/get_order_list";
 			 
 			 return nextPage;
 			 
-		 } else {
-			 
-			 String nextPage = "/franchisee/member/franchisee_login_form";
-			 
-			return nextPage;
-		}
-		
 	}
 	
 	// 주문 리스트 뿌리기
@@ -102,26 +90,11 @@ public class FranchiseeOrderController {
 	//오더 넣는곳 이동
 	@GetMapping("/createOrderList")
 	public String createOrderList(HttpSession session) {
-		
 		log.info("createOrderList()");
-				
-		FranchiseeMemberDto loginedFranchiseeMemberDto = 
-				(FranchiseeMemberDto) session.getAttribute("loginedFranchiseeMemberDto");
-					
-			if(loginedFranchiseeMemberDto != null) {
-			
-				String nextPage ="/franchisee/order/create_order_form";
-				
-				return nextPage;
-				
-			} else {
-				
-				 String nextPage = "/franchisee/member/franchisee_login_form";
-				 
-				return nextPage;
-			}
 		
-			
+		String nextPage ="/franchisee/order/create_order_form";
+		
+		return nextPage;
 					
 	}
 	
@@ -167,24 +140,18 @@ public class FranchiseeOrderController {
 	@PostMapping("/OrderAccountConfirm")
 	@ResponseBody
 	public Object OrderAccountConfirm(@RequestBody Map<String, Object> dataMsg, HttpSession session) {
-		
 		log.info("OrderAccountConfirm()");
 		
-		FranchiseeOrderDto loginedFranchiseeMemberDto = (FranchiseeOrderDto) session.getAttribute("loginedFranchiseeMemberDto");
+		log.info("dataMsg--- " + dataMsg);
+		
+		FranchiseeMemberDto loginedFranchiseeMemberDto = 
+				(FranchiseeMemberDto) session.getAttribute("loginedFranchiseeMemberDto");
 		 		 
 		int fcs_no = loginedFranchiseeMemberDto.getFcs_no();
 		
-			 List<Object> objects = (List<Object>) dataMsg.get("menuOrders");
-			 	
-//			 Integer fcs_no = loginedFranchiseeMemberDto.getFcs_no();
-//			 
-//			 session.setAttribute("loginedFranchiseeMemberDto", loginedFranchiseeMemberDto);
-					 
-			 log.info("objects: {}", objects);
-			 
-			 Map<String, Object> object = franchiseeOrderService.getAllOrder(dataMsg, fcs_no);
-			 			 
-			 return objects;
+		int orderResult = franchiseeOrderService.getAllOrder(dataMsg, fcs_no);
+		 			 
+		return orderResult;
 			 
 	}
 			

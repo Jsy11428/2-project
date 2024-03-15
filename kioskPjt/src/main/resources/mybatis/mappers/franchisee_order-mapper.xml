@@ -82,7 +82,8 @@
 
 	</select>
 
-     <insert id="insertAllOrder" parameterType="com.office.kiosk.franchisee.order.FranchiseeOrderDto"> 
+	<insert id="insertAllOrder" 
+			parameterType="com.office.kiosk.franchisee.order.FranchiseeOrderDto"> 
 			
 		INSERT INTO 
 			TBL_FC_ORDER(FCO_ORI_NO, 
@@ -90,6 +91,9 @@
 						FCMC_NO, 
 						FC_MENU_NO, 
 						FCO_MENU_CNT, 
+						FCO_MENU_OPTION, 
+						FCO_MENU_OPTION_PRICE, 
+						FCO_TOTAL_PRICE, 
 						FCS_NO, 
 						PM_TYPE, 
 						FCO_REG_DATE, 
@@ -100,18 +104,54 @@
 				#{fcmc_no}, 
 				#{fc_menu_no}, 
 				#{fco_menu_cnt}, 
+				#{fco_menu_option}, 
+				#{fco_menu_option_price}, 
+				#{fco_total_price}, 
 				#{fcs_no}, 
 				#{pm_type}, 
 				NOW(), NOW())
 		
 	</insert> 
 	
-	<select id="getOriNo" parameterType="int" resultType="com.office.kiosk.franchisee.order.FranchiseeOrderDto">
+	<select id="getOriNo" 
+			resultType="com.office.kiosk.franchisee.order.FranchiseeOrderDto">
 		
-		SELECT FCO_NO FROM TBL_FC_ORDER ORDER BY FCO_NO DESC  LIMIT 1
+		SELECT FCO_NO FROM TBL_FC_ORDER ORDER BY FCO_NO DESC LIMIT 1
 	
 	</select>
 	
+	<select id="selectOrderTotalPriceByOriNo"
+			parameterType="int"
+			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
+	
+		SELECT
+			SUM(FCO_ORI_NO) AS FCSA_PRICE 
+		FROM 
+			TBL_FC_ORDER 
+		WHERE 
+			FCO_ORI_NO = #{fco_ori_no};
+			
+	</select>
+	
+	<insert id="insertSalesByOrder"
+			parameterType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
+	
+		INSERT INTO 
+			TBL_FC_SALES(
+				FCO_ORI_NO,
+				FCSA_PRICE,
+				PM_TYPE,
+				FCS_NO,
+				FCSA_REG_DATE,
+				FCSA_MOD_DATE)
+		VALUES(
+			#{fco_ori_no},
+			#{fcsa_price},
+			#{pm_type},
+			#{fcs_no},
+			NOW(), NOW()) 
+	
+	</insert>
 
     
 </mapper>
