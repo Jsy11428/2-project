@@ -9,5 +9,9 @@ a {
 	max-width: 1000px;
 	min-width: 1000px;
 	margin: auto;
+	position: relative;
+}
+button {
+	cursor: pointer;
 }
 /* customer common.css END*/
