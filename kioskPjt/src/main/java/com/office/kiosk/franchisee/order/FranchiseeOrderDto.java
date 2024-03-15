@@ -10,6 +10,9 @@ public class FranchiseeOrderDto {
 	private int fco_ori_no;		
 	private int fco_packaging;
 	private int fco_menu_cnt;
+	private String fco_menu_option;
+	private int fco_menu_option_price;
+	private int fco_total_price;
 	private String pm_type;
 	private String fco_reg_date;
 	private String fco_mod_date;

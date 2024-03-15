@@ -1,36 +1,87 @@
 #section_wrap .pos_section_info_wrap .franchisee_order_list {
 	width: 100%;
-}
-
-#section_wrap .pos_section_info_wrap .franchisee_order_list {
-	width: 960px;
 	margin: 0 10px;
 	border-collapse: collapse;
 	margin: 0 auto;
 }
 
 #section_wrap .pos_section_info_wrap .word {
-	align-content: center;
+    text-align: center;
 	font-size: 1.5em;
 }
 
-
 table {
-        width: 100%;
-        border-collapse: collapse;
-    }
+    width: 100%;
+    border-collapse: collapse;
+}
 
-    th, td {
-        padding: 8px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
+th, td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
 
-    th {
-        background-color: #f2f2f2;
-    }
+th {
+    background-color: #f2f2f2;
+}
 
-    tr:hover {
-        background-color: #f5f5f5;
-    }
-    
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+#franchisee_order_list table {
+    text-align: center;
+}
+
+#franchisee_order_list table thead th:nth-child(2),
+#franchisee_order_list table tbody td:nth-child(2) {
+    width: 70px;
+}
+
+#franchisee_order_list table thead th:nth-child(3),
+#franchisee_order_list table tbody td:nth-child(3) {
+    width: 35px;
+}
+
+#franchisee_order_list table thead th:nth-child(4),
+#franchisee_order_list table tbody td:nth-child(4) {
+    width: 150px;
+}
+
+#franchisee_order_list table thead th:nth-child(5),
+#franchisee_order_list table tbody td:nth-child(5) {
+    width: 160px;
+}
+
+#franchisee_order_list table thead th:nth-child(6),
+#franchisee_order_list table tbody td:nth-child(6) {
+    width: 35px;
+}
+
+#franchisee_order_list table thead th:nth-child(7),
+#franchisee_order_list table tbody td:nth-child(7) {
+    width: 50px;
+}
+
+#franchisee_order_list table thead th:nth-child(8),
+#franchisee_order_list table tbody td:nth-child(8) {
+    width: 70px;
+}
+
+#franchisee_order_list table thead th:nth-child(9),
+#franchisee_order_list table tbody td:nth-child(9) {
+    width: 110px;
+}
+
+#franchisee_order_list table thead th:nth-child(10),
+#franchisee_order_list table tbody td:nth-child(10) {
+    width: 110px;
+}
+
+#franchisee_order_list .page_no_wrap {
+    width: 250px;
+    text-align: center;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-between;
+}

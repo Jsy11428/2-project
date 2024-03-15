@@ -1,0 +1,139 @@
+#payment_modal_wrap {
+	width: 100%;
+    position: absolute;
+    left: 0; top: 0;
+    background-color: rgba(0,0,0,0.7);
+    display: none;
+}
+
+#payment_modal_wrap div.payment_modal_close_btn {
+    width: 40px; height: 40px;
+    border-radius: 50px;
+    background: no-repeat center center url("/img/home/payment_modal_close_btn.png");
+    background-size: cover;
+    position: absolute;
+    right: 20px; top: 20px;
+    cursor: pointer;
+}
+
+#payment_modal_wrap div.payment_modal_section {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+}
+
+#payment_modal_wrap div.payment_modal_section div.payment_modal_header {
+    background: no-repeat center center url("/img/home/header_bg.jpg");   
+    width: 100%;
+    height: 150px;
+}
+
+#payment_modal_wrap div.payment_modal_section div.payment_modal_title_wrap {
+    padding: 50px;
+    text-align: center;    
+}
+
+#payment_modal_wrap div.payment_modal_section div.payment_modal_title_wrap h2 {
+    font-weight: 900;
+    font-size: 1.5em;
+}
+#payment_modal_wrap div.payment_modal_section div.payment_modal_title_wrap p {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #777;
+    padding: 20px;
+}
+
+#payment_modal_wrap div.payment_modal_section div.payment_modal_cart_wrap {
+    width: 100%;
+    height: 600px;
+}
+#payment_modal_wrap div.payment_modal_section div.payment_modal_cart_wrap ul.payment_modal_cart {
+    width: 1000px;
+}
+#payment_modal_wrap div.payment_modal_section div.payment_modal_cart_wrap ul.payment_modal_cart li {
+    width: 1000px;
+    display: flex;
+    justify-content: space-between;
+}
+#payment_modal_wrap div.payment_modal_section div.payment_modal_cart_wrap ul.payment_modal_cart li div.payment_modal_cart_item_img {
+    height: 150px;
+    width: 250px;
+    text-align: center;
+}
+#payment_modal_wrap div.payment_modal_section div.payment_modal_cart_wrap ul.payment_modal_cart li div.payment_modal_cart_item_img img {
+    height: 100%;
+}
+#payment_modal_wrap div.payment_modal_section div.payment_modal_cart_wrap ul.payment_modal_cart li div.payment_modal_cart_item_info {
+    height: 150px;
+    width: 500px;
+    text-align: left;
+    box-sizing: border-box;
+    padding-left: 20px;
+    padding-top: 30px;
+}
+#payment_modal_wrap div.payment_modal_section div.payment_modal_cart_wrap ul.payment_modal_cart li div.payment_modal_cart_item_info h3 {
+    font-size: 1.7em;
+    font-weight: 900;
+}
+#payment_modal_wrap div.payment_modal_section div.payment_modal_cart_wrap ul.payment_modal_cart li div.payment_modal_cart_item_info p {
+    font-size: 1.4em;
+    font-weight: 900;
+    color: #777;    
+    letter-spacing: 10px;
+}
+#payment_modal_wrap div.payment_modal_section div.payment_modal_cart_wrap ul.payment_modal_cart li div.payment_modal_cart_price_wrap {
+    height: 150px;
+    width: 250px;
+    text-align: right;
+}
+#payment_modal_wrap div.payment_modal_section div.payment_modal_cart_wrap ul.payment_modal_cart li div.payment_modal_cart_price_wrap h2 {
+    width: 100%; height: 100%;
+    line-height: 150px;
+    font-size: 1.5em;
+}
+
+#payment_modal_wrap div.payment_modal_section div.payment_modal_price_wrap {
+    width: 100%;
+    height: 100px;
+    background-color: rgba(0,0,0,0.7);
+    color: #ffe80a;
+}
+
+#payment_modal_wrap div.payment_modal_section div.payment_modal_price_wrap table tr td {
+    width: 500px;
+    height: 100px;
+    box-sizing: border-box;
+    text-align: left;
+    padding:0 50px;
+    font-size: 1.8em;
+    font-weight: 900;
+}
+#payment_modal_wrap div.payment_modal_section div.payment_modal_price_wrap table tr td:nth-child(even) {
+    text-align: right;
+}
+
+#payment_modal_wrap div.payment_modal_section div.payment_modal_payment_type_wrap {
+    width: 100%;
+    height: 150px;
+    background-color: #fff;
+    text-align: center;
+    padding-top: 35px;
+    box-sizing: border-box;
+}
+#payment_modal_wrap div.payment_modal_section div.payment_modal_payment_type_wrap button {
+    font-size: 1.8em;
+    font-weight: 900;
+    padding: 20px;
+    width: 200px;
+    height: 80px;
+    border-radius: 80px;
+    background-color: transparent;
+    color: blue;
+    border: 2px solid blue;
+    box-sizing: border-box;
+    &:hover{
+        background-color: blue;
+        color: #fff;
+    }
+}
