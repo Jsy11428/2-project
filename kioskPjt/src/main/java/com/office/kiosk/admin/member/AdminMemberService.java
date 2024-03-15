@@ -76,7 +76,7 @@ public class AdminMemberService {
 
 
 	public AdminMemberDto adminLoginConfirm(AdminMemberDto adminMemberDto) {
-		log.info("FranchiseeLoginConfirm");
+		log.info("adminLoginConfirm()");
 		
 		AdminMemberDto selectedAdminMemberDtoById = 
 				iAdminMemberDao.selectAdminForLogin(adminMemberDto);

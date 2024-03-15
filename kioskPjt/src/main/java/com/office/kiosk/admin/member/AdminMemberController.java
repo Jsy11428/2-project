@@ -162,8 +162,12 @@ public class AdminMemberController {
 //		return nextPage;
 //		
 //	}
+	
+	/*
+	 * 	가맹회원 목록
+	 */
 	@GetMapping("/franchiseeList")
-	public String franchiseeList(Model model) {
+	public String franchiseeList() {
 		log.info("franchiseeList()");
 		
 		String nextPage = "/admin/member/franchisee_list";
@@ -172,6 +176,9 @@ public class AdminMemberController {
 		
 	}
 	
+	/*
+	 * 	가맹회원 리스트 불러오기
+	 */
 	@GetMapping("/getFranchiseeList")
 	@ResponseBody
 	public Object franchiseeList(@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
@@ -229,6 +236,9 @@ public class AdminMemberController {
 //		
 //	}
 	
+	/*
+	 *  admin 목록 불러오기
+	 */
 	@GetMapping("/adminList")
 	public String adminList(Model model, HttpSession session) {
 		log.info("adminList()");
@@ -270,6 +280,10 @@ public class AdminMemberController {
 //		}
 //				
 //	}
+	
+	/*
+	 * 	어드민 목록 불러오기
+	 */
 	@GetMapping("/getAdminList")
 	@ResponseBody
 	public Object adminList(@RequestParam(value = "page", required = false, defaultValue = "1") int page, HttpSession session) {
@@ -310,8 +324,6 @@ public class AdminMemberController {
 		return nextPage;
 		
 	}
-	
-
 	
 	/*
 	 * 	store list 불러오기

@@ -344,6 +344,7 @@ function ajax_searchSalesList(search_term, search_value, search_word, pageNum = 
 
 }
 
+// ajax fco_ori_no 디테일 뷰
 function ajax_salesDetailInfo(fco_ori_no) {
     console.log("ajax_salesDetailInfo()");
 
@@ -375,11 +376,16 @@ function ajax_salesDetailInfo(fco_ori_no) {
                 let appendTbodyTag = '';
                 
                 appendTbodyTag += '<tr>'
-                    appendTbodyTag += '<td>' + salesDetailInfo[i].fc_menu_name + '</td>'
-                    appendTbodyTag += '<td>' + salesDetailInfo[i].fc_menu_price + '</td>'
-                    appendTbodyTag += '<td>' + salesDetailInfo[i].fco_menu_cnt + '</td>'
-                    appendTbodyTag += '<td>' + parseInt(salesDetailInfo[i].fc_menu_price*salesDetailInfo[i].fco_menu_cnt)  + '</td>'
+                    appendTbodyTag += '<td class="menu_name" colspan="4">' + salesDetailInfo[i].fc_menu_name + ' - ' + salesDetailInfo[i].fco_menu_option + '</td>'
                 appendTbodyTag += '</tr>'
+                
+                appendTbodyTag += '<tr>'
+                    appendTbodyTag += '<td></td>'
+               		appendTbodyTag += '<td>' + parseInt(salesDetailInfo[i].fco_menu_option_price+salesDetailInfo[i].fc_menu_price) + '</td>'
+               		appendTbodyTag += '<td>' + salesDetailInfo[i].fco_menu_cnt + '</td>'
+                	appendTbodyTag += '<td>' + parseInt((salesDetailInfo[i].fco_menu_option_price+salesDetailInfo[i].fc_menu_price)*salesDetailInfo[i].fco_menu_cnt)  + '</td>'
+                appendTbodyTag += '</tr>'
+                
 
                 $('#section_wrap .admin_section_view_wrap .sales_detail_modal .order_info table tbody').append(appendTbodyTag);
 

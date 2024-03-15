@@ -92,6 +92,8 @@
 		    FCO.PM_TYPE, 
 		    FCO.FC_MENU_NO, 
 		    FCO_MENU_CNT, 
+		    FCO_MENU_OPTION,
+		    FCO_MENU_OPTION_PRICE,
 		    M.FC_MENU_NAME, 
 		    M.FC_MENU_PRICE, 
 		    FCSA.FCSA_REG_DATE, 

@@ -56,6 +56,10 @@
 	border-bottom: 2px dotted #000;
 }
 
+#section_wrap .admin_section_view_wrap .sales_detail_modal table tbody tr td.menu_name {
+	text-align: left;
+}
+
 #section_wrap .admin_section_view_wrap .sales_detail_modal table th,
 #section_wrap .admin_section_view_wrap .sales_detail_modal table td {
 	padding: 3px;
