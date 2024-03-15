@@ -233,7 +233,7 @@ public class AdminMemberController {
 	public String adminList(Model model, HttpSession session) {
 		log.info("adminList()");
 		
-		String nextPage = null;
+		String nextPage = "/admin/member/admin_list";
 		
 		AdminMemberDto loginedAdminMemberDto = 
 				(AdminMemberDto) session.getAttribute("loginedAdminMemberDto");

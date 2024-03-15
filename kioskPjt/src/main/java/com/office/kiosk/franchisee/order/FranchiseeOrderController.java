@@ -1,17 +1,17 @@
 package com.office.kiosk.franchisee.order;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.office.kiosk.admin.menu.AdminMenuService;
 import com.office.kiosk.franchisee.member.FranchiseeMemberDto;
 import com.office.kiosk.paging.kioskPageDto;
 
@@ -26,13 +26,24 @@ public class FranchiseeOrderController {
 	@Autowired
 	FranchiseeOrderService franchiseeOrderService;
 	
+	//order누르면 가맹점 선택창 이동
 	@GetMapping("/getTableOrderList")
-	public String getTableOrderList() {
+	public String getTableOrderList(HttpSession session) {
 		log.info("getTableOrderList()");
 		
-		String nextPage ="/franchisee/order/get_order_list";
-				
-		return nextPage;
+		 FranchiseeMemberDto loginedFranchiseeMemberDto = 
+		            (FranchiseeMemberDto) session.getAttribute("loginedFranchiseeMemberDto");
+		 
+		 if(loginedFranchiseeMemberDto != null) {
+			 
+			 String nextPage ="/franchisee/order/get_order_list";
+			 
+			 return nextPage;
+			 
+		 } else {
+			return null;
+		}
+		
 	}
 	
 	// 주문 리스트 뿌리기
@@ -64,7 +75,6 @@ public class FranchiseeOrderController {
 	
 	// 주문 삭제
 	@GetMapping("/orderListDeleteConfirm")
-	@ResponseBody
 	public String orderListDeleteConfirm(@RequestParam("fco_no") int fco_no, HttpSession session) {
 		
 		log.info("orderListDeleteConfirm()");
@@ -87,39 +97,81 @@ public class FranchiseeOrderController {
 	//오더 넣는곳 이동
 	@GetMapping("/createOrderList")
 	public String createOrderList(HttpSession session) {
-		log.info("createOrderList()");
 		
-			String nextPage ="/franchisee/order/create_order_form";
+		log.info("createOrderList()");
+				
+		FranchiseeMemberDto loginedFranchiseeMemberDto = 
+				(FranchiseeMemberDto) session.getAttribute("loginedFranchiseeMemberDto");
+					
+			if(loginedFranchiseeMemberDto != null) {
 			
-			return nextPage;
+				String nextPage ="/franchisee/order/create_order_form";
+				
+				return nextPage;
+				
+			} else {
+				
+				return null;
+			}
+		
+			
 					
 	}
 	
 	//카테고리 가져오기
-	@PostMapping("/getCategory")
+	@GetMapping("/getCategory")
 	@ResponseBody
 	public Object getCategory() {
-		log.info("getCategorycon()");
-
-		Map<String, Object> cateDtos = franchiseeOrderService.getCategory();
-
-		return cateDtos;
+	    log.info("getCategorycon()");
+	    
+	    Map<String, Object> cateDtos = franchiseeOrderService.getCategory();
+	    
+	    return cateDtos;
 
 		
 	}
+
 	
 	// 카테고리에 따른 메뉴 가져오기
 	@GetMapping("/getMenusByCategory")
 	@ResponseBody
-	public Object getMenusByCategory() {
+	public Object getMenusByCategory(@RequestParam("fcmc_no") int fcmc_no) {
 		log.info("getMenus()");
 
-		Map<String, Object> franchiseeMenuDtos = franchiseeOrderService.getMenus();
+		Map<String, Object> MenuDtos = franchiseeOrderService.getMenus(fcmc_no);
 		
-		return franchiseeMenuDtos;
+		return MenuDtos;
 
 	}
 	
+	// 카테고리에 따른 가격 가져오기
+	@GetMapping("/getPriceByCategory")
+	@ResponseBody
+	public Object getPriceByCategory(@RequestParam("fc_menu_no") int fc_menu_no) {
+		log.info("getPriceByCategory()");
+		
+		Map<String, Object> PriceDtos = franchiseeOrderService.getPrice(fc_menu_no);
+				
+		return PriceDtos;
+				
+	}
 	
+	// 오더리스트 테이블에 넣기
+	@PostMapping("/OrderAccountConfirm")
+	@ResponseBody
+	public Object OrderAccountConfirm(@RequestBody Map<String, Object> dataMsg) {
+		
+		log.info("OrderAccountConfirm()");
+				
+		  List<Object> objects = (List<Object>) dataMsg.get("menuOrders");
+		  log.info("objects: {}", objects);
+		 		  
+		  Map<String, Object> object = franchiseeOrderService.getAllOrder(dataMsg);
+		 
+		  return objects;
+		 				
+	}
 	
+		
+
 }

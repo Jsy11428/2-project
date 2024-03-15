@@ -118,7 +118,7 @@ div.modal_wrap {
 	display: none;
 	position: absolute;
 	width: 100%;
-	height: 1150px;
+	height: 100%;
 	top: 0;
 	left: 0;
 	background-color: rgba(0, 0, 0, .7);
@@ -135,16 +135,29 @@ div.modify_menu_modal {
 }
 */
 
+div.modify_menu_wrap {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
 div.modify_menu_modal {
     position: fixed;
-    width: 500px;
-    height: 600px;
+    width: 600px;
+    height: 750px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fff;
+    display: flex;
+	justify-content: space-around;
+
 }
 
+div.modify_menu_modal form {
+	align-items: center;
+	position: absolute;
+}
 
 div.modify_menu_modal img {
 	width: 200px;

@@ -161,4 +161,19 @@ public class FranchiseeMemberService {
 		
 	}
 
+
+	public FranchiseeMemberDto franchiseeModifyPasswordConfirm(FranchiseeMemberDto franchiseeMemberDto) {
+		log.info("franchiseeModifyPasswordConfirm()");
+		
+		franchiseeMemberDto.setFcm_pw(passwordEncoder.encode(franchiseeMemberDto.getFcm_pw()));
+		
+		int result = iFranchiseeMemberDao.updateFranchiseeMemberPassword(franchiseeMemberDto);
+		
+		if(result > 0) 
+			return iFranchiseeMemberDao.selectLastesFranchiseeInfo(franchiseeMemberDto.getFcm_no());
+		else 
+			return null;
+		
+	}
+
 }
