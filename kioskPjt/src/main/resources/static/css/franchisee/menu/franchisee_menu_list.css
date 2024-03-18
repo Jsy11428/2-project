@@ -141,7 +141,7 @@ div.modify_menu_wrap {
 div.modify_menu_modal {
     position: fixed;
     width: 600px;
-    height: 680px;
+    height: 780px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);

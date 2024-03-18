@@ -11,8 +11,31 @@
 
 #section_wrap .main .img_box {
     width: 1000px;
-    height: 520px;
+    height: 420px;
     background-color: #0f0;
+}
+
+
+
+#section_wrap .main .img_box ul.img_slide {
+	width: 1000px;
+	height: 420px;
+	position: relative;
+}
+
+#section_wrap div.main .img_box ul li {
+	width: 1000px;
+	height: 420px;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+#section_wrap div.main .img_box ul li img {
+	width: 1000px;
+	height: 420px;
+	padding: 0;
+	
 }
 
 #section_wrap .main .auto_slide {
