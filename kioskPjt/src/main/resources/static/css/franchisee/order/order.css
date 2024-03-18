@@ -78,6 +78,10 @@ tr:hover {
     width: 110px;
 }
 
+#franchisee_order_list table tbody td button {
+	padding: 3px;
+}
+
 #franchisee_order_list .page_no_wrap {
     width: 250px;
     text-align: center;
