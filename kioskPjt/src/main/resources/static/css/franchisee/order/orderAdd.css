@@ -43,15 +43,16 @@
 
 input.order_btn {
     padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: #dadada;
+    color: #000;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    border: 1px solid  #000; 
 }
 
 input.order_btn:hover {
-    background-color: #0056b3;
+    background-color: #a78f8f;
 }
 
 table {
@@ -74,4 +75,15 @@ table th {
     margin: 10px 0;
     text-align: center;
 }
+select {
+	width: 200px;
+}
 
+input.shot_number, input.pur_number, input.basic_price, input.basic_count {
+	width: 200px;
+}
+
+
+.other {
+    text-align: center; /* 내부 요소를 가운데 정렬 */
+}

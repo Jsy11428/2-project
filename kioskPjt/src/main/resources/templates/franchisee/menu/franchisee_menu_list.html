@@ -23,7 +23,7 @@
     $(document).ready(function() {
         
         document.getElementById("menu_category_select").disabled = true;
-    });
+    }); 
 </script>
 
 <style type="text/css">
@@ -68,10 +68,8 @@ select[disabled] {
 					</ul>
 				</div>  -->
 	
-				<div class="admin_section_view_wrap">
-	
-					<div id="word">메뉴 리스트</div>
-				 	
+				<div class="admin_section_view_wrap" th:if="${session.loginedFranchiseeMemberDto != null}">
+					 	
 				 		<div class="menu_category_change_wrap" id="menu_category_change_wrap">
 							<!-- 카테고리 버튼들 -->
 						</div>
@@ -143,8 +141,7 @@ select[disabled] {
 											</tr>
 											</tbody>
 										</table>
-										
-										
+																				
 									</div>
 	
 								</form>
@@ -152,12 +149,15 @@ select[disabled] {
 	
 						</div>
 						
+				 </div>	
 				 	
-				 	
-	
-				</div>
-	
-				<!-- <div class="pos_section_detail_view_wrap"></div> -->
+
+				 <div class="admin_section_view_wrap" th:unless="${session.loginedFranchiseeMemberDto != null}">
+					<div class="other">
+						<p>로그인 후 이용 해주세요.</p>
+						<br><br>
+						<a th:href="@{/franchisee/member/franchiseeLoginForm}">로그인하러 가기</a>
+					</div>
 				</div>
 	
 		</section>
