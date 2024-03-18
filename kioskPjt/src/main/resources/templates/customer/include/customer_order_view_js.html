@@ -122,6 +122,10 @@ function eventsHandler(){
 		innerCartSlideMoveValue = 120;
 		leftMovedCount = 0;	
 		rightMovedCount = 0;
+		cartAreaBtnActiveHandler(leftMovedCount,rightMovedCount);
+		$('#footer_wrap ul.cart_area_items').animate({			
+			'left' : '0px'			
+		},300);
 	});
 	
 	//장바구니 슬라이드 영역
