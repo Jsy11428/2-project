@@ -99,12 +99,12 @@ function eventsHandler(){
 			console.log("카트에 아이템이 하나 이상 있고 중복된 메뉴가 없음 카트에 새로 메뉴 추가함");
 			addCartItem(fc_menu_img, fc_menu_price, fc_menu_no, fc_menu_cnt, fc_menu_price_one, fcmc_no, 
 					shot_number, shot_price, pur_number, pur_price, fco_total_price, fc_menu_name);
-			cartAreaBtnActiveHandler();
+			cartAreaBtnActiveHandler(leftMovedCount,rightMovedCount);
 		}else{
 			console.log("카트에 아이템이 하나도 없음 카트에 새로 메뉴 추가함");
 			addCartItem(fc_menu_img, fc_menu_price, fc_menu_no, fc_menu_cnt, fc_menu_price_one, fcmc_no, 
 					shot_number, shot_price, pur_number, pur_price, fco_total_price, fc_menu_name);
-			cartAreaBtnActiveHandler();
+			cartAreaBtnActiveHandler(leftMovedCount,rightMovedCount);
 		}
 		// 모달창 닫히고 모달창의 value 초기화
 		$("#myModal").fadeOut();
@@ -260,7 +260,7 @@ function eventsHandler(){
 }// function eventsHandler() END
 
 
-function cartAreaBtnActiveHandler(leftMovedCount=0,rightMovedCount=0){
+function cartAreaBtnActiveHandler(leftMovedCount,rightMovedCount){
 	console.log("cartAreaBtnActiveHandler()");
 	
 	let innerCartItemCnt = $('#footer_wrap ul.cart_area_items li').length;
