@@ -1,5 +1,3 @@
-<script th:fragment="home2_js" type="text/javascript">
-
 $(document).ready(function() {
 	
 	init();
@@ -9,6 +7,7 @@ $(document).ready(function() {
 function init(){
 	
 	$('#section_wrap .login_form input[name="fcs_name"]').click(function(){
+		console.log('오픈지점 click')
 		
 		let fcm_id = $('#section_wrap .login_form input[name="fcm_id"]').val();
 		
@@ -122,5 +121,3 @@ function ajax_selectStoreByFcmId(fcm_id){
 
 }
 
-
-</script>

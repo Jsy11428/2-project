@@ -1,8 +1,8 @@
-function orderListDeleteConfirm(fco_no) {
-    let result = confirm("정말 삭제하시겠습니까?");
+function orderListCompleteConfirm(fco_ori_no) {
+    let result = confirm("정말 완료하시겠습니까?");
     if (result) {
-        // 삭제할 주문 번호를 파라미터로 전달하여 요청            
-        location.href = "/franchisee/order/orderListDeleteConfirm?fco_no=" + fco_no;        
+        // 주문 완료
+        location.href = "/franchisee/order/orderListCompleteConfirm?fco_ori_no=" + fco_ori_no;        
     } 
 }
 

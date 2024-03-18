@@ -35,7 +35,7 @@
 	    
 	    JOIN TBL_FC_MEMBER FME ON FS.FCM_NO = FME.FCM_NO 
 	    
-	    WHERE FS.FCS_NO = #{loginNo}
+	    WHERE FS.FCS_NO = #{loginNo} AND FO.FCSA_COMPLETE = 0 
 
 	    ORDER BY FCO_NO ASC 
 	    
@@ -55,12 +55,6 @@
 	
   	</select>
   	
-  	<delete id="deleteSelectOrder" parameterType="int">
-  	
-    DELETE FROM TBL_FC_ORDER WHERE FCO_NO = #{fco_no}
-    
-	</delete>
-	
 	<select id="selectAllCategory" parameterType="int"
 		resultType="com.office.kiosk.franchisee.order.FranchiseeOrderDto">
 
@@ -152,6 +146,18 @@
 			NOW(), NOW()) 
 	
 	</insert>
+	
+	<update id="updateOrderCompleteByOriNo" 
+			parameterType="int">
+	
+		UPDATE 
+			TBL_FC_ORDER 
+		SET 
+			FCSA_COMPLETE = 1
+		WHERE 
+			FCO_ORI_NO = #{fco_ori_no};
+	
+	</update>
 
     
 </mapper>

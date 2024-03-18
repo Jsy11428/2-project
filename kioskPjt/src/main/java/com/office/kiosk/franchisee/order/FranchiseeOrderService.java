@@ -82,23 +82,10 @@ public class FranchiseeOrderService {
 		orderListPageDto.setStartPage(startPage);
 		orderListPageDto.setMaxPage(maxPage);
 		orderListPageDto.setEndPage(endPage);
-		
-		log.info("page: "+page);
-		log.info("maxPage: "+maxPage);
-		log.info("startPage: "+startPage);
-		log.info("endPage: "+endPage);
 				
 		return orderListPageDto;
 	}
 
-
-	public int deleteOrderListConfirm(int fco_no) {
-		log.info("deleteOrderListConfirm()");
-		
-		int result = iFranchiseeOrderDao.deleteSelectOrder(fco_no);
-		
-		return result;
-	}
 
 	
 	public Map<String, Object> getCategory() {
@@ -185,6 +172,15 @@ public class FranchiseeOrderService {
 		salesDto.setFcs_no(fcs_no);
 		
 		int result = iFranchiseeOrderDao.insertSalesByOrder(salesDto);
+		
+		return result;
+	}
+
+
+	public int orderListCompleteConfirm(int fco_ori_no) {
+		log.info("orderListCompleteConfirm()");
+		
+		int result = iFranchiseeOrderDao.updateOrderCompleteByOriNo(fco_ori_no);
 		
 		return result;
 	}
