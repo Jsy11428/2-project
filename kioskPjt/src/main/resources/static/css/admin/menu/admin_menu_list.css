@@ -25,16 +25,14 @@
 }
 
 #section_wrap div.menu_category_change_wrap a:hover {
-	background-color: #a78f8f;
-	border: 1px solid #a78f8f;
+	background-color: #dadada;
+	box-sizing: border-box;
 }
 
 #section_wrap div.menu_category_change_wrap a[value="3"],
 #section_wrap div.menu_category_change_wrap a[value="5"] {
 	width: 210px;
 	height: 30px;
-	background-color: #dadada;
-	border: 1px solid #dadada;
 	border-radius: 5px;
 	text-align: center;
 	font-weight: bold;
@@ -42,8 +40,7 @@
 
 #section_wrap div.menu_category_change_wrap a[value="3"]:hover,
 #section_wrap div.menu_category_change_wrap a[value="5"]:hover {
-	background-color: #a78f8f;
-	border: 1px solid #a78f8f;
+	background-color: #dadada;
 }
 
 div.admin_menu_list_wrap table td div.menu_item_wrap {
@@ -144,7 +141,7 @@ div.modify_menu_wrap {
 div.modify_menu_modal {
     position: fixed;
     width: 600px;
-    height: 750px;
+    height: 800px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -156,9 +153,13 @@ div.modify_menu_modal {
 
 /* 모달창 화면에 뜨게끔 하는곳 끝 */
 
+div.fc_menu_no_modal {
+	display: none;
+}
+
 div.modify_menu_wrap tr:nth-child(1) th {
 	font-size: 1.5em;
-	padding-top: 30px;
+	padding-top: 18px;
 
 }
 
@@ -171,34 +172,57 @@ div.modify_menu_modal img {
 	margin: 10px auto;
 	width: 200px;
 	height: 270px;
-	box-shadow: 3px 3px #dadada;
+	border: 1px solid #dadada;
+	box-shadow: 3px 3px 5px #dadada;
 	border-radius: 5px;
 
 }
 
 div.modify_menu_modal span {
 	font-weight: bold;
+}
 
+div.modify_menu_modal input {
+	border: 1px solid #5247474b;
+	height: 25px;
+	border-radius: 5px;
+}
+
+div.modify_menu_modal select {
+	border: 1px solid #5247474b;
+	height: 25px;
+	border-radius: 5px;
+}
+
+div.modify_menu_modal textarea {
+	border: 1px solid #5247474b;
+	border-radius: 5px;
+	margin-bottom: 30px;
+	resize: none;
 }
 
 div.modify_menu_modal input[type="button"],
 div.modify_menu_modal input[type="reset"] {
 	width: 200px;
-	height: 50px;
+	height: 40px;
+	margin: 10px;
 	line-height: 30px;
 	font-size: 1.2em;
-	border: 1px solid #dadada;
-	border-radius: 5px;
-	background-color: #dadada;
-
+	border: 3px solid blue;
+	border-radius: 20px;
+	background-color: blue;
+	color: #fff;
+	font-weight: bold;
 }
 
 div.modify_menu_modal input[type="button"]:hover,
 div.modify_menu_modal input[type="reset"]:hover {
 	background-color: #ffffffb2;
-	border: 1px solid #ffffffb2;
-	border-radius: 15px;
-
+	border: 3px solid blue;
+	border-radius: 20px;
+	color: blue;
+	font-weight: bold;
+	cursor: pointer;
 }
 
 /* 모달창 끝 */
