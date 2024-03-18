@@ -8,24 +8,10 @@
 <link rel="stylesheet" th:href="@{/css/customer/common.css}">
 <link rel="stylesheet" th:href="@{/css/customer/home.css}">
 <link rel="stylesheet" th:href="@{/css/customer/franchisee_store_login_result.css}">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
 <script type="text/javascript" th:src="@{/js/customer/franchisee_store_login_result.js}"></script>
 
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script type="text/javascript">
-
-$(document).ready(function(){
-	$('ul.img_slide li').eq(3).animate({'opacity':'0'},3000,function loop(){
-		$('ul.img_slide li').eq(2).animate({'opacity':'0'},3000,function(){
-			$('ul.img_slide li').eq(1).animate({'opacity':'0'},3000,function(){
-				$('ul.img_slide li').css('opacity','1');
-				$('ul.img_slide li').eq(3).animate({'opacity':'0'},3000,loop);
-			});
-		});
-	});
-});
-
-</script>
 </head>
 <body>
 
