@@ -11,5 +11,13 @@ public interface IFranchiseeSalesDao {
 	public List<FranchiseeSalesDto> selectMyStoreAllSalesInfo(Map<String, Integer> pagingParams);
 
 	public int selectMyStoreAllSalesInfoCnt(String fcs_no);
+
+	public List<FranchiseeSalesDto> selectMyStoreSalesInfoBySelectDate(Map<String, Object> pagingParams);
+
+	public int selectMyStoreSalesInfoBySelectDateCnt(Map<String, Object> pagingParams);
+
+	public List<FranchiseeSalesDto> selectMyStoreSalesInfoByInputPeriod(Map<String, Object> pagingParams);
+
+	public int selectMyStoreSalesInfoByInputPeriodCnt(Map<String, Object> pagingParams);
 	
 }

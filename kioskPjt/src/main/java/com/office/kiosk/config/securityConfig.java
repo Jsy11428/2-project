@@ -41,14 +41,37 @@ public class securityConfig {
 		
 		http
 			.authorizeHttpRequests((request) -> request
-					.requestMatchers("/franchisee/order/**").authenticated()
+					.requestMatchers("/franchisee/order/**",
+									"/franchisee/menu/**",
+									"/franchisee/sales/**",
+									"/franchisee/member/franchiseeModifyForm",
+									"/franchisee/member/franchiseeModifyConfirm",
+									"/franchisee/member/franchiseeFindPasswordForm",
+									"/franchisee/member/franchiseeFindPasswordConfirm",
+									"/franchisee/member/franchiseeModifyPassword",
+									"/franchisee/member/franchiseeModifyPasswordConfirm",
+									"/franchisee/member/sltStoreHome",
+									"/franchisee/member/franchiseeFindPassword",
+									"/franchisee/member/franchiseeLoginSuccess",
+									"/franchisee/member/franchiseeLoginForm",
+									"/franchisee/home",
+									"/franchisee/",
+									"/franchisee"
+									).authenticated()
 					.requestMatchers("/",
 									"/admin/**",
 									"/css/**",
 									"/js/**",
 									"/error/**",
 									"/img/**",
-									"/**").permitAll());
+									"/franchisee/member/createFranchiseeAccountForm",
+									"/franchisee/member/createFranchiseeAccountConfirm",
+									"/franchisee/member/getStoreList",
+									"/franchisee/member/franchiseeStoreLogin",
+									"/franchisee/member/customerOrderView",
+									"/franchisee/member/sotreLoginResultView",
+									"/franchisee/member/franchiseeLoginFail"
+									).permitAll());
 
 		http.formLogin(login -> login
 				.loginPage("/franchisee/member/franchiseeLoginForm")
@@ -72,7 +95,9 @@ public class securityConfig {
 
 				}).failureHandler((request, response, exception) -> {
 					log.info("fail handler");
-
+					
+					
+					
 					response.sendRedirect("/franchisee/member/franchiseeLoginFail");
 
 				}).permitAll());

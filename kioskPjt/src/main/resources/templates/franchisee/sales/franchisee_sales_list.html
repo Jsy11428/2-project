@@ -5,26 +5,14 @@
 
 <title th:replace="~{include/include_title.html::title}"></title>
 
-<script type="text/javascript" th:src="@{/js/admin/member/admin_member.js}"></script>
+<script type="text/javascript" th:src="@{/js/franchisee/member/franchisee_member.js}"></script>
 
-<!-- 
-<link rel="stylesheet" th:href="@{/css/admin/common.css}">
-<link rel="stylesheet" th:href="@{/css/admin/admin_include.css}">
-<link rel="stylesheet" th:href="@{/css/admin/admin_home.css}">
- -->
 <link rel="stylesheet" th:href="@{/css/admin/sales/admin_store_sales_list.css}">
- 
- 
 <link rel="stylesheet" th:href="@{/css/franchisee/common.css}">
 <link rel="stylesheet" th:href="@{/css/franchisee/franchisee_include.css}">
 <link rel="stylesheet" th:href="@{/css/franchisee/franchisee_home.css}">
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-
-<script type="text/javascript" th:replace="~{admin/include/section_side_menu_js.html::jquery_js}"></script>
-<!-- 
-<script type="text/javascript" th:replace="~{admin/include/admin_store_sales_list_js.html::admin_store_sales_list_js}"></script>
- -->
 <script type="text/javascript" th:replace="~{franchisee/include/franchisee_sales_list_js.html::franchisee_sales_list_js}"></script>
  
 
@@ -45,6 +33,9 @@
 				</div>
 				
 				<div class="admin_section_view_wrap" th:if="${session.loginedFranchiseeMemberDto != null}">
+
+				<p hidden id="fc_no" th:text="${session.loginedFranchiseeMemberDto.fcs_no}"></p>
+				<div class="admin_section_view_wrap">
 			
 				<div class="pos_section_main">
 					<div class="pos_section_info_wrap">
@@ -108,6 +99,8 @@
 									<td>주문자 NO</td>
 									<td>결제 가격</td>
 									<td>결제 타입</td>
+									<td>결제 등록일</td>
+									<td>결제 수정일</td>
 								</tr>
 							</thead>
 							

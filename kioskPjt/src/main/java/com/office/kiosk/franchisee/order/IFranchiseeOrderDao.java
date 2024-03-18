@@ -8,8 +8,6 @@ import org.apache.ibatis.annotations.Param;
 
 import com.office.kiosk.franchisee.sales.FranchiseeSalesDto;
 
-import jakarta.servlet.http.HttpSession;
-
 @Mapper
 public interface IFranchiseeOrderDao {
 
@@ -19,7 +17,6 @@ public interface IFranchiseeOrderDao {
 
 	public int selectAllOrderListCnt(@Param("loginNo") int loginNo);
 
-	public int deleteSelectOrder(int fco_no);
 
 	public List<FranchiseeOrderDto> selectAllCategory();
 
@@ -34,6 +31,8 @@ public interface IFranchiseeOrderDao {
 	public FranchiseeSalesDto selectOrderTotalPriceByOriNo(int fco_ori_no);
 
 	public int insertSalesByOrder(FranchiseeSalesDto salesDto);
+
+	public int updateOrderCompleteByOriNo(int fco_ori_no);
 
 
 }
