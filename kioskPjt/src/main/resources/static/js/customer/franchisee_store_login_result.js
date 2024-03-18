@@ -1,3 +1,5 @@
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
 function dineInOrder(fco_packaging){
 	console.log('dineInOrder()');
 	
@@ -11,3 +13,5 @@ function takeOutOrder(fco_packaging){
 	location.href = "/franchisee/member/customerOrderView?fco_packaging=" + fco_packaging;
 	
 };
+
+
