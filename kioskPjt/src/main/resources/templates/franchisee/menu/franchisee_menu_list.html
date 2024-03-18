@@ -34,7 +34,7 @@ select[disabled] {
     -moz-appearance: none;
     appearance: none;
     /* 배경색 변경 */
-    background-color: #fff ; /* 적절한 배경색으로 변경하세요 */
+    background-color: #fff ;
     border: 0.5px solid #000 ;
     color: #000000;
     /* 흐림 효과 제거 */
@@ -68,7 +68,7 @@ select[disabled] {
 					</ul>
 				</div>  -->
 	
-				<div class="admin_section_view_wrap" th:if="${session.loginedFranchiseeMemberDto != null}">
+				<div class="admin_section_view_wrap">
 					 	
 				 		<div class="menu_category_change_wrap" id="menu_category_change_wrap">
 							<!-- 카테고리 버튼들 -->
@@ -99,7 +99,7 @@ select[disabled] {
 										<table>
 											<thead>
 												<tr>
-												<th colspan="3">메뉴정보 수정
+												<th colspan="3">메뉴정보
 												</th>
 												</tr>
 											</thead>
@@ -150,16 +150,8 @@ select[disabled] {
 						</div>
 						
 				 </div>	
-				 	
-
-				 <div class="admin_section_view_wrap" th:unless="${session.loginedFranchiseeMemberDto != null}">
-					<div class="other">
-						<p>로그인 후 이용 해주세요.</p>
-						<br><br>
-						<a th:href="@{/franchisee/member/franchiseeLoginForm}">로그인하러 가기</a>
-					</div>
-				</div>
-	
+				 			 	
+				
 		</section>
 	
 		<footer th:replace="~{/franchisee/include/franchisee_include.html::franchisee_footer}">	

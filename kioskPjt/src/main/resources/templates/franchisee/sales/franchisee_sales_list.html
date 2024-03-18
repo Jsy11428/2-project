@@ -32,7 +32,7 @@
 				<div th:replace="~{/franchisee/include/franchisee_include.html::section_menu_wrap}">
 				</div>
 				
-				<div class="admin_section_view_wrap" th:if="${session.loginedFranchiseeMemberDto != null}">
+				<div class="admin_section_view_wrap">
 
 				<p hidden id="fc_no" th:text="${session.loginedFranchiseeMemberDto.fcs_no}"></p>
 				<div class="admin_section_view_wrap">
@@ -127,17 +127,10 @@
 					
 				</div>
 				
-				<div class="admin_section_view_wrap" th:unless="${session.loginedFranchiseeMemberDto != null}">
-					<div class="other">
-						<p>로그인 후 이용 해주세요.</p>
-						<br><br>
-						<a th:href="@{/franchisee/member/franchiseeLoginForm}">로그인하러 가기</a>
-					</div>
-				</div>			
 				
 			</div>
-					
 			
+						
 		</section>
 			
 		
