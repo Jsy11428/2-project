@@ -11,7 +11,7 @@
 <link rel="stylesheet" th:href="@{/css/franchisee/common.css}">
 <link rel="stylesheet" th:href="@{/css/franchisee/franchisee_include.css}">
 <link rel="stylesheet" th:href="@{/css/franchisee/franchisee_home.css}">
-<link rel="stylesheet" th:href="@{/css/admin/menu/admin_menu_list.css}">
+<link rel="stylesheet" th:href="@{/css/franchisee/menu/franchisee_menu_list.css}">
 
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
@@ -42,6 +42,11 @@ select[disabled] {
     opacity: 1;
     pointer-events: auto;
 }
+
+div.modify_menu_wrap td.buttons {
+	text-align: center;
+}
+
 
 </style>
 
@@ -99,22 +104,11 @@ select[disabled] {
 	
 									<div class="modify_menu_wrap">
 										<table>
-											<thead>
-												<tr>
-												<th colspan="3">메뉴정보 수정
-												</th>
-												</tr>
-											</thead>
-											<tbody>
 											<tr>
 												<td><span>메뉴 이미지</span></td>
 												<td><img class="img_section" id="img_section"></td>
 												<td><input type="hidden" name="fc_menu_no"></td>
 											</tr>
-											<!-- <tr>
-												<td><span>메뉴 이미지 첨부</span></td>
-												<td><input type="file" name="file" id="file"></td>
-											</tr> -->
 											<tr>
 												<td><span>카테고리</span></td>
 												<td><select name="fcmc_no" id="menu_category_select"></select></td>
@@ -136,8 +130,10 @@ select[disabled] {
 												</td>
 											</tr>
 	
-											<tr>									
-												<input type="button" value="취소">											
+											<tr>
+												<td  colspan="3" class="buttons">									
+												<input type="button" value="취소">
+												</td>										
 											</tr>
 											</tbody>
 										</table>
