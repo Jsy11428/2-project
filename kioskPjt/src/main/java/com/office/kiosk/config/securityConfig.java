@@ -51,7 +51,12 @@ public class securityConfig {
 									"/franchisee/member/franchiseeModifyPassword",
 									"/franchisee/member/franchiseeModifyPasswordConfirm",
 									"/franchisee/member/sltStoreHome",
-									"/franchisee/member/franchiseeFindPassword"
+									"/franchisee/member/franchiseeFindPassword",
+									"/franchisee/member/franchiseeLoginSuccess",
+									"/franchisee/member/franchiseeLoginForm",
+									"/franchisee/home",
+									"/franchisee/",
+									"/franchisee"
 									).authenticated()
 					.requestMatchers("/",
 									"/admin/**",
@@ -64,7 +69,8 @@ public class securityConfig {
 									"/franchisee/member/getStoreList",
 									"/franchisee/member/franchiseeStoreLogin",
 									"/franchisee/member/customerOrderView",
-									"/franchisee/member/sotreLoginResultView"
+									"/franchisee/member/sotreLoginResultView",
+									"/franchisee/member/franchiseeLoginFail"
 									).permitAll());
 
 		http.formLogin(login -> login
@@ -89,7 +95,9 @@ public class securityConfig {
 
 				}).failureHandler((request, response, exception) -> {
 					log.info("fail handler");
-
+					
+					
+					
 					response.sendRedirect("/franchisee/member/franchiseeLoginFail");
 
 				}).permitAll());
