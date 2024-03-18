@@ -31,6 +31,9 @@
 			
 				<div th:replace="~{/franchisee/include/franchisee_include.html::section_menu_wrap}">
 				</div>
+				
+				<div class="admin_section_view_wrap">
+
 				<p hidden id="fc_no" th:text="${session.loginedFranchiseeMemberDto.fcs_no}"></p>
 				<div class="admin_section_view_wrap">
 			
@@ -121,11 +124,13 @@
 						<input type="button" name="search" value="검색">
 
 					</div>
-
+					
 				</div>
+				
 				
 			</div>
 			
+						
 		</section>
 			
 		
