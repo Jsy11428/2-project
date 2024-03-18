@@ -334,7 +334,7 @@ public class FranchiseeMemberController {
 	}
 	
 	/*
-	 * 	로그인 후 매장 선택
+	 * 	franchisee 로그인 후 매장 선택
 	 */
 	@GetMapping("/sltStoreHome")
 	public String sltStoreHome(@RequestParam("fcs_no") int fcs_no, HttpSession session) {

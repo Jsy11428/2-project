@@ -1,10 +1,10 @@
 package com.office.kiosk.franchisee.order;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,7 +35,7 @@ public class FranchiseeOrderController {
 			 
 			 return nextPage;
 			 
-	}
+	}	
 	
 	// 주문 리스트 뿌리기
 	@GetMapping("/getOrdersByLogin")
@@ -58,22 +58,15 @@ public class FranchiseeOrderController {
 	    	
 	}
 	
-	// 주문 삭제
-	@GetMapping("/orderListDeleteConfirm")
-	public String orderListDeleteConfirm(@RequestParam("fco_no") int fco_no, HttpSession session) {
-		
-		log.info("orderListDeleteConfirm()");
+	// 주문 완료
+	@GetMapping("/orderListCompleteConfirm")
+	public String orderListCompleteConfirm(@RequestParam("fco_ori_no") int fco_ori_no, 
+										HttpSession session, Model model) {
+		log.info("orderListCompleteConfirm()");
 		
 			String nextPage = "/franchisee/order/get_order_list";
 		    		   
-			FranchiseeMemberDto loginedFranchiseeMemberDto = 
-					(FranchiseeMemberDto) session.getAttribute("loginedFranchiseeMemberDto");
-		    		   
-		    int result = franchiseeOrderService.deleteOrderListConfirm(fco_no);
-		    		    
-		    if (result <= 0) {
-		        nextPage = "/franchisee/order/orderList_delete_ng";
-		    }
+		    int updateResult = franchiseeOrderService.orderListCompleteConfirm(fco_ori_no); 		    
 		    
 		    return nextPage;		
 		
