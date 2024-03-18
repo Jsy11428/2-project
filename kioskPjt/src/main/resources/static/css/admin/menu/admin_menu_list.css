@@ -22,6 +22,8 @@
 	margin-top: 10px;
 	margin-bottom: 10px;
 	line-height: 30px;
+	background-color: #dadada;
+	border: 1px solid #dadada;
 }
 
 #section_wrap div.menu_category_change_wrap a:hover {

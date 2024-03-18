@@ -106,7 +106,7 @@ function ajax_get_order_by_category() {
         	}); 
         }
     });
-
+    
 }
 
 // 돈 불러오기
@@ -134,8 +134,16 @@ function ajax_get_price_by_category() {
         error: function(data) {
             console.log('ajax error!!');
         },
-    });
-
+        ////
+        //초기화 버튼을 누르면 메뉴 나오는 창
+        	complete: function(data) {
+        	$(".order_btn").click(function(){
+        		
+        		ajax_getCategorie();
+        		
+        	});
+        }    		
+    });   
 }
 
 // 가맹점 정보 
@@ -215,7 +223,7 @@ function orderBtnClick() {
         }
 
    });
-
+	
     $('#section_wrap input[name="AllOrder_btn"]').click(function() {
   		// 클릭 이벤트 발생 시 실행되는 코드
   		console.log(" eliments: --->>>", $('#order_table tr:nth-child(1) td').length);
@@ -232,6 +240,7 @@ function orderBtnClick() {
 
 }
 
+ // 테이블에 있는 오더 정보 db에 넣기
 function ajax_get_AllOrder_by_order() {	
 	
 		console.log('AllOrder_btn clicked');		

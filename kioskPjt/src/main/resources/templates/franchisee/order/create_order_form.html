@@ -6,6 +6,7 @@
 <title th:replace="~{include/include_title.html::title}"></title>
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
 <script type="text/javascript" th:src="@{/js/franchisee/order/franchisee_order.js}"></script>
 
 <script type="text/javascript"
@@ -21,9 +22,9 @@
 
 	<div id="wrap">
 
-		<nav th:replace="~{/franchisee/include/franchisee_include.html::franchisee_nav}">
+	<nav th:replace="~{/franchisee/include/franchisee_include.html::franchisee_nav}">
 		</nav>
-
+		
 		<section>
 			<div id="section_wrap">	
 			
@@ -42,7 +43,7 @@
 								<h3>메뉴 등록</h3>
 		
 								<form th:action="@{/franchisee/order/orderAccountForm}"
-										name="order_account_form" method="post">
+									name="order_account_form" method="post">
 								
 									<div class="input_create_menu_wrap">						
 										<table>
@@ -124,8 +125,12 @@
 							</div>
 		
 						</div>
+						
+					
+						
 					</div>
 				</div>
+								
 			</div>
 		</section>
 
