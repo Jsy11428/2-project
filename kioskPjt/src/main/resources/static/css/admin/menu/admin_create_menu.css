@@ -88,4 +88,10 @@
     border: 1px solid #c8c8c8;
     resize: none;
 }
+#section_wrap div.admin_section_view_wrap select {
+	width: 200px;
+	height: 20px;
+    border-radius: 7px;
+    border: 1px solid #aaa;
+}
 /* create_menu_form CSS END */
