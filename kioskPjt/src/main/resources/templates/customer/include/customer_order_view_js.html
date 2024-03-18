@@ -7,6 +7,7 @@ let innerCartSlideMoveValue = 120;
 let leftMovedCount = 0;	
 let rightMovedCount = 0;
 
+
 $(document).ready(function() {
 	
 	init();
@@ -67,10 +68,10 @@ function eventsHandler(){
 			console.log("$('ul.cart_area_items li').length !== 0");
 			
 			for(let i = 0; i < $("ul.cart_area_items li").length; i++){
-				console.log("카트에 담는 함수 for");
+				console.log("카트에 중복 아이템 검사 for문");
 				
 				if($("ul.cart_area_items li").eq(i).attr('id').replace("cart_item_", "") === fc_menu_no+shot_number+pur_number){
-					console.log("same menu");
+					console.log("카트에 아이템이 있고 중복된 메뉴가 있어서 카트에 있는 아이템 수량 +1");
 										
 					let item_cnt = parseInt($("ul.cart_area_items li").eq(i).children('div.cart_item_select_wrap').children('p.fco_menu_cnt').text());
 					let fc_menu_price_one = parseInt($("ul.cart_area_items li").eq(i).children('div.cart_item_select_wrap').children('input[name="fc_menu_price_one"]').val());
@@ -92,17 +93,18 @@ function eventsHandler(){
 			        resetValues();
 					
 					return;
-				}else{
-					continue;
 				}
 				
 			}// for(let i = 0; i < $("ul.cart_area_items li").length; i++)
-			addCartItem(fc_menu_img, fc_menu_price, fc_menu_no, fc_menu_cnt, fc_menu_price_one, fcmc_no, 
-					shot_number, shot_price, pur_number, pur_price, fco_total_price, fc_menu_name);			
-		}else{
-			console.log("1번 fco_total_price: ",fco_total_price);
+			console.log("카트에 아이템이 하나 이상 있고 중복된 메뉴가 없음 카트에 새로 메뉴 추가함");
 			addCartItem(fc_menu_img, fc_menu_price, fc_menu_no, fc_menu_cnt, fc_menu_price_one, fcmc_no, 
 					shot_number, shot_price, pur_number, pur_price, fco_total_price, fc_menu_name);
+			cartAreaBtnActiveHandler();
+		}else{
+			console.log("카트에 아이템이 하나도 없음 카트에 새로 메뉴 추가함");
+			addCartItem(fc_menu_img, fc_menu_price, fc_menu_no, fc_menu_cnt, fc_menu_price_one, fcmc_no, 
+					shot_number, shot_price, pur_number, pur_price, fco_total_price, fc_menu_name);
+			cartAreaBtnActiveHandler();
 		}
 		// 모달창 닫히고 모달창의 value 초기화
 		$("#myModal").fadeOut();
@@ -139,11 +141,13 @@ function eventsHandler(){
 					
 				},300);
 				rightMovedCount -= 1;							
-			}			
+			}	
+			
+			cartAreaBtnActiveHandler(leftMovedCount,rightMovedCount);
 				
 		}//if(innerCartItemCnt > 5)
 						
-	});//$('#footer_wrap div.cart_area_right_btn').click
+	});//$('#footer_wrap div.cart_area_right_btn').click END
 	
 	$('#footer_wrap div.cart_area_left_btn').click(function(){
 		console.log("cart_area_left_btn click!!!");				
@@ -161,18 +165,21 @@ function eventsHandler(){
 					
 				},300);
 				rightMovedCount += 1;
-			}			
+			}
+			
+			cartAreaBtnActiveHandler(leftMovedCount,rightMovedCount);
 				
 		}//if(innerCartItemCnt > 5)
 						
-	});//$('#footer_wrap div.cart_area_right_btn').click
+	});//$('#footer_wrap div.cart_area_right_btn').click END
+	//장바구니 슬라이드 영역 END
 	
-	
+	//payment_btn click 결제하기 버튼 클릭!
 	$(document).on('click', '#footer_wrap div.price_area_wrap div.payment_btn', function(){
 		console.log("payment_btn click!!!");
-
+		removePaymentCartItem();
 		if($("ul.cart_area_items li").length !== 0){
-			$("#payment_modal_wrap").show();
+			
 			let cartOrderItems = [];
 			for (let i = 0; i < $("ul.cart_area_items>li").length; i++){
 				//<img class="cart_area_cancel_btn" src="/img/home/cart_area_cancel_btn.png" alt="">
@@ -188,29 +195,31 @@ function eventsHandler(){
 				let shot_price = parseInt($("#footer_wrap div.cart_area_wrap ul.cart_area_items>li:nth-child("+(i+1)+") div.cart_item_select_wrap input[name='shot_price']").val()); // 1가지 메뉴 샷 추가 총 가격
 				let pur_number = parseInt($("#footer_wrap div.cart_area_wrap ul.cart_area_items>li:nth-child("+(i+1)+") div.cart_item_select_wrap input[name='pur_number']").val()); // 1가지 메뉴 펄 추가 갯수
 				let pur_price = parseInt($("#footer_wrap div.cart_area_wrap ul.cart_area_items>li:nth-child("+(i+1)+") div.cart_item_select_wrap input[name='pur_price']").val()); // 1가지 메뉴 펄 추가 총 가격
-				let fc_menu_option = "샷: "+shot_number+" , 펄: "+pur_number; //오더 1가지 메뉴 옵션명 & 수량
-				let fc_menu_option_price = shot_price+pur_price; //오더 메뉴 1잔 옵션 가격
+				let fco_menu_option = "샷: "+shot_number+" , 펄: "+pur_number; //오더 1가지 메뉴 옵션명 & 수량
+				let fco_menu_option_price = shot_price+pur_price; //오더 메뉴 1잔 옵션 가격
 				
 				
 				cartOrderItems[i] = {
 					'fc_menu_img' : fc_menu_img,
-					'fco_packaging' : fco_packaging,
-					'fco_menu_cnt' : fco_menu_cnt,
-					'fc_menu_no' : fc_menu_no,
+					'fco_packaging' : fco_packaging,//
+					'fco_menu_cnt' : fco_menu_cnt,//
+					'fc_menu_no' : fc_menu_no,//
 					'fc_menu_name' : fc_menu_name,
-					'fcmc_no' : fcmc_no,
+					'fcmc_no' : fcmc_no,//
 					'fc_menu_price' : fc_menu_price,
-					'fco_total_price' :	parseInt(fco_total_price.replace("\\",'')),
+					'fco_total_price' :	parseInt(fco_total_price.replace("\\",'')),//
 					'shot_number' : shot_number,
 					'shot_price' : shot_price,
 					'pur_number' : pur_number,
 					'pur_price' : pur_price,
-					'fc_menu_option' : fc_menu_option,
-					'fc_menu_option_price' : fc_menu_option_price,
+					'fco_menu_option' : fco_menu_option,//
+					'fco_menu_option_price' : fco_menu_option_price,//
 				};
 				
 			}// for END
-			console.log("cartOrderItems: ",cartOrderItems);				
+			console.log("cartOrderItems: ",cartOrderItems);	
+			removePaymentCartItem();
+			$("#payment_modal_wrap").show();
 			paymentModal(cartOrderItems);								
 		}//if END
 		else{
@@ -219,61 +228,160 @@ function eventsHandler(){
 		
 	});//payment_btn click END
 	
-	function paymentModal(cartOrderItems){
-		console.log("paymentModal()");
-		console.log("cartOrderItems: ", cartOrderItems.length);
-		let cartOrderItem = "";
-		let appendTag = "";
-		
-		for(let i = 0; i < cartOrderItems.length; i++){
-			cartOrderItem = cartOrderItems[i];
-			
-			console.log("fc_menu_img: "+cartOrderItem['fc_menu_img']);
-			console.log("fco_packaging: "+cartOrderItem['fco_packaging']);
-			console.log("fco_menu_cnt: "+cartOrderItem['fco_menu_cnt']);
-			console.log("fc_menu_no: "+cartOrderItem['fc_menu_no']);
-			console.log("fc_menu_name: "+cartOrderItem['fc_menu_name']);
-			console.log("fcmc_no: "+cartOrderItem['fcmc_no']);
-			console.log("fc_menu_price: "+cartOrderItem['fc_menu_price']);
-			console.log("fco_total_price: "+cartOrderItem['fco_total_price']);
-			console.log("shot_number: "+cartOrderItem['shot_number']);
-			console.log("shot_price: "+cartOrderItem['shot_price']);
-			console.log("pur_number: "+cartOrderItem['pur_number']);
-			console.log("pur_price: "+cartOrderItem['pur_price']);
-			console.log("fc_menu_option: "+cartOrderItem['fc_menu_option']);
-			console.log("fc_menu_option_price: "+cartOrderItem['fc_menu_option_price']);
-			
-			appendTag += '<li>';
-			/* 
-			<li>
-				<div class="payment_modal_cart_item_img">
-					<img src="/img/home/ice_ame.png" alt="">
-				</div>
-				<div class="payment_modal_cart_item_info">
-					<h3 class="payment_menu_name">아메리카노 X 1</h3>
-					<p class="payment_menu_option">샷:0 , 펄:0</p>
-				</div>
-				<div class="payment_modal_cart_price_wrap">
-					<h2 class="payment_modal_cart_price">1000원</h2>
-				</div>
-			</li> 
-			*/
-			appendTag += '</li>';
-			$('#payment_modal_wrap div.payment_modal_section div.payment_modal_cart_wrap ul.payment_modal_cart').append(appendTag);
-		}
-
-	}
-
+	//payment modal close btn click!!
 	$(document).on('click','#payment_modal_wrap div.payment_modal_close_btn',function(){
+		console.log("payment_modal_close_btn click!");
+		removePaymentCartItem();
+		console.log("cart item length ->>>>>>",$("ul.cart_area_items>li").length);
 		$("#payment_modal_wrap").hide();
 	});
+	//payment modal close btn click END
+	
+	//payment modal pay_card btn click!!
+	$(document).on('click','div.payment_modal_payment_type_wrap button.pay_card',function(){
+		console.log("pay_card click!");
+		let pm_type = $(this).attr('pm_type');
+		
+		ajax_insert_order(pm_type);
+				
+	});
+	//payment modal pay_card btn click END
+	
+	//payment modal pay_cash btn click!!
+	$(document).on('click','div.payment_modal_payment_type_wrap button.pay_cash',function(){
+		console.log("pay_cash click!");
+		let pm_type = $(this).attr('pm_type');
+		
+		ajax_insert_order(pm_type);
+				
+	});
+	//payment modal pay_cash btn click END
 	
 }// function eventsHandler() END
+
+
+function cartAreaBtnActiveHandler(leftMovedCount=0,rightMovedCount=0){
+	console.log("cartAreaBtnActiveHandler()");
+	
+	let innerCartItemCnt = $('#footer_wrap ul.cart_area_items li').length;
+	let canMoveCount = innerCartItemCnt - 5;
+	
+	if(innerCartItemCnt > 5){
+		console.log("canMoveCount: "+canMoveCount);
+		console.log("leftMovedCount: "+leftMovedCount);
+		console.log("rightMovedCount: "+rightMovedCount);
+	    if((canMoveCount - leftMovedCount) > 0 && rightMovedCount >= 0){
+	    	$('#footer_wrap div.cart_area_right_btn img').attr('src','/img/home/cart_area_activ_right_btn.png');
+	    	$('#footer_wrap div.cart_area_left_btn img').attr('src','/img/home/cart_area_left_btn.png');
+	    }else if ((canMoveCount - leftMovedCount) > 0 && rightMovedCount < 0){
+	    	$('#footer_wrap div.cart_area_right_btn img').attr('src','/img/home/cart_area_activ_right_btn.png');
+	    	$('#footer_wrap div.cart_area_left_btn img').attr('src','/img/home/cart_area_activ_left_btn.png');
+	    }else if ((canMoveCount - leftMovedCount) <= 0 && rightMovedCount < 0){
+	    	$('#footer_wrap div.cart_area_right_btn img').attr('src','/img/home/cart_area_right_btn.png');
+	    	$('#footer_wrap div.cart_area_left_btn img').attr('src','/img/home/cart_area_activ_left_btn.png');
+	    }
+	      
+	  }else{
+		$('#footer_wrap div.cart_area_right_btn img').attr('src','/img/home/cart_area_right_btn.png');
+	    $('#footer_wrap div.cart_area_left_btn img').attr('src','/img/home/cart_area_left_btn.png');
+	  }
+	
+}
+
+
+function ajax_insert_order(pm_type){
+	console.log('ajax_insert_order()');
+	
+	let menuOrders = [];
+	for(let i = 0; i < $('ul.payment_modal_cart li').length; i++){
+		let cartOrderItem = $('ul.payment_modal_cart li').eq(i).children('input[name="cartOrderItem"]').data('cartOrderItem');
+		cartOrderItem['pm_type'] = pm_type;
+		menuOrders[i] = cartOrderItem;
+	}
+	
+	console.log("menuOrders: ",menuOrders);
+	
+	dataMsg = {
+    		'menuOrders': menuOrders,
+    };
+    
+    /* $.ajax({
+		 url: '/franchisee/order/OrderAccountConfirm',
+	     method: 'post',
+	     data: JSON.stringify(dataMsg),
+	     contentType: 'application/json; charset=utf-8',
+	     dataType: 'json',	
+	     success: function(data) {
+	   	 	console.log('customer ajax_insert_order success!!');
+            
+        },	     
+		error: function(data) {
+        	console.log('customer ajax_insert_order error!!');
+        
+		},
+		complete: function(data) {
+			console.log('customer ajax_insert_order complete!!');
+			
+			location.href = "/";
+		}
+	     
+	}); */
+	
+}//function ajax_insert_order () END
+
+
+function paymentModal(cartOrderItems){
+	console.log("paymentModal()");
+	console.log("cartOrderItems: ", cartOrderItems);
+	removePaymentCartItem();
+	let cartOrderItem = "";
+	let appendTag = "";	
+	let paymentTotalPrice = 0;
+	
+	for(let i = 0; i < cartOrderItems.length; i++){
+		console.log("paymentModal for ->>>>>>>"+i+"번째 생성");
+		cartOrderItem = cartOrderItems[i];	
+		
+		appendTag = '<li class="cart_order_item'+i+'">';
+			appendTag += '<input type="hidden" name="cartOrderItem">';
+            appendTag += '<div class="payment_modal_cart_item_img">';
+               appendTag += '<img src="'+cartOrderItem['fc_menu_img']+'" alt="">';
+            appendTag += '</div>';
+            
+            appendTag += '<div class="payment_modal_cart_item_info">';
+               appendTag += '<h3 class="payment_menu_name">'+cartOrderItem['fc_menu_name']+' X '+cartOrderItem['fco_menu_cnt']+'</h3>';
+               appendTag += '<p class="payment_menu_option">'+cartOrderItem['fco_menu_option']+'</p>';
+            appendTag += '</div>';
+            
+            appendTag += '<div class="payment_modal_cart_price_wrap">';
+               appendTag += '<h2 class="payment_modal_cart_price" fco_total_price="'+cartOrderItem['fco_total_price']+'">'+cartOrderItem['fco_total_price'].toLocaleString("ko-KR")+'원</h2>';
+            appendTag += '</div>';
+  
+     	appendTag += '</li>';
+		$('#payment_modal_wrap div.payment_modal_section div.payment_modal_cart_wrap ul.payment_modal_cart').append(appendTag);
+		
+		$('ul.payment_modal_cart li.cart_order_item'+i+' input[name="cartOrderItem"]').data('cartOrderItem',cartOrderItem);
+		
+		paymentTotalPrice += parseInt($("li.cart_order_item"+i+" div.payment_modal_cart_price_wrap h2.payment_modal_cart_price").attr('fco_total_price'));
+	}
+	
+	$('#payment_modal_wrap div.payment_modal_price_wrap table tr td.payment_modal_total_price span').text(paymentTotalPrice.toLocaleString("ko-KR"));
+	let val = $('ul.payment_modal_cart li').eq(0).children('input[name="cartOrderItem"]').data('cartOrderItem');
+	cartOrderItems = [];
+}
+
+
 
 function removeCartItem(){
 	console.log("removeCartItem()");
 	
 	$("ul.cart_area_items").empty();
+}
+
+function removePaymentCartItem(){
+	console.log("removePaymentCartItem()");
+	
+	$("ul.payment_modal_cart").empty();
 }
 
 
@@ -293,7 +401,7 @@ function totalPriceCalculator(){
 //footer cart area
 function addCartItem(menu_img, fc_menu_price, menu_no, fco_menu_cnt, fc_menu_price_one, fcmc_no,
 		shot_number, shot_price, pur_number, pur_price, fco_total_price, fc_menu_name){
-	console.log("addCartItem()");
+	console.log("addCartItem() 나 1개 생성!!");
 	/*
 	let fco_menu_cnt = 1;
 	*/
@@ -345,7 +453,8 @@ function addCartItem(menu_img, fc_menu_price, menu_no, fco_menu_cnt, fc_menu_pri
 				},300);
 				rightMovedCount += 1;
 			}			
-				
+			
+			cartAreaBtnActiveHandler(leftMovedCount,rightMovedCount);
 		}//if(innerCartItemCnt > 5)
 				
 	});

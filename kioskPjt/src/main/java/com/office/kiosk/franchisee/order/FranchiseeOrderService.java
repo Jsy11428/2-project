@@ -158,8 +158,8 @@ public class FranchiseeOrderService {
 			LinkedHashMap<String, Object> dataDto = (LinkedHashMap<String, Object>) dtos.get(i);
 			
 			FranchiseeOrderDto franchiseeOrderDto = new FranchiseeOrderDto();
-			
-			franchiseeOrderDto.setFco_packaging(Integer.parseInt((String)dataDto.get("fco_packaging")) );
+			log.info("fco_packaging: "+dataDto.get("fco_packaging"));
+			franchiseeOrderDto.setFco_packaging(Integer.parseInt((String)dataDto.get("fco_packaging")));
 			franchiseeOrderDto.setPm_type((String)dataDto.get("pm_type"));
 			franchiseeOrderDto.setFcmc_no(Integer.parseInt((String)dataDto.get("fcmc_no")));
 			franchiseeOrderDto.setFc_menu_no(Integer.parseInt((String)dataDto.get("fc_menu_no")));
