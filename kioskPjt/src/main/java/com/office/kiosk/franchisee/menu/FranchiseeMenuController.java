@@ -27,16 +27,16 @@ public class FranchiseeMenuController {
 	
 	// 프랜차이즈 메뉴 홈
 	
-	@GetMapping("/franchiseeMenuHome")	
-	public String franchiseeMenuHome() {
-		log.info("franchiseeMenuHome()");
-		
-		String nextPage = "/franchisee/menu/franchisee_menu_home";
-		
-		return nextPage;
-		
-	}
-	
+//	@GetMapping("/franchiseeMenuHome")	
+//	public String franchiseeMenuHome() {
+//		log.info("franchiseeMenuHome()");
+//		
+//		String nextPage = "/franchisee/menu/franchisee_menu_home";
+//		
+//		return nextPage;
+//		
+//	}
+//	
 	// 프랜차이즈 메뉴 추가 신청 화면
 	
 	@GetMapping("/createMenuForm")	
@@ -75,7 +75,7 @@ public class FranchiseeMenuController {
 	
 	// 프랜차이즈 메뉴 리스트(전체) 화면
 	
-	@GetMapping("/getAllMenus")
+	@GetMapping("/franchiseeMenuHome")
 //	public Object getAllMenus(HttpSession session, Map<String, Object> menuMap) {
 		public Object getAllMenus() {
 		log.info("getAllMenus()");
