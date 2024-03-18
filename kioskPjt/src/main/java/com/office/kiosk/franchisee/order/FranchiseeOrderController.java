@@ -26,7 +26,7 @@ public class FranchiseeOrderController {
 	@Autowired
 	FranchiseeOrderService franchiseeOrderService;
 	
-	//order누르면 가맹점 선택창 이동
+	// 주문 리스트 불러오기
 	@GetMapping("/getTableOrderList")
 	public String getTableOrderList(HttpSession session) {
 		log.info("getTableOrderList()");

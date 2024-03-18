@@ -41,14 +41,31 @@ public class securityConfig {
 		
 		http
 			.authorizeHttpRequests((request) -> request
-					.requestMatchers("/franchisee/order/**").authenticated()
+					.requestMatchers("/franchisee/order/**",
+									"/franchisee/menu/**",
+									"/franchisee/sales/**",
+									"/franchisee/member/franchiseeModifyForm",
+									"/franchisee/member/franchiseeModifyConfirm",
+									"/franchisee/member/franchiseeFindPasswordForm",
+									"/franchisee/member/franchiseeFindPasswordConfirm",
+									"/franchisee/member/franchiseeModifyPassword",
+									"/franchisee/member/franchiseeModifyPasswordConfirm",
+									"/franchisee/member/sltStoreHome",
+									"/franchisee/member/franchiseeFindPassword"
+									).authenticated()
 					.requestMatchers("/",
 									"/admin/**",
 									"/css/**",
 									"/js/**",
 									"/error/**",
 									"/img/**",
-									"/**").permitAll());
+									"/franchisee/member/createFranchiseeAccountForm",
+									"/franchisee/member/createFranchiseeAccountConfirm",
+									"/franchisee/member/getStoreList",
+									"/franchisee/member/franchiseeStoreLogin",
+									"/franchisee/member/customerOrderView",
+									"/franchisee/member/sotreLoginResultView"
+									).permitAll());
 
 		http.formLogin(login -> login
 				.loginPage("/franchisee/member/franchiseeLoginForm")
