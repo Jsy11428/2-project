@@ -188,6 +188,10 @@
     line-height: 40px;
 }
 
+#payment_complete_modal_wrap div.payment_complete_modal_content h1 {
+	display: none;	
+}
+
 #payment_complete_modal_wrap div.payment_complete_modal_content {
     height: 190px;
     width: 300px;

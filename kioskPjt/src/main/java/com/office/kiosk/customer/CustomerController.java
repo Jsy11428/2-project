@@ -43,7 +43,7 @@ public class CustomerController {
 		log.info("loginedFranchiseeStoreDto--- " + loginedFranchiseeStoreDto);
 		int fcs_no = loginedFranchiseeStoreDto.getFcs_no();
 		int orderResult = customerService.insertCustomerOrder(dataMsg, fcs_no);
-		 			 
+		
 		return orderResult;
 	}
 	

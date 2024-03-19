@@ -18,6 +18,8 @@ import lombok.extern.log4j.Log4j2;
 @Service
 public class CustomerService {
 	
+	final static int INSERT_ORDER_FAIL = -1;
+	
 	@Autowired
 	IFranchiseeOrderDao iFranchiseeOrderDao;
 	
@@ -62,6 +64,12 @@ public class CustomerService {
 		salesDto.setFcs_no(fcs_no);
 		
 		int result = iFranchiseeOrderDao.insertSalesByOrder(salesDto);
+		
+		if(result <= 0) {
+			result = INSERT_ORDER_FAIL;
+		}else {
+			result = fco_ori_no;
+		}
 		
 		return result;
 	}
