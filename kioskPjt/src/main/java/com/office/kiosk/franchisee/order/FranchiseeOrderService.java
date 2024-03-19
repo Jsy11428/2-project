@@ -175,11 +175,15 @@ public class FranchiseeOrderService {
 		return result;
 	}
 
-
+	@Transactional
 	public int orderListCompleteConfirm(int fco_ori_no) {
 		log.info("orderListCompleteConfirm()");
 		
 		int result = iFranchiseeOrderDao.updateOrderCompleteByOriNo(fco_ori_no);
+		
+		if(result > 0) {
+			result = iFranchiseeOrderDao.updateSalesCompleteByOriNo(fco_ori_no);
+		}
 		
 		return result;
 	}

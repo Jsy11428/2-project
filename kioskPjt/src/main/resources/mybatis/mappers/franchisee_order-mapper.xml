@@ -51,7 +51,7 @@
 		
 		JOIN TBL_FC_STORE FS ON FO.FCS_NO = FS.FCS_NO
 		
-		WHERE FS.FCS_NO = #{loginNo}
+		WHERE FS.FCS_NO = #{loginNo} AND FO.FCSA_COMPLETE = 0 
 	
   	</select>
   	
@@ -157,6 +157,18 @@
 		WHERE 
 			FCO_ORI_NO = #{fco_ori_no};
 	
+	</update>
+	
+	<update id="updateSalesCompleteByOriNo" 
+			parameterType="int">
+	
+		UPDATE 
+			TBL_FC_SALES  
+		SET 
+			FCSA_COMPLETE = 1
+		WHERE 
+			FCO_ORI_NO = #{fco_ori_no};
+			
 	</update>
 
     

@@ -95,18 +95,43 @@ input.shot_number, input.pur_number, input.basic_price, input.basic_count {
 	line-height: 40px;
 }
 
+#order_table_thead tr th:nth-child(1),
 #order_table tr td:nth-child(1) {
 	width: 80px;
 }
 
+#order_table_thead tr th:nth-child(2),
 #order_table tr td:nth-child(2) {
 	width: 80px;
 }
 
+#order_table_thead tr th:nth-child(3),
+#order_table tr td:nth-child(3) {
+	width: 130px;
+}
+
+#order_table_thead tr th:nth-child(5),
 #order_table tr td:nth-child(5) {
 	width: 50px;
 }
 
+#order_table_thead tr th:nth-child(7),
+#order_table tr td:nth-child(7) {
+	width: 80px;
+}
+
+#order_table_thead tr th:nth-child(8),
+#order_table tr td:nth-child(8) {
+	width: 65px;
+}
+
 #order_table input[type="button"] {
 	padding: 5px;
+}
+
+.other {
+	text-align: center;	
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
