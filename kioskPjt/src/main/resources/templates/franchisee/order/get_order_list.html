@@ -35,7 +35,7 @@
 				
 				<div class="pos_section_main">
 
-					<div class="pos_section_info_wrap">
+					<div class="pos_section_info_wrap" th:if="${session.loginedFranchiseeMemberDto != null}">
 
 						<div class="word">
 							오더 리스트
@@ -70,6 +70,13 @@
 					
 					</div>
 						
+					<div class="pos_section_info_wrap" th:unless="${session.loginedFranchiseeMemberDto != null}">
+						<div class="other">
+							<p>로그인 후 이용해주세요.</p>
+							<br><br>
+							<a th:href="@{/franchisee/member/franchiseeLoginForm}">로그인으로 이동</a>
+						</div>
+					</div>	
 
 				</div>
 			</div>

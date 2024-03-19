@@ -64,16 +64,8 @@ div.modify_menu_wrap td.buttons {
 				<div th:replace="~{/franchisee/include/franchisee_include.html::section_menu_wrap}">
 				</div>
 					
-				<!-- <div class="pos_section_side_menu_wrap">
-					<ul>
-						<li><a th:href="@{/franchisee/sales/getSalesInfo}">SALES</a></li>
-						<li><a th:href="@{/franchisee/menu/franchiseeMenuHome}">MENU</a></li>
-						<li><a th:href="@{/franchisee/order/getTableOrderList}">ORDER</a></li>
-						<li><a href="#none">MAGAGEMENT</a></li>
-					</ul>
-				</div>  -->
 	
-				<div class="admin_section_view_wrap">
+				<div class="admin_section_view_wrap" th:if="${session.loginedFranchiseeMemberDto != null}">
 					 	
 				 		<div class="menu_category_change_wrap" id="menu_category_change_wrap">
 							<!-- 카테고리 버튼들 -->
@@ -101,6 +93,7 @@ div.modify_menu_wrap td.buttons {
 									enctype="multipart/form-data">
 	
 									<div class="modify_menu_wrap">
+										<div class="fc_menu_no_modal"></div>
 										<table>
 											<thead>
 												<tr>
@@ -136,15 +129,11 @@ div.modify_menu_wrap td.buttons {
 												</td>
 											</tr>
 	
-											<tr>	
-												<td>												
-													<input type="button" value="취소">											
-												</td>								
 
-											<tr>
+											<tr>	
 												<td  colspan="3" class="buttons">									
 												<input type="button" value="취소">
-												</td>										
+												</td>		
 
 											</tr>
 											</tbody>
@@ -158,8 +147,14 @@ div.modify_menu_wrap td.buttons {
 						</div>
 						
 				 </div>	
-				 			 	
-				
+				 
+					<div class="admin_section_view_wrap" th:unless="${session.loginedFranchiseeMemberDto != null}">
+						<div class="other">
+							<p>로그인 후 이용해주세요.</p>
+							<br><br>
+							<a th:href="@{/franchisee/member/franchiseeLoginForm}">로그인으로 이동</a>
+						</div>
+					</div> 						 				
 		</section>
 	
 		<footer th:replace="~{/franchisee/include/franchisee_include.html::franchisee_footer}">	
