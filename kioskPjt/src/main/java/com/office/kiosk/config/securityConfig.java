@@ -65,12 +65,9 @@ public class securityConfig {
 									"/franchisee",
 									"/franchisee/member/createFranchiseeAccountForm",
 									"/franchisee/member/createFranchiseeAccountConfirm",
-									"/franchisee/member/getStoreList",
-									"/franchisee/member/franchiseeStoreLogin",
-									"/franchisee/member/customerOrderView",
-									"/franchisee/member/sotreLoginResultView",
+									"/franchisee/member/franchiseeLoginApproval",
 									"/franchisee/member/franchiseeLoginFail",
-									"/customer/order/OrderAccountConfirm",
+									"/customer/order/customerOrderAccountConfirm",
 									"/customer/order/getStoreList",
 									"/customer/order/franchiseeStoreLogin",
 									"/customer/order/customerOrderView",
@@ -91,17 +88,18 @@ public class securityConfig {
 					FranchiseeMemberDto loginedFranchiseeMemberDto = iFranchiseeMemberDao
 							.selectFranchiseeForLogin(franchiseeMemberDto);
 					
+					HttpSession session = request.getSession();
+					
 					int fcmApproval = loginedFranchiseeMemberDto.getFcm_approval(); 
 					
 					if(fcmApproval == 1) {
-						HttpSession session = request.getSession();
 						session.setAttribute("loginedFranchiseeMemberDto", loginedFranchiseeMemberDto);
 						session.setMaxInactiveInterval(60 * 480);
 						
 						response.sendRedirect("/franchisee/member/franchiseeLoginSuccess");
 
 					} else {
-						response.sendRedirect("/franchisee/member/franchiseeLoginFail?approval=" + fcmApproval);
+						response.sendRedirect("/franchisee/member/franchiseeLoginApproval");
 						
 					}
 
