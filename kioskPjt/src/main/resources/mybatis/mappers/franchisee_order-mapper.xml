@@ -37,7 +37,7 @@
 	    
 	    WHERE FS.FCS_NO = #{loginNo} AND FO.FCSA_COMPLETE = 0 
 
-	    ORDER BY FCO_NO ASC 
+	    ORDER BY FCO_NO DESC 
 	    
 		LIMIT #{pagingParams.start}, #{pagingParams.limit}
   		
