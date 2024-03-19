@@ -42,6 +42,14 @@ function ajax_getCategorie() {
                     '<option value="' + cateDtos[i].fcmc_no + '">' +
                     cateDtos[i].fcmc_name + '</option>');
             }
+            
+        	// 카테고리가 변경될 때마다 해당 카테고리의 메뉴를 가져오는 함수 호출
+        	$('#order_category_select').change(function() {
+        		console.log("order_category_select change!!!!");
+        	    // ajax_get_order_by_category($(this).val());
+        	    ajax_get_order_by_category();
+        	}); 
+            
         },
         error: function(data) {
             console.log('CATEajax error!!');
@@ -51,15 +59,10 @@ function ajax_getCategorie() {
         	
         	ajax_get_order_by_category();
         	
-        	// 카테고리가 변경될 때마다 해당 카테고리의 메뉴를 가져오는 함수 호출
-        	$('#order_category_select').change(function() {
-        		console.log("order_category_select change!!!!");
-        	    // ajax_get_order_by_category($(this).val());
-        	    ajax_get_order_by_category();
-        	}); 
         }
     });
 }
+
 
 //메뉴
 function ajax_get_order_by_category() {
@@ -88,6 +91,12 @@ function ajax_get_order_by_category() {
 
             $('#order_menu_select').html(appendTag);
             
+        	$('#order_menu_select').change(function() {
+        		console.log("order_menu_select change!!!!");
+        		
+        		
+        		ajax_get_price_by_category();
+        	}); 
         },
         error: function(data) {
             console.log('ajax error!!');
@@ -97,18 +106,12 @@ function ajax_get_order_by_category() {
         	console.log("fc_menu_no: ",$('#order_menu_select').val());
         	
         	ajax_get_price_by_category();
+
         	
-        	$('#order_menu_select').change(function() {
-        		console.log("order_menu_select change!!!!");
-        		
-        		
-        		ajax_get_price_by_category();
-        	}); 
         }
     });
     
 }
-
 // 돈 불러오기
 
 function ajax_get_price_by_category() {
@@ -129,54 +132,23 @@ function ajax_get_price_by_category() {
             let appendTag = priceDtos[0].fc_menu_price;
                        
             $('.basic_price').val(appendTag);
+            
+        //초기화 버튼을 누르면 메뉴 나오는 창
+        	$(".order_btn").click(function(){
+        		
+        		ajax_getCategorie();
+        		
+        	}); 
                             			         	
         },
         error: function(data) {
             console.log('ajax error!!');
         },
         
-        //초기화 버튼을 누르면 메뉴 나오는 창
-        	 complete: function(data) {
-        	$(".order_btn").click(function(){
-        		
-        		ajax_getCategorie();
-        		
-        	}); 
-        }    	
+       /*  	 complete: function(data) {
+        }    */ 	
     });   
 }
-
-
-
-// 가맹점 정보 
-
-/* function ajax_store_select() {
-    console.log('ajax_store_select');
-      
-    $.ajax({
-        url: '/franchisee/order/getStoreInfo',
-        method: 'get',
-        dataType: 'json',
-        success: function(data) {
-            console.log('Storejsx success!!');
-            
-            let storeDtos = data.franchiseeStoreDto;
-
-            $('#order_store_select').empty();
-            
-            for (let i = 0; i < storeDtos.length; i++) {
-                // 카테고리 옵션 추가
-                $('#order_store_select').append(
-                    '<option value="' + storeDtos[i].fcm_no + '">' +
-                    storeDtos[i].fcs_name + '</option>');
-            }
-        },
-        error: function(xhr, status, error) {
-            console.log('Storejsx error:', error);
-        },
-    });
-}
- */
 
 
 function orderBtnClick() {
