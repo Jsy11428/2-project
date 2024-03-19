@@ -46,7 +46,7 @@
 				<div class="session_chk" th:if="${session.loginedFranchiseeStoreDto == null}">
 					<div class="login_form">
 	
-						<form	action="/franchisee/member/franchiseeStoreLogin" 
+						<form	action="/customer/order/franchiseeStoreLogin" 
 								method="post"
 								name="franchisee_store_login_form">
 								
@@ -80,7 +80,7 @@
 				
 				<div class="session_chk" th:unless="${session.loginedFranchiseeStoreDto == null}">
 					<div class="btn">
-						<a th:href="@{/franchisee/member/sotreLoginResultView}">주문하러 가기</a>
+						<a th:href="@{/customer/order/sotreLoginResultView}">주문하러 가기</a>
 					</div>
 				</div>
 				

@@ -46,7 +46,7 @@ function franchiseeStoreLogin() {
 function ajax_selectStoreByFcmId(fcm_id){
 
 	$.ajax({
-		url: '/franchisee/member/getStoreList',
+		url: '/customer/order/getStoreList',
 		method: 'post',
 		data: { 'fcm_id' : fcm_id },
 		dataType: 'json',
