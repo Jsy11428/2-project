@@ -256,7 +256,6 @@ public class AdminMemberController {
 			
 		} 
 		
-		
 		return nextPage;
 	}
 	
