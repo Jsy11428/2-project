@@ -146,15 +146,18 @@ div.modify_menu_wrap td.buttons {
 	
 						</div>
 						
-				 </div>	
+				</div>	
 				 
-					<div class="admin_section_view_wrap" th:unless="${session.loginedFranchiseeMemberDto != null}">
-						<div class="other">
-							<p>로그인 후 이용해주세요.</p>
-							<br><br>
-							<a th:href="@{/franchisee/member/franchiseeLoginForm}">로그인으로 이동</a>
-						</div>
-					</div> 						 				
+				<div class="admin_section_view_wrap" th:unless="${session.loginedFranchiseeMemberDto != null}">
+					<div class="other">
+						<p>로그인 후 이용해주세요.</p>
+						<br><br>
+						<a th:href="@{/franchisee/member/franchiseeLoginForm}">로그인으로 이동</a>
+					</div>
+				</div>
+				
+			</div>
+			
 		</section>
 	
 		<footer th:replace="~{/franchisee/include/franchisee_include.html::franchisee_footer}">	

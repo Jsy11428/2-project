@@ -342,7 +342,8 @@ public class FranchiseeMemberController {
 	 * 로그인 후 매장 선택
 	 */
 	@GetMapping("/sltStoreHome")
-	public String sltStoreHome(@RequestParam("fcs_no") int fcs_no, HttpSession session) {
+	public String sltStoreHome(@RequestParam("fcs_no") int fcs_no,
+								@RequestParam("fcs_name") String fcs_name, HttpSession session) {
 		log.info("sltStoreHome()");
 
 		String nextPage = "/franchisee/franchisee_home";
@@ -351,6 +352,7 @@ public class FranchiseeMemberController {
 				.getAttribute("loginedFranchiseeMemberDto");
 
 		loginedFranchiseeMemberDto.setFcs_no(fcs_no);
+		loginedFranchiseeMemberDto.setFcs_name(fcs_name);
 
 		session.setAttribute("loginedFranchiseeMemberDto", loginedFranchiseeMemberDto);
 		session.setMaxInactiveInterval(60 * 30);
