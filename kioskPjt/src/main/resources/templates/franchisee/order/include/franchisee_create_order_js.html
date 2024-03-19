@@ -390,10 +390,10 @@ function ajax_get_AllOrder_by_order() {
 				
 				if(data === 1) {
 					alert('주문이 등록되었습니다.')
-				} else
-		   	 	
-		   	 	
-                removeOrderTable();
+	                removeOrderTable();
+					$('.order_btns #totalPrice').text('');
+					
+				}
 
             },
 		     
@@ -405,6 +405,8 @@ function ajax_get_AllOrder_by_order() {
 		});
 
 } 
+ 
+ 
 
 
  

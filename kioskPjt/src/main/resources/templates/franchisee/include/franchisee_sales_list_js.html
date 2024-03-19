@@ -148,6 +148,15 @@ function initEvents() {
         searchBtnClick();
 
     })
+    
+    $('#section_wrap .franchisee_section_view_wrap .sales_detail_modal .close_box').click(function() {
+        console.log('modal close btn click!');
+
+        $('#section_wrap .franchisee_section_view_wrap .sales_detail_modal_wrap').css('display', 'none');
+
+        removeDetailModal();
+
+    })
 
 }
 
@@ -243,6 +252,15 @@ function removePageNo() {
 
 }
 
+function removeDetailModal() {
+    console.log('removeDetailModal()');
+
+    $('#section_wrap .franchisee_section_view_wrap .sales_detail_modal .store_info ul').empty();
+    $('#section_wrap .franchisee_section_view_wrap .sales_detail_modal .order_info table tbody').empty();
+    $('#section_wrap .franchisee_section_view_wrap .sales_detail_modal .price_info').empty();
+
+}
+
 // ajax - 우리가게 총 매출 불러오기 /* fcs_no = 로그인된 가게 no */ 
 function ajax_getMyStoreAllSalesInfo(fcs_no, pageNum = 1) {
     console.log('ajax_getMyStoreAllSalesInfo()');
@@ -273,7 +291,7 @@ function ajax_getMyStoreAllSalesInfo(fcs_no, pageNum = 1) {
                 appendTag = '<tr>';
                     
                     appendTag += '<td>' + myStoreAllSalesInfoDto[i].fcsa_no + '</td>';
-                    appendTag += '<td>' + myStoreAllSalesInfoDto[i].fco_ori_no + '</td>';
+                    appendTag += '<td><a class="ori_no" href="#none">' + myStoreAllSalesInfoDto[i].fco_ori_no + '</a></td>';
                     appendTag += '<td>' + myStoreAllSalesInfoDto[i].fcsa_price + '</td>';
                     appendTag += '<td>' + myStoreAllSalesInfoDto[i].pm_type + '</td>';
                     appendTag += '<td>' + myStoreAllSalesInfoDto[i].fcsa_reg_date + '</td>';
@@ -353,6 +371,17 @@ function ajax_getMyStoreAllSalesInfo(fcs_no, pageNum = 1) {
 
                 ajax_getMyStoreAllSalesInfo(fcs_no, this.getAttribute('page_num'));
             });
+            
+            $('#section_wrap .franchisee_sales_list table a.ori_no').click(function(){
+            	console.log('a.ori_no click');
+            	
+            	let fco_ori_no = $(this).text();
+            	
+            	ajax_salesDetailInfo(fco_ori_no);
+            	
+            	$('#section_wrap .franchisee_section_view_wrap .sales_detail_modal_wrap').css('display', 'block');
+            	
+            })
 
         }
 
@@ -591,10 +620,69 @@ function ajax_getMyStoreSalesInfoByInputPeriod(fcs_no, pageNum = 1) {
         }
 
     })
+	
+}
 
-	
-	
-	
+function ajax_salesDetailInfo(fco_ori_no) {
+    console.log("ajax_salesDetailInfo()");
+
+    $.ajax({
+        url: '/admin/sales/getSalesDetailInfo',
+        method: 'post',
+        data: {'fco_ori_no' : fco_ori_no},
+        dataType: 'json',
+        success: function(data) {
+            console.log('ajax success!')
+
+            removeDetailModal();
+
+            let salesDetailInfo = data.salesDetailInfo;
+            console.log("salesDetailInfo--", salesDetailInfo);
+            let appendTag = '';
+
+            appendTag += '<li> 지점명 : ' + salesDetailInfo[0].fcs_name + '</li>';
+            appendTag += '<li> 대표자 : ' + salesDetailInfo[0].fcm_name + '</li>';
+            appendTag += '<li> 주소 : ' + salesDetailInfo[0].fcs_location + '</li>';
+            appendTag += '<li> 연락처 : ' + salesDetailInfo[0].fcs_phone + '</li>';
+            appendTag += '<li> 결제수단 : ' + salesDetailInfo[0].pm_type + '</li>';
+            appendTag += '<li> 결제일 : ' + salesDetailInfo[0].fcsa_reg_date + '</li>';
+
+            $('#section_wrap .franchisee_section_view_wrap .sales_detail_modal .store_info ul').append(appendTag);
+
+            for (let i = 0; i < salesDetailInfo.length; i++) {
+
+                let appendTbodyTag = '';
+                
+                appendTbodyTag += '<tr>'
+                    appendTbodyTag += '<td class="menu_name" colspan="4">' + salesDetailInfo[i].fc_menu_name + ' - ' + salesDetailInfo[i].fco_menu_option + '</td>'
+                appendTbodyTag += '</tr>'
+                
+                appendTbodyTag += '<tr>'
+                    appendTbodyTag += '<td></td>'
+               		appendTbodyTag += '<td>' + parseInt(salesDetailInfo[i].fco_menu_option_price+salesDetailInfo[i].fc_menu_price) + '</td>'
+               		appendTbodyTag += '<td>' + salesDetailInfo[i].fco_menu_cnt + '</td>'
+                	appendTbodyTag += '<td>' + parseInt((salesDetailInfo[i].fco_menu_option_price+salesDetailInfo[i].fc_menu_price)*salesDetailInfo[i].fco_menu_cnt)  + '</td>'
+                appendTbodyTag += '</tr>'
+                
+
+                $('#section_wrap .franchisee_section_view_wrap .sales_detail_modal .order_info table tbody').append(appendTbodyTag);
+
+            }
+
+            let appendPriceTag = '';
+
+            appendPriceTag += '<p>판매금액</p><p>' + salesDetailInfo[0].fcsa_price + ' 원</p>';
+
+            $('#section_wrap .franchisee_section_view_wrap .sales_detail_modal .price_info').append(appendPriceTag);
+
+        },
+        error: function(data) {
+            console.log('ajax error!')
+
+        }
+
+    })
+
 }
 
 

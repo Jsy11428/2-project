@@ -15,7 +15,7 @@ import lombok.extern.log4j.Log4j2;
 @Service
 public class FranchiseeSalesService {
 	
-	private int pageLimit = 3; // 한 페이지당 보여줄 sales 정보 갯수
+	private int pageLimit = 5; // 한 페이지당 보여줄 sales 정보 갯수
 	private int blockLimit = 3;
 	
 	@Autowired
