@@ -24,7 +24,7 @@ public class AdminSalesService {
 	@Autowired
 	IAdminMemberDao iAdminMemberDao;
 	
-	private int pageLimit = 1; 		// 한 페이지당 보여줄 admin정보 갯수
+	private int pageLimit = 5; 		// 한 페이지당 보여줄 admin정보 갯수
 	private int blockLimit = 3; 	// 하단에 보여줄 페이지 번호 갯수
 
 	public List<FranchiseeSalesDto> salesList() {

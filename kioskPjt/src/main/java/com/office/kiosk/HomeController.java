@@ -20,6 +20,7 @@ public class HomeController {
 		
 	}
 	
+	
 	/*
 	 * @GetMapping({"/franchisee/home","/franchisee", "/franchisee/"}) public String
 	 * franchiseeHome() { log.info("franchiseeHome()");

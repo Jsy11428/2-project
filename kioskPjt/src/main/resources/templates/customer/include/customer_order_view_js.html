@@ -316,6 +316,12 @@ function ajax_insert_order(pm_type){
 	     success: function(data) {
 	   	 	console.log('customer ajax_insert_order success!!');
             
+	   	 	if(data <= 0){
+	   	 		alert('결제에 실패하였습니다.');
+	   	 	}else{
+	   	 		paymentCompleteModal(data);
+	   	 	}
+	   	 	
         },	     
 		error: function(data) {
         	console.log('customer ajax_insert_order error!!');
@@ -323,14 +329,14 @@ function ajax_insert_order(pm_type){
 		},
 		complete: function(data) {
 			console.log('customer ajax_insert_order complete!!');
-			paymentCompleteModal();
+			
 		}
 	     
 	}); 
 	
 }//function ajax_insert_order () END
 
-function paymentCompleteModal(){
+function paymentCompleteModal(fco_ori_no){
 	$('#payment_complete_modal_wrap').show();
 	let num = 0;
 	let interval = setInterval(function(){
@@ -338,8 +344,10 @@ function paymentCompleteModal(){
 		if( num >= 100){ 
 			num = 100;
 			$('div.payment_complete_modal_content p span').text(num);
-			clearInterval(interval);
 			$('div.payment_complete_modal_content h6').text('결제 완료!');
+			$('div.payment_complete_modal_content h1 span').text(fco_ori_no);
+			$('div.payment_complete_modal_content h1').show();
+			clearInterval(interval);
 		}
 		$('div.payment_complete_modal_content p span').text(num);
 	},30);
@@ -348,11 +356,12 @@ function paymentCompleteModal(){
 		$('div.payment_complete_modal_content p').animate({'opacity':'0'},500,loop_text);
 	});
 	let timeout = setTimeout(function(){
+		$('div.payment_complete_modal_content h1').hide();
 		$('#payment_complete_modal_wrap').hide();
 		removePaymentCartItem();
 		$("#payment_modal_wrap").hide();
 		location.href = "/customer/order/sotreLoginResultView";
-	}, 6000);
+	}, 7000);
 }
 
 function paymentModal(cartOrderItems){

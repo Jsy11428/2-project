@@ -1,3 +1,7 @@
+#wrap {
+	position: relative;
+}
+
 #section_wrap .admin_section_view_wrap .admin_sales_list {
 	width: 100%;
 }
@@ -28,12 +32,26 @@
 	padding: 5px;
 }
 
+#section_wrap .admin_section_view_wrap .sales_detail_modal_wrap {
+	width: 100%;
+	display: none;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	background-color: rgba(0, 0, 0, .8);
+}
+
 #section_wrap .admin_section_view_wrap .sales_detail_modal {
 	width: 40%;
 	border: 1px solid #000;
+	top: 60px;
+	padding: 10px;
 	margin: 0 auto; 
-	display: none;
 	position: relative;
+	background-color: #fff;
 }
 
 #section_wrap .admin_section_view_wrap .sales_detail_modal table {
