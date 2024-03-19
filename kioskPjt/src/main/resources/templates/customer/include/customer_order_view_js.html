@@ -308,8 +308,8 @@ function ajax_insert_order(pm_type){
     		'menuOrders': menuOrders,
     };
     
-    /* $.ajax({
-		 url: '/customer/order/OrderAccountConfirm',
+     $.ajax({
+		 url: '/customer/order/customerOrderAccountConfirm',
 	     method: 'post',
 	     data: JSON.stringify(dataMsg),
 	     contentType: 'application/json; charset=utf-8',
@@ -328,7 +328,7 @@ function ajax_insert_order(pm_type){
 			location.href = "/";
 		}
 	     
-	}); */
+	}); 
 	
 }//function ajax_insert_order () END
 

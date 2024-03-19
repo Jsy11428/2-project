@@ -30,15 +30,15 @@ public class CustomerController {
 	@Autowired
 	FranchiseeMemberService franchiseeMemberService;
 	
-	@PostMapping("/OrderAccountConfirm")
+	@PostMapping("/customerOrderAccountConfirm")
 	@ResponseBody
 	public Object OrderAccountConfirm(@RequestBody Map<String, Object> dataMsg, HttpSession session) {
 		log.info("OrderAccountConfirm()");
 		
 		log.info("dataMsg--- " + dataMsg);
 		
-		FranchiseeMemberDto loginedFranchiseeStoreDto = 
-				(FranchiseeMemberDto) session.getAttribute("loginedFranchiseeStoreDto");
+		FranchiseeStoreDto loginedFranchiseeStoreDto = 
+				(FranchiseeStoreDto) session.getAttribute("loginedFranchiseeStoreDto");
 		 		 
 		int fcs_no = loginedFranchiseeStoreDto.getFcs_no();
 		
