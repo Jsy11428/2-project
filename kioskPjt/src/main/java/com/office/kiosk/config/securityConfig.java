@@ -69,7 +69,12 @@ public class securityConfig {
 									"/franchisee/member/franchiseeStoreLogin",
 									"/franchisee/member/customerOrderView",
 									"/franchisee/member/sotreLoginResultView",
-									"/franchisee/member/franchiseeLoginFail"
+									"/franchisee/member/franchiseeLoginFail",
+									"/customer/order/OrderAccountConfirm",
+									"/customer/order/getStoreList",
+									"/customer/order/franchiseeStoreLogin",
+									"/customer/order/customerOrderView",
+									"/customer/order/sotreLoginResultView"
 									).permitAll());
 
 		http.formLogin(login -> login
