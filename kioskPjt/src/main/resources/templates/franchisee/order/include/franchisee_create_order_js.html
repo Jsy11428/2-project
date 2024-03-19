@@ -200,7 +200,7 @@ function orderBtnClick() {
         let fc_menu_option_price = parseInt(shot_number * 500) + (pur_number * 1000);
         let menuPrice = fc_menu_option_price + price;
         // let fc_menu_option_price = parseInt(shot_number * 500) + (pur_number * 1000);
-        let fco_total_price = price * quantity;
+        let fco_total_price = price;
 
  
         let cof_packaging = $('#order_packaging_select').val();
@@ -250,6 +250,8 @@ function orderBtnClick() {
         	            $('input[name="fof_menu_count"]').val(1);
         	            
         	            sumTotalPrice();
+        	            
+        	            ajax_get_price_by_category();
             			
 	            		return;
             		}
@@ -275,6 +277,8 @@ function orderBtnClick() {
 		        $('input[name="fof_menu_count"]').val(1);
 		        
 		        sumTotalPrice();
+		        
+		        ajax_get_price_by_category();
 	            
 	         // 등록된 메뉴가 하나 이상 있을 때. end
             
@@ -298,8 +302,9 @@ function orderBtnClick() {
 	            $('input.pur_number').val(0);
 	            $('input[name="fof_menu_count"]').val(1);
 	            
-	            
 	            sumTotalPrice();
+	            
+	            ajax_get_price_by_category();
             	
             }	// 처음 메뉴 등록할 때. (등록된 메뉴가 없을 때) end
         }
@@ -401,11 +406,12 @@ function ajax_get_AllOrder_by_order() {
 		     success: function(data) {
 		   	 	console.log('order_ajax success!!');
 				
-				if(data === 1) {
-					alert('주문이 등록되었습니다.')
-	                removeOrderTable();
+				if(data <= 0) {
+					alert('결제에 실패하였습니다.')
+				} else {
+					paymentCompleteModal(data);
 					$('.order_btns #totalPrice').text('');
-					
+					removeOrderTable();
 				}
 
             },
@@ -419,7 +425,33 @@ function ajax_get_AllOrder_by_order() {
 
 } 
  
- 
+function paymentCompleteModal(fco_ori_no){
+	$('#payment_complete_modal_wrap').show();
+	let num = 0;
+	let interval = setInterval(function(){
+		num += 1;
+		if( num >= 100){ 
+			num = 100;
+			$('div.payment_complete_modal_content p span').text(num);
+			$('div.payment_complete_modal_content h6').text('결제 완료!');
+			$('div.payment_complete_modal_content h1 span').text(fco_ori_no);
+			$('div.payment_complete_modal_content h1').show();
+			clearInterval(interval);
+		}
+		$('div.payment_complete_modal_content p span').text(num);
+	},30);
+	$('div.payment_complete_modal_content p').animate({'opacity':'0'},500,function loop_text(){
+		$('div.payment_complete_modal_content p').animate({'opacity':'1'},500);
+		$('div.payment_complete_modal_content p').animate({'opacity':'0'},500,loop_text);
+	});
+	let timeout = setTimeout(function(){
+		$('div.payment_complete_modal_content h1').hide();
+		$('#payment_complete_modal_wrap').hide();
+		removePaymentCartItem();
+		$("#payment_modal_wrap").hide();
+		location.href = "/customer/order/sotreLoginResultView";
+	}, 7000);
+}
 
 // 샷 수량 변경
 function modiftyShotCount() {
@@ -438,10 +470,18 @@ function modfiyPurCount() {
 	
 }
 
+//메뉴 수량 변경 
+function modfiyMenuCount() {
+	console.log("modfiyMenuCount()()");
+	
+	moifyShotPur();
+	
+}
+
 function moifyShotPur() {
 	console.log("moifyShotPur()");
 	
-	let total_price = current_menu_basic_price + (Number($('input[name="shot_number"]').val()) * 500) + (Number($('input[name="pur_number"]').val()) * 1000);
+	let total_price = (current_menu_basic_price + (Number($('input[name="shot_number"]').val()) * 500) + (Number($('input[name="pur_number"]').val()) * 1000)) * Number($('input[name="fof_menu_count"]').val());
 	
 	console.log("total_price: " + total_price);
 	
