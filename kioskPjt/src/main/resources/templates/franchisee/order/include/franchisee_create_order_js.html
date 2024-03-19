@@ -121,6 +121,7 @@ function ajax_get_order_by_category() {
 }
 
 // 돈 불러오기
+let current_menu_basic_price;
 function ajax_get_price_by_category() {
     console.log('ajax_get_price_by_category()');
     	
@@ -134,9 +135,9 @@ function ajax_get_price_by_category() {
         success: function(data) {
             console.log('pricejsx success!!');
             let priceDtos = data.franchiseePriceDtos;
-            let appendTag = priceDtos[0].fc_menu_price;
-                       
-            $('.basic_price').val(appendTag);
+            current_menu_basic_price = priceDtos[0].fc_menu_price;
+                 
+            $('.basic_price').val(current_menu_basic_price);
                             			         	
         },
         error: function(data) {
@@ -197,9 +198,11 @@ function orderBtnClick() {
         let shot_number = $('.shot_number').val();
         let pur_number = $('.pur_number').val();
         let fc_menu_option_price = parseInt(shot_number * 500) + (pur_number * 1000);
-        let fco_total_price = (fc_menu_option_price + price) * quantity;
         let menuPrice = fc_menu_option_price + price;
+        // let fc_menu_option_price = parseInt(shot_number * 500) + (pur_number * 1000);
+        let fco_total_price = price * quantity;
 
+ 
         let cof_packaging = $('#order_packaging_select').val();
         let cof_pay = $('#order_payment_select').val();
 
@@ -209,6 +212,16 @@ function orderBtnClick() {
         } else {
             // 주문 목록에 추가
            	let cartNo = menu + shot_number + pur_number;
+            let appendTag = "<tr>";
+                    appendTag += '<td fco_packaging="'+packaging+'">' + $('#order_packaging_select option:selected').text() + '</td>';    
+                    appendTag += '<td pm_type="'+pay+'">' + pay + '</td>';    
+                    appendTag += '<td fcmc_no="'+category+'">' + $('#order_category_select option:selected').text() + '</td>';
+                    appendTag += '<td fc_menu_no="'+menu+'">' + $('#order_menu_select option:selected').text() + '</td>';
+                    appendTag += '<td fco_menu_cnt="'+quantity+'">' + quantity + '</td>';
+                    appendTag += '<td>샷: '+ shot_number + ' , 펄: ' + pur_number + '</td>';
+                    appendTag += '<td fco_total_price="'+fco_total_price+'" fc_menu_option_price="'+fco_total_price+'">'+fco_total_price+'</td>';
+                    appendTag += '<td>' + new Date().toLocaleDateString() + '</td>'; // 현재 날짜를 주문일로 설정
+                appendTag += '</tr>';
             
             // 등록된 메뉴가 하나 이상 있을 때.
             if($('#order_table tr').length !== 0) {	
@@ -408,6 +421,31 @@ function ajax_get_AllOrder_by_order() {
  
  
 
+// 샷 수량 변경
+function modiftyShotCount() {
+	console.log("modiftyShotCount()");
+	
+	moifyShotPur();
+	
+}
 
+
+//펄 수량 변경 
+function modfiyPurCount() {
+	console.log("modfiyPurCount()");
+	
+	moifyShotPur();
+	
+}
+
+function moifyShotPur() {
+	console.log("moifyShotPur()");
+	
+	let total_price = current_menu_basic_price + (Number($('input[name="shot_number"]').val()) * 500) + (Number($('input[name="pur_number"]').val()) * 1000);
+	
+	console.log("total_price: " + total_price);
+	
+	$('.basic_price').val(total_price);
+}
  
 </script>

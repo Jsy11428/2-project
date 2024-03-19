@@ -5,7 +5,6 @@
 
 <title th:replace="~{/include/include_title.html::title}"></title>
 
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
 <script type="text/javascript" th:src="@{/js/franchisee/order/franchisee_order.js}"></script>
 
@@ -17,6 +16,8 @@
 <link rel="stylesheet" th:href="@{/css/franchisee/franchisee_include.css}">
 <link rel="stylesheet" th:href="@{/css/franchisee/order/orderAdd.css}">
 <link rel="stylesheet" th:href="@{/css/franchisee/franchisee_home.css}">
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
 </head>
 <body>
@@ -52,7 +53,7 @@
 											<tr>
 												<td><span>포장여부</span></td>
 												<td><select name="cof_packaging" id="order_packaging_select">
-													<option value="">----선택------</option>
+													<option value="">------선택------</option>
 													<option value="1">포장</option>
 													<option value="0">매장</option>
 												</select></td>
@@ -60,7 +61,7 @@
 											<tr>
 												<td><span>결제 방식</span></td>
 												<td><select name="cof_pay" id="order_payment_select">
-													<option value="">----선택------</option>
+													<option value="">------선택-------</option>
 													<option value="카드">카드</option>
 													<option value="현금">현금</option>
 												</select></td>
@@ -75,11 +76,11 @@
 											</tr>
 											<tr>
 												<td><span>샷 추가</span></td>
-												<td><input type="number"  name="shot_number" value="0" class="shot_number" min="0"></td>
+												<td><input type="number"  name="shot_number" value="0" class="shot_number" min="0" onchange="modiftyShotCount()"></td>
 											</tr>
 											<tr>
 												<td><span>펄 추가</span></td>
-												<td><input type="number"  name="pur_number" value="0" class="pur_number" min="0"></td>
+												<td><input type="number"  name="pur_number" value="0" class="pur_number" min="0" onchange="modfiyPurCount()"></td>
 											</tr>
 											<tr>
 												<td><span>주문 수량</span></td>
