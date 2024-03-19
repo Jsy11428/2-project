@@ -16,5 +16,6 @@ public class FranchiseeMemberDto {
 	private String fcm_mod_date;
 	
 	private int fcs_no;
+	private String fcs_name;
 
 }

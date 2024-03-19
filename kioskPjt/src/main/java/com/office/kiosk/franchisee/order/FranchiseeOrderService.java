@@ -172,6 +172,12 @@ public class FranchiseeOrderService {
 		
 		int result = iFranchiseeOrderDao.insertSalesByOrder(salesDto);
 		
+		if(result <= 0) {
+			result = -1;
+		}else {
+			result = fco_ori_no;
+		}
+		
 		return result;
 	}
 

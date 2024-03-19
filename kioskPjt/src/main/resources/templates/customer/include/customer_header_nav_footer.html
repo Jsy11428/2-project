@@ -2,9 +2,23 @@
 		<!-- customer header 영역 -->
 		<header th:fragment ="customer_header">
             <div id="header_wrap">
-                <div class="home_btn">
-                    <img src="/img/home/home_icon.png" alt="home_icon">
-                </div>
+            	<ul class="header_btn_wrap">
+	            	<li class="home_btn">
+	                    <a th:href="@{/}">
+	                    	<img src="/img/home/home_icon.png" alt="home_icon">
+	                    </a>
+	                </li>
+	                <li class="home_btn">
+	                    <a th:href="@{/franchisee/home}">
+	                    	<img src="/img/home/franchisee_icon.png" alt="home_icon">
+	                    </a>
+	                </li>
+	                <li class="home_btn">
+	                    <a th:href="@{/admin/home}">
+	                    	<img src="/img/home/admin_icon.png" alt="home_icon">
+	                    </a>
+	                </li>
+            	</ul>                
             </div>
        	</header>
         <!-- customer header 영역 END -->
