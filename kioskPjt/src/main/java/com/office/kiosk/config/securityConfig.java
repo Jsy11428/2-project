@@ -69,7 +69,12 @@ public class securityConfig {
 									"/franchisee/member/franchiseeStoreLogin",
 									"/franchisee/member/customerOrderView",
 									"/franchisee/member/sotreLoginResultView",
-									"/franchisee/member/franchiseeLoginFail"
+									"/franchisee/member/franchiseeLoginFail",
+									"/customer/order/OrderAccountConfirm",
+									"/customer/order/getStoreList",
+									"/customer/order/franchiseeStoreLogin",
+									"/customer/order/customerOrderView",
+									"/customer/order/sotreLoginResultView"
 									).permitAll());
 
 		http.formLogin(login -> login
@@ -85,17 +90,24 @@ public class securityConfig {
 
 					FranchiseeMemberDto loginedFranchiseeMemberDto = iFranchiseeMemberDao
 							.selectFranchiseeForLogin(franchiseeMemberDto);
+					
+					int fcmApproval = loginedFranchiseeMemberDto.getFcm_approval(); 
+					
+					if(fcmApproval == 1) {
+						HttpSession session = request.getSession();
+						session.setAttribute("loginedFranchiseeMemberDto", loginedFranchiseeMemberDto);
+						session.setMaxInactiveInterval(60 * 480);
+						
+						response.sendRedirect("/franchisee/member/franchiseeLoginSuccess");
 
-					HttpSession session = request.getSession();
-					session.setAttribute("loginedFranchiseeMemberDto", loginedFranchiseeMemberDto);
-					session.setMaxInactiveInterval(60 * 480);
+					} else {
+						response.sendRedirect("/franchisee/member/franchiseeLoginFail?approval=" + fcmApproval);
+						
+					}
 
-					response.sendRedirect("/franchisee/member/franchiseeLoginSuccess");
 
 				}).failureHandler((request, response, exception) -> {
 					log.info("fail handler");
-					
-					
 					
 					response.sendRedirect("/franchisee/member/franchiseeLoginFail");
 
