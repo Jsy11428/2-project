@@ -90,8 +90,6 @@ public class FranchiseeSalesController {
 		
 		 pagingMyStoreSalesInfoByInputPeriod.put("myStoreSalesInfoByInputPeriodPageNum", myStoreSalesInfoByInputPeriodPageNum);
 		 
-		 log.info("pagingMyStoreSalesInfoByInputPeriod---------?" + pagingMyStoreSalesInfoByInputPeriod);
-		
 		 return pagingMyStoreSalesInfoByInputPeriod;
 		
 	}
