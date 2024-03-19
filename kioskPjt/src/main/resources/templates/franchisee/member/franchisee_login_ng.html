@@ -32,7 +32,13 @@
 
 				<div class="pos_section_main">
 					<div class="pos_section_info_wrap">
-						<div class="word">
+						<div class="word" th:if="${approval} == 0">
+							franchisee_login_fail
+							<br>
+							관리자 승인 후 사용 가능. 관리자에게 문의하세요.
+						</div>
+						
+						<div class="word" th:unless="${approval} == 0">
 							franchisee_login_fail
 						</div>
 						

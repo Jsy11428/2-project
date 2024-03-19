@@ -48,8 +48,6 @@
 			TBL_FC_MEMBER 
 		WHERE 
 			FCM_ID = #{fcm_id} 
-		AND 
-			FCM_APPROVAL = 1 
 	
 	</select>
 	
