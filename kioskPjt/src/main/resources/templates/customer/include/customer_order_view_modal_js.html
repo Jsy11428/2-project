@@ -13,18 +13,7 @@ $(document).ready(function() {
             resetValues();
         }
     });
-  
 
-    $(".select_oreder input[name='cancel']").click(function(){
-        $(this).css('border', '2px solid #fff').css('backgroundColor', 'blue').css('color', '#fff');
-        $(".select_oreder input[name='select']").css('border', '2px solid blue').css('backgroundColor', 'inherit').css('color', 'blue');
-    });
-
-    $(".select_oreder input[name='select']").click(function(){
-        $(this).css('border', '2px solid #fff').css('backgroundColor', 'blue').css('color', '#fff');
-        $(".select_oreder input[name='cancel']").css('border', '2px solid blue').css('backgroundColor', 'inherit').css('color', 'blue');
-    });
-    
      menuSelectHandler();
     
 });
