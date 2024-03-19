@@ -42,19 +42,18 @@ function ajax_getCategorie() {
                     '<option value="' + cateDtos[i].fcmc_no + '">' +
                     cateDtos[i].fcmc_name + '</option>');
             }
-            
         },
         error: function(data) {
             console.log('CATEajax error!!');
         },
         complete: function(data){
-        	//console.log('CATEajax complate!!');
+        	console.log('CATEajax complate!!');
         	
         	ajax_get_order_by_category();
         	
         	// 카테고리가 변경될 때마다 해당 카테고리의 메뉴를 가져오는 함수 호출
         	$('#order_category_select').change(function() {
-        		//console.log("order_category_select change!!!!");
+        		console.log("order_category_select change!!!!");
         	    // ajax_get_order_by_category($(this).val());
         	    ajax_get_order_by_category();
         	}); 
@@ -89,14 +88,13 @@ function ajax_get_order_by_category() {
 
             $('#order_menu_select').html(appendTag);
             
-            
         },
         error: function(data) {
             console.log('ajax error!!');
         },
         complete: function(date) {
-        	/* console.log('ajax complete');
-        	console.log("fc_menu_no: ",$('#order_menu_select').val()); */
+        	console.log('ajax complete');
+        	console.log("fc_menu_no: ",$('#order_menu_select').val());
         	
         	ajax_get_price_by_category();
         	
@@ -113,6 +111,8 @@ function ajax_get_order_by_category() {
 
 // 돈 불러오기
 
+let current_menu_basic_price;
+
 function ajax_get_price_by_category() {
     console.log('ajax_get_price_by_category()');
     	
@@ -128,10 +128,9 @@ function ajax_get_price_by_category() {
         success: function(data) {
             console.log('pricejsx success!!');
             let priceDtos = data.franchiseePriceDtos;
-            let appendTag = priceDtos[0].fc_menu_price;
-                       
-            $('.basic_price').val(appendTag);
-            
+            current_menu_basic_price = priceDtos[0].fc_menu_price;
+                 
+            $('.basic_price').val(current_menu_basic_price);
                             			         	
         },
         error: function(data) {
@@ -139,13 +138,13 @@ function ajax_get_price_by_category() {
         },
         
         //초기화 버튼을 누르면 메뉴 나오는 창
-         	 complete: function(data) {
+        	 complete: function(data) {
         	$(".order_btn").click(function(){
         		
         		ajax_getCategorie();
         		
         	}); 
-        }     	
+        }    	
     });   
 }
 
@@ -198,9 +197,10 @@ function orderBtnClick() {
         let price = parseInt($('.basic_price').val());          // 주문 가격 가져오기
         let shot_number = $('.shot_number').val();
         let pur_number = $('.pur_number').val();
-        let fc_menu_option_price = parseInt(shot_number * 500) + (pur_number * 1000);
-        let fco_total_price = (fc_menu_option_price + price) * quantity;
+        // let fc_menu_option_price = parseInt(shot_number * 500) + (pur_number * 1000);
+        let fco_total_price = price * quantity;
 
+ 
         let cof_packaging = $('#order_packaging_select').val();
         let cof_pay = $('#order_payment_select').val();
 
@@ -216,7 +216,7 @@ function orderBtnClick() {
                     appendTag += '<td fc_menu_no="'+menu+'">' + $('#order_menu_select option:selected').text() + '</td>';
                     appendTag += '<td fco_menu_cnt="'+quantity+'">' + quantity + '</td>';
                     appendTag += '<td>샷: '+ shot_number + ' , 펄: ' + pur_number + '</td>';
-                    appendTag += '<td fco_total_price="'+fco_total_price+'" fc_menu_option_price="'+fc_menu_option_price+'">'+fco_total_price+'</td>';
+                    appendTag += '<td fco_total_price="'+fco_total_price+'" fc_menu_option_price="'+fco_total_price+'">'+fco_total_price+'</td>';
                     appendTag += '<td>' + new Date().toLocaleDateString() + '</td>'; // 현재 날짜를 주문일로 설정
                 appendTag += '</tr>';
             
@@ -278,7 +278,7 @@ function ajax_get_AllOrder_by_order() {
                     "fco_menu_option" : fco_menu_option,
                     "fco_menu_option_price" : fco_menu_option_price,
                     "fco_total_price" : fco_total_price
-		     	}		 
+		     	}
 
         }
 	    
@@ -297,16 +297,13 @@ function ajax_get_AllOrder_by_order() {
 		     dataType: 'json',	
 		     success: function(data) {
 		   	 	console.log('order_ajax success!!');
-				
-		   	 	alert('주문 요청이 성공했습니다!');
+
                 removeOrderTable();
 
             },
 		     
 			error: function(data) {
 	        	console.log('order_ajax error!!');
-	        	
-	        	alert('주문 요청이 실패되었습니다. 다시 시도해주세요.');
 	        
 			}
 		     
@@ -314,6 +311,31 @@ function ajax_get_AllOrder_by_order() {
 
 } 
 
+// 샷 수량 변경
+function modiftyShotCount() {
+	console.log("modiftyShotCount()");
+	
+	moifyShotPur();
+	
+}
 
+
+//펄 수량 변경 
+function modfiyPurCount() {
+	console.log("modfiyPurCount()");
+	
+	moifyShotPur();
+	
+}
+
+function moifyShotPur() {
+	console.log("moifyShotPur()");
+	
+	let total_price = current_menu_basic_price + (Number($('input[name="shot_number"]').val()) * 500) + (Number($('input[name="pur_number"]').val()) * 1000);
+	
+	console.log("total_price: " + total_price);
+	
+	$('.basic_price').val(total_price);
+}
  
 </script>
