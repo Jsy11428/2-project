@@ -126,6 +126,19 @@ public class FranchiseeMemberController {
 		return nextPage;
 
 	}
+	
+	/*
+	 * 	로그인 실패(관리자 승인 안됨)
+	 */
+	@GetMapping("/franchiseeLoginApproval")
+	public String franchiseeLoginApproval() {
+		log.info("franchiseeLoginApproval()");
+
+		String nextPage = "/franchisee/member/franchisee_login_approval";
+
+		return nextPage;
+
+	}
 
 //	/*
 //	 * 	로그아웃 확인
