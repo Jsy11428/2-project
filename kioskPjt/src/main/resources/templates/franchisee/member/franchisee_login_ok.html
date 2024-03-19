@@ -54,7 +54,8 @@
 									<td th:text="${rst.fcs_location}"></td>
 									<td th:text="${rst.fcs_phone}"></td>
 									<td>
-										<button th:fcs_no="${rst.fcs_no}" th:text="선택" th:onclick="sltStoreBtn(this.getAttribute('fcs_no'))"></button>
+										<button th:fcs_name="${rst.fcs_name}" th:fcs_no="${rst.fcs_no}" th:text="선택" 
+												th:onclick="sltStoreBtn(this.getAttribute('fcs_no'),this.getAttribute('fcs_name'))"></button>
 									</td>
 								</tr>
 							</table>

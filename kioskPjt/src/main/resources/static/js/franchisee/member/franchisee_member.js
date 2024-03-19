@@ -150,10 +150,10 @@ function franchiseeFindPasswordConFirm() {
 }
 
 
-function sltStoreBtn(fcs_no){
+function sltStoreBtn(fcs_no, fcs_name){
 	console.log('sltStoreBtn()');
 	
-	location.href = "/franchisee/member/sltStoreHome?fcs_no=" + fcs_no;
+	location.href = "/franchisee/member/sltStoreHome?fcs_no=" + fcs_no +"&fcs_name=" + fcs_name;
 	
 }
 
