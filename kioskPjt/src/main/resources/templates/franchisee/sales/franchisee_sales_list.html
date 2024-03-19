@@ -7,14 +7,13 @@
 
 <script type="text/javascript" th:src="@{/js/franchisee/member/franchisee_member.js}"></script>
 
-<link rel="stylesheet" th:href="@{/css/admin/sales/admin_store_sales_list.css}">
+<link rel="stylesheet" th:href="@{/css/franchisee/sales/franchisee_sales_list.css}">
 <link rel="stylesheet" th:href="@{/css/franchisee/common.css}">
 <link rel="stylesheet" th:href="@{/css/franchisee/franchisee_include.css}">
 <link rel="stylesheet" th:href="@{/css/franchisee/franchisee_home.css}">
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script type="text/javascript" th:replace="~{franchisee/include/franchisee_sales_list_js.html::franchisee_sales_list_js}"></script>
- 
 
 </head>
 <body>
@@ -32,20 +31,19 @@
 				<div th:replace="~{/franchisee/include/franchisee_include.html::section_menu_wrap}">
 				</div>
 				
-				<div class="admin_section_view_wrap" th:if="${session.loginedFranchiseeMemberDto != null}">
-
 				<p hidden id="fc_no" th:text="${session.loginedFranchiseeMemberDto.fcs_no}"></p>
-				<div class="admin_section_view_wrap">
 			
-				<div class="pos_section_main">
-					<div class="pos_section_info_wrap">
-					
-						<div class="word">
-							우리매장 매출
-						</div>
+				<div class="franchisee_section_view_wrap" th:if="${session.loginedFranchiseeMemberDto != null}">
+			
+					<div class="pos_section_main">
+						<div class="pos_section_info_wrap">
 						
+							<div class="word">
+								우리매장 매출
+							</div>
+							
+						</div>
 					</div>
-				</div>
 
 					
 					<div class="select_wrap">
@@ -89,7 +87,7 @@
 					</div>
 					 
 						
-					<div class="admin_store_sales_list">
+					<div class="franchisee_sales_list">
 					
 		  				<table>
 
@@ -125,18 +123,58 @@
 
 					</div>
 					
+					<div class="sales_detail_modal_wrap">
+						<div class="sales_detail_modal">
+	
+							<div class="store_info">
+								<ul>
+									<!-- <li>지점명</li>
+									<li>대표자</li>
+									<li>주소</li>
+									<li>연락처</li>
+									<li>결제수단</li> -->
+								</ul>
+							</div>
+	
+							<div class="order_info">
+								<table>
+									<thead>
+										<tr>
+											<th>메뉴명</th>
+											<th>단가</th>
+											<th>수량</th>
+											<th>금액</th>
+										</tr>
+									</thead>
+									<tbody>
+										
+									</tbody>
+								</table>
+							</div>
+		
+							<div class="price_info">
+								
+							</div>
+		
+							<div class="close_box">
+								close
+							</div>
+		
+						</div>
+					</div>
+					
 				</div>
 							
+				<div class="franchisee_section_view_wrap" th:unless="${session.loginedFranchiseeMemberDto != null}">
+					<div class="other">
+						<p>로그인 후 이용해주세요.</p>
+						<br><br>
+						<a th:href="@{/franchisee/member/franchiseeLoginForm}">로그인으로 이동</a>
+					</div>
+				</div>
+			
 			</div>
 			
-			<div class="admin_section_view_wrap" th:unless="${session.loginedFranchiseeMemberDto != null}">
-				<div class="other">
-					<p>로그인 후 이용해주세요.</p>
-					<br><br>
-					<a th:href="@{/franchisee/member/franchiseeLoginForm}">로그인으로 이동</a>
-				</div>
-			</div>
-						
 		</section>
 			
 		

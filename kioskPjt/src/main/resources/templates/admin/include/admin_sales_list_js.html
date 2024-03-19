@@ -42,15 +42,11 @@ function initEvents() {
     $('#section_wrap .admin_section_view_wrap .sales_detail_modal .close_box').click(function() {
         console.log('modal close btn click!');
 
-        $('#section_wrap .admin_section_view_wrap .sales_detail_modal').css('display', 'none');
+        $('#section_wrap .admin_section_view_wrap .sales_detail_modal_wrap').css('display', 'none');
 
         removeDetailModal();
 
     })
-
-    
-
-
 
 }
 
@@ -165,7 +161,7 @@ function ajax_getAllSalesInfo(pageNum = 1) {
 
                 ajax_salesDetailInfo(fco_ori_no);
 
-                $('#section_wrap .admin_section_view_wrap .sales_detail_modal').css('display', 'block');
+                $('#section_wrap .admin_section_view_wrap .sales_detail_modal_wrap').css('display', 'block');
 
             })
 
@@ -305,7 +301,7 @@ function ajax_searchSalesList(search_term, search_value, search_word, pageNum = 
 
                 ajax_salesDetailInfo(fco_ori_no);
 
-                $('#section_wrap .admin_section_view_wrap .sales_detail_modal').css('display', 'block');
+                $('#section_wrap .admin_section_view_wrap .sales_detail_modal_wrap').css('display', 'block');
 
             })
 

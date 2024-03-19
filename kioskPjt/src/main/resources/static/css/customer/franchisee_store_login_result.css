@@ -87,7 +87,9 @@
     border: 3px solid #fff;
     border-radius: 40px;
     padding: 18px 50px;
+
     background-color: #253f85;
+
     color: #fff;
     font-size: 1.5em;
     font-weight: bold;
@@ -95,5 +97,7 @@
 }
 
 #section_wrap .option input[type="button"]:hover {
-    background-color: rgba(0, 255, 255, .8);
+    background-color: #fff;
+    color: #253f85;
+    border: 3px solid #253f85;
 }
