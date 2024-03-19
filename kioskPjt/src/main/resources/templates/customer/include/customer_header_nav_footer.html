@@ -4,13 +4,19 @@
             <div id="header_wrap">
             	<ul class="header_btn_wrap">
 	            	<li class="home_btn">
-	                    <img src="/img/home/home_icon.png" alt="home_icon">
+	                    <a th:href="@{/}">
+	                    	<img src="/img/home/home_icon.png" alt="home_icon">
+	                    </a>
 	                </li>
 	                <li class="home_btn">
-	                    <img src="/img/home/franchisee_icon.png" alt="home_icon">
+	                    <a th:href="@{/franchisee/home}">
+	                    	<img src="/img/home/franchisee_icon.png" alt="home_icon">
+	                    </a>
 	                </li>
 	                <li class="home_btn">
-	                    <img src="/img/home/admin_icon.png" alt="home_icon">
+	                    <a th:href="@{/admin/home}">
+	                    	<img src="/img/home/admin_icon.png" alt="home_icon">
+	                    </a>
 	                </li>
             	</ul>                
             </div>
