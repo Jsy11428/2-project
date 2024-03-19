@@ -57,3 +57,8 @@
     text-align: center;
     background-color: #dadada;
 }
+
+#footer_wrap img {
+	text-align: right;
+	height: 50px;
+}

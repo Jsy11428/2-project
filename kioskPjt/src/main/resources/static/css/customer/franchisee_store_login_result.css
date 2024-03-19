@@ -1,17 +1,17 @@
 #wrap {
     max-width: 1000px;
     min-width: 1000px;
-    height: 1030px;
+    height: 1200px;
 }
 
 #section_wrap .main {
     width: 1000px;
-    height: 880px;
+    height: 1050px;
 }
 
 #section_wrap .main .img_box {
     width: 1000px;
-    height: 420px;
+    height: 1050px;
     background-color: #0f0;
 }
 
@@ -19,13 +19,13 @@
 
 #section_wrap .main .img_box ul.img_slide {
 	width: 1000px;
-	height: 420px;
+	height: 1050px;
 	position: relative;
 }
 
 #section_wrap div.main .img_box ul li {
 	width: 1000px;
-	height: 420px;
+	height: 1050px;
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -33,7 +33,7 @@
 
 #section_wrap div.main .img_box ul li img {
 	width: 1000px;
-	height: 420px;
+	height: 1050px;
 	padding: 0;
 	
 }
