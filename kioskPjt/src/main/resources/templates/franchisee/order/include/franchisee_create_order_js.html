@@ -43,26 +43,24 @@ function ajax_getCategorie() {
                     cateDtos[i].fcmc_name + '</option>');
             }
             
-        	// 카테고리가 변경될 때마다 해당 카테고리의 메뉴를 가져오는 함수 호출
-        	$('#order_category_select').change(function() {
-        		console.log("order_category_select change!!!!");
-        	    // ajax_get_order_by_category($(this).val());
-        	    ajax_get_order_by_category();
-        	}); 
-            
         },
         error: function(data) {
             console.log('CATEajax error!!');
         },
         complete: function(data){
-        	console.log('CATEajax complate!!');
+        	//console.log('CATEajax complate!!');
         	
         	ajax_get_order_by_category();
         	
+        	// 카테고리가 변경될 때마다 해당 카테고리의 메뉴를 가져오는 함수 호출
+        	$('#order_category_select').change(function() {
+        		//console.log("order_category_select change!!!!");
+        	    // ajax_get_order_by_category($(this).val());
+        	    ajax_get_order_by_category();
+        	}); 
         }
     });
 }
-
 
 //메뉴
 function ajax_get_order_by_category() {
@@ -91,27 +89,28 @@ function ajax_get_order_by_category() {
 
             $('#order_menu_select').html(appendTag);
             
+            
+        },
+        error: function(data) {
+            console.log('ajax error!!');
+        },
+        complete: function(date) {
+        	/* console.log('ajax complete');
+        	console.log("fc_menu_no: ",$('#order_menu_select').val()); */
+        	
+        	ajax_get_price_by_category();
+        	
         	$('#order_menu_select').change(function() {
         		console.log("order_menu_select change!!!!");
         		
         		
         		ajax_get_price_by_category();
         	}); 
-        },
-        error: function(data) {
-            console.log('ajax error!!');
-        },
-        complete: function(date) {
-        	console.log('ajax complete');
-        	console.log("fc_menu_no: ",$('#order_menu_select').val());
-        	
-        	ajax_get_price_by_category();
-
-        	
         }
     });
     
 }
+
 // 돈 불러오기
 
 function ajax_get_price_by_category() {
@@ -133,22 +132,54 @@ function ajax_get_price_by_category() {
                        
             $('.basic_price').val(appendTag);
             
-        //초기화 버튼을 누르면 메뉴 나오는 창
-        	$(".order_btn").click(function(){
-        		
-        		ajax_getCategorie();
-        		
-        	}); 
                             			         	
         },
         error: function(data) {
             console.log('ajax error!!');
         },
         
-       /*  	 complete: function(data) {
-        }    */ 	
+        //초기화 버튼을 누르면 메뉴 나오는 창
+         	 complete: function(data) {
+        	$(".order_btn").click(function(){
+        		
+        		ajax_getCategorie();
+        		
+        	}); 
+        }     	
     });   
 }
+
+
+
+// 가맹점 정보 
+
+/* function ajax_store_select() {
+    console.log('ajax_store_select');
+      
+    $.ajax({
+        url: '/franchisee/order/getStoreInfo',
+        method: 'get',
+        dataType: 'json',
+        success: function(data) {
+            console.log('Storejsx success!!');
+            
+            let storeDtos = data.franchiseeStoreDto;
+
+            $('#order_store_select').empty();
+            
+            for (let i = 0; i < storeDtos.length; i++) {
+                // 카테고리 옵션 추가
+                $('#order_store_select').append(
+                    '<option value="' + storeDtos[i].fcm_no + '">' +
+                    storeDtos[i].fcs_name + '</option>');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.log('Storejsx error:', error);
+        },
+    });
+}
+ */
 
 
 function orderBtnClick() {
@@ -247,7 +278,7 @@ function ajax_get_AllOrder_by_order() {
                     "fco_menu_option" : fco_menu_option,
                     "fco_menu_option_price" : fco_menu_option_price,
                     "fco_total_price" : fco_total_price
-		     	}
+		     	}		 
 
         }
 	    
@@ -266,13 +297,16 @@ function ajax_get_AllOrder_by_order() {
 		     dataType: 'json',	
 		     success: function(data) {
 		   	 	console.log('order_ajax success!!');
-
+				
+		   	 	alert('주문 요청이 성공했습니다!');
                 removeOrderTable();
 
             },
 		     
 			error: function(data) {
 	        	console.log('order_ajax error!!');
+	        	
+	        	alert('주문 요청이 실패되었습니다. 다시 시도해주세요.');
 	        
 			}
 		     
