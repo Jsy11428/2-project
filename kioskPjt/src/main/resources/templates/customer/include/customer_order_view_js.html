@@ -324,14 +324,37 @@ function ajax_insert_order(pm_type){
 		},
 		complete: function(data) {
 			console.log('customer ajax_insert_order complete!!');
-			
-			/* location.href = "/"; */
+			paymentCompleteModal();
 		}
 	     
-	});
+	}); 
 	
 }//function ajax_insert_order () END
 
+function paymentCompleteModal(){
+	$('#payment_complete_modal_wrap').show();
+	let num = 0;
+	let interval = setInterval(function(){
+		num += 1;
+		if( num >= 100){ 
+			num = 100;
+			$('div.payment_complete_modal_content p span').text(num);
+			clearInterval(interval);
+			$('div.payment_complete_modal_content h6').text('결제 완료!');
+		}
+		$('div.payment_complete_modal_content p span').text(num);
+	},30);
+	$('div.payment_complete_modal_content p').animate({'opacity':'0'},500,function loop_text(){
+		$('div.payment_complete_modal_content p').animate({'opacity':'1'},500);
+		$('div.payment_complete_modal_content p').animate({'opacity':'0'},500,loop_text);
+	});
+	let timeout = setTimeout(function(){
+		$('#payment_complete_modal_wrap').hide();
+		removePaymentCartItem();
+		$("#payment_modal_wrap").hide();
+		location.href = "/customer/order/sotreLoginResultView";
+	}, 6000);
+}
 
 function paymentModal(cartOrderItems){
 	console.log("paymentModal()");
