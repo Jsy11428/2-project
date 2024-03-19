@@ -70,7 +70,7 @@ public class securityConfig {
 									"/franchisee/member/customerOrderView",
 									"/franchisee/member/sotreLoginResultView",
 									"/franchisee/member/franchiseeLoginFail",
-									"/customer/order/OrderAccountConfirm",
+									"/customer/order/customerOrderAccountConfirm",
 									"/customer/order/getStoreList",
 									"/customer/order/franchiseeStoreLogin",
 									"/customer/order/customerOrderView",
