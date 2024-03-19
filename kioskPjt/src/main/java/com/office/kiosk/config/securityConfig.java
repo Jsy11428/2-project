@@ -52,11 +52,7 @@ public class securityConfig {
 									"/franchisee/member/franchiseeModifyPasswordConfirm",
 									"/franchisee/member/sltStoreHome",
 									"/franchisee/member/franchiseeFindPassword",
-									"/franchisee/member/franchiseeLoginSuccess",
-									"/franchisee/member/franchiseeLoginForm",
-									"/franchisee/home",
-									"/franchisee/",
-									"/franchisee"
+									"/franchisee/member/franchiseeLoginSuccess"
 									).authenticated()
 					.requestMatchers("/",
 									"/admin/**",
@@ -64,6 +60,9 @@ public class securityConfig {
 									"/js/**",
 									"/error/**",
 									"/img/**",
+									"/franchisee/home",
+									"/franchisee/",
+									"/franchisee",
 									"/franchisee/member/createFranchiseeAccountForm",
 									"/franchisee/member/createFranchiseeAccountConfirm",
 									"/franchisee/member/getStoreList",
