@@ -1,0 +1,128 @@
+#wrap {
+	position: relative;	
+}
+
+#section_wrap .franchisee_section_view_wrap .select_wrap {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+#section_wrap .franchisee_section_view_wrap .select_wrap select {
+	padding: 5px;
+	text-align: center;
+}
+
+#section_wrap .franchisee_section_view_wrap .select_wrap input[name="p_today"] {
+	padding: 5px;
+}
+
+#section_wrap .franchisee_section_view_wrap .franchisee_sales_list {
+	width: 100%;
+}
+
+#section_wrap .franchisee_section_view_wrap .franchisee_sales_list table {
+	margin: 0 10px;
+	border-collapse: collapse;
+	margin: 0 auto;
+}
+
+#section_wrap .franchisee_section_view_wrap .franchisee_sales_list table tr td {
+	border: 1px solid #000;
+	text-align: center;
+	font-size: .9em;
+	padding: 5px;
+}
+
+#section_wrap .franchisee_section_view_wrap .list_search {
+	margin: 20px 0 ;
+	text-align: center;
+}
+
+#section_wrap .franchisee_section_view_wrap .list_search input {
+	padding: 5px;
+}
+
+#section_wrap .franchisee_section_view_wrap div.page_no_wrap {
+	width: 250px;
+	text-align: center;
+	margin: 20px auto;
+	display: flex;
+	justify-content: space-between;
+}
+
+#section_wrap .franchisee_section_view_wrap .sales_detail_modal_wrap {
+	width: 100%;
+	display: none;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	background-color: rgba(0, 0, 0, .8);
+}
+
+#section_wrap .franchisee_section_view_wrap .sales_detail_modal {
+	width: 40%;
+	border: 1px solid #000;
+	top: 60px;
+	padding: 10px;
+	margin: 0 auto; 
+	position: relative;
+	background-color: #fff;
+}
+
+#section_wrap .franchisee_section_view_wrap .sales_detail_modal table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 0 auto;
+}
+
+#section_wrap .franchisee_section_view_wrap .sales_detail_modal .store_info {
+	padding: 5px;
+}
+
+#section_wrap .franchisee_section_view_wrap .sales_detail_modal table thead {
+	border-top: 2px dotted #000;
+	border-bottom: 2px dotted #000;
+}
+
+#section_wrap .franchisee_section_view_wrap .sales_detail_modal table tbody {
+	border-bottom: 2px dotted #000;
+}
+
+#section_wrap .franchisee_section_view_wrap .sales_detail_modal table tbody td {
+	text-align: center;
+}
+
+#section_wrap .franchisee_section_view_wrap .sales_detail_modal table tbody tr td.menu_name {
+	text-align: left;
+}
+
+#section_wrap .franchisee_section_view_wrap .sales_detail_modal table th,
+#section_wrap .franchisee_section_view_wrap .sales_detail_modal table td {
+	padding: 3px;
+}
+
+#section_wrap .franchisee_section_view_wrap .sales_detail_modal .price_info {
+	display: flex;
+	justify-content: space-between;
+}
+
+#section_wrap .franchisee_section_view_wrap .sales_detail_modal .price_info p {
+	padding: 5px;
+	font-size: 1.1em;
+}
+
+#section_wrap .franchisee_section_view_wrap .sales_detail_modal .close_box {
+	width: 40px;
+	height: 15px;
+	line-height: 15px;
+	text-align: center;
+	cursor: pointer;
+	padding: 5px;
+	border: 1px solid #000;
+	position: absolute;
+	right: 15px;
+	top: 15px;
+}

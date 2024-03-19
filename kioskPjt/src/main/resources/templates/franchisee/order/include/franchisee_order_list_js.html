@@ -44,11 +44,9 @@ function ajax_get_all_order(pageNum = 1) {
                 appendTag += '<td>' + packaging + '</td>';
                 appendTag += '<td>' + orderDtos[i].fcmc_name + '</td>';
                 appendTag += '<td>' + orderDtos[i].fc_menu_name + '</td>';
+                appendTag += '<td>' + orderDtos[i].fco_menu_option + '</td>';
                 appendTag += '<td>' + orderDtos[i].fco_menu_cnt +'개'+ '</td>';
-                appendTag += '<td>' + orderDtos[i].fcs_name + '</td>';
-                appendTag += '<td>' + orderDtos[i].pm_type + '</td>';
                 appendTag += '<td>' + orderDtos[i].fco_reg_date + '</td>';
-                appendTag += '<td>' + orderDtos[i].fco_mod_date + '</td>';          
                 appendTag += '<td><button onclick="orderListCompleteConfirm('+orderDtos[i].fco_ori_no+')">완료</button></td>';
                 appendTag += '</tr>';
               
