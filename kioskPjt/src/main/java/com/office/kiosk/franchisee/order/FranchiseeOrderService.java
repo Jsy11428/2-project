@@ -145,7 +145,6 @@ public class FranchiseeOrderService {
 			LinkedHashMap<String, Object> dataDto = (LinkedHashMap<String, Object>) dtos.get(i);
 			
 			FranchiseeOrderDto franchiseeOrderDto = new FranchiseeOrderDto();
-			log.info("fco_packaging: "+dataDto.get("fco_packaging"));
 			franchiseeOrderDto.setFco_packaging(Integer.parseInt((String)dataDto.get("fco_packaging")));
 			franchiseeOrderDto.setPm_type((String)dataDto.get("pm_type"));
 			franchiseeOrderDto.setFcmc_no(Integer.parseInt((String)dataDto.get("fcmc_no")));
@@ -176,11 +175,15 @@ public class FranchiseeOrderService {
 		return result;
 	}
 
-
+	@Transactional
 	public int orderListCompleteConfirm(int fco_ori_no) {
 		log.info("orderListCompleteConfirm()");
 		
 		int result = iFranchiseeOrderDao.updateOrderCompleteByOriNo(fco_ori_no);
+		
+		if(result > 0) {
+			result = iFranchiseeOrderDao.updateSalesCompleteByOriNo(fco_ori_no);
+		}
 		
 		return result;
 	}

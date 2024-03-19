@@ -34,5 +34,7 @@ public interface IFranchiseeOrderDao {
 
 	public int updateOrderCompleteByOriNo(int fco_ori_no);
 
+	public int updateSalesCompleteByOriNo(int fco_ori_no);
+
 
 }

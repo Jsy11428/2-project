@@ -9,8 +9,9 @@
 
 <script type="text/javascript" th:src="@{/js/franchisee/order/franchisee_order.js}"></script>
 
-<script type="text/javascript"
-	th:replace="~{/franchisee/order/include/franchisee_create_order_js.html::js}"></script>
+<script type="text/javascript" th:replace="~{/franchisee/order/include/franchisee_create_order_js.html::js}"></script>
+	
+<script type="text/javascript" th:src="@{/js/franchisee/member/franchisee_member.js}"></script>
 
 <link rel="stylesheet" th:href="@{/css/franchisee/common.css}">
 <link rel="stylesheet" th:href="@{/css/franchisee/franchisee_include.css}">
@@ -93,7 +94,7 @@
 											<tr>
 												<td colspan="2">
 													<input id="order_btn" class="order_btn" type="button" value="메뉴등록">
-													<input class="order_btn" type="reset" value="초기화" >											
+													<input class="order_btn" name="reset" type="reset" value="초기화" >											
 												</td>
 											</tr>
 										</table>
@@ -102,16 +103,16 @@
 								</form>	
 													
 									<table>							
-										<thead>
+										<thead id="order_table_thead">
 											<tr>								      
 										    	<th>포장여부</th>
 												<th>결제방식</th>
 												<th>카테고리</th>
 												<th>메뉴</th>							   
-												<th>주문 수량</th>
+												<th>수량</th>
 												<th>추가 옵션</th>
 												<th>금액</th>
-												<th>주문일</th>
+												<th>취소</th>
 										 	 </tr>
 										</thead>					  
 										<tbody id="order_table">
@@ -120,7 +121,8 @@
 									</table>
 									
 									<div class="order_btns">
-										<input class="order_btn" name="AllOrder_btn" type="button" value="오더등록">
+										<span id="total">합계 :    </span><span id="totalPrice"></span><span>원</span>
+										<input class="order_btn" name="AllOrder_btn" type="button" value="결제">
 										<input class="order_btn" name="AllOrder_delete_btn" type="button" value="초기화">
 									</div>
 							</div>

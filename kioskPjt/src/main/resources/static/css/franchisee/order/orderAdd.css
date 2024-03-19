@@ -1,6 +1,6 @@
 .franchisee_section_view_wrap {
-    width: 80%;
-    max-width: 800px;
+    width: 100%;
+    max-width: 900px;
     background-color: #f0f0f0;
     padding: 20px;
     border-radius: 10px;
@@ -22,7 +22,8 @@
 }
 
 .input_create_menu_wrap table {
-    width: 100%;
+	margin: 10px auto;
+    width: 90%;
 }
 
 .input_create_menu_wrap table td {
@@ -62,7 +63,7 @@ table {
 }
 
 table th, table td {
-    padding: 10px;
+    padding: 5px;
     border: 1px solid #ccc;
     text-align: center;
 }
@@ -72,7 +73,8 @@ table th {
 }
 
 .order_btns {
-    margin: 10px 0;
+	width: 400px;
+    margin: 10px auto;
     text-align: center;
 }
 select {
@@ -86,4 +88,50 @@ input.shot_number, input.pur_number, input.basic_price, input.basic_count {
 
 .other {
     text-align: center; /* 내부 요소를 가운데 정렬 */
+}
+
+.order_btns span {
+	float: left;
+	line-height: 40px;
+}
+
+#order_table_thead tr th:nth-child(1),
+#order_table tr td:nth-child(1) {
+	width: 80px;
+}
+
+#order_table_thead tr th:nth-child(2),
+#order_table tr td:nth-child(2) {
+	width: 80px;
+}
+
+#order_table_thead tr th:nth-child(3),
+#order_table tr td:nth-child(3) {
+	width: 130px;
+}
+
+#order_table_thead tr th:nth-child(5),
+#order_table tr td:nth-child(5) {
+	width: 50px;
+}
+
+#order_table_thead tr th:nth-child(7),
+#order_table tr td:nth-child(7) {
+	width: 80px;
+}
+
+#order_table_thead tr th:nth-child(8),
+#order_table tr td:nth-child(8) {
+	width: 65px;
+}
+
+#order_table input[type="button"] {
+	padding: 5px;
+}
+
+.other {
+	text-align: center;	
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
