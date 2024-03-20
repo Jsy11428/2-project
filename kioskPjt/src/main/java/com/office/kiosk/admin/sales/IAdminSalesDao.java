@@ -59,4 +59,8 @@ public interface IAdminSalesDao {
 
 	public List<FranchiseeSalesDto> selectFranchiseeSalesInfoByInputPeriod(Map<String, Object> pagingParams);
 
+	public FranchiseeSalesDto selectAllMemberTotalSales();
+
+	public FranchiseeSalesDto selectSearchTotalSales(Map<String, Object> pagingParams);
+
 }

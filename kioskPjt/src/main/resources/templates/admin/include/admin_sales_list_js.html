@@ -90,6 +90,7 @@ function ajax_getAllSalesInfo(pageNum = 1) {
 
             let pageDto = data.allSalesListPageDto;
             let salesDtos = data.allFranchiseeSalesDtos;
+            let totlaSales = data.allMemberTotalSales;
             let appendTag = '';
 			
             for (let i = 0; i < salesDtos.length; i++) {
@@ -145,6 +146,12 @@ function ajax_getAllSalesInfo(pageNum = 1) {
                     .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(pageDto.page+1)}'>[다음]</a>`);
                 $('#section_wrap div.page_no_wrap')
                     .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(pageDto.maxPage)}'>&#8811;</a>`);
+            }
+            
+            if(totlaSales !== null) {
+            	$('#section_wrap .list_total_sales_price span.total_price').text(totlaSales.sum_total_price.toLocaleString("ko-KR"));
+            } else {
+            	$('#section_wrap .list_total_sales_price span.total_price').text('0');
             }
 
         },
@@ -211,7 +218,7 @@ function ajax_searchSalesList(search_term, search_value, search_word, pageNum = 
             
             let pageDto = data.searchSalesListPageDto;
             let searchDtos = data.searchSalesDtos;
-            console.log("searchDtos--", searchDtos);
+            let searchTotalSales = data.searchTotalSales;
             let appendTag = '';
             
             removeSalesList();
@@ -285,6 +292,12 @@ function ajax_searchSalesList(search_term, search_value, search_word, pageNum = 
                     .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(pageDto.page+1)}'>[다음]</a>`);
                 $('#section_wrap div.page_no_wrap')
                     .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(pageDto.maxPage)}'>&#8811;</a>`);
+            }
+            
+            if(searchTotalSales !== null) {
+            	$('#section_wrap .list_total_sales_price span.total_price').text(searchTotalSales.sum_total_price.toLocaleString("ko-KR"));
+            } else {
+            	$('#section_wrap .list_total_sales_price span.total_price').text('0');
             }
 
         },

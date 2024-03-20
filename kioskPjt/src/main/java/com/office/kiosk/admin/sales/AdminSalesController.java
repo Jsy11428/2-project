@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.office.kiosk.franchisee.dto.SearchSalesDto;
+import com.office.kiosk.franchisee.sales.FranchiseeSalesDto;
 import com.office.kiosk.paging.kioskPageDto;
 
 import lombok.extern.log4j.Log4j2;
@@ -52,7 +53,10 @@ public class AdminSalesController {
 		
 		kioskPageDto allSalesListPageDto = adminSalesService.allSalesListPageNum(page);
 		
+		FranchiseeSalesDto allMemberTotalSales = adminSalesService.getAllMemberTotalSales();
+		
 		resultMap.put("allSalesListPageDto", allSalesListPageDto);
+		resultMap.put("allMemberTotalSales", allMemberTotalSales);
 		
 		return resultMap;
 	}
@@ -69,7 +73,10 @@ public class AdminSalesController {
 		
 		kioskPageDto searchSalesListPageDto = adminSalesService.SearchSalesListPageNum(searchSalesDto);
 		
+		FranchiseeSalesDto searchTotalSales = adminSalesService.getSearchTotalSales(searchSalesDto);
+		
 		resultMap.put("searchSalesListPageDto", searchSalesListPageDto);
+		resultMap.put("searchTotalSales", searchTotalSales);
 		
 		return resultMap;
 		

@@ -26,8 +26,13 @@
 	
 		SELECT 
 			COUNT(FCSA_NO) 
-		FROM TBL_FC_SALES 
-		WHERE DATE(FCSA_REG_DATE) = CURDATE() 
+		FROM 
+			TBL_FC_SALES FCSA 
+		JOIN TBL_FC_STORE FCS ON FCSA.FCS_NO = FCS.FCS_NO  
+		WHERE 
+			DATE(FCSA_REG_DATE) = CURDATE() 
+		AND 
+			FCS.FCS_DELETED = 0 
 	
 	</select>
 	
@@ -47,7 +52,10 @@
 			TBL_FC_MEMBER FCM 
 		ON 
 			FCM.FCM_NO = FCS.FCM_NO 
-		WHERE DATE(FCSA_REG_DATE) = CURDATE() 
+		WHERE 
+			DATE(FCSA_REG_DATE) = CURDATE() 
+		AND 
+			FCS.FCS_DELETED = 0 
 		ORDER BY 
 			FCSA_NO DESC
 		LIMIT 
@@ -75,6 +83,18 @@
 		ORDER BY 
 			FCSA_NO DESC 
 	
+	</select>
+	
+	<select id="selectAllMemberTotalSales"
+			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
+	
+		SELECT 
+			SUM(FCSA_PRICE)	AS SUM_TOTAL_PRICE 
+		FROM 
+			TBL_FC_SALES 
+		WHERE 
+			DATE(FCSA_REG_DATE) = CURDATE() 
+			
 	</select>
 	
 	<!-- 선택 ori_no order info 가져오기 -->
@@ -221,6 +241,61 @@
 			FCSA.FCSA_NO DESC 
 		LIMIT 
 			#{start},#{limit} 
+	
+	</select>
+	
+	<select id="selectSearchTotalSales"
+			parameterType="map" 
+			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
+	
+		SELECT 
+			SUM(FCSA.FCSA_PRICE) AS SUM_TOTAL_PRICE 
+		FROM 
+			TBL_FC_SALES FCSA 
+		JOIN 
+			TBL_FC_STORE FCS 
+		ON 
+			FCSA.FCS_NO = FCS.FCS_NO 
+		JOIN 
+			TBL_FC_MEMBER FCM 
+		ON 
+			FCM.FCM_NO = FCS.FCM_NO 
+		<where>
+			FCSA_REG_DATE BETWEEN
+            <choose>
+                <when test="search_term == '1d'">
+                    DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+                </when>
+                <when test="search_term == '1w'">
+                    DATE_SUB(CURDATE(), INTERVAL 1 WEEK)
+                </when>
+                <when test="search_term == '1m'">
+                    DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+                </when>
+                <when test="search_term == '6m'">
+                    DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+                </when>
+                <when test="search_term == '1y'">
+                    DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+                </when>
+                <otherwise>
+                    DATE_SUB(CURDATE(), INTERVAL 100 YEAR)
+                </otherwise>
+            </choose>
+        	AND NOW()
+		AND 
+			<choose>
+				<when test="search_value == 'fcs_name'">
+					FCS.FCS_NAME LIKE '%${search_word}%' 
+				</when>
+				<when test="search_value == 'fcm_name'">
+					FCM.FCM_NAME LIKE '%${search_word}%' 
+				</when>
+				<when test="search_value == 'pm_type'">
+					FCSA.PM_TYPE LIKE '%${search_word}%' 
+				</when>
+			</choose>
+		</where>
 	
 	</select>
 	

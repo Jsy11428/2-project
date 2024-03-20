@@ -64,11 +64,21 @@ public class AdminSalesService {
 		return pagingList;
 	}
 	
+	public FranchiseeSalesDto getAllMemberTotalSales() {
+		log.info("getAllMemberTotalSales()");
+		
+		FranchiseeSalesDto result = iAdminSalesDao.selectAllMemberTotalSales();
+		
+		return result;
+	}
+	
 	public kioskPageDto allSalesListPageNum(int page) {
 		log.info("allSalesListPageNum()");
 		
 		//전체 franchisee member 갯수 조회
 		int allSalesListCnt = iAdminSalesDao.selectAllSalesListCnt();
+		
+		log.info("allSalesListCnt---" + allSalesListCnt);
 		
 		//전체 페이지 갯수 계산
 		int maxPage = (int) (Math.ceil((double) allSalesListCnt / pageLimit));
@@ -112,6 +122,20 @@ public class AdminSalesService {
 		
 		return pagingList;
 		
+	}
+	
+	public FranchiseeSalesDto getSearchTotalSales(SearchSalesDto searchSalesDto) {
+		log.info("getSearchTotalSales()");
+		
+		Map<String, Object> pagingParams = new HashMap<>();
+		
+		pagingParams.put("search_term", searchSalesDto.getSearch_term());
+		pagingParams.put("search_value", searchSalesDto.getSearch_value());
+		pagingParams.put("search_word", searchSalesDto.getSearch_word());
+		
+		FranchiseeSalesDto result = iAdminSalesDao.selectSearchTotalSales(pagingParams);
+		
+		return result;
 	}
 	
 	public kioskPageDto SearchSalesListPageNum(SearchSalesDto searchSalesDto) {
@@ -582,6 +606,10 @@ public class AdminSalesService {
 		
 		return pagingList;
 	}
+
+
+
+
 
 
 

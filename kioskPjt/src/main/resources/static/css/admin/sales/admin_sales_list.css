@@ -24,6 +24,18 @@
 	padding: 5px;
 }
 
+#section_wrap .admin_section_view_wrap .admin_sales_list .list_total_sales_price {
+	width: 470px;
+	margin: 0 auto;
+	margin-top: 20px;
+	text-align: right;
+}
+
+#section_wrap .admin_section_view_wrap .admin_sales_list .list_total_sales_price span {
+	font-weight: bold;
+	font-size: 1.1em;
+}
+
 #section_wrap .admin_section_view_wrap .list_search {
 	margin: 20px 0;
 	text-align: center;

@@ -338,7 +338,11 @@ function ajax_getMyStoreAllSalesInfo(fcs_no, pageNum = 1) {
                     .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(myStoreAllSalesInfoPageDto.maxPage)}'>&#8811;</a>`);
             }
             
-            $('#section_wrap .list_total_sales_price span.total_price').text(storeTotalSalesPrice.sum_total_price.toLocaleString("ko-KR"));
+            if(storeTotalSalesPrice !== null) {
+            	$('#section_wrap .list_total_sales_price span.total_price').text(storeTotalSalesPrice.sum_total_price.toLocaleString("ko-KR"));
+            } else {
+            	$('#section_wrap .list_total_sales_price span.total_price').text('0');
+            }
         	
             
         },
