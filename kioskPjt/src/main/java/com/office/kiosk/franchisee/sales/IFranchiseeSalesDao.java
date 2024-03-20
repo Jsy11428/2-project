@@ -23,5 +23,7 @@ public interface IFranchiseeSalesDao {
 	public FranchiseeSalesDto selectMyStoreTotalSales(String fcs_no);
 
 	public FranchiseeSalesDto selectCurrentDateMyStoreTotalSales(Map<String, Object> pagingParams);
+
+	public FranchiseeSalesDto selectPeriodDateMyStoreTotalSales(Map<String, Object> pagingParams);
 	
 }
