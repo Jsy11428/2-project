@@ -12,6 +12,11 @@
 	margin: 0 auto;
 }
 
+#section_wrap .admin_section_view_wrap .admin_sales_list table tbody td:nth-child(2) {
+	color: #152f89;
+	text-decoration: underline;
+}
+
 #section_wrap .admin_section_view_wrap .admin_sales_list table tr td {
 	border: 1px solid #000;
 	text-align: center;
@@ -20,7 +25,7 @@
 }
 
 #section_wrap .admin_section_view_wrap .list_search {
-	margin-top: 10px;
+	margin: 20px 0;
 	text-align: center;
 }
 
@@ -45,9 +50,9 @@
 }
 
 #section_wrap .admin_section_view_wrap .sales_detail_modal {
-	width: 40%;
+	width: 400px;
 	border: 1px solid #000;
-	top: 60px;
+	top: 100px;
 	padding: 10px;
 	margin: 0 auto; 
 	position: relative;

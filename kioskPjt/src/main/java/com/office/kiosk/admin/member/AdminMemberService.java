@@ -323,12 +323,12 @@ public class AdminMemberService {
 	}
 
 
-	public Map<String, Object> getFranchiseeStoreListBySelect(int fcm_no) {
+	public Map<String, Object> getFranchiseeStoreListBySelect(String fcm_id) {
 		log.info("getFranchiseeStoreListBySelect()");
 		
 		Map<String, Object> map = new HashMap<>();
 		
-		List<FranchiseeStoreDto> franchiseeStoreDtos = iAdminMemberDao.selectFranchiseeStoreInfoBySelect(fcm_no);
+		List<FranchiseeStoreDto> franchiseeStoreDtos = iAdminMemberDao.selectFranchiseeStoreInfoBySelect(fcm_id);
 		
 		map.put("franchiseeStoreDtos", franchiseeStoreDtos);
 		
@@ -362,7 +362,7 @@ public class AdminMemberService {
 	public void franchiseeStoreDelete(int fcs_no) {
 		log.info("franchiseeStoreDelete()");
 		
-		iAdminMemberDao.deleteFranchiseeStoreByFcsNo(fcs_no);
+		iAdminMemberDao.updateFranchiseeStoreByFcsNoForDelete(fcs_no);
 		
 		
 	}

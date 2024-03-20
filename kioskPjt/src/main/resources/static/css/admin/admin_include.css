@@ -5,12 +5,15 @@
 }
 #header_wrap h2 {
     line-height: 50px;
+    background: no-repeat left url("/img/main/header_logo.JPG");
+    background-size: 130px;
+    background-position: 10px 3px;
 }
 
 #nav_wrap {
     width: 100%;
     height: 50px;
-    background-color: #dadada;
+    background-color: #c8c8c8;
 }
 
 #nav_wrap a {

@@ -230,6 +230,14 @@ public class FranchiseeSalesService {
 		
 		return myStoreSalesInfoBySelectDate;
 	}
+
+	public FranchiseeSalesDto getMyStoreTotalSales(String fcs_no) {
+		log.info("getMyStoreTotalSales()");
+		
+		FranchiseeSalesDto result = ifranchiseeSalesDao.selectMyStoreTotalSales(fcs_no);
+		
+		return result;
+	}
 	
 	
 	// 우리가게의 선택날짜(위쪽에서 날짜 하루 찍었을때) 매출 END	

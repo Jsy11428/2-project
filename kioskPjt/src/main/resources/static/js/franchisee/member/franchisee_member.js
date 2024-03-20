@@ -187,3 +187,10 @@ function franchiseeModifyPasswordConFirm(){
 	}
 	
 }
+
+function changeStoreBtn() {
+	console.log('changeStoreBtn')
+	
+	location.href = "/franchisee/member/franchiseeLoginSuccess";
+	
+}

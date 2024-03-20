@@ -265,9 +265,9 @@ function ajax_getStoreAllSalesInfo(pageNum = 1) {
                     appendTag += '<td>' + storeDtos[i].fcs_no + '</td>';
                     appendTag += '<td>' + storeDtos[i].fcs_name + '</td>';
                     appendTag += '<td>' + storeDtos[i].fcm_name + '</td>';
-                    appendTag += '<td>' + storeDtos[i].cash_total_price + '</td>';
-                    appendTag += '<td>' + storeDtos[i].card_total_price + '</td>';
-                    appendTag += '<td>' + parseInt(storeDtos[i].card_total_price+storeDtos[i].cash_total_price) + '</td>';
+                    appendTag += '<td>' + storeDtos[i].cash_total_price.toLocaleString("ko-KR") + '</td>';
+                    appendTag += '<td>' + storeDtos[i].card_total_price.toLocaleString("ko-KR") + '</td>';
+                    appendTag += '<td>' + (parseInt(storeDtos[i].card_total_price+storeDtos[i].cash_total_price)).toLocaleString("ko-KR") + '</td>';
 
                 appendTag += '</tr>';
 
@@ -381,9 +381,9 @@ function ajax_getCurrentDateTotalSales(pageNum = 1) {
                     appendTag += '<td>' + selectDtos[i].fcs_no + '</td>';
                     appendTag += '<td>' + selectDtos[i].fcs_name + '</td>';
                     appendTag += '<td>' + selectDtos[i].fcm_name + '</td>';
-                    appendTag += '<td>' + selectDtos[i].cash_total_price + '</td>';
-                    appendTag += '<td>' + selectDtos[i].card_total_price + '</td>';
-                    appendTag += '<td>' + parseInt(selectDtos[i].card_total_price+selectDtos[i].cash_total_price) + '</td>';
+                    appendTag += '<td>' + selectDtos[i].cash_total_price.toLocaleString("ko-KR") + '</td>';
+                    appendTag += '<td>' + selectDtos[i].card_total_price.toLocaleString("ko-KR") + '</td>';
+                    appendTag += '<td>' + (parseInt(selectDtos[i].card_total_price+selectDtos[i].cash_total_price)).toLocaleString("ko-KR") + '</td>';
 
                 appendTag += '</tr>';
 
@@ -492,9 +492,9 @@ function ajax_getStoreTotalSalesByInputPeriod(pageNum = 1) {
                     appendTag += '<td>' + selectDtos[i].fcs_no + '</td>';
                     appendTag += '<td>' + selectDtos[i].fcs_name + '</td>';
                     appendTag += '<td>' + selectDtos[i].fcm_name + '</td>';
-                    appendTag += '<td>' + selectDtos[i].cash_total_price + '</td>';
-                    appendTag += '<td>' + selectDtos[i].card_total_price + '</td>';
-                    appendTag += '<td>' + parseInt(selectDtos[i].card_total_price+selectDtos[i].cash_total_price) + '</td>';
+                    appendTag += '<td>' + selectDtos[i].cash_total_price.toLocaleString("ko-KR") + '</td>';
+                    appendTag += '<td>' + selectDtos[i].card_total_price.toLocaleString("ko-KR") + '</td>';
+                    appendTag += '<td>' + (parseInt(selectDtos[i].card_total_price+selectDtos[i].cash_total_price)).toLocaleString("ko-KR") + '</td>';
 
                 appendTag += '</tr>';
 

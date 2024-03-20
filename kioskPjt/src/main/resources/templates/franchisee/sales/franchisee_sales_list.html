@@ -39,7 +39,7 @@
 						<div class="pos_section_info_wrap">
 						
 							<div class="word">
-								우리매장 매출
+								<span th:text="${session.loginedFranchiseeMemberDto.fcs_name}"></span> 매출
 							</div>
 							
 						</div>
@@ -109,6 +109,10 @@
 							</tbody>
 
 						</table> 
+						
+						<div class="list_total_sales_price">
+							<p></p>
+						</div>
 
 						<div class="page_no_wrap">
 						</div>

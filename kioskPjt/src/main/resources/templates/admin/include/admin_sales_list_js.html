@@ -100,7 +100,7 @@ function ajax_getAllSalesInfo(pageNum = 1) {
                     appendTag += '<td><a class="ori_no" href="#none">' + salesDtos[i].fco_ori_no + '</a></td>';
                     appendTag += '<td>' + salesDtos[i].fcs_name + '</td>';
                     appendTag += '<td>' + salesDtos[i].fcm_name + '</td>';
-                    appendTag += '<td>' + salesDtos[i].fcsa_price + '</td>';
+                    appendTag += '<td>' + salesDtos[i].fcsa_price.toLocaleString("ko-KR") + '</td>';
                     appendTag += '<td>' + salesDtos[i].pm_type + '</td>';
                     appendTag += '<td>' + salesDtos[i].fcsa_reg_date + '</td>';
                     appendTag += '<td>' + salesDtos[i].fcsa_mod_date + '</td>';
@@ -228,7 +228,7 @@ function ajax_searchSalesList(search_term, search_value, search_word, pageNum = 
                     appendTag += '<td><a class="ori_no" href="#none">' + searchDtos[i].fco_ori_no + '</a></td>';
                     appendTag += '<td>' + searchDtos[i].fcs_name + '</td>';
                     appendTag += '<td>' + searchDtos[i].fcm_name + '</td>';
-                    appendTag += '<td>' + searchDtos[i].fcsa_price + '</td>';
+                    appendTag += '<td>' + searchDtos[i].fcsa_price.toLocaleString("ko-KR") + '</td>';
                     appendTag += '<td>' + searchDtos[i].pm_type + '</td>';
                     appendTag += '<td>' + searchDtos[i].fcsa_reg_date + '</td>';
                     appendTag += '<td>' + searchDtos[i].fcsa_mod_date + '</td>';
@@ -377,9 +377,9 @@ function ajax_salesDetailInfo(fco_ori_no) {
                 
                 appendTbodyTag += '<tr>'
                     appendTbodyTag += '<td></td>'
-               		appendTbodyTag += '<td>' + parseInt(salesDetailInfo[i].fco_menu_option_price+salesDetailInfo[i].fc_menu_price) + '</td>'
+               		appendTbodyTag += '<td>' + (parseInt(salesDetailInfo[i].fco_menu_option_price+salesDetailInfo[i].fc_menu_price)).toLocaleString("ko-KR") + '</td>'
                		appendTbodyTag += '<td>' + salesDetailInfo[i].fco_menu_cnt + '</td>'
-                	appendTbodyTag += '<td>' + parseInt((salesDetailInfo[i].fco_menu_option_price+salesDetailInfo[i].fc_menu_price)*salesDetailInfo[i].fco_menu_cnt)  + '</td>'
+                	appendTbodyTag += '<td>' + (parseInt((salesDetailInfo[i].fco_menu_option_price+salesDetailInfo[i].fc_menu_price)*salesDetailInfo[i].fco_menu_cnt)).toLocaleString("ko-KR")  + '</td>'
                 appendTbodyTag += '</tr>'
                 
 
@@ -389,7 +389,7 @@ function ajax_salesDetailInfo(fco_ori_no) {
 
             let appendPriceTag = '';
 
-            appendPriceTag += '<p>판매금액</p><p>' + salesDetailInfo[0].fcsa_price + ' 원</p>';
+            appendPriceTag += '<p>판매금액</p><p>' + salesDetailInfo[0].fcsa_price.toLocaleString("ko-KR") + ' 원</p>';
 
             $('#section_wrap .admin_section_view_wrap .sales_detail_modal .price_info').append(appendPriceTag);
 
