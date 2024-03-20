@@ -64,7 +64,7 @@
 		 
 	</select>
 	
-		<select id="selectMyStoreSalesInfoByInputPeriod"
+	<select id="selectMyStoreSalesInfoByInputPeriod"
 		parameterType="java.util.Map"
 		resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
 
@@ -105,6 +105,20 @@
 		WHERE 
 			FCS_NO = #{fcs_no};
 	
+	</select>
+	
+	<select id="selectCurrentDateMyStoreTotalSales"
+			parameterType="java.util.Map" 
+			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
+			
+		SELECT 
+			SUM(FCSA_PRICE) AS SUM_TOTAL_PRICE 
+		FROM 
+			TBL_FC_SALES 
+		WHERE 
+			FCS_NO = #{fcs_no} 
+		AND DATE(FCSA_REG_DATE) = #{selectDate} 
+			
 	</select>
 
 </mapper>

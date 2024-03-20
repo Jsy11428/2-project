@@ -284,9 +284,6 @@ function ajax_getMyStoreAllSalesInfo(fcs_no, pageNum = 1) {
             let myStoreAllSalesInfoPageDto = data.myStoreAllSalesPageDtos;
             let storeTotalSalesPrice = data.totalsalesDto;
             let appendTag = '';
-            
-            console.log(myStoreAllSalesInfoDto);
-            console.log(myStoreAllSalesInfoPageDto);
 			
             for (let i = 0; i < myStoreAllSalesInfoDto.length; i++) {
                 
@@ -347,13 +344,6 @@ function ajax_getMyStoreAllSalesInfo(fcs_no, pageNum = 1) {
         },
         error: function(data) {
             console.log('ajax error!!')
-            console.log("----------------------->", data);
-            
-            let myStoreAllSalesInfoDto = data.myStoreAllSalesInfo;
-            let myStoreAllSalesInfoPageDto = data.myStoreAllSalesPageDtos;
-            
-            console.log(myStoreAllSalesInfoDto);
-            console.log(myStoreAllSalesInfoPageDto);
             
 
         }, 
@@ -424,12 +414,9 @@ function ajax_getCurrentDateMyStoreSalesInfo(fcs_no, pageNum = 1) {
 
             let myStoreSalesDtosBySelectDate = data.myStoreSalesDtosBySelectDate;
             let myStoreSalesInfoBySelectDatePageNum = data.myStoreSalesInfoBySelectDatePageNum;
+            let currentDateTotalsalesDto = data.currentDateTotalsalesDto;
             let appendTag = '';
             
-            console.log(myStoreSalesDtosBySelectDate);
-            console.log(myStoreSalesInfoBySelectDatePageNum);
-            
-			
             for (let i = 0; i < myStoreSalesDtosBySelectDate.length; i++) {
                 
                 appendTag = '<tr>';
@@ -483,12 +470,13 @@ function ajax_getCurrentDateMyStoreSalesInfo(fcs_no, pageNum = 1) {
                     .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(myStoreSalesInfoBySelectDatePageNum.maxPage)}'>&#8811;</a>`);
             }
             
-            let totalPriceTag = '';
+            if(currentDateTotalsalesDto !== null) {
+            	$('#section_wrap .list_total_sales_price span.total_price').text(currentDateTotalsalesDto.sum_total_price.toLocaleString("ko-KR"));
+            } else {
+            	$('#section_wrap .list_total_sales_price span.total_price').text('0');
+            }
             
-            totalPriceTag = "총 매출 : " + storeTotalSalesPrice.sum_total_price.toLocaleString("ko-KR") + " 원";
             
-            $('#section_wrap .list_total_sales_price p').append(totalPriceTag);
-
         },
         error: function(data) {
             console.log('ajax error!!')

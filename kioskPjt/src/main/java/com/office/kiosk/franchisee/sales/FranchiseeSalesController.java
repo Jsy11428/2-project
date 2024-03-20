@@ -50,7 +50,6 @@ public class FranchiseeSalesController {
 		kioskPageDto myStoreAllSalesPageDtos = franchiseeSalesService.getMyStoreSalesInfoPageNum(page, fcs_no);
 		
 		FranchiseeSalesDto totalsalesDto = franchiseeSalesService.getMyStoreTotalSales(fcs_no);
-		log.info("totalsalesDto------->" + totalsalesDto);
 		
 		pagingMyStoreAllSalesDtos.put("myStoreAllSalesPageDtos", myStoreAllSalesPageDtos);
 		pagingMyStoreAllSalesDtos.put("totalsalesDto", totalsalesDto);
@@ -70,9 +69,12 @@ public class FranchiseeSalesController {
 		 Map<String, Object> pagingMyStoreSalesInfoBySelectDate =
 		 franchiseeSalesService.pagingMyStoreSalesInfoBySelectDate(currentDate);
 		 
+		 FranchiseeSalesDto currentDateTotalsalesDto = franchiseeSalesService.getCurrentDateMyStoreTotalSales(currentDate);
+		 
 		 kioskPageDto myStoreSalesInfoBySelectDatePageNum = franchiseeSalesService.getMyStoreSalesInfoBySelectDatePageNum(currentDate);
 		
 		 pagingMyStoreSalesInfoBySelectDate.put("myStoreSalesInfoBySelectDatePageNum", myStoreSalesInfoBySelectDatePageNum);
+		 pagingMyStoreSalesInfoBySelectDate.put("currentDateTotalsalesDto", currentDateTotalsalesDto);
 		
 		 return pagingMyStoreSalesInfoBySelectDate;
 		

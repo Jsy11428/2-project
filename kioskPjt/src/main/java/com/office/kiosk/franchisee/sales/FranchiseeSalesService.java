@@ -81,6 +81,14 @@ public class FranchiseeSalesService {
 		
 		return myStoreSalesInfoPageDto;
 	}
+	
+	public FranchiseeSalesDto getMyStoreTotalSales(String fcs_no) {
+		log.info("getMyStoreTotalSales()");
+		
+		FranchiseeSalesDto result = ifranchiseeSalesDao.selectMyStoreTotalSales(fcs_no);
+		
+		return result;
+	}
 
 	// 우리가게의 전체 매출 END
 	
@@ -119,6 +127,29 @@ public class FranchiseeSalesService {
 		
 		return pagingList;
 		
+	}
+	
+	public FranchiseeSalesDto getCurrentDateMyStoreTotalSales(Map<String, String> currentDate) {
+		log.info("getCurrentDateMyStoreTotalSales()");
+		
+		String year = currentDate.get("year");
+        String month = currentDate.get("month");
+        String date = currentDate.get("date");
+        String fcs_no = currentDate.get("fcs_no");
+
+        String selectDate = String.format("%04d-%02d-%02d",
+                Integer.parseInt(year),
+                Integer.parseInt(month),
+                Integer.parseInt(date));
+        
+		Map<String, Object> pagingParams = new HashMap<>();
+		
+		pagingParams.put("selectDate", selectDate);
+		pagingParams.put("fcs_no", fcs_no);
+		
+		FranchiseeSalesDto resultDto = ifranchiseeSalesDao.selectCurrentDateMyStoreTotalSales(pagingParams);
+		
+		return resultDto;
 	}
 
 	public kioskPageDto getMyStoreSalesInfoBySelectDatePageNum(Map<String, String> currentDate) {
@@ -231,13 +262,9 @@ public class FranchiseeSalesService {
 		return myStoreSalesInfoBySelectDate;
 	}
 
-	public FranchiseeSalesDto getMyStoreTotalSales(String fcs_no) {
-		log.info("getMyStoreTotalSales()");
-		
-		FranchiseeSalesDto result = ifranchiseeSalesDao.selectMyStoreTotalSales(fcs_no);
-		
-		return result;
-	}
+
+
+
 	
 	
 	// 우리가게의 선택날짜(위쪽에서 날짜 하루 찍었을때) 매출 END	
