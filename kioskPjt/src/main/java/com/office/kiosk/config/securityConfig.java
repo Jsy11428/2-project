@@ -62,6 +62,7 @@ public class securityConfig {
 									"/franchisee",
 									"/franchisee/member/createFranchiseeAccountForm",
 									"/franchisee/member/createFranchiseeAccountConfirm",
+									"/franchisee/member/franchiseeFindPassword",
 									"/franchisee/member/franchiseeFindPasswordForm",
 									"/franchisee/member/franchiseeFindPasswordConfirm",
 									"/franchisee/member/franchiseeLoginApproval",

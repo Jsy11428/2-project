@@ -195,6 +195,12 @@ public class FranchiseeSalesService {
 		
 		return myStoreSalesInfoBySelectDate;
 	}
+	
+	
+	// 우리가게의 선택날짜(위쪽에서 날짜 하루 찍었을때) 매출 END	
+	
+	
+	// 우리가게의 선택날짜(아래쪽에서 기간 선택) 매출 START	
 
 	public Map<String, Object> pagingMyStoreSalesInfoByInputPeriod(Map<String, String> period) {
 		log.info("pagingMyStoreSalesInfoBySelectDate()");
@@ -222,6 +228,24 @@ public class FranchiseeSalesService {
 		
 		return pagingList;
 		
+	}
+	
+	public FranchiseeSalesDto getMyStoreTotalSalesByInputPeriod(Map<String, String> period) {
+		log.info("getMyStoreTotalSalesByInputPeriod()");
+		
+		String startDate = period.get("startDate");
+        String endDate = period.get("endDate");
+        String fcs_no = period.get("fcs_no");
+        
+		Map<String, Object> pagingParams = new HashMap<>();
+        
+		pagingParams.put("startDate", startDate);
+		pagingParams.put("endDate", endDate);
+		pagingParams.put("fcs_no", fcs_no);
+		
+		FranchiseeSalesDto resultDto = ifranchiseeSalesDao.selectPeriodDateMyStoreTotalSales(pagingParams);
+		
+		return resultDto;
 	}
 
 	public kioskPageDto getMyStoreSalesInfoByInputPeriodPageNum(Map<String, String> period) {
@@ -265,9 +289,6 @@ public class FranchiseeSalesService {
 
 
 
-	
-	
-	// 우리가게의 선택날짜(위쪽에서 날짜 하루 찍었을때) 매출 END	
-
+	// 우리가게의 선택날짜(아래쪽에서 기간 선택) 매출 END	
 
 }

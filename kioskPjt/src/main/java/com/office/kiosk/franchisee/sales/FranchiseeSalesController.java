@@ -91,8 +91,11 @@ public class FranchiseeSalesController {
 		 franchiseeSalesService.pagingMyStoreSalesInfoByInputPeriod(period);
 		 
 		 kioskPageDto myStoreSalesInfoByInputPeriodPageNum = franchiseeSalesService.getMyStoreSalesInfoByInputPeriodPageNum(period);
+		 
+		 FranchiseeSalesDto periodDateTotalSalesDto = franchiseeSalesService.getMyStoreTotalSalesByInputPeriod(period);
 		
 		 pagingMyStoreSalesInfoByInputPeriod.put("myStoreSalesInfoByInputPeriodPageNum", myStoreSalesInfoByInputPeriodPageNum);
+		 pagingMyStoreSalesInfoByInputPeriod.put("periodDateTotalSalesDto", periodDateTotalSalesDto);
 		 
 		 return pagingMyStoreSalesInfoByInputPeriod;
 		
