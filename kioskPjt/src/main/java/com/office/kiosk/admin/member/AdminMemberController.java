@@ -414,8 +414,6 @@ public class AdminMemberController {
 	public String franchiseeStoreDelete(@RequestParam("fcs_no") int fcs_no) {
 		log.info("franchiseeStoreDelete()");
 		
-		log.info("fcs_no---" + fcs_no);
-		
 		adminMemberService.franchiseeStoreDelete(fcs_no);
 		
 		return null;

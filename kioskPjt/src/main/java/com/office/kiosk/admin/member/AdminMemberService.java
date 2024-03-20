@@ -362,7 +362,7 @@ public class AdminMemberService {
 	public void franchiseeStoreDelete(int fcs_no) {
 		log.info("franchiseeStoreDelete()");
 		
-		iAdminMemberDao.deleteFranchiseeStoreByFcsNo(fcs_no);
+		iAdminMemberDao.updateFranchiseeStoreByFcsNoForDelete(fcs_no);
 		
 		
 	}

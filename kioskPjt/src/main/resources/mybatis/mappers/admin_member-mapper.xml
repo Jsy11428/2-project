@@ -214,7 +214,9 @@
 			TBL_FC_MEMBER FCM 
 		ON 
 			FCS.FCM_NO = FCM.FCM_NO
-		ORDER BY FCS_NO ASC 
+		WHERE 
+			FCS.FCS_DELETED = 0 
+		ORDER BY FCM.FCM_NO ASC, FCS.FCS_NO ASC 
 		LIMIT 
 			#{start},#{limit}
 		
@@ -226,6 +228,8 @@
 			COUNT(FCS_NO) 
 		FROM 
 			TBL_FC_STORE
+		WHERE 
+			FCS_DELETED = 0 
 		
 	</select>
 	
@@ -238,26 +242,30 @@
 		FROM 
 			TBL_FC_MEMBER FCM 
 		JOIN TBL_FC_STORE FCS ON FCS.FCM_NO = FCM.FCM_NO 
-		WHERE FCM.FCM_NO = #{fcm_no} 
+		WHERE 
+			FCM.FCM_NO = #{fcm_no} 
+		AND 
+			FCS.FCS_DELETED = 0  
+		
 	
 	</select>
 	
 	<insert id="insertFranchiseeStore"
 			parameterType="com.office.kiosk.franchisee.FranchiseeStoreDto">
 			
-	INSERT INTO 
-		TBL_FC_STORE(
-			FCS_NAME,
-	        FCS_LOCATION,
-	        FCS_PHONE,
-	        FCM_NO,
-	        FCS_REG_DATE,
-	        FCS_MOD_DATE) 
-	VALUES (#{fcs_name}, 
-			#{fcs_location},
-			#{fcs_phone},
-			#{fcm_no},
-			NOW(), NOW())
+		INSERT INTO 
+			TBL_FC_STORE(
+				FCS_NAME,
+		        FCS_LOCATION,
+		        FCS_PHONE,
+		        FCM_NO,
+		        FCS_REG_DATE,
+		        FCS_MOD_DATE) 
+		VALUES (#{fcs_name}, 
+				#{fcs_location},
+				#{fcs_phone},
+				#{fcm_no},
+				NOW(), NOW())
 			
 	</insert>
 	
@@ -275,10 +283,12 @@
 			FCS.FCM_NO = FCM.FCM_NO
 		WHERE 
 			FCM.FCM_NO = #{fcm_no}
+		AND 
+			FCS.FCS_DELETED = 0 
 			
 	</select>
 	
-	<delete id="deleteFranchiseeStoreByFcsNo" 
+<!-- 	<delete id="deleteFranchiseeStoreByFcsNo" 
 			parameterType="Integer">
 			
 		DELETE FROM 
@@ -286,6 +296,20 @@
 		WHERE 
 			FCS_NO = #{fcs_no}
 				
-	</delete>
+	</delete> -->
+	
+	<update id="updateFranchiseeStoreByFcsNoForDelete"
+			parameterType="int">
+			
+		UPDATE 
+			TBL_FC_STORE 
+		SET 
+			FCS_DELETED = 1,
+			FCS_DELETED_DATE = NOW(),
+			FCS_MOD_DATE = NOW()
+		WHERE 
+			FCS_NO = #{fcs_no} 
+			
+	</update>
 	
 </mapper>

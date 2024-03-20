@@ -1,17 +1,17 @@
 #wrap {
     max-width: 1000px;
     min-width: 1000px;
-    height: 1200px;
+    height: 1060px;
 }
 
 #section_wrap .main {
     width: 1000px;
-    height: 1050px;
+    height: 910px;
 }
 
 #section_wrap .main .img_box {
     width: 1000px;
-    height: 1050px;
+    height: 910px;
     background-color: #0f0;
 }
 
@@ -19,13 +19,13 @@
 
 #section_wrap .main .img_box ul.img_slide {
 	width: 1000px;
-	height: 1050px;
+	height: 910px;
 	position: relative;
 }
 
 #section_wrap div.main .img_box ul li {
 	width: 1000px;
-	height: 1050px;
+	height: 910px;
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -33,7 +33,7 @@
 
 #section_wrap div.main .img_box ul li img {
 	width: 1000px;
-	height: 1050px;
+	height: 910px;
 	padding: 0;
 	
 }
@@ -63,12 +63,6 @@
     font-size: 0.8em;
 }
 
-#section_wrap .main .text_box {
-    width: 1000px;
-    height: 150px;
-    background-color: #dadada;
-}
-
 #section_wrap .option {
     width: 1000px;
     height: 150px;
@@ -79,7 +73,7 @@
 
 #section_wrap .option div {
     height: 150px;
-    line-height: 150px;
+    padding: 38px;
     margin: 0 10px;
 }
 
@@ -87,9 +81,7 @@
     border: 3px solid #fff;
     border-radius: 40px;
     padding: 18px 50px;
-
     background-color: #253f85;
-
     color: #fff;
     font-size: 1.5em;
     font-weight: bold;

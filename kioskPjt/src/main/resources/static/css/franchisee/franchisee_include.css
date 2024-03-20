@@ -28,6 +28,10 @@
 	margin-left: 10px;
 }
 
+#nav_wrap input[type="button"] {
+	padding: 2px;
+}
+
 /* nav end */
 
 /* section_menu_wrap start */
