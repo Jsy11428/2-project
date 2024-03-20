@@ -185,7 +185,7 @@ function eventsHandler(){
 			
 			let cartOrderItems = [];
 			for (let i = 0; i < $("ul.cart_area_items>li").length; i++){
-				//<img class="cart_area_cancel_btn" src="/img/home/cart_area_cancel_btn.png" alt="">
+				
 				let fc_menu_img = $("#footer_wrap div.cart_area_wrap ul.cart_area_items>li:nth-child("+(i+1)+") div.cart_item_img img").attr('src');
 				let fco_packaging = parseInt($("#footer_wrap div.cart_area_wrap div.cart_area_item_wrap>input[name='fco_packaging']").val());// 0 = 매장 or 1 = 포장  
 				let fco_menu_cnt = parseInt($("#footer_wrap div.cart_area_wrap ul.cart_area_items>li:nth-child("+(i+1)+") div.cart_item_select_wrap p.fco_menu_cnt").text()); //1가지 메뉴 주문 갯수
