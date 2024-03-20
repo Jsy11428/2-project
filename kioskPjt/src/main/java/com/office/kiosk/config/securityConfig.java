@@ -49,7 +49,6 @@ public class securityConfig {
 									"/franchisee/member/franchiseeModifyPassword",
 									"/franchisee/member/franchiseeModifyPasswordConfirm",
 									"/franchisee/member/sltStoreHome",
-									"/franchisee/member/franchiseeFindPassword",
 									"/franchisee/member/franchiseeLoginSuccess"
 									).authenticated()
 					.requestMatchers("/",
