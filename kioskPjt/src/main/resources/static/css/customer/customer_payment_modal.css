@@ -39,7 +39,7 @@
 }
 
 #payment_modal_wrap div.payment_modal_section div.payment_modal_title_wrap {
-    padding: 50px;
+    padding: 30px;
     text-align: center;    
 }
 
@@ -56,7 +56,7 @@
 
 #payment_modal_wrap div.payment_modal_section div.payment_modal_cart_wrap {
     width: 100%;
-    height: 600px;
+    height: 532px;
     overflow-y: scroll;
 }
 #payment_modal_wrap div.payment_modal_section div.payment_modal_cart_wrap ul.payment_modal_cart {
@@ -128,10 +128,10 @@
 
 #payment_modal_wrap div.payment_modal_section div.payment_modal_payment_type_wrap {
     width: 100%;
-    height: 150px;
+    height: 120px;
     background-color: #fff;
+    padding-top: 22px;
     text-align: center;
-    padding-top: 35px;
     box-sizing: border-box;
 }
 #payment_modal_wrap div.payment_modal_section div.payment_modal_payment_type_wrap button {
