@@ -45,11 +45,11 @@
 }
 
 #section_wrap .slt_fcs_no table tr td:nth-child(1) {
-    width: 30px;
+    width: 40px;
 }
 
 #section_wrap .slt_fcs_no table tr td:nth-child(2) {
-    width: 60px;
+    width: 80px;
 }
 
 #section_wrap .slt_fcs_no table tr td:nth-child(3) {
@@ -57,11 +57,11 @@
 }
 
 #section_wrap .slt_fcs_no table tr td:nth-child(4) {
-    width: 120px;
+    width: 130px;
 }
 
 #section_wrap .slt_fcs_no table tr td:nth-child(5) {
-    width: 63px;
+    width: 50px;
 }
 
 #section_wrap .slt_fcs_no table input {

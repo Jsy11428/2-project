@@ -15,7 +15,7 @@
 			<a th:href="@{/franchisee/home}">홈</a>
 			<a th:href="@{/franchisee/member/franchiseeModifyForm}">정보수정</a>
 			<a href="#none" th:onclick="franchiseeLogoutConfirm()">로그아웃</a>
-			<span th:text="${session.loginedFranchiseeMemberDto.fcs_no}"></span>&nbsp;&nbsp;<span th:text="${session.loginedFranchiseeMemberDto.fcs_name}"></span>
+			<span hidden th:text="${session.loginedFranchiseeMemberDto.fcs_no}"></span>&nbsp;&nbsp;<span th:text="${session.loginedFranchiseeMemberDto.fcs_name}"></span>
 			<input type="button" value="변경" onclick="changeStoreBtn()">
 		</div> 
 	</nav>
@@ -24,11 +24,10 @@
 	<div class="section_menu_wrap" th:fragment="section_menu_wrap">
 		
 	 	<ul>
-	 		<li><a th:href="@{/franchisee/sales/getSalesInfo}">SALES</a></li>
-			<li><a th:href="@{/franchisee/menu/franchiseeMenuHome}">MENU</a></li>
+	 		<li><a th:href="@{/franchisee/sales/getSalesInfo}">매출조회</a></li>
+			<li><a th:href="@{/franchisee/menu/franchiseeMenuHome}">메뉴목록</a></li>
 			<li><a th:href="@{/franchisee/order/createOrderList}">주문하기</a></li>
-			<li><a th:href="@{/franchisee/order/getTableOrderList}">주문목록</a></li>
-			<li><a href="#none">MAGAGEMENT</a></li>
+			<li><a th:href="@{/franchisee/order/getTableOrderList}">주문조회</a></li>
 		</ul>
 	
 			<!-- <li><a th:href="@{/franchisee/menu/createMenuForm}">추가 메뉴 신청</a></li>

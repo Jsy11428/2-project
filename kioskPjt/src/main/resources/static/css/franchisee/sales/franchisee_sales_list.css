@@ -26,11 +26,28 @@
 	margin: 0 auto;
 }
 
+#section_wrap .franchisee_section_view_wrap .franchisee_sales_list table tbody td:nth-child(2) {
+	color: #152f89;
+	text-decoration: underline;
+}
+
 #section_wrap .franchisee_section_view_wrap .franchisee_sales_list table tr td {
 	border: 1px solid #000;
 	text-align: center;
 	font-size: .9em;
 	padding: 5px;
+}
+
+#section_wrap .franchisee_section_view_wrap .franchisee_sales_list .list_total_sales_price {
+	width: 470px;
+	margin: 0 auto;
+	margin-top: 20px;
+	text-align: right;
+}
+
+#section_wrap .franchisee_section_view_wrap .franchisee_sales_list .list_total_sales_price p {
+	font-weight: bold;
+	font-size: 1.1em;
 }
 
 #section_wrap .franchisee_section_view_wrap .list_search {

@@ -55,6 +55,7 @@ public class FranchiseeSalesDto {
 	
 	private int cash_total_price;
 	private int card_total_price;
+	private int sum_total_price;
 	
 }
 

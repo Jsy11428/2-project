@@ -6,23 +6,24 @@ $(document).ready(function(){
 
     initEvents();
 
-    addFranchiseeInfoDiv();
+    // addFranchiseeInfoDiv();
 
 })
 
 function initEvents() {
     console.log("initEvents()");
 
-    $(document).on('change', '#section_wrap .create_form .franchisee_info select[name="fcm_no"]', function() {
-        console.log('select[name="fcm_no"] change handler!')
+    $('#section_wrap .create_form .create_form_table_wrap input[name="id_chk"]').click( function() {
+        console.log('input[name="id_chk"] click handler!')
 
-        let fcm_no = $('#section_wrap .create_form .franchisee_info select[name="fcm_no"]').val();
-        addFranchiseeStoreList(fcm_no);
+        let fcm_id = $('#section_wrap .create_form .create_form_table_wrap input[name="fcm_id"]').val();
+        
+        addFranchiseeStoreList(fcm_id);
 
     })
 
-    $('#section_wrap .create_form form[name="create_franchisee_store_form"] input[type="button"]').click(function() {
-        console.log('.create_form form[name="create_franchisee_store_form"] input[type="button"] click handler!')
+    $('#section_wrap .create_form form[name="create_franchisee_store_form"] input[name="create_sotre"]').click(function() {
+        console.log('.create_form form[name="create_franchisee_store_form"] input[name="create_sotre"] click handler!')
 
         let fcs_name = $('#section_wrap .create_form input[name="fcs_name"]').val();
         let fcs_location = $('#section_wrap .create_form input[name="fcs_location"]').val();
@@ -48,32 +49,41 @@ function initEvents() {
         }
 
     })
+    
+    $('#section_wrap .admin_section_view_wrap .create_form .franchisee_info_modal input[name="modal_close"]').click(function(){
+    	console.log('.franchisee_info_modal close handler');
+    	
+    	$('#section_wrap .admin_section_view_wrap .create_form .franchisee_info_modal').css('display', 'none');
+	
+    	removeFranchiseeInfoUl();
+    	
+    })
 
 }
 
-function addFranchiseeInfoDiv() {
+/* function addFranchiseeInfoDiv() {
     console.log("addFranchiseeInfoDiv");
 
     ajax_getAllFranchiseeInfo();
 
-}
+} */
 
-function addFranchiseeStoreList(fcm_no) {
+function addFranchiseeStoreList(fcm_id) {
     console.log('addFranchiseeStoreList()');
 
-    ajax_getFranchiseeStoreInfoBySelect(fcm_no);
+    ajax_getFranchiseeStoreInfoBySelect(fcm_id);
 
 }
 
 function removeFranchiseeInfoUl() {
     console.log('removeFranchiseeInfoUl()');
 
-    $('#section_wrap .create_form .franchisee_info>ul').empty();
+    $('#section_wrap .create_form .franchisee_info table.info_table tbody').empty();
 
 }
 
 // 가맹 회원 정보 select 입력
-function ajax_getAllFranchiseeInfo() {
+/* function ajax_getAllFranchiseeInfo() {
     console.log("ajax_getAllFranchiseeInfo()")
 
     $.ajax({
@@ -105,33 +115,50 @@ function ajax_getAllFranchiseeInfo() {
         }
     })
 
-}
+} */
 
-function ajax_getFranchiseeStoreInfoBySelect(fcm_no) {
+function ajax_getFranchiseeStoreInfoBySelect(fcm_id) {
     console.log('ajax_getFranchiseeStoreInfoBySelect()');
 
     $.ajax({
         url: '/admin/member/getFranchiseeStoreListBySelect',
         method: 'post',
-        data: { 'fcm_no' : fcm_no },
+        data: { 'fcm_id' : fcm_id },
+        dataType: 'json',
         success: function(data) {
             console.log('ajax success!')
 
             removeFranchiseeInfoUl();
 
             let dtos = data.franchiseeStoreDtos;
+            
+            if (dtos.length !== 0) {
 
-            for (let i = 0; i < dtos.length; i++) {
-                let appendTag = '';
+	            for (let i = 0; i < dtos.length; i++) {
+	                let appendTag = '';
+	                
+	                appendTag = '<tr>'
+	                	appendTag += '<td>' + dtos[i].fcs_name + '</td>'
+	                	appendTag += '<td>' + dtos[i].fcs_location + '</td>'
+	                	appendTag += '<td>' + dtos[i].fcs_phone + '</td>'
+	                appendTag += '</tr>'
+	                
+	                $('#section_wrap .create_form .franchisee_info table.info_table tbody').append(appendTag);
+	
+	            }
+	            
+            } else {
+            	
+                appendTag = '<tr>'
+                	appendTag += '<td colspan="3">ID를 확인해주세요.</td>'
+                appendTag += '</tr>'
                 
-                appendTag = '<li>'
-                appendTag += dtos[i].fcs_name;
-                appendTag += '</li>'
-                
-                $('#section_wrap .create_form .franchisee_info>ul').append(appendTag);
-
+                $('#section_wrap .create_form .franchisee_info table.info_table tbody').append(appendTag);
+            	
             }
-
+            
+            $('#section_wrap .admin_section_view_wrap .create_form .franchisee_info_modal').css('display', 'block');
+            
         }, 
         error: function(data) {
             console.log('ajax error!')

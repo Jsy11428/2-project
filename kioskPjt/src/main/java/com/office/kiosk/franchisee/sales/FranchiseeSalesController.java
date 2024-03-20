@@ -49,9 +49,11 @@ public class FranchiseeSalesController {
 		
 		kioskPageDto myStoreAllSalesPageDtos = franchiseeSalesService.getMyStoreSalesInfoPageNum(page, fcs_no);
 		
-		pagingMyStoreAllSalesDtos.put("myStoreAllSalesPageDtos", myStoreAllSalesPageDtos);
-		// log.info("pagingMyStoreAllSalesDtos------------------->" + pagingMyStoreAllSalesDtos);
+		FranchiseeSalesDto totalsalesDto = franchiseeSalesService.getMyStoreTotalSales(fcs_no);
+		log.info("totalsalesDto------->" + totalsalesDto);
 		
+		pagingMyStoreAllSalesDtos.put("myStoreAllSalesPageDtos", myStoreAllSalesPageDtos);
+		pagingMyStoreAllSalesDtos.put("totalsalesDto", totalsalesDto);
 		
 		return pagingMyStoreAllSalesDtos;
 		

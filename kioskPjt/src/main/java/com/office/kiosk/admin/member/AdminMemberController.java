@@ -384,10 +384,10 @@ public class AdminMemberController {
 	 */
 	@PostMapping("/getFranchiseeStoreListBySelect")
 	@ResponseBody
-	public Object getFranchiseeStoreListBySelect(@RequestParam("fcm_no") int fcm_no) {
+	public Object getFranchiseeStoreListBySelect(@RequestParam("fcm_id") String fcm_id) {
 		log.info("getFranchiseeStoreListBySelect()");
 		
-		Map<String, Object> resultMap = adminMemberService.getFranchiseeStoreListBySelect(fcm_no);
+		Map<String, Object> resultMap = adminMemberService.getFranchiseeStoreListBySelect(fcm_id);
 		
 		return resultMap;
 		

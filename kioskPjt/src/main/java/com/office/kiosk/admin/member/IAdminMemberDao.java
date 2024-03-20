@@ -44,7 +44,7 @@ public interface IAdminMemberDao {
 
 	public int selcetAllStoreListCnt();
 
-	public List<FranchiseeStoreDto> selectFranchiseeStoreInfoBySelect(int fcm_no);
+	public List<FranchiseeStoreDto> selectFranchiseeStoreInfoBySelect(String fcm_id);
 
 	public int insertFranchiseeStore(FranchiseeSalesDto franchiseeSalesDto);
 

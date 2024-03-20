@@ -95,5 +95,16 @@
 		 
 	</select>
 	
+	<select id="selectMyStoreTotalSales" 
+			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
+	
+		SELECT 
+			SUM(FCSA_PRICE) AS SUM_TOTAL_PRICE 
+		FROM 
+			TBL_FC_SALES 
+		WHERE 
+			FCS_NO = #{fcs_no};
+	
+	</select>
 
 </mapper>
