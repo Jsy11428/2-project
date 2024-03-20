@@ -44,7 +44,7 @@
 		* 
 		FROM
 		TBL_FC_MENU 
-		ORDER BY FC_MENU_NO ASC 
+		ORDER BY FCMC_NO ASC ,FC_MENU_NO ASC 
 		LIMIT
 		#{start}, #{limit}
 	
