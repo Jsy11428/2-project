@@ -22,6 +22,11 @@
     font-size: 1.3em;
 }
 
+#section_wrap .pos_section_info_wrap .word img {
+	width: 260px;
+}
+
+
 #section_wrap .pos_section_info_wrap .login_form {
     margin: 0 auto;
     text-align: center;

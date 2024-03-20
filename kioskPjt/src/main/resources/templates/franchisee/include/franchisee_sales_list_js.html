@@ -261,6 +261,7 @@ function removeDetailModal() {
 
 }
 
+
 // ajax - 우리가게 총 매출 불러오기 /* fcs_no = 로그인된 가게 no */ 
 function ajax_getMyStoreAllSalesInfo(fcs_no, pageNum = 1) {
     console.log('ajax_getMyStoreAllSalesInfo()');
@@ -340,8 +341,9 @@ function ajax_getMyStoreAllSalesInfo(fcs_no, pageNum = 1) {
                     .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(myStoreAllSalesInfoPageDto.maxPage)}'>&#8811;</a>`);
             }
             
-            $('#section_wrap .list_total_sales_price p').append("총 매출 : " + storeTotalSalesPrice.sum_total_price.toLocaleString("ko-KR") + " 원");
-
+            $('#section_wrap .list_total_sales_price span.total_price').text(storeTotalSalesPrice.sum_total_price.toLocaleString("ko-KR"));
+        	
+            
         },
         error: function(data) {
             console.log('ajax error!!')
@@ -385,6 +387,8 @@ function ajax_getMyStoreAllSalesInfo(fcs_no, pageNum = 1) {
             	$('#section_wrap .franchisee_section_view_wrap .sales_detail_modal_wrap').css('display', 'block');
             	
             })
+            
+
             
 
         }
@@ -478,6 +482,12 @@ function ajax_getCurrentDateMyStoreSalesInfo(fcs_no, pageNum = 1) {
                 $('#section_wrap div.page_no_wrap')
                     .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(myStoreSalesInfoBySelectDatePageNum.maxPage)}'>&#8811;</a>`);
             }
+            
+            let totalPriceTag = '';
+            
+            totalPriceTag = "총 매출 : " + storeTotalSalesPrice.sum_total_price.toLocaleString("ko-KR") + " 원";
+            
+            $('#section_wrap .list_total_sales_price p').append(totalPriceTag);
 
         },
         error: function(data) {
@@ -595,7 +605,7 @@ function ajax_getMyStoreSalesInfoByInputPeriod(fcs_no, pageNum = 1) {
                 $('#section_wrap div.page_no_wrap')
                     .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(myStoreSalesInfoByInputPeriodPageNum.maxPage)}'>&#8811;</a>`);
             }
-
+            
         },
         error: function(data) {
             console.log('ajax error!!')

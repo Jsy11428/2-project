@@ -251,7 +251,7 @@
 	</select>
 	
 	<insert id="insertFranchiseeStore"
-			parameterType="com.office.kiosk.franchisee.FranchiseeStoreDto">
+			parameterType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
 			
 		INSERT INTO 
 			TBL_FC_STORE(
@@ -311,5 +311,18 @@
 			FCS_NO = #{fcs_no} 
 			
 	</update>
+	
+	<select id="selectFcmNoByFcmId"
+			parameterType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto"
+			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
+	
+		SELECT 
+			FCM_NO 
+		FROM 
+			TBL_FC_MEMBER 
+		WHERE 
+			FCM_ID = #{fcm_id} 
+	
+	</select>
 	
 </mapper>
