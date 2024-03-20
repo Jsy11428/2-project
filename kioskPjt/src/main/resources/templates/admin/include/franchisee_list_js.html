@@ -57,7 +57,7 @@ function ajax_getAllFranchiseeInfo(pageNum = 1) {
                     
                     if(franchiseeMemberDtos[i].fcm_approval === 0){
                     	appendTag += '<td>';
-                    	appendTag += '<button type="button" onclick="adminApproveBtn('+franchiseeMemberDtos[i].fcm_no+')" >승인</button>';
+                    	appendTag += '<button type="button" onclick="franchiseeApproveBtn('+franchiseeMemberDtos[i].fcm_no+')" >승인</button>';
                     	appendTag += '</td>';
                     }else{                    	
                     	appendTag += '<td>승인완료</td>'

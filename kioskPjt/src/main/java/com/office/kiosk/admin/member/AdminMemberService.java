@@ -341,6 +341,10 @@ public class AdminMemberService {
 		
 		Map<String, Object> map = new HashMap<>();
 		
+		FranchiseeSalesDto fcmNo = iAdminMemberDao.selectFcmNoByFcmId(franchiseeSalesDto);
+		
+		franchiseeSalesDto.setFcm_no(fcmNo.getFcm_no());
+		
 		int result = iAdminMemberDao.insertFranchiseeStore(franchiseeSalesDto);
 		
 		if (result > 0) {

@@ -52,5 +52,7 @@ public interface IAdminMemberDao {
 
 	public void updateFranchiseeStoreByFcsNoForDelete(int fcs_no);
 
+	public FranchiseeSalesDto selectFcmNoByFcmId(FranchiseeSalesDto franchiseeSalesDto);
+
 
 }

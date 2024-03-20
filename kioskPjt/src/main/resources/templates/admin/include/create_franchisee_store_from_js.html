@@ -25,13 +25,17 @@ function initEvents() {
     $('#section_wrap .create_form form[name="create_franchisee_store_form"] input[name="create_sotre"]').click(function() {
         console.log('.create_form form[name="create_franchisee_store_form"] input[name="create_sotre"] click handler!')
 
+        let fcm_id = $('#section_wrap .create_form input[name="fcm_id"]').val();
         let fcs_name = $('#section_wrap .create_form input[name="fcs_name"]').val();
         let fcs_location = $('#section_wrap .create_form input[name="fcs_location"]').val();
         let fcs_phone = $('#section_wrap .create_form input[name="fcs_phone"]').val();
-        let fcm_no = $('#section_wrap .create_form .franchisee_info select[name="fcm_no"]').val();
 
         let form = document.create_franchisee_store_form;
-        if (form.fcs_name.val === '') {
+        if (form.fcm_id.val === '') {
+            console.log('INPUT FRANCHISEE ID');
+            form.fcm_id.focus();
+
+        } else if (form.fcs_name.val === '') {
             console.log('INPUT FRANCHISEE STORE NAME');
             form.fcs_name.focus();
 
@@ -44,7 +48,7 @@ function initEvents() {
             form.fcs_phone.focus();
             
         } else {
-            ajax_createFranchiseeStore(fcs_name, fcs_location, fcs_phone, fcm_no);
+            ajax_createFranchiseeStore(fcm_id, fcs_name, fcs_location, fcs_phone);
             
         }
 
@@ -168,14 +172,14 @@ function ajax_getFranchiseeStoreInfoBySelect(fcm_id) {
 
 }
 
-function ajax_createFranchiseeStore(fcs_name, fcs_location, fcs_phone, fcm_no) {
+function ajax_createFranchiseeStore(fcm_id, fcs_name, fcs_location, fcs_phone) {
     console.log('ajax_createFranchiseeStore()');
 
     let formData = new FormData();
+    formData.append('fcm_id', fcm_id);
     formData.append('fcs_name', fcs_name);
     formData.append('fcs_location', fcs_location);
     formData.append('fcs_phone', fcs_phone);
-    formData.append('fcm_no', fcm_no);
 
     $.ajax({
         url: '/admin/member/createFranchiseeStoreConfirm', 
@@ -188,7 +192,7 @@ function ajax_createFranchiseeStore(fcs_name, fcs_location, fcs_phone, fcm_no) {
 
             let fcm_no = $('#section_wrap .create_form .franchisee_info select[name="fcm_no"]').val();
 
-            ajax_getFranchiseeStoreInfoBySelect(fcm_no);
+            ajax_getFranchiseeStoreInfoBySelect(fcm_id);
 
             $('#section_wrap .create_form input[name="fcs_name"]').val('');
             $('#section_wrap .create_form input[name="fcs_location"]').val('');
