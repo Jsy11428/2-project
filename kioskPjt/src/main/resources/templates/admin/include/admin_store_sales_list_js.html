@@ -255,6 +255,65 @@ function removeModalChart(){
 	
 }
 
+function addChart(fcs_name_arr, card_price_arr, cash_price_arr) {
+	console.log('addChart()')
+	
+	removeChart();
+    
+    var context = document
+        .getElementById('myChart')
+        .getContext('2d');
+    var myChart = new Chart(context, {
+        type: 'bar', // 차트의 형태
+        data: { // 차트에 들어갈 데이터
+            labels: fcs_name_arr, //x 축
+            datasets: [
+                { //데이터
+                    label: '카드', //차트 제목
+                    fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                    data: card_price_arr //x축 label에 대응되는 데이터 값
+                    ,
+                    backgroundColor: 
+                        //색상
+                        'rgba(255, 99, 132, 0.2)'
+                    ,
+                    borderColor: 
+                        //경계선 색상
+                        'rgba(255, 99, 132, 1)'
+
+                    ,
+                    borderWidth: 1 //경계선 굵기
+                },
+                {
+                    label: '현금',
+                    fill: false,
+                    data: cash_price_arr,
+                    backgroundColor: 
+                        //색상
+                        'rgba(54, 162, 235, 0.2)'
+                    ,
+                    borderColor: 
+                        //경계선 색상
+                        'rgba(54, 162, 235, 1)'
+                    ,
+                    borderWidth: 1 //경계선 굵기
+                } 
+            ]
+        },
+        options: {
+            scales:  {
+                x: {
+                    stacked: true,
+                  },
+                  y: {
+                    stacked: true
+                  }
+            },
+            maxBarThickness: 50
+        }
+    });
+}
+
 // ajax - 가맹점 총 매출 불러오기 
 function ajax_getStoreAllSalesInfo(pageNum = 1) {
     console.log('ajax_getStoreAllSalesInfo');
@@ -335,60 +394,7 @@ function ajax_getStoreAllSalesInfo(pageNum = 1) {
                     .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(pageDto.maxPage)}'>&#8811;</a>`);
             }
             
-            removeChart();
-            
-            var context = document
-	            .getElementById('myChart')
-	            .getContext('2d');
-	        var myChart = new Chart(context, {
-	            type: 'bar', // 차트의 형태
-	            data: { // 차트에 들어갈 데이터
-	                labels: fcs_name_arr, //x 축
-	                datasets: [
-	                    { //데이터
-	                        label: '카드', //차트 제목
-	                        fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
-	                        data: card_price_arr //x축 label에 대응되는 데이터 값
-	                        ,
-	                        backgroundColor: 
-	                            //색상
-	                            'rgba(255, 99, 132, 0.2)'
-	                        ,
-	                        borderColor: 
-	                            //경계선 색상
-	                            'rgba(255, 99, 132, 1)'
-
-	                        ,
-	                        borderWidth: 1 //경계선 굵기
-	                    },
-	                    {
-	                        label: '현금',
-	                        fill: false,
-	                        data: cash_price_arr,
-	                        backgroundColor: 
-	                            //색상
-	                            'rgba(54, 162, 235, 0.2)'
-	                        ,
-	                        borderColor: 
-	                            //경계선 색상
-	                            'rgba(54, 162, 235, 1)'
-	                        ,
-	                        borderWidth: 1 //경계선 굵기
-	                    } 
-	                ]
-	            },
-	            options: {
-	                scales:  {
-	                    x: {
-	                        stacked: true,
-	                      },
-	                      y: {
-	                        stacked: true
-	                      }
-                    },
-                    maxBarThickness: 50
-	            }
-	        });
+            addChart(fcs_name_arr, card_price_arr, cash_price_arr);
 
         },
         error: function(data) {
@@ -468,7 +474,7 @@ function ajax_getCurrentDateTotalSales(pageNum = 1) {
                 appendTag = '<tr>';
                     
                     appendTag += '<td>' + selectDtos[i].fcs_no + '</td>';
-                    appendTag += '<td>' + selectDtos[i].fcs_name + '</td>';
+                    appendTag += '<td><a href="#none" fcs_no="'+selectDtos[i].fcs_no+'">' + selectDtos[i].fcs_name + '</a></td>';
                     appendTag += '<td>' + selectDtos[i].fcm_name + '</td>';
                     appendTag += '<td>' + selectDtos[i].cash_total_price.toLocaleString("ko-KR") + '</td>';
                     appendTag += '<td>' + selectDtos[i].card_total_price.toLocaleString("ko-KR") + '</td>';
@@ -520,60 +526,7 @@ function ajax_getCurrentDateTotalSales(pageNum = 1) {
                     .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(pageDto.maxPage)}'>&#8811;</a>`);
             }
             
-            removeChart();
-            
-            var context = document
-	            .getElementById('myChart')
-	            .getContext('2d');
-	        var myChart = new Chart(context, {
-	            type: 'bar', // 차트의 형태
-	            data: { // 차트에 들어갈 데이터
-	                labels: fcs_name_arr, //x 축
-	                datasets: [
-	                    { //데이터
-	                        label: '카드', //차트 제목
-	                        fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
-	                        data: card_price_arr //x축 label에 대응되는 데이터 값
-	                        ,
-	                        backgroundColor: 
-	                            //색상
-	                            'rgba(255, 99, 132, 0.2)'
-	                        ,
-	                        borderColor: 
-	                            //경계선 색상
-	                            'rgba(255, 99, 132, 1)'
-	
-	                        ,
-	                        borderWidth: 1 //경계선 굵기
-	                    },
-	                    {
-	                        label: '현금',
-	                        fill: false,
-	                        data: cash_price_arr,
-	                        backgroundColor: 
-	                            //색상
-	                            'rgba(54, 162, 235, 0.2)'
-	                        ,
-	                        borderColor: 
-	                            //경계선 색상
-	                            'rgba(54, 162, 235, 1)'
-	                        ,
-	                        borderWidth: 1 //경계선 굵기
-	                    } 
-	                ]
-	            },
-	            options: {
-	                scales:  {
-	                    x: {
-	                        stacked: true,
-	                      },
-	                      y: {
-	                        stacked: true
-	                      }
-	                },
-	                maxBarThickness: 50
-	            }
-	        });
+            addChart(fcs_name_arr, card_price_arr, cash_price_arr);
 
         },
         error: function(data) {
@@ -598,6 +551,16 @@ function ajax_getCurrentDateTotalSales(pageNum = 1) {
                 console.log('pageNumBtnClick()')
 
                 ajax_getCurrentDateTotalSales(this.getAttribute('page_num'));
+            });
+            
+            $('#section_wrap table tbody tr td:nth-child(2) a').click(function(){
+            	console.log('지점 버튼 클릭');
+            	
+            	let fcs_no = $(this).attr("fcs_no");
+            	let fcs_name = $(this).text();
+            	
+            	ajax_storeMonthlySalesChart(fcs_no, fcs_name);
+            	
             });
 
         }
@@ -644,7 +607,7 @@ function ajax_getStoreTotalSalesByInputPeriod(pageNum = 1) {
                 appendTag = '<tr>';
                     
                     appendTag += '<td>' + selectDtos[i].fcs_no + '</td>';
-                    appendTag += '<td>' + selectDtos[i].fcs_name + '</td>';
+                    appendTag += '<td><a href="#none" fcs_no="'+selectDtos[i].fcs_no+'">' + selectDtos[i].fcs_name + '</a></td>';
                     appendTag += '<td>' + selectDtos[i].fcm_name + '</td>';
                     appendTag += '<td>' + selectDtos[i].cash_total_price.toLocaleString("ko-KR") + '</td>';
                     appendTag += '<td>' + selectDtos[i].card_total_price.toLocaleString("ko-KR") + '</td>';
@@ -696,60 +659,7 @@ function ajax_getStoreTotalSalesByInputPeriod(pageNum = 1) {
                     .append(`<a style='font-weight: bold' href="#none" class="next_page_btn" page_num='${(pageDto.maxPage)}'>&#8811;</a>`);
             }
             
-            removeChart();
-            
-            var context = document
-	            .getElementById('myChart')
-	            .getContext('2d');
-	        var myChart = new Chart(context, {
-	            type: 'bar', // 차트의 형태
-	            data: { // 차트에 들어갈 데이터
-	                labels: fcs_name_arr, //x 축
-	                datasets: [
-	                    { //데이터
-	                        label: '카드', //차트 제목
-	                        fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
-	                        data: card_price_arr //x축 label에 대응되는 데이터 값
-	                        ,
-	                        backgroundColor: 
-	                            //색상
-	                            'rgba(255, 99, 132, 0.2)'
-	                        ,
-	                        borderColor: 
-	                            //경계선 색상
-	                            'rgba(255, 99, 132, 1)'
-	
-	                        ,
-	                        borderWidth: 1 //경계선 굵기
-	                    },
-	                    {
-	                        label: '현금',
-	                        fill: false,
-	                        data: cash_price_arr,
-	                        backgroundColor: 
-	                            //색상
-	                            'rgba(54, 162, 235, 0.2)'
-	                        ,
-	                        borderColor: 
-	                            //경계선 색상
-	                            'rgba(54, 162, 235, 1)'
-	                        ,
-	                        borderWidth: 1 //경계선 굵기
-	                    } 
-	                ]
-	            },
-	            options: {
-	                scales:  {
-	                    x: {
-	                        stacked: true,
-	                      },
-	                      y: {
-	                        stacked: true
-	                      }
-	                },
-	                maxBarThickness: 50
-	            }
-	        });
+            addChart(fcs_name_arr, card_price_arr, cash_price_arr);
 
         },
         error: function(data) {
@@ -774,6 +684,16 @@ function ajax_getStoreTotalSalesByInputPeriod(pageNum = 1) {
                 console.log('pageNumBtnClick()')
 
                 ajax_getStoreTotalSalesByInputPeriod(this.getAttribute('page_num'));
+            });
+            
+            $('#section_wrap table tbody tr td:nth-child(2) a').click(function(){
+            	console.log('지점 버튼 클릭');
+            	
+            	let fcs_no = $(this).attr("fcs_no");
+            	let fcs_name = $(this).text();
+            	
+            	ajax_storeMonthlySalesChart(fcs_no, fcs_name);
+            	
             });
 
         }

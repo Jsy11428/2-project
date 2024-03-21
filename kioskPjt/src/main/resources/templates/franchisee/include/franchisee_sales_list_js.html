@@ -426,7 +426,7 @@ function ajax_getCurrentDateMyStoreSalesInfo(fcs_no, pageNum = 1) {
                 appendTag = '<tr>';
                     
                     appendTag += '<td>' + myStoreSalesDtosBySelectDate[i].fcsa_no + '</td>';
-                    appendTag += '<td>' + myStoreSalesDtosBySelectDate[i].fco_ori_no + '</td>';
+                    appendTag += '<td><a class="ori_no" href="#none">' + myStoreSalesDtosBySelectDate[i].fco_ori_no + '</a></td>';
                     appendTag += '<td>' + myStoreSalesDtosBySelectDate[i].fcsa_price.toLocaleString("ko-KR") + '</td>';
                     appendTag += '<td>' + myStoreSalesDtosBySelectDate[i].pm_type + '</td>';
                     appendTag += '<td>' + myStoreSalesDtosBySelectDate[i].fcsa_reg_date + '</td>';
@@ -505,6 +505,17 @@ function ajax_getCurrentDateMyStoreSalesInfo(fcs_no, pageNum = 1) {
 
                 ajax_getCurrentDateMyStoreSalesInfo(fcs_no, this.getAttribute('page_num'));
             });
+            
+            $('#section_wrap .franchisee_sales_list table a.ori_no').click(function(){
+            	console.log('a.ori_no click');
+            	
+            	let fco_ori_no = $(this).text();
+            	
+            	ajax_salesDetailInfo(fco_ori_no);
+            	
+            	$('#section_wrap .franchisee_section_view_wrap .sales_detail_modal_wrap').css('display', 'block');
+            	
+            })
 
         }
 
@@ -551,7 +562,7 @@ function ajax_getMyStoreSalesInfoByInputPeriod(fcs_no, pageNum = 1) {
                 appendTag = '<tr>';
                     
                     appendTag += '<td>' + myStoreSalesDtosByInputPeriod[i].fcsa_no + '</td>';
-                    appendTag += '<td>' + myStoreSalesDtosByInputPeriod[i].fco_ori_no + '</td>';
+                    appendTag += '<td><a class="ori_no" href="#none">' + myStoreSalesDtosByInputPeriod[i].fco_ori_no + '</a></td>';
                     appendTag += '<td>' + myStoreSalesDtosByInputPeriod[i].fcsa_price.toLocaleString("ko-KR") + '</td>';
                     appendTag += '<td>' + myStoreSalesDtosByInputPeriod[i].pm_type + '</td>';
                     appendTag += '<td>' + myStoreSalesDtosByInputPeriod[i].fcsa_reg_date + '</td>';
@@ -629,6 +640,17 @@ function ajax_getMyStoreSalesInfoByInputPeriod(fcs_no, pageNum = 1) {
 
                 ajax_getMyStoreSalesInfoByInputPeriod(fcs_no, this.getAttribute('page_num'));
             });
+            
+            $('#section_wrap .franchisee_sales_list table a.ori_no').click(function(){
+            	console.log('a.ori_no click');
+            	
+            	let fco_ori_no = $(this).text();
+            	
+            	ajax_salesDetailInfo(fco_ori_no);
+            	
+            	$('#section_wrap .franchisee_section_view_wrap .sales_detail_modal_wrap').css('display', 'block');
+            	
+            })
 
         }
 

@@ -452,9 +452,7 @@ function paymentCompleteModal(fco_ori_no){
 	let timeout = setTimeout(function(){
 		$('div.payment_complete_modal_content h1').hide();
 		$('#payment_complete_modal_wrap').hide();
-		removePaymentCartItem();
 		$("#payment_modal_wrap").hide();
-		location.href = "/customer/order/sotreLoginResultView";
 	}, 7000);
 }
 
