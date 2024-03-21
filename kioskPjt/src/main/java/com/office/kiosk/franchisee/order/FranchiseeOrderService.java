@@ -138,7 +138,12 @@ public class FranchiseeOrderService {
 		List<Map<String, Object>> dtos = (List<Map<String, Object>>) dataMsg.get("menuOrders");
 
 		FranchiseeOrderDto oriNoDto = iFranchiseeOrderDao.getOriNo();
-		int fco_ori_no = oriNoDto.getFco_no() + 1;
+		int fco_ori_no;
+		if(oriNoDto == null) {
+			fco_ori_no = 1;
+		} else {
+			fco_ori_no = oriNoDto.getFco_no() + 1;
+		}
 		
 		for(int i = 0; i < dtos.size(); i++) {
 			
