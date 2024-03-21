@@ -601,5 +601,22 @@
 	
 	</select>
 	
+	<select id="selectStoreMonthlySales" 
+			resultType="com.office.kiosk.franchisee.sales.FranchiseeSalesDto">
+			
+		SELECT
+			YEAR(FCSA_REG_DATE) AS YEAR,
+			MONTH(FCSA_REG_DATE) AS MONTH,
+			SUM(FCSA_PRICE) AS SUM_TOTAL_PRICE
+		FROM 
+			TBL_FC_SALES
+		WHERE 
+			FCS_NO = #{fcs_no}
+		GROUP BY 
+			YEAR(FCSA_REG_DATE), MONTH(FCSA_REG_DATE)
+		ORDER BY 
+			YEAR ASC, MONTH ASC
+			
+	</select>
 
 </mapper>

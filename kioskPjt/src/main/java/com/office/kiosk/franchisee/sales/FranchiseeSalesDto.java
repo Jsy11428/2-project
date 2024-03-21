@@ -57,5 +57,8 @@ public class FranchiseeSalesDto {
 	private int card_total_price;
 	private int sum_total_price;
 	
+	private int year;
+	private int month;
+	
 }
 
