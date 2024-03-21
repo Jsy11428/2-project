@@ -198,7 +198,6 @@ function orderBtnClick() {
         let shot_number = $('.shot_number').val();
         let pur_number = $('.pur_number').val();
         let fc_menu_option_price = parseInt(shot_number * 500) + (pur_number * 1000);
-        let menuPrice = fc_menu_option_price + price;
         // let fc_menu_option_price = parseInt(shot_number * 500) + (pur_number * 1000);
         let fco_total_price = price;
 
@@ -238,12 +237,11 @@ function orderBtnClick() {
             			let addMenuCnt = $('.input_create_menu_wrap table input[name="fof_menu_count"]').val();
             			
             			let cnt = parseInt(menuCnt) + parseInt(addMenuCnt);
-            			console.log('cnt-----', cnt);
             			
             			$('#order_table tr').eq(i).children('td:nth-child(5)').attr("fco_menu_cnt", cnt);
             			$('#order_table tr').eq(i).children('td:nth-child(5)').text(cnt);
-            			$('#order_table tr').eq(i).children('td:nth-child(7)').attr("fco_total_price", (cnt * menuPrice));
-            			$('#order_table tr').eq(i).children('td:nth-child(7)').text(cnt * menuPrice);
+            			$('#order_table tr').eq(i).children('td:nth-child(7)').attr("fco_total_price", (cnt * price));
+            			$('#order_table tr').eq(i).children('td:nth-child(7)').text(cnt * price);
             			
         	            $('input.shot_number').val(0);
         	            $('input.pur_number').val(0);
@@ -482,8 +480,6 @@ function moifyShotPur() {
 	console.log("moifyShotPur()");
 	
 	let total_price = (current_menu_basic_price + (Number($('input[name="shot_number"]').val()) * 500) + (Number($('input[name="pur_number"]').val()) * 1000)) * Number($('input[name="fof_menu_count"]').val());
-	
-	console.log("total_price: " + total_price);
 	
 	$('.basic_price').val(total_price);
 }

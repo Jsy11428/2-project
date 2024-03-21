@@ -58,7 +58,7 @@ function ajax_getAllFranchiseeStoreInfo(pageNum = 1) {
                     appendTag += '<td>' + storeDtos[i].fcm_phone + '</td>';
                     appendTag += '<td>' + storeDtos[i].fcs_reg_date + '</td>';
                     appendTag += '<td>' + storeDtos[i].fcs_mod_date + '</td>';
-                    appendTag += '<td><input type="button" value="삭제" name="deleteBtn" fcs_no='+ storeDtos[i].fcs_no +'></td>';
+                    appendTag += '<td><input type="button" value="폐점" name="deleteBtn" fcs_no='+ storeDtos[i].fcs_no +'></td>';
 
                 appendTag += '</tr>';
 

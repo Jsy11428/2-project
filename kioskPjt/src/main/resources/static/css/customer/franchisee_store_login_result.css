@@ -12,7 +12,6 @@
 #section_wrap .main .img_box {
     width: 1000px;
     height: 910px;
-    background-color: #0f0;
 }
 
 
@@ -72,7 +71,6 @@
 }
 
 #section_wrap .option div {
-    height: 150px;
     padding: 38px;
     margin: 0 10px;
 }
