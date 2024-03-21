@@ -16,6 +16,12 @@
 	width: 100%;
 }
 
+#section_wrap .admin_section_view_wrap .admin_store_sales_list .chart {
+	width: 600px;
+	margin: 0 auto;
+	margin-bottom: 20px;
+}
+
 #section_wrap .admin_section_view_wrap .admin_store_sales_list table {
 	margin: 0 10px;
 	border-collapse: collapse;

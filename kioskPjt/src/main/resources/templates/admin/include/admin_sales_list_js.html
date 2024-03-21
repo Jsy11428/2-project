@@ -153,7 +153,7 @@ function ajax_getAllSalesInfo(pageNum = 1) {
             } else {
             	$('#section_wrap .list_total_sales_price span.total_price').text('0');
             }
-
+            
         },
         error: function(data) {
             console.log('ajax error!!')
@@ -190,7 +190,7 @@ function ajax_getAllSalesInfo(pageNum = 1) {
 
                 ajax_getAllSalesInfo(this.getAttribute('page_num'));
             });
-
+			
         }
 
     })

@@ -13,6 +13,7 @@
 <link rel="stylesheet" th:href="@{/css/admin/sales/admin_store_sales_list.css}">
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
 
 <script type="text/javascript" th:replace="~{admin/include/section_side_menu_js.html::jquery_js}"></script>
 <script type="text/javascript" th:replace="~{admin/include/admin_store_sales_list_js.html::admin_store_sales_list_js}"></script>
@@ -41,6 +42,8 @@
 					<div class="word">
 						가맹점별 매출
 					</div>
+					
+					
 
 					<div class="select_wrap">
 			
@@ -83,7 +86,11 @@
 					</div>
 						
 					<div class="admin_store_sales_list">
-					
+						
+						<div class="chart">
+							<canvas id="myChart"></canvas>
+						</div>
+						
 		  				<table>
 
 							<thead>
