@@ -236,12 +236,19 @@ function orderBtnClick() {
             			
             			let addMenuCnt = $('.input_create_menu_wrap table input[name="fof_menu_count"]').val();
             			
+            			console.log("totalPrice----", totalPrice);
+            			console.log("addMenuCnt----", addMenuCnt);
+            			console.log("current_menu_basic_price----", current_menu_basic_price);
+            			console.log("fc_menu_option_price----", fc_menu_option_price);
+            			
+            			let addPrice = parseInt(totalPrice) + ((parseInt(addMenuCnt) * (parseInt(current_menu_basic_price) + parseInt(fc_menu_option_price))));
+            			
             			let cnt = parseInt(menuCnt) + parseInt(addMenuCnt);
             			
             			$('#order_table tr').eq(i).children('td:nth-child(5)').attr("fco_menu_cnt", cnt);
             			$('#order_table tr').eq(i).children('td:nth-child(5)').text(cnt);
-            			$('#order_table tr').eq(i).children('td:nth-child(7)').attr("fco_total_price", (cnt * price));
-            			$('#order_table tr').eq(i).children('td:nth-child(7)').text(cnt * price);
+            			$('#order_table tr').eq(i).children('td:nth-child(7)').attr("fco_total_price", addPrice);
+            			$('#order_table tr').eq(i).children('td:nth-child(7)').text(addPrice);
             			
         	            $('input.shot_number').val(0);
         	            $('input.pur_number').val(0);

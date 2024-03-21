@@ -247,6 +247,14 @@ function removeChart(){
 	
 }
 
+function removeModalChart(){
+	console.log('removeChart()');
+	
+	$('#storeChart').remove();
+	$('.modal_chart').append('<canvas id="storeChart"></canvas>');
+	
+}
+
 // ajax - 가맹점 총 매출 불러오기 
 function ajax_getStoreAllSalesInfo(pageNum = 1) {
     console.log('ajax_getStoreAllSalesInfo');
@@ -275,7 +283,7 @@ function ajax_getStoreAllSalesInfo(pageNum = 1) {
                 appendTag = '<tr>';
                     
                     appendTag += '<td>' + storeDtos[i].fcs_no + '</td>';
-                    appendTag += '<td>' + storeDtos[i].fcs_name + '</td>';
+                    appendTag += '<td><a href="#none" fcs_no="'+storeDtos[i].fcs_no+'">' + storeDtos[i].fcs_name + '</a></td>';
                     appendTag += '<td>' + storeDtos[i].fcm_name + '</td>';
                     appendTag += '<td>' + storeDtos[i].cash_total_price.toLocaleString("ko-KR") + '</td>';
                     appendTag += '<td>' + storeDtos[i].card_total_price.toLocaleString("ko-KR") + '</td>';
@@ -405,6 +413,16 @@ function ajax_getStoreAllSalesInfo(pageNum = 1) {
                 console.log('pageNumBtnClick()')
 
                 ajax_getStoreAllSalesInfo(this.getAttribute('page_num'));
+            });
+            
+            $('#section_wrap table tbody tr td:nth-child(2) a').click(function(){
+            	console.log('지점 버튼 클릭');
+            	
+            	let fcs_no = $(this).attr("fcs_no");
+            	let fcs_name = $(this).text();
+            	
+            	ajax_storeMonthlySalesChart(fcs_no, fcs_name);
+            	
             });
 
         }
@@ -588,6 +606,8 @@ function ajax_getCurrentDateTotalSales(pageNum = 1) {
 
 }
 
+
+// 하단 선택 기간 가맹점별 매출 불러오기
 function ajax_getStoreTotalSalesByInputPeriod(pageNum = 1) {
     console.log('ajax_getStoreTotalSalesByInputPeriod()');
 
@@ -759,6 +779,123 @@ function ajax_getStoreTotalSalesByInputPeriod(pageNum = 1) {
         }
     })
 
+}
+
+// 선택 지점 월별 매출 그래프 모달 불러오기
+function ajax_storeMonthlySalesChart(fcs_no, fcs_name){
+	console.log('ajax_storeMonthlySalesChart()');
+	
+	$.ajax({
+        url: '/admin/sales/getStoreMonthlySales',
+        method: 'post',
+        data: { "fcs_no" : fcs_no },
+        dataType: 'json',
+        success: function(data) {
+        	console.log('ajax_storeMonthlySalesChart success')
+        	
+        	let storeMonthlySalesDtos = data.storeMonthlySalesDtos;
+        	
+        	let dateArr = [];
+        	let totalPrice = [];
+        	
+        	for (let i = 0; i < storeMonthlySalesDtos.length; i++) {
+        		
+        		let date = '';
+        		
+        		date += storeMonthlySalesDtos[i].year;
+        		date += '.';
+        		date += storeMonthlySalesDtos[i].month;
+        		
+        		dateArr.push(date);
+        		
+        		totalPrice.push(storeMonthlySalesDtos[i].sum_total_price);
+        		
+        	}
+        	
+        	$('#section_wrap .admin_section_view_wrap .store_sales_modal_wrap').show();
+        	
+        	$('#section_wrap .admin_section_view_wrap .store_sales_modal_wrap .store_sales_modal .modal_txt p').text(fcs_name);
+        	
+        	removeModalChart();
+        	
+            var context = document
+	            .getElementById('storeChart')
+	            .getContext('2d');
+	        var myChart = new Chart(context, {
+	            type: 'line', // 차트의 형태
+	            data: { // 차트에 들어갈 데이터
+	                labels: dateArr, //x 축
+	                datasets: [
+	                    { //데이터
+	                        label: '월 매출', //차트 제목
+	                        fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+	                        data: totalPrice //x축 label에 대응되는 데이터 값
+	                        ,
+	                        backgroundColor: 
+	                            //색상
+	                            'rgba(153, 102, 255, 0.2)'
+	                        ,
+	                        borderColor: 
+	                            //경계선 색상
+	                            'rgba(153, 102, 255, 1)'
+	
+	                        ,
+	                        borderWidth: 1 //경계선 굵기
+	                    }
+	                ]
+	            },
+	            options: {
+	            	response: true,
+	                scales:  {
+	                    x: {
+	                    	display: true,
+	                        title: {
+	                          display: true,
+	                          color: '#911',
+	                          font: {
+	                            family: 'Comic Sans MS',
+	                            size: 20,
+	                            weight: 'bold',
+	                            lineHeight: 1.2,
+	                          },
+	                          padding: {top: 20, left: 0, right: 0, bottom: 0}
+	                        }
+	                      },
+	                      y: {
+	                    	  display: true,
+	                          title: {
+	                            display: true,
+	                            color: '#191',
+	                            font: {
+	                              family: 'Times',
+	                              size: 20,
+	                              style: 'normal',
+	                              lineHeight: 1.2
+	                            },
+	                            padding: {top: 30, left: 0, right: 0, bottom: 0}
+	                      }
+	                	}
+	                }
+	            }
+	        });
+        	
+        },
+        error: function(data) {
+        	console.log('ajax_storeMonthlySalesChart error')
+        	
+        }, 
+        complete: function(data) {
+        	console.log('ajax_storeMonthlySalesChart complete')
+        	
+        	$('#section_wrap .admin_section_view_wrap .store_sales_modal_wrap').click(function(){
+        		
+        		$('#section_wrap .admin_section_view_wrap .store_sales_modal_wrap').hide();
+        		
+        	});
+        	
+        }
+	})
+	
 }
 
 </script>

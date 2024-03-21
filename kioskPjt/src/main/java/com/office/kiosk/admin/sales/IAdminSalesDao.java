@@ -63,4 +63,6 @@ public interface IAdminSalesDao {
 
 	public FranchiseeSalesDto selectSearchTotalSales(Map<String, Object> pagingParams);
 
+	public List<FranchiseeSalesDto> selectStoreMonthlySales(int fcs_no);
+
 }

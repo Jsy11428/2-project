@@ -607,6 +607,18 @@ public class AdminSalesService {
 		return pagingList;
 	}
 
+	public Map<String, Object> getStoreMonthlySales(int fcs_no) {
+		log.info("getStoreMonthlySales()");
+		
+		Map<String, Object> resultMap = new HashMap<>();
+		
+		List<FranchiseeSalesDto> storeMonthlySalesDtos = iAdminSalesDao.selectStoreMonthlySales(fcs_no);
+		
+		resultMap.put("storeMonthlySalesDtos",storeMonthlySalesDtos);
+		
+		return resultMap;
+	}
+
 
 
 

@@ -302,6 +302,20 @@ public class AdminSalesController {
 		
 	}
 	
+	/*
+	 * 	선택 가맹정 월별 매출 정보 가져오기 ajax
+	 */
+	@PostMapping("/getStoreMonthlySales")
+	@ResponseBody
+	public Object getStoreMonthlySales(@RequestParam("fcs_no") int fcs_no) {
+		log.info("getStoreMonthlySales()");
+		
+		Map<String, Object> resultMap = adminSalesService.getStoreMonthlySales(fcs_no);
+		
+		return resultMap;
+	}
+	
+	
 	
 	
 }
