@@ -108,6 +108,26 @@ function eventsHandler(){
 		// 모달창 닫히고 모달창의 value 초기화
 		$("#myModal").fadeOut();
         resetValues();
+        
+        let innerCartItemCnt = $('#footer_wrap ul.cart_area_items li').length;
+		let canMoveCount = innerCartItemCnt - 5;
+			
+		if(innerCartItemCnt > 5){
+			
+			if((canMoveCount - leftMovedCount) > 0){
+				leftMovedCount += 1;
+												
+				$('#footer_wrap ul.cart_area_items').animate({
+						
+					'left' : -(innerCartSlideMoveValue * leftMovedCount)+'px'
+					
+				},300);
+				rightMovedCount -= 1;
+			}	
+			
+			cartAreaBtnActiveHandler(leftMovedCount,rightMovedCount);
+				
+		}
 		
 	});
 	
@@ -143,7 +163,7 @@ function eventsHandler(){
 					'left' : -(innerCartSlideMoveValue * leftMovedCount)+'px'
 					
 				},300);
-				rightMovedCount -= 1;							
+				rightMovedCount -= 1;
 			}	
 			
 			cartAreaBtnActiveHandler(leftMovedCount,rightMovedCount);
