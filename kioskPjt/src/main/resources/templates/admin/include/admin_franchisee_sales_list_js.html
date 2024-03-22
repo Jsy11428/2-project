@@ -266,9 +266,9 @@ function ajax_getFranchiseeAllSalesInfo(pageNum = 1) {
                     
                     appendTag += '<td>' + salesDtos[i].fcm_no + '</td>';
                     appendTag += '<td>' + salesDtos[i].fcm_name + '</td>';
-                    appendTag += '<td>' + salesDtos[i].cash_total_price + '</td>';
-                    appendTag += '<td>' + salesDtos[i].card_total_price + '</td>';
-                    appendTag += '<td>' + parseInt(salesDtos[i].card_total_price+salesDtos[i].cash_total_price) + '</td>';
+                    appendTag += '<td>' + salesDtos[i].cash_total_price.toLocaleString('ko-KR') + '</td>';
+                    appendTag += '<td>' + salesDtos[i].card_total_price.toLocaleString('ko-KR') + '</td>';
+                    appendTag += '<td>' + (parseInt(salesDtos[i].card_total_price+salesDtos[i].cash_total_price)).toLocaleString('ko-KR') + '</td>';
 
                 appendTag += '</tr>';
 
@@ -376,9 +376,9 @@ function ajax_getCurrentDateFranchiseeTotalSales(pageNum = 1) {
                     
                     appendTag += '<td>' + selectDtos[i].fcm_no + '</td>';
                     appendTag += '<td>' + selectDtos[i].fcm_name + '</td>';
-                    appendTag += '<td>' + selectDtos[i].cash_total_price + '</td>';
-                    appendTag += '<td>' + selectDtos[i].card_total_price + '</td>';
-                    appendTag += '<td>' + parseInt(selectDtos[i].card_total_price+selectDtos[i].cash_total_price) + '</td>';
+                    appendTag += '<td>' + selectDtos[i].cash_total_price.toLocaleString('ko-KR') + '</td>';
+                    appendTag += '<td>' + selectDtos[i].card_total_price.toLocaleString('ko-KR') + '</td>';
+                    appendTag += '<td>' + (parseInt(selectDtos[i].card_total_price+selectDtos[i].cash_total_price)).toLocaleString('ko-KR') + '</td>';
 
                 appendTag += '</tr>';
 
@@ -487,9 +487,9 @@ function ajax_getFranchiseeTotalSalesByInputPeriod(pageNum = 1) {
                     
                     appendTag += '<td>' + selectDtos[i].fcm_no + '</td>';
                     appendTag += '<td>' + selectDtos[i].fcm_name + '</td>';
-                    appendTag += '<td>' + selectDtos[i].cash_total_price + '</td>';
-                    appendTag += '<td>' + selectDtos[i].card_total_price + '</td>';
-                    appendTag += '<td>' + parseInt(selectDtos[i].card_total_price + selectDtos[i].cash_total_price) + '</td>';
+                    appendTag += '<td>' + selectDtos[i].cash_total_price.toLocaleString('ko-KR') + '</td>';
+                    appendTag += '<td>' + selectDtos[i].card_total_price.toLocaleString('ko-KR') + '</td>';
+                    appendTag += '<td>' + (parseInt(selectDtos[i].card_total_price + selectDtos[i].cash_total_price)).toLocaleString('ko-KR') + '</td>';
 
                 appendTag += '</tr>';
 

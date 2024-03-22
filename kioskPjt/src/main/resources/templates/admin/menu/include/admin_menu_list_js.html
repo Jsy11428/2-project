@@ -253,7 +253,7 @@ function ajax_get_all_menus(pageNum = 1) {
 					appendTag += adminMenuDtos[index].fc_menu_name;
 					appendTag += '</li>';
 					appendTag += '<li class="fc_menu_price">';
-					appendTag += adminMenuDtos[index].fc_menu_price;
+					appendTag += adminMenuDtos[index].fc_menu_price.toLocaleString('ko-KR');
 					appendTag += '</li>';
 					appendTag += '</ul>';
 					appendTag += '</div>';
@@ -411,7 +411,7 @@ function ajax_get_menus_by_category(fcmc_no, pageNum = 1) {
 					appendTag += adminMenuDtos[index].fc_menu_name;
 					appendTag += '</li>';
 					appendTag += '<li class="fc_menu_price">';
-					appendTag += adminMenuDtos[index].fc_menu_price;
+					appendTag += adminMenuDtos[index].fc_menu_price.toLocaleString('ko-KR');
 					appendTag += '</li>';
 					appendTag += '</ul>';
 					appendTag += '</div>';

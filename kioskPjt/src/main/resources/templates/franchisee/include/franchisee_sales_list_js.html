@@ -149,10 +149,11 @@ function initEvents() {
 
     })
     
+    // .sales_detail_modal colse 버튼. 모달 hide 처리.
     $('#section_wrap .franchisee_section_view_wrap .sales_detail_modal .close_box').click(function() {
         console.log('modal close btn click!');
 
-        $('#section_wrap .franchisee_section_view_wrap .sales_detail_modal_wrap').css('display', 'none');
+        $('#section_wrap .franchisee_section_view_wrap .sales_detail_modal_wrap').hide();
 
         removeDetailModal();
 
@@ -160,6 +161,7 @@ function initEvents() {
 
 }
 
+// select[name="p_year"] set 함수
 function setYearBySelectChange() {
     console.log('setYearBySelectChange()');
 
@@ -169,17 +171,18 @@ function setYearBySelectChange() {
 
     let selectedDate = new Date(temp_year, temp_month, temp_date);
 
+    // 변경된 year currentDAte 적용
     setCurrentDate(selectedDate.getFullYear(), 
                     selectedDate.getMonth(), 
                     selectedDate.getDate(), 
                     selectedDate.getDay())
                     
-                    
 	let fcs_no = $('#fc_no').text();
-    ajax_getCurrentDateMyStoreSalesInfo(fcs_no);
+    ajax_getCurrentDateMyStoreSalesInfo(fcs_no);	// 변경된 날짜 sales 정보 가져오기
 
 }
 
+// select[name="p_month"] set 함수
 function setMonthBySelectChange() {
     console.log('setMonthBySelectChange()');
 
@@ -188,17 +191,19 @@ function setMonthBySelectChange() {
 	let temp_date = $('select[name="p_date"]').val();
 
     let selectedDate = new Date(temp_year, temp_month, temp_date);
-
+	
+ 	// 변경된 year currentDAte 적용
     setCurrentDate(selectedDate.getFullYear(), 
                     selectedDate.getMonth(), 
                     selectedDate.getDate(), 
                     selectedDate.getDay())
 
     let fcs_no = $('#fc_no').text();
-    ajax_getCurrentDateMyStoreSalesInfo(fcs_no);
+    ajax_getCurrentDateMyStoreSalesInfo(fcs_no);	// 변경된 날짜 sales 정보 가져오기
 
 }
 
+//select[name="p_date"] set 함수
 function setDateBySelectChange() {
     console.log('setDateBySelectChange()');
 
@@ -207,28 +212,33 @@ function setDateBySelectChange() {
 	let temp_date = $('select[name="p_date"]').val();
 
     let selectedDate = new Date(temp_year, temp_month, temp_date);
-
+	
+ 	// 변경된 year currentDAte 적용
     setCurrentDate(selectedDate.getFullYear(), 
                     selectedDate.getMonth(), 
                     selectedDate.getDate(), 
                     selectedDate.getDay())
 
     let fcs_no = $('#fc_no').text();       
-    ajax_getCurrentDateMyStoreSalesInfo(fcs_no);
+    ajax_getCurrentDateMyStoreSalesInfo(fcs_no); 	// 변경된 날짜 sales 정보 가져오기
 
 }
 
+// input[name="p_today"] 버튼 클릭 (오늘날짜)
 function setDateByTodayBtnclick() {
     console.log('setDateByTodayBtnclick()');
 
+    // currentDAte 오늘 날짜로 세팅
     setCurrentDate(today_year, today_month, today_date);
-
+	
+    // select 날짜들 오늘 날짜로 세팅
     setCurrentYearAndMonthSelectUI()
 
     let fcs_no = $('#fc_no').text();
-    ajax_getCurrentDateMyStoreSalesInfo(fcs_no);
+    ajax_getCurrentDateMyStoreSalesInfo(fcs_no);// 변경된 날짜 sales 정보 가져오기
 
 }
+
 
 function searchBtnClick() {
     console.log('searchBtnClick()');
@@ -252,6 +262,8 @@ function removePageNo() {
 
 }
 
+
+// .sales_detail_modal 내 정보 지우기
 function removeDetailModal() {
     console.log('removeDetailModal()');
 
@@ -658,6 +670,7 @@ function ajax_getMyStoreSalesInfoByInputPeriod(fcs_no, pageNum = 1) {
 	
 }
 
+// 주문번호 클릭 시 상세 오더 모달
 function ajax_salesDetailInfo(fco_ori_no) {
     console.log("ajax_salesDetailInfo()");
 

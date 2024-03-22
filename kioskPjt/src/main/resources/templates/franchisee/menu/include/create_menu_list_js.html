@@ -136,7 +136,7 @@
 						appendTag += franchiseeMenuDtos[index].fc_menu_name;
 						appendTag += '</li>';
 						appendTag += '<li class="fc_menu_price">';
-						appendTag += franchiseeMenuDtos[index].fc_menu_price;
+						appendTag += franchiseeMenuDtos[index].fc_menu_price.toLocaleString('ko-KR');
 						appendTag += '</li>';
 						appendTag += '</ul>';
 						appendTag += '</div>';
@@ -255,7 +255,7 @@
 							appendTag += franchiseeMenuDtos[index].fc_menu_name;
 							appendTag += '</li>';
 							appendTag += '<li class="fc_menu_price">';
-							appendTag += franchiseeMenuDtos[index].fc_menu_price;
+							appendTag += franchiseeMenuDtos[index].fc_menu_price.toLocaleString('ko-KR');
 							appendTag += '</li>';
 							appendTag += '</ul>';
 							appendTag += '</div>';
@@ -359,8 +359,6 @@
 								"value", `${data.fc_menu_no}`);
 						
 						$("div.modify_menu_wrap select[name='fcmc_no']").val(data.fcmc_no).prop('selected', true);
-						
-						console.log(`${data.fcmc_namo}`);
 						
 						$("div.modify_menu_wrap input[name='fc_menu_name']").attr(
 								"value", `${data.fc_menu_name}`);

@@ -407,7 +407,7 @@ public class AdminMemberController {
 	}
 	
 	/*
-	 * 	delete franchisee store
+	 * 	가맹점 폐점
 	 */
 	@PostMapping("/franchiseeStoreDelete")
 	@ResponseBody

@@ -97,7 +97,6 @@ function ajax_get_all_order(pageNum = 1) {
             	console.log('nextPageBtnClick()')
             	
             	ajax_get_all_order(this.getAttribute('page_num'));
-            	console.log('page_num--->>>'+this.getAttribute('page_num'));
             });
         	
         	$('#section_wrap div.page_no_wrap .pre_page_btn').click(function(){
@@ -110,7 +109,6 @@ function ajax_get_all_order(pageNum = 1) {
             	console.log('pageNumBtnClick()')
             	
             	ajax_get_all_order(this.getAttribute('page_num'));
-            	console.log('page_num--->>>'+this.getAttribute('page_num'));
             });
         	
         }
